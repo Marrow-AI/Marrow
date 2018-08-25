@@ -1,0 +1,63 @@
+.App {
+  text-align: center;
+}
+
+.Header{
+  height: 25%;
+}
+
+.Links{
+  height: 25%;
+  margin: 4vw 0px;
+}
+
+.Credits{
+  height: 25%;
+}
+
+.Logos{
+
+}
+
+.Logos{
+  margin: 4vw auto;
+  width: 100%;
+  height: 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Logo{
+  width: 40%;
+}
+
+.Logos img{
+  margin: 0px 20px;
+  width: 40px;
+}
+
+.LargeLogo{
+  width: 100px !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .Logo{
+    /* width: 10%; */
+  }
+  .Logos {
+    /* display: inline;
+    text-align: center; */
+    /* margin: 1rem 0px; */
+    position: absolute;
+    bottom: 0px;
+  }
+  .Logos img{
+    /* display: block; */
+    /* margin: 0 auto; */
+    margin: 0px 6px;
+  }
+  li{
+    margin: 0 12px 0px 0px;
+  }
+}

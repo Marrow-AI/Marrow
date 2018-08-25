@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css?family=Assistant:300,400');
+
+*{
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: default;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: rgb(48, 0, 64);
+  font-family: 'Assistant', sans-serif;
+  font-weight: 400;
+  height: 100vw;
+  overflow: hidden;
+}
+
+h2, h3, h4, h5{
+  color: #33ffeb;
+  font-weight: 300;
+}
+
+h2{
+  font-weight: 300;
+  letter-spacing: 1rem;
+  font-size: 1rem;
+  margin: 2rem 0px;
+}
+
+h3{
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  max-width: 420px;
+  margin: 2rem auto;
+}
+
+h4{
+  font-size: 0.9rem;
+  margin: 2rem 0px 0px 0px;
+}
+
+h5{
+  margin: 5px 0px;
+}
+
+ul{  
+  padding: 0px;
+}
+
+li{
+  display: inline-block;
+  margin: 0 30px;
+}
+
+li a{
+  color: rgb(249, 66, 229);
+  text-decoration: none;
+  display: inline-block;
+}
+
+a{
+  text-decoration: none;
+  text-transform: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+a:hover{
+  border-bottom: 1px solid;
+}
