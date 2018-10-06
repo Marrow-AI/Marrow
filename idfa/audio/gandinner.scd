@@ -3,7 +3,6 @@
 TXSystem1.start(showAudioOptions: false);
 
 (
-//l = NetAddr(\localhost.asString, 57120);
 OSCdef.new( \speechreload, { |data,time,source|
 	"reloading speech".postln;
 	data.postln;

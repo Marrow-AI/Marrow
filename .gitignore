@@ -61,6 +61,7 @@ typings/
 .next
 
 *.swp
+*.swo
 
 venv/
 __pycache__/
