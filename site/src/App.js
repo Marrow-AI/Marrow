@@ -26,7 +26,7 @@ class App extends Component {
             onMouseOver={() => this.setState({ isHovering: true })}
             onMouseLeave={() => this.setState({ isHovering: false })} 
           />
-          <h3>MARROW is an interactive experience about the mental states of the intelligent machines we create</h3>
+          <h3>A tale of nonsense in the age of intelligence played by machine learning actors</h3>
         </div>
         <div className="Links">
           <ul>
@@ -46,7 +46,7 @@ class App extends Component {
         </div>
 
         <div className="Credits">
-          <h4>MARROW is an exploration of the mental states of the intelligent machines we create</h4>
+          <h4>MARROW is an interactive experience about the mental states of the intelligent machines we create</h4>
           <h4>by <a href="https://shirin.works/">~shirin anlen</a></h4>
           <h5>technical director: <a href="https://cvalenzuelab.com/">Cristóbal Valenzuela</a></h5>
           <h5>experience designer: <a href="http://zivschneider.com/">Ziv Schneider</a></h5>

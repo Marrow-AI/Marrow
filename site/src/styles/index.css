@@ -13,7 +13,7 @@ body {
   background: rgb(48, 0, 64);
   font-family: 'Assistant', sans-serif;
   font-weight: 400;
-  height: 100vw;
+  height: 100%;
   overflow: hidden;
 }
 
@@ -32,13 +32,12 @@ h2{
 h3{
   font-size: 0.9rem;
   letter-spacing: 2px;
-  max-width: 420px;
+  max-width: 350px;
   margin: 2rem auto;
 }
 
 h4{
   font-size: 0.9rem;
-  margin: 2rem 0px 0px 0px;
 }
 
 h5{
