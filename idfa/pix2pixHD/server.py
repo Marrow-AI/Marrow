@@ -1,6 +1,14 @@
-# pix2pix server
-# Run inference over a single image
-# =================
+# Copyright (c) Runway, Inc. and its affiliates.
+# All rights reserved.
+#
+# https://www.runwayapp.ai
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+##############################################################################
+
+# pix2pix Server
+##############################################################################
+
 import time
 import os
 import json
@@ -39,7 +47,7 @@ def load_model(name):
   opt.label_nc = 0
   return create_model(opt)
 
-current_model_name = 'dotherightthing'
+current_model_name = 'marrow'
 current_model = load_model(current_model_name)
 
 # Server configs

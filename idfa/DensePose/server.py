@@ -1,3 +1,14 @@
+# Copyright (c) Runway, Inc. and its affiliates.
+# All rights reserved.
+#
+# https://www.runwayapp.ai
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+##############################################################################
+
+# DensePose Server with pix2pix connection
+##############################################################################
+
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
