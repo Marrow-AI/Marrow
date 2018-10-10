@@ -1,0 +1,234 @@
+fileFormatVersion: 2
+guid: a6e972acff33547cea271648c7f7228f
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: back
+    100002: cube
+    100004: floor
+    100006: floor 1
+    100008: floor 2
+    100010: floor1
+    100012: floor2
+    100014: frameA
+    100016: frameB
+    100018: frameC
+    100020: leg_left
+    100022: leg_right
+    100024: StageA
+    100026: StageB
+    100028: StageC
+    100030: StageD
+    100032: StageE
+    100034: //RootNode
+    100036: stairStage
+    100038: stand1
+    100040: stand2
+    100042: stand3
+    100044: triStand
+    100046: tubeA
+    100048: tubeB
+    100050: wall_holes
+    100052: wall_left
+    100054: wall_left 1
+    100056: wall_right
+    100058: wall_right 1
+    100060: screen1
+    100062: screen2
+    100064: screen3
+    400000: back
+    400002: cube
+    400004: floor
+    400006: floor 1
+    400008: floor 2
+    400010: floor1
+    400012: floor2
+    400014: frameA
+    400016: frameB
+    400018: frameC
+    400020: leg_left
+    400022: leg_right
+    400024: StageA
+    400026: StageB
+    400028: StageC
+    400030: StageD
+    400032: StageE
+    400034: //RootNode
+    400036: stairStage
+    400038: stand1
+    400040: stand2
+    400042: stand3
+    400044: triStand
+    400046: tubeA
+    400048: tubeB
+    400050: wall_holes
+    400052: wall_left
+    400054: wall_left 1
+    400056: wall_right
+    400058: wall_right 1
+    400060: screen1
+    400062: screen2
+    400064: screen3
+    2100000: lambert1
+    2300000: back
+    2300002: cube
+    2300004: floor
+    2300006: floor 1
+    2300008: floor 2
+    2300010: floor1
+    2300012: floor2
+    2300014: frameA
+    2300016: frameB
+    2300018: frameC
+    2300020: leg_left
+    2300022: leg_right
+    2300024: stairStage
+    2300026: stand1
+    2300028: stand2
+    2300030: stand3
+    2300032: triStand
+    2300034: tubeA
+    2300036: tubeB
+    2300038: wall_holes
+    2300040: wall_left
+    2300042: wall_left 1
+    2300044: wall_right
+    2300046: wall_right 1
+    2300048: screen1
+    2300050: screen2
+    2300052: screen3
+    3300000: back
+    3300002: cube
+    3300004: floor
+    3300006: floor 1
+    3300008: floor 2
+    3300010: floor1
+    3300012: floor2
+    3300014: frameA
+    3300016: frameB
+    3300018: frameC
+    3300020: leg_left
+    3300022: leg_right
+    3300024: stairStage
+    3300026: stand1
+    3300028: stand2
+    3300030: stand3
+    3300032: triStand
+    3300034: tubeA
+    3300036: tubeB
+    3300038: wall_holes
+    3300040: wall_left
+    3300042: wall_left 1
+    3300044: wall_right
+    3300046: wall_right 1
+    3300048: screen1
+    3300050: screen2
+    3300052: screen3
+    4300000: floor
+    4300002: wall_right
+    4300004: wall_left
+    4300006: floor
+    4300008: back
+    4300010: wall_left
+    4300012: wall_right
+    4300014: stand1
+    4300016: stand3
+    4300018: stand2
+    4300020: floor
+    4300022: tubeB
+    4300024: tubeA
+    4300026: stairStage
+    4300028: wall_holes
+    4300030: triStand
+    4300032: frameA
+    4300034: frameB
+    4300036: frameC
+    4300038: floor1
+    4300040: leg_right
+    4300042: leg_left
+    4300044: floor2
+    4300046: cube
+    4300048: screen1
+    4300050: screen2
+    4300052: screen3
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.8
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

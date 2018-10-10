@@ -1,0 +1,1 @@
+Go to http://hitboxteam.com/HxVolumetricLighting/ for documentation 

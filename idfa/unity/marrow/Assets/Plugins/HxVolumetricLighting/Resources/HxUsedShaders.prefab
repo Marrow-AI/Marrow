@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a964cd513d63c464cb8703af21e0481f, type: 3}
+  m_Name: HxUsedShaders
+  m_EditorClassIdentifier: 
+  TransperencyQuality: 1
+  DensityParticleQuality: 2
+  LastDensityParticleQuality: 2
+  LastTransperencyQuality: 1
+  Full: 0
+  LowRes: 1
+  HeightFog: 0
+  HeightFogOff: 1
+  Noise: 0
+  NoiseOff: 1
+  Transparency: 1
+  TransparencyOff: 1
+  DensityParticles: 0
+  Point: 0
+  Spot: 1
+  Directional: 0
+  SinglePassStereo: 0
+  Projector: 0
+  FullLast: 0
+  LowResLast: 1
+  HeightFogLast: 0
+  HeightFogOffLast: 1
+  NoiseLast: 0
+  NoiseOffLast: 1
+  TransparencyLast: 1
+  TransparencyOffLast: 1
+  DensityParticlesLast: 0
+  PointLast: 0
+  SpotLast: 1
+  DirectionalLast: 0
+  SinglePassStereoLast: 0
+  ProjectorLast: 0
