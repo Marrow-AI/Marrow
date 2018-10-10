@@ -6126,6 +6126,7 @@ var ServiceRecognizerBase = /** @class */ (function () {
             });
         };
         this.SendSpeechConfig = function (requestId, connection, speechConfigJson) {
+            console.log(speechConfigJson)
             if (speechConfigJson && _this.connectionId !== _this.speechConfigConnectionId) {
                 _this.speechConfigConnectionId = _this.connectionId;
                 return connection
