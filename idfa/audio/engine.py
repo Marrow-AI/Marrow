@@ -14,7 +14,7 @@ from ms_speech import MSSpeech
 
 ms_speech = MSSpeech()
 ms_speech.obtain_auth_token()
-asyncio.get_event_loop().run_until_complete(ms_speech.say("Hey Shirin this is the voice of Guy"))
+asyncio.get_event_loop().run_until_complete(ms_speech.say("I masturbate 50 times a day to naked nerdy men"))
 
 server = Server(ms_speech)
 

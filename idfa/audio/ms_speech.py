@@ -37,9 +37,12 @@ class MSSpeech:
 
     async def synthesize_speech(self, text):
         body = "<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='{}'><voice name='{}'>{}</voice></speak>".format(
+        #body = "<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis' xml:lang='{}'><voice name='{}'><prosody pitch='low'>{}</prosody></voice></speak>".format(
+
             'en-US',
             #"Microsoft Server Speech Text to Speech Voice (en-US, BenjaminRUS)", 
-            "Microsoft Server Speech Text to Speech Voice (en-US, Guy24kRUS)",
+            #"Microsoft Server Speech Text to Speech Voice (en-US, Guy24kRUS)",
+            "Microsoft Server Speech Text to Speech Voice (en-US, Jessa24kRUS)",
             text
         )
 
