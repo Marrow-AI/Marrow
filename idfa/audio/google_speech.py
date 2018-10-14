@@ -23,7 +23,7 @@ class GoogleSpeech:
         response = self.client.synthesize_speech(synthesis_input, voice, audio_config)
         print("Done")
 
-        with open('/tmp/avner.wav', 'wb') as fd:
+        with open('/tmp/yes.wav', 'wb') as fd:
             fd.write(response.audio_content)
             print("Wrote to file")
 

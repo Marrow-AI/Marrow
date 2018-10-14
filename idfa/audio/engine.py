@@ -1,11 +1,17 @@
+import os
+import sys
+
 from pythonosc import osc_message_builder
 from pythonosc import udp_client
-import os
 from server import Server
 import asyncio
 
 from ms_speech import MSSpeech
 from google_speech import GoogleSpeech
+
+sys.path.append(os.path.abspath('./emotion'))
+
+from offline_ser import LiveSer
 
 #osc_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
 
@@ -13,12 +19,14 @@ from google_speech import GoogleSpeech
 #nlp = spacy.load('en')
 #print("Loaded English NLP")
 
+live_ser = LiveSer()
+
 ms_speech = MSSpeech()
 ms_speech.obtain_auth_token()
 
 google_speech = GoogleSpeech()
-google_speech.say("Sometimes I wear headphones without music so people are less inclined to engage with me.")
 
+#google_speech.say("Yes!")
 #asyncio.get_event_loop().run_until_complete(ms_speech.say("I masturbate 50 times a day to naked nerdy men"))
 
 server = Server(ms_speech)
