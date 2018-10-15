@@ -109,203 +109,218 @@ def predict_file(dec, pyaudio, path, frames, args, rate = 16000, format = pyaudi
         task_outputs = dec.returnClassDist(results)
     return task_outputs
 
-#main loop for speech emotion recognition
-def ser(args):
-
-    if args.log_file:
-        logger = open(args.log_file, "w")
-    else:
-        logger = open(args.wave + ".vad.csv", "w")
-            
-    tasks = []
-    
-    for task in args.tasks.split(","):
-        tasks.append(int(task.split(":")[1]))
-        
-    #audio device setup
-    format = pyaudio.paInt16
-    sample_rate = args.sample_rate
-    frame_duration = args.frame_duration
-    frame_len = int(sample_rate * (frame_duration / 1000.0))
-    chunk = int(frame_len/ args.n_channel)
-    vad_mode = args.vad_mode
-    
-    log("frame_len: %d" % frame_len)
-    log("chunk size: %d" % chunk)
-
-    #feature extraction setting
-    min_voice_frame_len = frame_len * (args.vad_duration / frame_duration)
-    log("minimum voice frame length: %d" % min_voice_frame_len)
-    feat_path = args.feat_path
-    tmp_data_path = "./tmp"
-    try:
-        os.mkdir(tmp_data_path)
-    except:
-        log('Data folder already exists')
-    
-
-    #initialise vad
-    vad = webrtcvad.Vad()
-    vad.set_mode(vad_mode)
-
-    #automatic gain normalisation
-    if args.g_min and args.g_max:
-        g_min_max = (args.g_min, args.g_max)
-    else:
-        g_min_max = None
-
-    #initialise recognition model
-    if args.model_file:
-        if args.stl:
-           dec = Decoder(model_file = args.model_file, elm_model_files = args.elm_model_file, context_len = args.context_len, max_time_steps = args.max_time_steps, tasks = args.tasks, sr = args.sample_rate, min_max = g_min_max, seq2seq = args.seq2seq)
-        else:
-           dec = Decoder(model_file = args.model_file, elm_model_files = args.elm_model_file, context_len = args.context_len, max_time_steps = args.max_time_steps, tasks = args.tasks, stl = False, sr = args.sample_rate, min_max = g_min_max, seq2seq = args.seq2seq)
-            
-    p = pyaudio.PyAudio()
-
-    #open file (offline mode)
-    if args.wave:
-        wave_file_list = [args.wave]
-
-    elif args.batch:
-        with open(args.batch, 'r') as f:
-            wave_file_list = f.readlines()
-
-    else:
-        wave_file_list = ['live']
-    
-    if args.play:
-            s = p.open(format = p.get_format_from_width(f.getsampwidth()),
-                    channels = f.getnchannels(),
-                    rate = f.getframerate(),
-                    output = True)
-
-    for wave_file in wave_file_list:
-
-        if wave_file == 'live':
-            log("no input wav file! Starting a live mode.")
-            #open mic
-            if args.device_id is None:
-                args.device_id = find_device_id("pulse")
-            if args.device_id == -1:
-                log("There is no default device!, please check the configuration")
-                sys.exit(-1)
-                
-            #open mic
-            f = p.open(format = format, channels = args.n_channel, rate = sample_rate, input = True, input_device_index = args.device_id,frames_per_buffer = chunk)
-        else:
-            wave_file = wave_file.rstrip()
-            f = wave.open(wave_file)
-        
-
-        log("---Starting---")
-
-        is_currently_speech = False
-        total_frame_len = 0
-        frames_16i = ''
-        frames_np = []
-        prev_task_outputs = None
-        speech_frame_len = 0
-        total_frame_count = 0
-        file_path = None
-        
-        while True:
-            #read a frame    
-            if wave_file != 'live':
-                data = f.readframes(chunk)
-            else:
-                data = f.read(chunk,exception_on_overflow=False)
-                
-            if data == '':
-                break
-
-            #play stream
-            if args.play:
-                s.write(data)
-
-            #check gain
-            mx = audioop.max(data, 2)
-            
-            #VAD
-            try:
-                is_speech = vad.is_speech(data, sample_rate)
-            except:
-                log("end of speech")
-                break
-
-            if mx < args.min_energy:
-                is_speech = 0
-            
-            if args.gain:
-                log(str('gain: %d, vad: %d' % (mx, is_speech)))   
-            
-            if is_speech == 1:
-                speech_frame_len = speech_frame_len + chunk #note chunk is a half of frame length.
-
-            if args.save:
-                if frames_16i == '': 
-                    frames_16i = data
-                else:
-                    frames_16i = frames_16i + data
-            
-            frames_np.append(np.fromstring(data, dtype=np.int16))
-            
-            total_frame_len = total_frame_len + chunk
-
-            #only if a sufficient number of frames are collected,
-            if total_frame_len > min_voice_frame_len:       
-                
-                #only if the ratio of speech frames to the total frames is higher than the threshold
-                if args.model_file and float(speech_frame_len)/total_frame_len > args.speech_ratio:
-                    
-                    #predict
-                    if args.save:
-                        file_path = tmp_data_path + "/" + str(datetime.now()) + '.wav'
-                        outputs = predict_file(dec, p, file_path, frames_16i, args, save = args.save)
-                    else:
-                        frames_np = np.hstack(frames_np)
-                        outputs = predict_frame(dec, frames_np, args)
-                    
-                    if wave_file == 'live': #live mode, record a detected speech
-                        vad_result(outputs, args.predict_mode, file_path, logger)
-                    else: #offline mode, record original wave file names
-                        vad_result(outputs, args.predict_mode, wave_file, logger)
-                else:
-                    if wave_file == 'live':
-                        no_vad_result(tasks, args.predict_mode, "", logger)
-                    else:
-                        no_vad_result(tasks, args.predict_mode, wave_file, logger)
-                
-                #initialise variables
-                total_frame_len = 0
-                speech_frame_len = 0
-                frames_16i = ''
-                frames_np = []
-
-            total_frame_count = total_frame_count + 1
-            if total_frame_count % 100 == 0:
-                log(str("total frame: %d" %( total_frame_count)))
-
-        log("---done---")
-
-        if wave_file != 'live':
-            f.close()
-    if args.play:
-        s.stop_stream()
-        s.close()
-    if args.log_file:
-        logger.close()
-
-    p.terminate()   
-
-
-
 class LiveSer:
     def __init__(self): 
         print("Initializing LIVE_SER")
 
-    def start():
+    def start(args):
         
+        tasks = [3,3]
+        
+        for task in args.tasks.split(","):
+            tasks.append(int(task.split(":")[1]))
+            
+        #audio device setup
+        format = pyaudio.paInt16
+        sample_rate = 16000
+        frame_duration = 20
+        n_channel = 1
+
+        frame_len = int(sample_rate * (frame_duration / 1000.0))
+        chunk = int(frame_len / n_channel)
+
+        # vad mode, only accept [0|1|2|3], 0 more quiet 3 more noisy"
+        vad_mode = 0
+        
+        log("frame_len: %d" % frame_len)
+        log("chunk size: %d" % chunk)
+
+        #feature extraction setting
+
+        # the minimum length(ms) of speech for emotion detection
+        vad_duration = 1000
+        min_voice_frame_len = frame_len * (vad_duration / frame_duration)
+
+        log("minimum voice frame length: %d" % min_voice_frame_len)
+
+        feat_path = "./temp.csv"
+        tmp_data_path = "./tmp"
+
+        try:
+            os.mkdir(tmp_data_path)
+        except:
+            log('Data folder already exists')
+        
+
+        #initialise vad
+        vad = webrtcvad.Vad()
+        vad.set_mode(vad_mode)
+
+        #automatic gain normalisation
+        if args.g_min and args.g_max:
+            g_min_max = (args.g_min, args.g_max)
+        else:
+            g_min_max = None
+
+        #initialise recognition model
+        model_file = './emotion/model/si.ENG.cw.raw.2d.res.lstm.gpool.dnn.1.h5'
+
+        # The provided model (./model/si.ENG.cw.raw.2d.res.lstm.gpool.dnn.1.h5) is trained by using end-to-end method, 
+        # which means its input feature is raw-wave. So you have to specify -f_mode as "1". 
+        # Also, the raw wave form has 16000 samples per sec. So we set -m_t_step as "16000".
+        # The model uses 10 contextual windows; so each window has 1600 samples (-c_len 1600).
+
+        context_len = 1600
+        max_time_steps = 16000
+
+        dec = Decoder(
+                model_file = model_file, 
+                elm_model_files = None, 
+                context_len = context_len
+                max_time_steps = max_time_steps, 
+                tasks = tasks,
+                stl = False, 
+                sr = sample_rate, 
+                min_max = g_min_max, 
+                seq2seq = False
+        )
+                
+        p = pyaudio.PyAudio()
+
+        #open file (offline mode)
+        if args.wave:
+            wave_file_list = [args.wave]
+
+        elif args.batch:
+            with open(args.batch, 'r') as f:
+                wave_file_list = f.readlines()
+
+        else:
+            wave_file_list = ['live']
+        
+        if args.play:
+                s = p.open(format = p.get_format_from_width(f.getsampwidth()),
+                        channels = f.getnchannels(),
+                        rate = f.getframerate(),
+                        output = True)
+
+        for wave_file in wave_file_list:
+
+            if wave_file == 'live':
+                log("no input wav file! Starting a live mode.")
+                #open mic
+                if args.device_id is None:
+                    args.device_id = find_device_id("pulse")
+                if args.device_id == -1:
+                    log("There is no default device!, please check the configuration")
+                    sys.exit(-1)
+                    
+                #open mic
+                f = p.open(format = format, channels = args.n_channel, rate = sample_rate, input = True, input_device_index = args.device_id,frames_per_buffer = chunk)
+            else:
+                wave_file = wave_file.rstrip()
+                f = wave.open(wave_file)
+            
+
+            log("---Starting---")
+
+            is_currently_speech = False
+            total_frame_len = 0
+            frames_16i = ''
+            frames_np = []
+            prev_task_outputs = None
+            speech_frame_len = 0
+            total_frame_count = 0
+            file_path = None
+            
+            while True:
+                #read a frame    
+                if wave_file != 'live':
+                    data = f.readframes(chunk)
+                else:
+                    data = f.read(chunk,exception_on_overflow=False)
+                    
+                if data == '':
+                    break
+
+                #play stream
+                if args.play:
+                    s.write(data)
+
+                #check gain
+                mx = audioop.max(data, 2)
+                
+                #VAD
+                try:
+                    is_speech = vad.is_speech(data, sample_rate)
+                except:
+                    log("end of speech")
+                    break
+
+                if mx < args.min_energy:
+                    is_speech = 0
+                
+                if args.gain:
+                    log(str('gain: %d, vad: %d' % (mx, is_speech)))   
+                
+                if is_speech == 1:
+                    speech_frame_len = speech_frame_len + chunk #note chunk is a half of frame length.
+
+                if args.save:
+                    if frames_16i == '': 
+                        frames_16i = data
+                    else:
+                        frames_16i = frames_16i + data
+                
+                frames_np.append(np.fromstring(data, dtype=np.int16))
+                
+                total_frame_len = total_frame_len + chunk
+
+                #only if a sufficient number of frames are collected,
+                if total_frame_len > min_voice_frame_len:       
+                    
+                    #only if the ratio of speech frames to the total frames is higher than the threshold
+                    if args.model_file and float(speech_frame_len)/total_frame_len > args.speech_ratio:
+                        
+                        #predict
+                        if args.save:
+                            file_path = tmp_data_path + "/" + str(datetime.now()) + '.wav'
+                            outputs = predict_file(dec, p, file_path, frames_16i, args, save = args.save)
+                        else:
+                            frames_np = np.hstack(frames_np)
+                            outputs = predict_frame(dec, frames_np, args)
+                        
+                        if wave_file == 'live': #live mode, record a detected speech
+                            vad_result(outputs, args.predict_mode, file_path, logger)
+                        else: #offline mode, record original wave file names
+                            vad_result(outputs, args.predict_mode, wave_file, logger)
+                    else:
+                        if wave_file == 'live':
+                            no_vad_result(tasks, args.predict_mode, "", logger)
+                        else:
+                            no_vad_result(tasks, args.predict_mode, wave_file, logger)
+                    
+                    #initialise variables
+                    total_frame_len = 0
+                    speech_frame_len = 0
+                    frames_16i = ''
+                    frames_np = []
+
+                total_frame_count = total_frame_count + 1
+                if total_frame_count % 100 == 0:
+                    log(str("total frame: %d" %( total_frame_count)))
+
+            log("---done---")
+
+            if wave_file != 'live':
+                f.close()
+        if args.play:
+            s.stop_stream()
+            s.close()
+        if args.log_file:
+            logger.close()
+
+        p.terminate()   
 
 
 
