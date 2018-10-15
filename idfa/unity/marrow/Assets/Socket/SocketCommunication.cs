@@ -18,12 +18,11 @@ public class SocketCommunication : MonoBehaviour {
 	public int attnGanImageHeight = 256;
 	public float typingTimerLength = 0.5f;
 	public Material attnGanMaterial;
-	public Texture2D testTexture;
 
 	private SocketManager attnGanSocketManager;
 	private Socket attnGanSocket;
 
-	public Texture2D attnGanTexture;
+	private Texture2D attnGanTexture;
 	private float lastTypingTimecode;
 
 	private void Start ()
@@ -47,14 +46,8 @@ public class SocketCommunication : MonoBehaviour {
 		attnGanSocketManager.Open();
 
         // Image convert related
-		//byte[] testBase64Img = testTexture.GetRawTextureData();
-		//Debug.Log("test image format: " + testTexture.format);
-		attnGanTexture = new Texture2D(attnGanImageWidth, attnGanImageHeight, TextureFormat.RGB24, false, false);
-		//attnGanTexture.LoadRawTextureData(testBase64Img);
-		//attnGanTexture.Apply();
-
+		attnGanTexture = new Texture2D(attnGanImageWidth, attnGanImageHeight);
 		attnGanMaterial.mainTexture = attnGanTexture;
-		//byte[] base64Img = attnGanTexture.GetRawTextureData();
 	}
 
 	private void Update()
@@ -95,12 +88,8 @@ public class SocketCommunication : MonoBehaviour {
 	{
 		Dictionary<string, object> data = args[0] as Dictionary<string, object>;
 		string base64Image = data["image"] as string;
-		Debug.Log("Got AttnGAN update_response - base64Image: " + base64Image);
-
 		byte[] receivedBase64Img = Convert.FromBase64String(base64Image);
-		//Debug.Log("received base64Img length: " + receivedBase64Img.Length);
-		attnGanTexture.LoadRawTextureData(receivedBase64Img);
-		attnGanTexture.Apply();
+		attnGanTexture.LoadImage(receivedBase64Img);
 	}
 
 	void OnAttnGanError(Socket socket, Packet packet, params object[] args)

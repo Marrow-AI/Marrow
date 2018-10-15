@@ -444,7 +444,7 @@ MonoBehaviour:
   attnGanUrl: http://api.marrow.raycaster.studio:3333/socket.io/
   attnGanImageWidth: 256
   attnGanImageHeight: 256
-  typingTimerLength: 700
+  typingTimerLength: 0.4
   attnGanMaterial: {fileID: 2100000, guid: b6bb77f00e5964ca8a2d75ba2a46377c, type: 2}
 --- !u!4 &1297263016
 Transform:
