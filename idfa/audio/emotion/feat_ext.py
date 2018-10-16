@@ -23,11 +23,11 @@ class FeatExt(object):
             if temp_min < self.min:
                 self.min = temp_min
                 #debug
-                print("new min", self.min)
+                #print("new min", self.min)
             if temp_max > self.max:
                 self.max = temp_max
                 #debug
-                print("new max", self.max)
+                #print("new max", self.max)
             frames = (frames - self.min)/(self.max - self.min)
         else:            
             frames = (frames - self.min)/(self.max - self.min)

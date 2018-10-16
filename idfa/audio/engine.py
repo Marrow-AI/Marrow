@@ -1,5 +1,7 @@
 import os
 import sys
+import argparse
+
 
 from pythonosc import osc_message_builder
 from pythonosc import udp_client
@@ -19,20 +21,54 @@ from offline_ser import LiveSer
 #nlp = spacy.load('en')
 #print("Loaded English NLP")
 
-live_ser = LiveSer()
 
-ms_speech = MSSpeech()
-ms_speech.obtain_auth_token()
+def emotion_update(data):
+    print("Emotion update!")
+    conc = asyncio.run_coroutine_threadsafe(server.emotion_update(data), main_loop)
+    print(conc.result())
 
-google_speech = GoogleSpeech()
+if __name__ == '__main__':
 
-#google_speech.say("Yes!")
-#asyncio.get_event_loop().run_until_complete(ms_speech.say("I masturbate 50 times a day to naked nerdy men"))
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-d_id", "--device_id", dest= 'device_id', type=int, help="a device id for microphone", default=None)
 
-server = Server(ms_speech)
+    #automatic gain normalisation
+    parser.add_argument("-g_min", "--gain_min", dest= 'g_min', type=float, help="the min value of automatic gain normalisation")
+    parser.add_argument("-g_max", "--gain_max", dest= 'g_max', type=float, help="the max value of automatic gain normalisation")
 
-asyncio.get_event_loop().run_until_complete(server.start())
-asyncio.get_event_loop().run_forever()
+    args = parser.parse_args()
+    args.stop = False
+
+    print("args: " + str(args))
+    args.callback = emotion_update
+
+    live_ser = LiveSer()
+    live_ser.run(args)
+
+    ms_speech = MSSpeech()
+ #  ms_speech.obtain_auth_token()
+
+   # google_speech = GoogleSpeech()
+
+    #google_speech.say("Yes!")
+    #asyncio.get_event_loop().run_until_complete(ms_speech.say("I masturbate 50 times a day to naked nerdy men"))
+
+
+    print("STARTING SERVER?")
+
+    server = Server(ms_speech)
+
+    main_loop = asyncio.get_event_loop()
+
+    asyncio.get_event_loop().run_until_complete(server.start())
+
+    try:
+        asyncio.get_event_loop().run_forever()
+    except KeyboardInterrupt:
+        print("Stopping everything")
+        args.stop = True
+
+
 
 
 

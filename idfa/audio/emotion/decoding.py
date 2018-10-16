@@ -73,7 +73,7 @@ class Decoder(object):
         self.feat_path = feat_path
         self.context_len = context_len
         self.max_time_steps = max_time_steps   
-        self.model.summary()
+        #self.model.summary()
 
     #predict frames
     def predict(self, frames, feat_mode = 0, feat_dim = 80, three_d = False):
@@ -103,7 +103,7 @@ class Decoder(object):
 
     #prediction using temporal features
     def temporal_predict(self, temporal_feat):  
-        print("temporal feat shape: ", temporal_feat.shape)
+        #print("temporal feat shape: ", temporal_feat.shape)
         #print(temporal_feat[0,0,0,0,0])
         predictions = self.model.predict(temporal_feat,verbose=1)
 
@@ -126,7 +126,7 @@ class Decoder(object):
 
     #compose a temporal feature structure
     def build_temporal_feat(self, input_feat, three_d = False):
-        print("feature shape:", input_feat.shape)
+        #print("feature shape:", input_feat.shape)
 
         input_dim = input_feat.shape[1]
         max_t_steps = int(self.max_time_steps / self.context_len)
@@ -153,7 +153,7 @@ class Decoder(object):
     def returnLabel(self, result):
         labels = []
         
-        print(result)
+       # print(result)
 
         #multi-tasks output format
         for task in result:
@@ -176,14 +176,14 @@ class Decoder(object):
         
         labels = []
         #multi-tasks output format
-        print(result)
+        #print(result)
 
 
         for task in result:
-            print("task result shape: ", task.shape)
+            #print("task result shape: ", task.shape)
             values = task.T
-            print(values)
-            print ("Highest index: {}".format(np.argmax(values)))
+            #print(values)
+            #print ("Highest index: {}".format(np.argmax(values)))
 
             class_avg_p = []
             for class_p in values:

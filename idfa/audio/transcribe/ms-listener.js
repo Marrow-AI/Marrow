@@ -11,6 +11,7 @@ export default class MSListener {
 
         this.socket.onmessage = (packet) => {
             let message = JSON.parse(packet.data);
+            console.log("Message",message)
             if (message.token) {
                 this.listen(message.token)
             }
@@ -32,8 +33,10 @@ export default class MSListener {
             console.log('(' + event.result.text + ')');
         }
         recognizer.recognized = (r,event) => {
-            console.log(event.result.text);
-            this.socket.send(JSON.stringify({action: 'speech', text: event.result.text}));
+            if (event.result && event.result.text) {
+                console.log(event.result.text);
+                this.socket.send(JSON.stringify({action: 'speech', text: event.result.text}));
+            }
         }
         recognizer.canceled = (r,event) => {
             console.log("Canceled!");
