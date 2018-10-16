@@ -17,3 +17,4 @@ webrtcvad
 six>=1.10
 spacy
 annoy
+python-osc

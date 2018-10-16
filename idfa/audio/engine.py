@@ -16,7 +16,6 @@ sys.path.append(os.path.abspath('./emotion'))
 
 from offline_ser import LiveSer
 
-#osc_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
 
 # Load English tokenizer, tagger, parser, NER and word vectors
 #nlp = spacy.load('en')
@@ -34,6 +33,7 @@ def gain_update(min, max):
     live_ser.feat_ext.max = float(max)
 
 def speech_text(text):
+    t2i_client.send_message("/speech", text)
     print(script.match(text))
 
 
@@ -58,6 +58,8 @@ if __name__ == '__main__':
     #live_ser.run(args)
 
     ms_speech = MSSpeech()
+
+    t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
 
    # google_speech = GoogleSpeech()
 
