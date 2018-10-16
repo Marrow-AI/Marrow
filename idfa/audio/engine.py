@@ -10,6 +10,7 @@ import asyncio
 
 from ms_speech import MSSpeech
 from google_speech import GoogleSpeech
+from script import Script
 
 sys.path.append(os.path.abspath('./emotion'))
 
@@ -32,6 +33,10 @@ def gain_update(min, max):
     live_ser.feat_ext.min = float(min)
     live_ser.feat_ext.max = float(max)
 
+def speech_text(text):
+    print(script.match(text))
+
+
 
 if __name__ == '__main__':
 
@@ -42,27 +47,24 @@ if __name__ == '__main__':
     parser.add_argument("-g_min", "--gain_min", dest= 'g_min', type=float, help="the min value of automatic gain normalisation")
     parser.add_argument("-g_max", "--gain_max", dest= 'g_max', type=float, help="the max value of automatic gain normalisation")
 
+    script = Script()
+
     args = parser.parse_args()
     args.stop = False
 
-    print("args: " + str(args))
     args.callback = emotion_update
 
-    live_ser = LiveSer()
-    live_ser.run(args)
+    #live_ser = LiveSer()
+    #live_ser.run(args)
 
     ms_speech = MSSpeech()
- #  ms_speech.obtain_auth_token()
 
    # google_speech = GoogleSpeech()
 
     #google_speech.say("Yes!")
     #asyncio.get_event_loop().run_until_complete(ms_speech.say("I masturbate 50 times a day to naked nerdy men"))
 
-
-    print("STARTING SERVER?")
-
-    server = Server(ms_speech, gain_update)
+    server = Server(ms_speech, gain_update, speech_text)
 
     main_loop = asyncio.get_event_loop()
 

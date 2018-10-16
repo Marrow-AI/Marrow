@@ -9,10 +9,11 @@ import numpy as np
 
 class Server:
 
-    def __init__(self, ms_speech,gain_callback):
+    def __init__(self, ms_speech,gain_callback, speech_callback):
         print("Init server {}".format(ms_speech))
         self.ms_speech = ms_speech
         self.gain_callback = gain_callback
+        self.speech_callback = speech_callback
         self.connected = set()
 
     async def handler(self, websocket, path):
@@ -26,7 +27,7 @@ class Server:
                 if data['action'] == 'get-token':
                     await websocket.send(json.dumps({'token': self.ms_speech.obtain_auth_token()}))
                 elif (data['action'] == 'speech'):
-                    print(data['text'])
+                    self.speech_callback(data['text'])
                 elif (data["action"] == 'update-gain'):
                     self.gain_callback(data["min"], data["max"])
 
