@@ -3,13 +3,16 @@ import asyncio
 import websockets
 import json
 import requests
+import ssl
+import pathlib
 import numpy as np
 
 class Server:
 
-    def __init__(self, ms_speech):
+    def __init__(self, ms_speech,gain_callback):
         print("Init server {}".format(ms_speech))
         self.ms_speech = ms_speech
+        self.gain_callback = gain_callback
         self.connected = set()
 
     async def handler(self, websocket, path):
@@ -24,6 +27,8 @@ class Server:
                     await websocket.send(json.dumps({'token': self.ms_speech.obtain_auth_token()}))
                 elif (data['action'] == 'speech'):
                     print(data['text'])
+                elif (data["action"] == 'update-gain'):
+                    self.gain_callback(data["min"], data["max"])
 
         finally:
             print("Unregistering Websocket")
@@ -31,7 +36,9 @@ class Server:
 
     def start(self):
         print("Staring server")
-        return websockets.serve(self.handler, '127.0.0.1', 5678)
+        ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+        ssl_context.load_cert_chain(certfile='localhost.pem', keyfile='localkey.pem')
+        return websockets.serve(self.handler, 'localhost', 9540, ssl=ssl_context)
 
     async def emotion_update(self,data):
         print("Sending emotion update")

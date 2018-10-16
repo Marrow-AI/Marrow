@@ -1,9 +1,87 @@
 <html>
 <head>
    <script src="microsoft.cognitiveservices.speech.sdk.bundle.js"></script>
+   <script src="jquery-2.2.4.min.js"></script>
+   <script src="bootstrap.bundle.min.js"></script>
+   <script src="reconnecting-websocket.min.js"></script>
    <script src="app.bundle.js"></script>
+   <link rel="stylesheet" type="text/css" href="bootstrap.css">
    <title>Listening...</title>
+
+   <style>
+        html {
+            height: 100%;
+        }
+        body {
+            height: 100%;
+            background-color: #cbcbcb;
+        }
+        #emotion-debug {
+            margin: 10px;
+        }
+        #vad-state {
+           Y line-height: 2;
+            padding-left: 5px;
+        }
+
+        #vad-state.speaking {
+            background-color: #93ff93;
+        }
+        #vad-state.silence {
+            background-color: #ff7e7e;
+        }
+        .gain-input {
+            line-height: 2;
+            line-height: 2;
+            background-color: #ffff9b;
+            border-width: 1px;
+            border-style: solid;
+        }
+        .gain-input label {
+            margin: 5px;            
+        }
+        .gain-input span {
+            margin-left: 10px;            
+        }
+   </style>
 </head>
 <body>
+    <div id="emotion-debug">
+        <div id="vad-state">
+            <b>Unknown state</b>
+        </div>
+        <table class="table table-dark">
+            <thead>
+                <th>Feature</th>
+                <th>Low</th>
+                <th>Medium</th>
+                <th>High</th>
+            </thead>
+            <tbody>
+                <tr id="arousal-table">
+                    <td>AROUSAL</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr id="valence-table">
+                    <td>VALENCE</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+            </tbody>
+        </table>
+        <div id="gain-input-min" class="gain-input">
+            <label for="micGainMin">Minimum Gain:</label>
+            <input type="range" class="custom-range" min="-1" max="1" step="0.01" value="-0.5" id="micGainMin">
+            <b> <span>-0.5</span> </b>
+        </div>
+        <div id="gain-input-max" class="gain-input">
+            <label for="micGainMax">Maximum Gain:</label>
+            <input type="range" class="custom-range" min="-1" max="1" step="0.01" value="0.5" id="micGainMax">
+            <b> <span>0.5</span> </b>
+        </div>
+    </div>
 </body>
 </html>

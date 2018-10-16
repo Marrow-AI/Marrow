@@ -27,6 +27,12 @@ def emotion_update(data):
     conc = asyncio.run_coroutine_threadsafe(server.emotion_update(data), main_loop)
     print(conc.result())
 
+def gain_update(min, max):
+    print("Update gain! {} : {}".format(min, max))
+    live_ser.feat_ext.min = float(min)
+    live_ser.feat_ext.max = float(max)
+
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
@@ -56,7 +62,7 @@ if __name__ == '__main__':
 
     print("STARTING SERVER?")
 
-    server = Server(ms_speech)
+    server = Server(ms_speech, gain_update)
 
     main_loop = asyncio.get_event_loop()
 

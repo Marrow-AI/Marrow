@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js"
+    "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --https --cert ../localhost.pem --key ../localkey.pem"
   },
   "author": "",
   "license": "ISC",
