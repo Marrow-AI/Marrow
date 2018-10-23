@@ -106,10 +106,13 @@ namespace Marrow
 				return;
 
 			AttnGanRequestData attnGanRequestData = new AttnGanRequestData();
-			attnGanRequestData.caption = inputText;
+			string stringToSend = inputText.ToLower();
+			stringToSend += " ";
+			attnGanRequestData.caption = inputText.ToLower();
 			attnGanSocket.Emit("update_request", attnGanRequestData);
 
 			lastTypingTimecode = Time.time;
+			Debug.LogFormat("socket emit request: {0}", stringToSend);
 		}
 	}
 }
