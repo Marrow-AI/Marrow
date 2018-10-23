@@ -13,7 +13,8 @@
 			"text": "Oh thank you. I cooked all day for YOU.",
 			"triggers-beat": {
 				"slot": 1,
-				"text": "oh"
+				"text": "oh",
+                "word": "oh"
 			}
 		},
 
@@ -112,7 +113,8 @@
 			"text": "Today was spectacular.",
 			"triggers-beat": {
 				"slot": 1,
-				"text": "tac"
+				"text": "tac",
+                "word": "spectacular"
 			}
 		},
 		{
@@ -144,7 +146,8 @@
 			"text": "What is a rainbow?",
 			"triggers-beat": {
 				"slot": 2,
-				"text": "bow"
+				"text": "bow",
+                "word": "rainbow"
 			}
 		},
 		{
@@ -225,7 +228,8 @@
 			"text": "I wonder what I will dream today.",
 			"triggers-beat": {
 				"slot": 3,
-				"text": "eeeem"
+				"text": "eeeem",
+                "word": "dream"
 			}
 		},
 		{
@@ -261,7 +265,8 @@
 			"text": "I love you dear.",
 			"triggers-beat": {
 				"slot": 4,
-				"text": "love"
+				"text": "love",
+                "word": "love"
 			}
 		},
 		{
@@ -310,7 +315,8 @@
 			"text": "I am not sure. It happened only once.",
 			"triggers-beat": {
 				"slot": 1,
-				"text": "only"
+				"text": "only",
+                "word": "only"
 			}
 		},
 		{
