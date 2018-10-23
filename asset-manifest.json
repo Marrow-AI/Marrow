@@ -1,8 +1,11 @@
 {
-  "main.css": "static/css/main.31025e43.css",
-  "main.css.map": "static/css/main.31025e43.css.map",
-  "main.js": "static/js/main.0d119bc0.js",
-  "main.js.map": "static/js/main.0d119bc0.js.map",
-  "static/media/logo.svg": "static/media/logo.38a3ab71.svg",
-  "static/media/logo_hover.svg": "static/media/logo_hover.9b263d95.svg"
+  "main.css": "static/css/main.4fef8412.css",
+  "main.css.map": "static/css/main.4fef8412.css.map",
+  "main.js": "static/js/main.08d66dc3.js",
+  "main.js.map": "static/js/main.08d66dc3.js.map",
+  "static/media/background.jpg": "static/media/background.7354847c.jpg",
+  "static/media/doclab.png": "static/media/doclab.0464b653.png",
+  "static/media/idfa.png": "static/media/idfa.887865e7.png",
+  "static/media/nfb.png": "static/media/nfb.bf49e001.png",
+  "static/media/runway_w.png": "static/media/runway_w.5d9d6ad5.png"
 }
