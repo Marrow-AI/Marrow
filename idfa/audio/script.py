@@ -1,10 +1,14 @@
 import spacy
 import numpy as np
 from annoy import AnnoyIndex
+import json
 
 class Script:
     def __init__(self):
-        print("Initializing script")
+        print("Initializing script engine")
+        self.load_space()
+
+    def load_space(self):
         self.nlp = spacy.load('en')
         self.script_lines = {}
 
@@ -15,27 +19,28 @@ class Script:
 
         i = 0
         line_i = 0
-        file = open("script.txt", "r")
-        lines = file.readlines()
         inserted_lines = list()
-        for line in lines:
-            line = line.rstrip()    
-            try:        
-                mean_vector = self.meanvector(line)        
-                self.text_space.add_item(i, mean_vector)
-                inserted_lines.append(line)
-                self.script_lines[i] = {"text": line, "index": line_i}
-                i += 1
-            except IndexError:
-                print('NLP error at "{}"'.format(line))
-                continue    
+        with open("marrow_script.json", 'r') as file:
+            self.data = json.load(file)
+            for line in self.data["script-lines"]:
+                text = line["text"]
+                try:        
+                    mean_vector = self.meanvector(text)        
+                    self.text_space.add_item(i, mean_vector)
+                    inserted_lines.append(line)
+                    self.script_lines[i] = {"text": text, "index": line_i}
+                    i += 1
+                except IndexError:
+                    print('NLP error at "{}"'.format(text))
+                    continue    
 
-            finally:
-                line_i += 1
+                finally:
+                    line_i += 1
 
         self.text_space.build(100)
         print("{} items in vector space for {} lines".format(self.text_space.get_n_items(), len(inserted_lines)))
         assert(self.text_space.get_n_items() == len(inserted_lines))
+
             
     def meanvector(self,text):
         s = self.nlp(text)
