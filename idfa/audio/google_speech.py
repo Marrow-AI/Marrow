@@ -16,14 +16,15 @@ class GoogleSpeech:
 
         audio_config = texttospeech.types.AudioConfig(
             audio_encoding=texttospeech.enums.AudioEncoding.LINEAR16,
-            pitch=-2.8
+            pitch=-2.8,
+            speaking_rate = 0.8
         )
 
         print("Synthesizing")
         response = self.client.synthesize_speech(synthesis_input, voice, audio_config)
         print("Done")
 
-        with open('/tmp/mine.wav', 'wb') as fd:
+        with open('/tmp/love.wav', 'wb') as fd:
             fd.write(response.audio_content)
             print("Wrote to file")
 

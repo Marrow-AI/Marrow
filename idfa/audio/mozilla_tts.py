@@ -70,17 +70,22 @@ class MozillaTTS:
         waveform, alignment, spectrogram, stop_tokens = create_speech(model, text, CONFIG, use_cuda, ap) 
         return waveform
 
-    def text2audio(self, text, model, CONFIG, use_cuda, ap):
+    def text2audio(self, data, model, CONFIG, use_cuda, ap):
         wavs = []
-        for sen in text.split('.'):
-            if len(sen) < 3:
-                continue
-            sen+='.'
-            sen = sen.strip()
-            print(sen)
-            wav = self.tts(model, sen, CONFIG, use_cuda, ap)
-            wavs.append(wav)
-            wavs.append(np.zeros(10000))
+        for segment in data:
+            print(segment)
+            for sen in segment["text"].split('.'):
+                if len(sen) < 3:
+                    continue
+                sen+='.'
+                sen = sen.strip()
+                print(sen)
+                wav = self.tts(model, sen, CONFIG, use_cuda, ap)
+                wavs.append(wav)
+                wavs.append(np.zeros(10000))
+            if "pause" in segment:
+                print(segment["pause"] * 10 - 10000)
+                wavs.append(np.zeros(segment["pause"] * 10))
     #     audio = np.stack(wavs)
     #     IPython.display.display(Audio(audio, rate=CONFIG.sample_rate))  
         return wavs

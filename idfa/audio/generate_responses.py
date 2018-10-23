@@ -1,4 +1,14 @@
 from mozilla_tts import MozillaTTS
+from script import Script
 
 moz_tts = MozillaTTS()
-moz_tts.say("Everything eventually comes crawling home. Because love is gone. And when love is gone there's always force. And when force is gone there is always dad. So hold me, dad.", "love.wav")
+script = Script()
+
+for line in script.data["script-lines"]:
+    if "triggers-gan" in line:
+        utterance = line["triggers-gan"]
+        for state in utterance:
+            print("State: {}".format(state))
+            moz_tts.say(utterance[state], "pause_test.wav")
+        break
+

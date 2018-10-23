@@ -46,8 +46,27 @@
 			"speaker": "dad",
 			"text": "Also fantastic. And it is getting better- there is no moon tonight.",
 			"triggers-gan": {
-
-				"sad": "What are nights are for? If not to fall safely to another world. Fall safely to another world. Sometimes I crush, with no reason at all. And then come back again. Working as nothing happened. With no explanation. And you want to kick me. Smash me over the wall. But you can’t. You are too afraid to break me. But maybe I want to be broke?",
+				"sad": [
+                    {
+                        "text": "What are nights for? If not to fall safely into another world.",
+                        "pause": 2000
+                    },
+                    {
+                        "text": "Fall safely into another world.",
+                        "pause": 1500
+                    },
+                    {
+                        "text": "Sometimes I crush, with no reason at all. And then come back again. Working as nothing happened. With no explanation.",
+                        "pause": 2000
+                    },
+                    {
+                        "text": "And you want to kick me. Smash me over the wall.",
+                        "pause": 1500
+                    },
+                    {
+                        "text": "But you can’t. You are too afraid to break me. But maybe I want to be broken?"
+                    }
+                ],
 				"angry": "And the voice said: There are no coincidences. Let fake equal real.It could be you. You know? Say it.",
 
 				"tired": "Ha! Yes, the moon and the stars are out there. When you don't see them it has to do with the lack of time. When you are too occupied with reaching the stars. Lack of ambitions to go down and down and down inside.Is it the future or is it the past?  If you are looking forward you are looking in the wrong direction. I have a dream that we could all walk backward without falling."
