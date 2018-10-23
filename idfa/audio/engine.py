@@ -61,9 +61,9 @@ if __name__ == '__main__':
 
     t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
 
-   # google_speech = GoogleSpeech()
+    google_speech = GoogleSpeech()
 
-    #google_speech.say("Yes!")
+    google_speech.say("Everything eventually comes craawling home. Because love is gone. And when love is gone there's always force. And when force is gone there is always daad. So hold me. Daad.")
     #asyncio.get_event_loop().run_until_complete(ms_speech.say("I masturbate 50 times a day to naked nerdy men"))
 
     server = Server(ms_speech, gain_update, speech_text)
