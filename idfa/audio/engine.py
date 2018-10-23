@@ -6,6 +6,7 @@ import argparse
 from pythonosc import osc_message_builder
 from pythonosc import udp_client
 from server import Server
+import shutil
 import asyncio
 
 from ms_speech import MSSpeech
@@ -15,6 +16,7 @@ from script import Script
 sys.path.append(os.path.abspath('./emotion'))
 
 from offline_ser import LiveSer
+from mental_state import MentalState
 
 
 # Load English tokenizer, tagger, parser, NER and word vectors
@@ -33,8 +35,22 @@ def gain_update(min, max):
     live_ser.feat_ext.max = float(max)
 
 def speech_text(text):
+    print("Speech! {}".format(text))
     t2i_client.send_message("/speech", text)
-    print(script.match(text))
+    match = script.match(text)
+    if match and match['match'] < 0.5:
+        print("Match! {}".format(match))
+        line = script.data["script-lines"][match["index"]]
+        if "triggers-gan" in line:
+            trigger = line["triggers-gan"]
+            current_metnal_state = mental_state.get_current_state()
+            if current_metnal_state in trigger:
+                shutil.copyfile("gan_responses/{}-{}.wav".format(match['index'], current_metnal_state), "tmp/gan_response.wav")
+                print("Copied")
+                voice_client.send_message("/speech/reload",1)
+                voice_client.send_message("/speech/play",1)
+
+
 
 
 
@@ -48,6 +64,7 @@ if __name__ == '__main__':
     parser.add_argument("-g_max", "--gain_max", dest= 'g_max', type=float, help="the max value of automatic gain normalisation")
 
     script = Script()
+    script.load_space()
 
     args = parser.parse_args()
     args.stop = False
@@ -60,10 +77,12 @@ if __name__ == '__main__':
     ms_speech = MSSpeech()
 
     t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
+    voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
 
-    google_speech = GoogleSpeech()
+    mental_state = MentalState()
 
-    google_speech.say("Everything. eventually. comes crawling home.\n\n\nBecause, love is gone. And when love is gone there's always force. And when force is gone there is always dad. So hold me, dad.")
+    #google_speech = GoogleSpeech()
+    #google_speech.say("Hi")
     #asyncio.get_event_loop().run_until_complete(ms_speech.say("I masturbate 50 times a day to naked nerdy men"))
 
     server = Server(ms_speech, gain_update, speech_text)

@@ -44,7 +44,7 @@
 		},
 		{
 			"speaker": "dad",
-			"text": "Also fantastic. And it is getting better- there is no moon tonight.",
+			"text": "Also fantastic. And it is getting better there is no moon tonight.",
 			"triggers-gan": {
 				"sad": [
                     {
@@ -67,7 +67,19 @@
                         "text": "But you can’t. You are too afraid to break me. But maybe I want to be broken?"
                     }
                 ],
-				"angry": "And the voice said: There are no coincidences. Let fake equal real.It could be you. You know? Say it.",
+                "angry": [
+                    {
+                        "text": "And the voice said: There are no coincidences.",
+                        "pause": 1500
+                    },
+                    {
+                        "text": "Let fake equal real.",
+                        "pause": 1500
+                    },
+                    {
+                        "text":  "It could be you, You know? Say it."
+                    }
+                ],
 
 				"tired": "Ha! Yes, the moon and the stars are out there. When you don't see them it has to do with the lack of time. When you are too occupied with reaching the stars. Lack of ambitions to go down and down and down inside.Is it the future or is it the past?  If you are looking forward you are looking in the wrong direction. I have a dream that we could all walk backward without falling."
 			}
@@ -120,7 +132,21 @@
 			"speaker": "mom",
 			"text": "Here you go sweetheart.",
 			"triggers-gan": {
-				"sad": "We made a wish to be together. Together. Fake-Fake-Fake. Is it better to fake it then being alone? Alone-Alone-Alone."
+                "sad": [
+                    {
+                        "text": "We made a wish to be together.",
+                        "pause": 1500
+                    },
+                    {
+                        "text": "Together. Fake-Fake-Fake.",
+                        "pause": 2000 
+
+                    }, 
+                    {
+                        "text": "Is it better to fake it then being alone? Alone-Alone-Alone."
+                    
+                    }
+                ] 
 			}
 		},
 		{

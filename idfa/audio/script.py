@@ -30,7 +30,6 @@ class Script:
                 mean_vector = self.meanvector(text)        
                 self.text_space.add_item(i, mean_vector)
                 inserted_lines.append(line)
-                self.script_lines[i] = {"text": text, "index": line_i}
                 i += 1
             except IndexError:
                 print('NLP error at "{}"'.format(text))
@@ -61,8 +60,7 @@ class Script:
                     n=1, 
                     include_distances=True
             )
-            line_index = nearest[0][0]
-            return {"match": nearest[1][0], "line": self.script_lines[line_index]}
+            return {"match": nearest[1][0], "index": nearest[0][0]}
         except:
             return None
 

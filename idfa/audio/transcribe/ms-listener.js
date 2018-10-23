@@ -27,7 +27,7 @@ export default class MSListener {
             }
         }
         recognizer.canceled = (r,event) => {
-            console.log("Canceled!");
+            console.log("Canceled!", event.reason, event.errorDetails);
             recognizer.startContinuousRecognitionAsync()
         }
     }

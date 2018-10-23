@@ -7,10 +7,10 @@ OSCdef.new( \speechreload, { |data,time,source|
 	"reloading speech".postln;
 	data.postln;
 	if (TXSamplePlayer5a.arrInstances.size > 0) {
+			"foundsample".postln;
 			TXSamplePlayer5a.arrInstances[0].loadSample(1);
 	}
-}, '/speech');
+}, '/speech/reload');
 )
 
 
-l.sendMsg("/speech", 111);

@@ -2586,6 +2586,7 @@ var SpeechConnectionFactory = /** @class */ (function () {
             var queryParams = {
                 format: config.parameters.getProperty(Exports_2.OutputFormatPropertyName, Exports_4.OutputFormat[Exports_4.OutputFormat.Simple]).toLowerCase(),
                 language: config.parameters.getProperty(Exports_4.PropertyId.SpeechServiceConnection_RecoLanguage),
+                profanity: "raw"
             };
             if (_this.IsDebugModeEnabled) {
                 queryParams[TestHooksParamName] = "1";
