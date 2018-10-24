@@ -1,0 +1,8 @@
+delete blank lines:
+:g/^\s*$/d
+
+find script lines
+/^\w*: / 
+
+get rid of them
+:%s/\w*: //g

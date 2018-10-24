@@ -1,0 +1,261 @@
+fileFormatVersion: 2
+guid: 7cccba18b3df14bad83a0db521893e25
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: body
+    100002: D_eye_left
+    100004: D_eye_right
+    100006: D_Face
+    100008: D_mouth
+    100010: D_nose
+    100012: G_eye_left
+    100014: G_eye_right
+    100016: G_Face
+    100018: G_mouth
+    100020: G_nose
+    100022: //RootNode
+    100024: GAN_body
+    100026: GAN_head
+    100028: hand_left
+    100030: hand_right
+    100032: joint_albow_left
+    100034: joint_albow_right
+    100036: joint_chest
+    100038: joint_face_left
+    100040: joint_face_right
+    100042: joint_foot_left
+    100044: joint_foot_right
+    100046: joint_hand_left
+    100048: joint_hand_left1
+    100050: joint_hand_left2
+    100052: joint_hand_right
+    100054: joint_head_left
+    100056: joint_head_right
+    100058: joint_head_root
+    100060: joint_knee_left
+    100062: joint_knee_right
+    100064: joint_leg_left
+    100066: joint_leg_right
+    100068: joint_legRoot_left
+    100070: joint_legRoot_right
+    100072: joint_neck
+    100074: joint_neck1_left
+    100076: joint_neck1_right
+    100078: joint_neck2_left
+    100080: joint_neck2_right
+    100082: joint_root
+    100084: joint_shoulder_left
+    100086: joint_shoulder_right
+    100088: joint_spine
+    100090: joint_tail
+    100092: joint_toe_left
+    100094: joint_toe_right
+    100096: leg_left
+    100098: leg_right
+    400000: body
+    400002: D_eye_left
+    400004: D_eye_right
+    400006: D_Face
+    400008: D_mouth
+    400010: D_nose
+    400012: G_eye_left
+    400014: G_eye_right
+    400016: G_Face
+    400018: G_mouth
+    400020: G_nose
+    400022: //RootNode
+    400024: GAN_body
+    400026: GAN_head
+    400028: hand_left
+    400030: hand_right
+    400032: joint_albow_left
+    400034: joint_albow_right
+    400036: joint_chest
+    400038: joint_face_left
+    400040: joint_face_right
+    400042: joint_foot_left
+    400044: joint_foot_right
+    400046: joint_hand_left
+    400048: joint_hand_left1
+    400050: joint_hand_left2
+    400052: joint_hand_right
+    400054: joint_head_left
+    400056: joint_head_right
+    400058: joint_head_root
+    400060: joint_knee_left
+    400062: joint_knee_right
+    400064: joint_leg_left
+    400066: joint_leg_right
+    400068: joint_legRoot_left
+    400070: joint_legRoot_right
+    400072: joint_neck
+    400074: joint_neck1_left
+    400076: joint_neck1_right
+    400078: joint_neck2_left
+    400080: joint_neck2_right
+    400082: joint_root
+    400084: joint_shoulder_left
+    400086: joint_shoulder_right
+    400088: joint_spine
+    400090: joint_tail
+    400092: joint_toe_left
+    400094: joint_toe_right
+    400096: leg_left
+    400098: leg_right
+    2100000: lambert1
+    2100002: lambert2
+    2300000: D_eye_left
+    2300002: D_eye_right
+    2300004: D_mouth
+    2300006: D_nose
+    2300008: G_eye_left
+    2300010: G_eye_right
+    2300012: G_mouth
+    2300014: G_nose
+    3300000: D_eye_left
+    3300002: D_eye_right
+    3300004: D_mouth
+    3300006: D_nose
+    3300008: G_eye_left
+    3300010: G_eye_right
+    3300012: G_mouth
+    3300014: G_nose
+    4300000: GAN_head
+    4300002: leg_left
+    4300004: leg_right
+    4300006: hand_right
+    4300008: hand_left
+    4300010: body
+    4300012: D_eye_left
+    4300014: D_eye_right
+    4300016: D_mouth
+    4300018: D_nose
+    4300020: G_eye_right
+    4300022: G_eye_left
+    4300024: G_nose
+    4300026: G_mouth
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: body
+    13700002: GAN_head
+    13700004: hand_left
+    13700006: hand_right
+    13700008: leg_left
+    13700010: leg_right
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Take 001
+      takeName: Take 001
+      firstFrame: 1
+      lastFrame: 530
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events:
+      - time: 0.8506098
+        functionName: ShowFace
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.3
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

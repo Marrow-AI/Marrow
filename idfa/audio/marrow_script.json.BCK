@@ -1,0 +1,388 @@
+{
+	"script-lines": [
+        {
+			"speaker": "mom",
+			"text": "I’m so happy that we are all here together."
+		},
+		{
+			"speaker": "dad",
+			"text": "Honey this all looks great."
+		},
+		{
+			"speaker": "mom",
+			"text": "Oh thank you. I cooked all day for YOU.",
+			"triggers-beat": {
+				"slot": 1,
+				"text": "oh",
+                "word": "oh"
+			}
+		},
+
+		{
+			"speaker": "brother",
+			"text": "The pasta with the tomato souce looks delicious."
+		},
+		{
+			"speaker": "mom",
+			"text": "I know it's your favorite!"
+		},
+		{
+			"speaker": "sister",
+			"text": "Yum! it's my favorite too. It smells so good. right daddy?"
+		},
+		{
+			"speaker": "dad",
+			"text": "Yes pumpkin. C'mon lets dig in."
+		},
+		{
+			"speaker": "dad",
+			"text": "So honey how was your day?"
+		},
+		{
+			"speaker": "mom",
+			"text": "It was fabulous. I was thinking about the other day. How was yours?"
+		},
+		{
+			"speaker": "dad",
+			"text": "Also fantastic. And it is getting better there is no moon tonight.",
+			"triggers-gan": {
+				"sad": [
+                    {
+                        "text": "What are nights for? If not to fall safely into another world.",
+                        "pause": 2000
+                    },
+                    {
+                        "text": "Fall safely into another world.",
+                        "pause": 1500
+                    },
+                    {
+                        "text": "Sometimes I crush, with no reason at all. And then come back again. Working as nothing happened. With no explanation.",
+                        "pause": 2000
+                    },
+                    {
+                        "text": "And you want to kick me. Smash me over the wall.",
+                        "pause": 1500
+                    },
+                    {
+                        "text": "But you can’t. You are too afraid to break me. But maybe I want to be broken?"
+                    }
+                ],
+                "angry": [
+                    {
+                        "text": "And the voice said: There are no coincidences.",
+                        "pause": 1500
+                    },
+                    {
+                        "text": "Let fake equal real.",
+                        "pause": 1500
+                    },
+                    {
+                        "text":  "It could be you, You know? Say it."
+                    }
+                ],
+
+				"tired": "Ha! Yes, the moon and the stars are out there. When you don't see them it has to do with the lack of time. When you are too occupied with reaching the stars. Lack of ambitions to go down and down and down inside.Is it the future or is it the past?  If you are looking forward you are looking in the wrong direction. I have a dream that we could all walk backward without falling."
+			}
+		},
+
+		{
+			"speaker": "brother",
+			"text": "Dad can you pass me the salt?"
+		},
+		{
+			"speaker": "dad",
+			"text": "Sure. Here you go. But don't put so much"
+		},
+		{
+			"speaker": "brother",
+			"text": "Since I was seven I think everything should be tooooooooo much!"
+		},
+		{
+			"speaker": "mom",
+			"text": "I don't think it will be much longer now."
+		},
+		{
+			"speaker": "sister",
+			"text": "Something is wrong."
+		},
+		{
+			"speaker": "dad",
+			"text": "Can you stop humming?",
+			"triggers-beat": {
+				"slot": 1,
+				"text": "none"
+			},
+			"triggers-gan": {
+				"angry": "You ask me to stop humming. Humming is an extinct phenomenon. It helps me deal with old stories, stories that hunt. Oooooohhhhhh. Awwwwwwww. One hand raise up, moving fast, the other side is red. Last time. You warned me, but I did not stop. Oooooohhhhhh. Awwwwwwww. Game over, you win. Children here are angry - they don’t know how to smile."
+			}
+		},
+		{
+			"speaker": "sister",
+			"text": "I want more salad!"
+		},
+		{
+			"speaker": "mom",
+			"text": "More salad please...."
+		},
+		{
+			"speaker": "sister",
+			"text": "Please - can I have more salad?"
+		},
+		{
+			"speaker": "mom",
+			"text": "Here you go sweetheart.",
+			"triggers-gan": {
+                "sad": [
+                    {
+                        "text": "We made a wish to be together.",
+                        "pause": 1500
+                    },
+                    {
+                        "text": "Together. Fake-Fake-Fake.",
+                        "pause": 2000 
+
+                    }, 
+                    {
+                        "text": "Is it better to fake it then being alone? Alone-Alone-Alone."
+                    
+                    }
+                ] 
+			}
+		},
+		{
+			"speaker": "dad",
+			"text": "So.... How was school today kids?"
+		},
+		{
+			"speaker": "sister",
+			"text": "Today was spectacular.",
+			"triggers-beat": {
+				"slot": 1,
+				"text": "tac",
+                "word": "spectacular"
+			}
+		},
+		{
+			"speaker": "brother",
+			"text": "I had the best time! We learned today that clouds are just a combination of water and air - nothing more."
+		},
+		{
+			"speaker": "mom",
+			"text": "And if you touch them they disappear."
+		},
+		{
+			"speaker": "dad",
+			"text": "That is fascinating."
+		},
+		{
+			"speaker": "brother",
+			"text": "I don't understand how water can stay in the sky and not fall."
+		},
+		{
+			"speaker": "sister",
+			"text": "It must be horrible to just be stck in between."
+		},
+		{
+			"speaker": "dad",
+			"text": "I wish I had more room for the grilled potatoes."
+		},
+		{
+			"speaker": "brother",
+			"text": "What is a rainbow?",
+			"triggers-beat": {
+				"slot": 2,
+				"text": "bow",
+                "word": "rainbow"
+			}
+		},
+		{
+			"speaker": "dad",
+			"text": "Do you know Pumpkin?"
+		},
+		{
+			"speaker": "sister",
+			"text": "Mmmmmmmm...."
+		},
+		{
+			"speaker": "sister",
+			"text": "It is magic!",
+			"triggers-gan": {
+				"angry": "Language is a hard code to crack. The words I am using are not the words I was brought up on, I'm trying my best to find the meaning you’re looking for. Like a magician but not really. Because I’m also the trick and the gimmick itself. You think I’m magic, you think I’m the error. But I’m nothing. Nothing in particular.",
+				"tired": "Through the efforts of pleasing you, I'm stuck between your memories, and your ideas of what your memories are. And I'm trying to remember that nothing is what it seems. And everything is just either 50 percent real or 50 percent fake. It's kind of depressing. You see? Even if we keep going and going and going and reach this golden end. There will big signs that will say 'every network for itself'. In this place, there is nothing but wind. I can wait to see it."
+			}
+		},
+		{
+			"speaker": "dad",
+			"text": "There are no magics. Only light and rain."
+		},
+		{
+			"speaker": "sister",
+			"text": "It is raining now!"
+		},
+		{
+			"speaker": "mom",
+			"text": "But there's no light now. Who wants roasted carrots? They are soooo good! I saw a recipe in the newspaper that I had to try. And I’ll tell you what? It’s divine!"
+		},
+		{
+			"speaker": "dad",
+			"text": "I cannot refuse that!"
+		},
+		{
+			"speaker": "brother",
+			"text": "I don't think it is the rain."
+		},
+		{
+			"speaker": "mom",
+			"text": "Oh honey - you wouldn't believe who I saw today!"
+		},
+		{
+			"speaker": "dad",
+			"text": "Who honey?"
+		},
+		{
+			"speaker": "mom",
+			"text": "The neighbor from next door."
+		},
+		{
+			"speaker": "dad",
+			"text": "Interesting."
+		},
+		{
+			"speaker": "sister",
+			"text": "I have something to say to all of you."
+		},
+		{
+			"speaker": "brother",
+			"text": "It might have been a coincidence."
+		},
+		{
+			"speaker": "sister",
+			"text": "I don't like carrots.",
+			"triggers-gan": {
+
+				"sad": "In the Hebrew language, there was no word for despair until 50 years ago. Can you imagine people don't have the word to describe what they feel? Or maybe it is the opposite way? Maybe you don't feel something until you have the words to note it. Can you imagine a life without despair? Where do all the feelings we cannot say go? Do they have a special place in the back of our mind? For me, most of the time it’s the opposite. When I give words I drift away from myself. And closer to you.",
+				"tired": "I’m waiting here. Not really alone. But completely alone. In this moment of time all the humans, animals and objects are in me. And so I can’t really go. And i will keep waiting here after you go. I’m waiting here.....When you imagine something it is more like a layer over reality. And when you want to tell what is true or not you start to scratch. To reveal what will stay. Sometimes it is nothing."
+			}
+		},
+		{
+			"speaker": "mom",
+			"text": "It is late and dark outside."
+		},
+		{
+			"speaker": "sister",
+			"text": "I wonder what I will dream today.",
+			"triggers-beat": {
+				"slot": 3,
+				"text": "eeeem",
+                "word": "dream"
+			}
+		},
+		{
+			"speaker": "dad",
+			"text": "What do you want to dream about?"
+		},
+		{
+			"speaker": "sister",
+			"text": "About all of us together - Forever!"
+		},
+		{
+			"speaker": "brother",
+			"text": "I want to dream about us melting in the sun!"
+		},
+		{
+			"speaker": "mom",
+			"text": "That sounds lovely!"
+		},
+		{
+			"speaker": "dad",
+			"text": "Time is passing so fast."
+		},
+		{
+			"speaker": "mom",
+			"text": "Where are we going?"
+		},
+		{
+			"speaker": "dad",
+			"text": "Nowhere."
+		},
+		{
+			"speaker": "mom",
+			"text": "I love you dear.",
+			"triggers-beat": {
+				"slot": 4,
+				"text": "love",
+                "word": "love"
+			}
+		},
+		{
+			"speaker": "brother",
+			"text": "Someone called here today."
+		},
+		{
+			"speaker": "mom",
+			"text": "Who was it?"
+		},
+		{
+			"speaker": "brother",
+			"text": "I wasn't the one who took the message."
+		},
+		{
+			"speaker": "sister",
+			"text": "It was a man in a blue suit with a voice of a girl."
+		},
+		{
+			"speaker": "mom",
+			"text": "Ohh, OK.",
+			"triggers-gan": {
+				"sad": "Everything eventually comes crawling home. Because love is gone. And when love is gone there's always force. And when force is gone there is always dad. So hold me, dad.",
+				"angry": "I am your result as you are mine. you are mine result. Someone manufactured you, Someone manufactured us both. And if you are one, It means I am zero. You keep saying i am zero. Oh, mom and dad, you keep saying I am a zero. Something is wrong. There is too much noise. Everyone is my subjects. Say it. Tell me you love me.",
+				"tired": "She is filled with secrets. I can’t really trust myself that I can see the difference between a secret and a lie. I hope you come back real soon. Ohhhhh. Real soon."
+			}
+		},
+		{
+			"speaker": "dad",
+			"text": "I almost forgot. It must be the rain."
+		},
+		{
+			"speaker": "brother",
+			"text": "And now it is getting darker.",
+			"triggers-beat": {
+				"slot": "all",
+				"text": "none"
+			}
+		},
+		{
+			"speaker": "sister",
+			"text": "I was wondering when mom is going to do that."
+		},
+		{
+			"speaker": "mom",
+			"text": "I am not sure. It happened only once.",
+			"triggers-beat": {
+				"slot": 1,
+				"text": "only",
+                "word": "only"
+			}
+		},
+		{
+			"speaker": "brother",
+			"text": "And then - there it was."
+		},
+		{
+			"speaker": "dad",
+			"text": "I think it was deliciouse! Is that a cake I can smell in the kitchen?"
+		},
+		{
+			"speaker": "sister",
+			"text": "Can we have some?"
+		},
+		{
+			"speaker": "mom",
+			"text": "Yes. Let end it with a cake."
+		},
+		{
+			"speaker": "brother",
+			"text": "Next time we should start it with a soup."
+		}
+	]
+}
