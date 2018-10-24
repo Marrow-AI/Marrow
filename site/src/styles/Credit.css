@@ -1,0 +1,39 @@
+.Credit{
+  display: inline-block;
+}
+
+.Credit-Large{
+  display: inline-block;
+  /* width: 250px; */
+}
+
+.Credit-Component{
+  color: white;
+  letter-spacing: -0.6px;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 20px 10px 0px;
+}
+
+.Credit-Title{
+  font-size: 0.8rem;
+  line-height: 0.7rem;
+  text-align: center;
+  margin: 0px 4px 0px 0px;
+}
+
+.Credit-Name{
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .Credit{
+    display: block;
+  }
+  .Credit-Title{
+    margin: 10px 4px 0px 0px;
+  }
+}
+

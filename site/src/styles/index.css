@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Assistant:300,400');
+@import url('https://fonts.googleapis.com/css?family=Oswald:300,400,700');
 
 *{
   -webkit-font-smoothing: antialiased;
@@ -10,38 +10,16 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background: rgb(48, 0, 64);
-  font-family: 'Assistant', sans-serif;
+  background: black;  
+  font-family: 'Oswald', sans-serif;
   font-weight: 400;
-  height: 100%;
-  overflow: hidden;
+  height: 100vh;
 }
 
-h2, h3, h4, h5{
-  color: #33ffeb;
-  font-weight: 300;
-}
-
-h2{
-  font-weight: 300;
-  letter-spacing: 1rem;
-  font-size: 1rem;
-  margin: 2rem 0px;
-}
-
-h3{
-  font-size: 0.9rem;
-  letter-spacing: 2px;
-  max-width: 350px;
-  margin: 2rem auto;
-}
-
-h4{
-  font-size: 0.9rem;
-}
-
-h5{
-  margin: 5px 0px;
+@media only screen and (max-width: 600px) {
+  body {
+    overflow-y: scroll;
+  }
 }
 
 ul{  
@@ -50,13 +28,8 @@ ul{
 
 li{
   display: inline-block;
-  margin: 0 30px;
-}
-
-li a{
-  color: rgb(249, 66, 229);
-  text-decoration: none;
-  display: inline-block;
+  padding: 0px;
+  margin: 0px;
 }
 
 a{
@@ -68,4 +41,9 @@ a{
 
 a:hover{
   border-bottom: 1px solid;
+  border-color: rgb(173, 173, 173);
+}
+
+#root{
+  height: 100vh;
 }
