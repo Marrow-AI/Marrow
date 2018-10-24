@@ -22,12 +22,12 @@ socket.onmessage = (packet) => {
         msListener.listen(message.token)
     }
     else if (message.action == "emotion") {
-        updateEmotion(message.data)
+        updateEmotion(message.data, message.state)
     }
 }
 
-function updateEmotion(data) {
-    console.log("Update emotion", data);
+function updateEmotion(data, state) {
+    //console.log("Update emotion", data, state);
     $("#vad-state").find("b").text(data.status)
     $("#vad-state").removeClass($("#vad-state").attr("class"))
     $("#vad-state").addClass(data.status);
@@ -44,6 +44,14 @@ function updateEmotion(data) {
             }
         }
     }
+
+   $($("#arousal-average").find("td")[1]).text(Number((state.arousal).toFixed(3)));
+   $($("#valence-average").find("td")[1]).text(Number((state.valence).toFixed(3)));
+
+   $("#script-match").find("span").text(Number((state.script_match).toFixed(3)));
+
+
+   $("#mood").find("span").text(state.mood.toUpperCase());
 }
 
 function updateGains() {

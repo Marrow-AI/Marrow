@@ -192,7 +192,7 @@ class LiveSer:
         if args.g_min and args.g_max:
             g_min_max = (args.g_min, args.g_max)
         else:
-            g_min_max = (-0.45, 0.53)
+            g_min_max = (-0.45, 0.5)
 
         #initialise recognition model
         model_file = './emotion/model/si.ENG.cw.raw.2d.res.lstm.gpool.dnn.1.h5'

@@ -25,9 +25,13 @@ from mental_state import MentalState
 
 
 def emotion_update(data):
-    print("Emotion update!")
-    conc = asyncio.run_coroutine_threadsafe(server.emotion_update(data), main_loop)
-    print(conc.result())
+    print("Emotion update! {}".format(data))
+    if (data["status"] == "silence"):
+        mental_state.update_silence()
+    else:
+        mental_state.update_emotion(data["analysis"])
+        
+    conc = asyncio.run_coroutine_threadsafe(server.emotion_update(data, mental_state.get_current_state()), main_loop)
 
 def gain_update(min, max):
     print("Update gain! {} : {}".format(min, max))
@@ -38,19 +42,29 @@ def speech_text(text):
     print("Speech! {}".format(text))
     t2i_client.send_message("/speech", text)
     match = script.match(text)
-    if match and match['match'] < 0.5:
-        print("Match! {}".format(match))
-        line = script.data["script-lines"][match["index"]]
-        if "triggers-gan" in line:
-            trigger = line["triggers-gan"]
-            current_metnal_state = mental_state.get_current_state()
-            if current_metnal_state in trigger:
-                shutil.copyfile("gan_responses/{}-{}.wav".format(match['index'], current_metnal_state), "tmp/gan_response.wav")
-                print("Copied")
-                voice_client.send_message("/speech/reload",1)
-                voice_client.send_message("/speech/play",1)
+    if match:
+        if match['match'] < 0.5:
+            print("Match! {}".format(match))
+            line = script.data["script-lines"][match["index"]]
+            if "triggers-gan" in line:
+                trigger = line["triggers-gan"]
+                current_metnal_state = mental_state.get_current_state()
+                if current_metnal_state in trigger:
+                    shutil.copyfile(
+                            "gan_responses/{}-{}.wav".format(
+                                match['index'], 
+                                current_metnal_state
+                            ), 
+                            "tmp/gan_response.wav"
+                    )
+                    print("Copied")
+                    voice_client.send_message("/speech/reload",1)
+                    voice_client.send_message("/speech/play",1)
 
-
+        mental_state.update_script_match(match['match'])
+    else:
+        mental_state.update_script_match(1)
+        
 
 
 
@@ -71,8 +85,8 @@ if __name__ == '__main__':
 
     args.callback = emotion_update
 
-    #live_ser = LiveSer()
-    #live_ser.run(args)
+    live_ser = LiveSer()
+    live_ser.run(args)
 
     ms_speech = MSSpeech()
 
