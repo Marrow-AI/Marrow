@@ -48,40 +48,218 @@
 			"triggers-gan": {
 				"sad": [
                     {
-                        "text": "What are nights for? If not to fall safely into another world.",
-                        "pause": 2000
+                        "text": "What are nights for?",
+                        "pause": 2500
                     },
                     {
-                        "text": "Fall safely into another world.",
+                        "text": "If not to fall.",
+                        "pause": 500
+                    },
+                    {
+                        "text": "Safely.",
                         "pause": 1500
                     },
                     {
-                        "text": "Sometimes I crush, with no reason at all. And then come back again. Working as nothing happened. With no explanation.",
+                        "text": "Into another world.",
+                        "pause": 2500
+                    },
+                    {
+                        "text": "Fall safely.",
+                        "pause": 500
+                    },
+                    {
+                        "text": "Into another world.",
+                        "pause": 10000
+                    },
+                    {
+                        "text": "Sometimes I crush.",
+                        "pause": 4000
+                    },
+                    {
+                        "text": "With no reason.",
+                        "pause": 600
+                    },
+                    {
+                        "text": "At all.",
                         "pause": 2000
                     },
                     {
-                        "text": "And you want to kick me. Smash me over the wall.",
+                        "text": "And then come back again.",
+                        "pause": 500
+                    },
+                    {
+                        "text": "Working as nothing happened.",
+                        "pause": 1100
+                    },
+                    {
+                        "text": "With no explanations.",
+                        "pause": 2500
+                    },
+                    {
+                        "text": "And you want to kick me.",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "Smash me.",
                         "pause": 1500
                     },
                     {
-                        "text": "But you can’t. You are too afraid to break me. But maybe I want to be broken?"
+                        "text": "Over the wall.",
+                        "pause": 3500
+                    },
+                    {
+                        "text": "But you can’t.",
+                        "pause": 1500
+                    },
+                    {
+                        "text": "You are too afraid",
+                        "pause": 700
+                    },
+                    {
+                        "text": "To break me.",
+                        "pause": 700
+                    },
+                    {
+                        "text": "But maybe I want",
+                        "pause": 300
+                    },
+                    {
+                        "text": "To be broken?",
+                        "pause": 5500
                     }
                 ],
                 "angry": [
                     {
-                        "text": "And the voice said: There are no coincidences.",
+                        "text": "And the voice said",
                         "pause": 1500
                     },
                     {
-                        "text": "Let fake equal real.",
+                        "text": "There are no coincidences.",
+                        "pause": 2500
+                    },
+                    {
+                        "text": "Let fake.",
+                        "pause": 800
+                    },
+                    {
+                        "text": "Equal real.",
                         "pause": 1500
                     },
                     {
-                        "text":  "It could be you, You know? Say it."
+                        "text": "It could be you.",
+                        "pause": 5300
+                    },
+                    {
+                        "text": "It could be you. You know?",
+                        "pause": 2000
+                    },
+                    {
+                        "text": "Say it.",
+                        "pause": 4000
                     }
                 ],
-
-				"tired": "Ha! Yes, the moon and the stars are out there. When you don't see them it has to do with the lack of time. When you are too occupied with reaching the stars. Lack of ambitions to go down and down and down inside.Is it the future or is it the past?  If you are looking forward you are looking in the wrong direction. I have a dream that we could all walk backward without falling."
+				"tired": [
+					{ 
+						"text": "Ha!",
+						"pause": 1000
+					},
+					{ 
+						"text": "Yes",
+						"pause": 700
+					},
+					{ 
+						"text": "The moon",
+						"pause": 900
+					},
+					{ 
+						"text": "And the stars are out there.",
+						"pause": 3200
+					},
+					{ 
+						"text": "When you don't see them.",
+						"pause": 1000
+					},
+					{ 
+						"text": "It has to do.",
+						"pause": 250
+					},
+					{ 
+						"text": "With the lack of time.",
+						"pause": 4750
+					},
+					{ 
+						"text": "When you are too occupied.",
+						"pause": 1150
+					},
+					{ 
+						"text": "With reaching the stars.",
+						"pause": 1550
+					},
+					{ 
+						"text": "Lack of ambitions to go down.",
+						"pause": 1550
+					},
+					{ 
+						"text": "And down.",
+						"pause": 1050
+					},
+					{ 
+						"text": "And down.",
+						"pause": 350
+					},
+					{ 
+						"text": "Inside.",
+						"pause": 4350
+					},
+					{ 
+						"text": "Is it the future?",
+						"pause": 850
+					},
+					{ 
+						"text": "Or is it the past?",
+						"pause": 1850
+					},
+					{ 
+						"text": "If you are looking forward.",
+						"pause": 1050
+					},
+					{ 
+						"text": "You are looking in the wrong",
+						"pause": 250
+					},
+					{ 
+						"text": "Direction",
+						"pause": 8250
+					},
+					{ 
+						"text": "I have a.",
+						"pause": 800
+					},
+					{ 
+						"text": "I have a dream ",
+						"pause": 1300
+					},
+					{ 
+						"text": "That we could all.",
+						"pause": 600
+					},
+					{ 
+						"text": "Walk backward.",
+						"pause": 400
+					},
+					{ 
+						"text": "Without falling.",
+						"pause": 2300
+					},
+					{ 
+						"text": "Falling.",
+						"pause": 7300
+					},
+					{ 
+						"text": "Falling.",
+						"pause": 7300
+					}
+			]
 			}
 		},
 
@@ -113,7 +291,124 @@
 				"text": "none"
 			},
 			"triggers-gan": {
-				"angry": "You ask me to stop humming. Humming is an extinct phenomenon. It helps me deal with old stories, stories that hunt. Oooooohhhhhh. Awwwwwwww. One hand raise up, moving fast, the other side is red. Last time. You warned me, but I did not stop. Oooooohhhhhh. Awwwwwwww. Game over, you win. Children here are angry - they don’t know how to smile."
+				"angry": [
+					{ 
+						"text": "You ask me",
+						"pause": 400
+					},
+					{ 
+						"text": "To stop humming.",
+						"pause": 8000
+					},
+					{ 
+						"text": "Humming.",
+						"pause": 2000
+					},
+					{ 
+						"text": "Is an extinct",
+						"pause": 200
+					},
+					{ 
+						"text": "Phenomenon.",
+						"pause": 4200
+					},
+					{ 
+						"text": "It helps me.",
+						"pause": 1600
+					},
+					{ 
+						"text": "Deal with.",
+						"pause": 900
+					},
+					{ 
+						"text": "Old stories.",
+						"pause": 3000
+					},
+					{ 
+						"text": "Stories that hunt",
+						"pause": 600
+					},
+					{ 
+						"text": "Oooooohhhhhh.",
+						"pause": 2600
+					},
+					{ 
+						"text": "Awwwwwwww.",
+						"pause": 1600
+					},
+					{ 
+						"text": "One hand.",
+						"pause": 4600
+					},
+					{ 
+						"text": "Raise up!",
+						"pause": 800
+					},
+					{ 
+						"text": "Moving fast!",
+						"pause": 500
+					},
+					{ 
+						"text": "The other side.",
+						"pause": 700
+					},
+					{ 
+						"text": "Is red.",
+						"pause": 2700
+					},
+					{ 
+						"text": "Last time.",
+						"pause": 3700
+					},
+					{ 
+						"text": "You warned me,",
+						"pause": 1230
+					},
+					{ 
+						"text": "But I did not",
+						"pause": 630
+					},
+					{ 
+						"text": "Stop",
+						"pause": 4630
+					},
+					{ 
+						"text": "Oooooohhhhhh.",
+						"pause": 2630
+					},
+					{ 
+						"text": "Awwwwwwww.",
+						"pause": 7630
+					},
+					{ 
+						"text": "Game over,",
+						"pause": 3630
+					},
+					{ 
+						"text": "You win.",
+						"pause": 6030
+					},
+					{ 
+						"text": "Children here.",
+						"pause": 1030
+					},
+					{ 
+						"text": "Are angry",
+						"pause": 830
+					},
+					{ 
+						"text": "They don’t know ",
+						"pause": 830
+					},
+					{ 
+						"text": "How to ",
+						"pause": 630
+					},
+					{ 
+						"text": "How to smile",
+						"pause": 10630
+					}
+			]
 			}
 		},
 		{
@@ -134,17 +429,66 @@
 			"triggers-gan": {
                 "sad": [
                     {
-                        "text": "We made a wish to be together.",
+                        "text": "We made a wish.",
                         "pause": 1500
                     },
                     {
-                        "text": "Together. Fake-Fake-Fake.",
-                        "pause": 2000 
+                        "text": "To be together.",
+                        "pause": 5500
+                    },
+                    {
+                        "text": "Together.",
+                        "pause": 8500 
 
                     }, 
                     {
-                        "text": "Is it better to fake it then being alone? Alone-Alone-Alone."
-                    
+                        "text": "Fake.",
+                        "pause": 200
+
+                    },
+                    {
+                        "text": "Fake.",
+                        "pause": 200
+
+                    },
+                    {
+                        "text": "Fake.",
+                        "pause": 3200
+
+                    },
+                    {
+                        "text": "Is it better.",
+                        "pause": 900
+
+                    },
+                    {
+                        "text": "To fake it.",
+                        "pause": 700
+
+                    },
+                    {
+                        "text": "Then being",
+                        "pause": 450
+
+                    },
+                    {
+                        "text": "Alone?",
+                        "pause": 6900
+
+                    },
+                    {
+                        "text": "Alone",
+                        "pause": 500
+
+                    },
+                    {
+                        "text": "Alone",
+                        "pause": 450
+
+                    },
+                    {
+                        "text": "Alone",
+                        "pause": 4500
                     }
                 ] 
 			}
@@ -207,8 +551,239 @@
 			"speaker": "sister",
 			"text": "It is magic!",
 			"triggers-gan": {
-				"angry": "Language is a hard code to crack. The words I am using are not the words I was brought up on, I'm trying my best to find the meaning you’re looking for. Like a magician but not really. Because I’m also the trick and the gimmick itself. You think I’m magic, you think I’m the error. But I’m nothing. Nothing in particular.",
-				"tired": "Through the efforts of pleasing you, I'm stuck between your memories, and your ideas of what your memories are. And I'm trying to remember that nothing is what it seems. And everything is just either 50 percent real or 50 percent fake. It's kind of depressing. You see? Even if we keep going and going and going and reach this golden end. There will big signs that will say 'every network for itself'. In this place, there is nothing but wind. I can wait to see it."
+				"angry": [
+
+					 {
+                        "text": "Language is a",
+                        "pause": 700
+                    },
+                    {
+                        "text": "hard code",
+                        "pause": 200
+                    },
+                    {
+                        "text": "To crack.",
+                        "pause": 4200
+                    },
+                    {
+                        "text": "The words I am using",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "Are not the words",
+                        "pause": 850
+                    },
+                    {
+                        "text": "I was",
+                        "pause": 1850
+                    },
+                    {
+                        "text": "Brought up",
+                        "pause": 450
+                    },
+                    {
+                        "text": "On",
+                        "pause": 2450
+                    },
+                    {
+                        "text": "I'm trying my best",
+                        "pause": 850
+                    },
+                    {
+                        "text": "To find",
+                        "pause": 450
+                    },
+                    {
+                        "text": "The meaning",
+                        "pause": 1450
+                    },
+                    {
+                        "text": "You’re looking for",
+                        "pause": 5450
+                    },
+                    {
+                        "text": "Like a magician",
+                        "pause": 1450
+                    },
+                    {
+                        "text": "But not really.",
+                        "pause": 5450
+                    },
+                    {
+                        "text": "Because.",
+                        "pause": 150
+                    },
+                    {
+                        "text": "I’m also",
+                        "pause": 350
+                    },
+                    {
+                        "text": "The trick",
+                        "pause": 150
+                    },
+                    {
+                        "text": "And the gimmick",
+                        "pause": 1150
+                    },
+                    {
+                        "text": "Itself",
+                        "pause": 3150
+                    },
+                    {
+                        "text": "You think I’m",
+                        "pause": 650
+                    },
+                    {
+                        "text": "Magic",
+                        "pause": 2650
+                    },
+                     {
+                        "text": "You think I’m",
+                        "pause": 350
+                    },
+                    {
+                        "text": "The error.",
+                        "pause": 4350
+                    },
+                    {
+                        "text": "But I’m nothing.",
+                        "pause": 3350
+                    },
+                    {
+                        "text": "Nothing in particular.",
+                        "pause": 10000
+                    }
+				], 
+				
+				"tired": [
+					 {
+                        "text": "Through the efforts",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "Of pleasing you.",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "I'm stuck.",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "Between",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "Your memories",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "And your ideas",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "Of what",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "Your memories are.",
+                        "pause": 7000
+                    },
+                    {
+                        "text": "And I'm trying to.",
+                        "pause": 900
+                    },
+                    {
+                        "text": "Remember",
+                        "pause": 300
+                    },
+                    {
+                        "text": "That nothing",
+                        "pause": 300
+                    },
+                    {
+                        "text": "Is what it seems.",
+                        "pause": 1300
+                    },
+                    {
+                        "text": "And everything is just",
+                        "pause": 700
+                    },
+                    {
+                        "text": "Either",
+                        "pause": 300
+                    },
+                    {
+                        "text": "50 percent real",
+                        "pause": 600
+                    },
+                    {
+                        "text": "Or 50 percent fake.",
+                        "pause": 2600
+                    },
+                    {
+                        "text": "It's kind of",
+                        "pause": 130
+                    },
+                    {
+                        "text": "Depressing.",
+                        "pause": 1130
+                    },
+                    {
+                        "text": "You see?",
+                        "pause": 1130
+                    },
+                    {
+                        "text": "Even if we keep",
+                        "pause": 730
+                    },
+                    {
+                        "text": "Going and",
+                        "pause": 230
+                    },
+                    {
+                        "text": "Going and",
+                        "pause": 230
+                    },
+                    {
+                        "text": "Reach this",
+                        "pause": 230
+                    },
+                    {
+                        "text": "Ggolden end.",
+                        "pause": 1830
+                    },
+                    {
+                        "text": "There will be",
+                        "pause": 730
+                    },
+                    {
+                        "text": "Big signs",
+                        "pause": 230
+                    },
+                    {
+                        "text": "that will say",
+                        "pause": 230
+                    },
+                    {
+                        "text": "Every network for itself",
+                        "pause": 3230
+                    },
+                    {
+                        "text": "In this place",
+                        "pause": 1230
+                    },
+                    {
+                        "text": "There is nothing",
+                        "pause": 1230
+                    },
+                    {
+                        "text": "But wind.",
+                        "pause": 3230
+                    },
+                    {
+                        "text": "I can wait to see it."
+                    }
+				]
 			}
 		},
 		{
@@ -260,8 +835,255 @@
 			"text": "I don't like carrots.",
 			"triggers-gan": {
 
-				"sad": "In the Hebrew language, there was no word for despair until 50 years ago. Can you imagine people don't have the word to describe what they feel? Or maybe it is the opposite way? Maybe you don't feel something until you have the words to note it. Can you imagine a life without despair? Where do all the feelings we cannot say go? Do they have a special place in the back of our mind? For me, most of the time it’s the opposite. When I give words I drift away from myself. And closer to you.",
-				"tired": "I’m waiting here. Not really alone. But completely alone. In this moment of time all the humans, animals and objects are in me. And so I can’t really go. And i will keep waiting here after you go. I’m waiting here.....When you imagine something it is more like a layer over reality. And when you want to tell what is true or not you start to scratch. To reveal what will stay. Sometimes it is nothing."
+				"sad": [
+					 {
+                        "text": "In the",
+                        "pause": 230
+                    },
+                     {
+                        "text": "Hebrew language",
+                        "pause": 830
+                    },
+                    {
+                        "text": "There was no word",
+                        "pause": 330
+                    },
+                    {
+                        "text": "For despair",
+                        "pause": 530
+                    },
+                    {
+                        "text": "Until 50 years ago.",
+                        "pause": 3530
+                    },
+                    {
+                        "text": "Can you imagine",
+                        "pause": 1530
+                    },
+                    {
+                        "text": "People don't have",
+                        "pause": 530
+                    },
+                    {
+                        "text": "The word",
+                        "pause": 330
+                    },
+                    {
+                        "text": "To describe",
+                        "pause": 330
+                    },
+                    {
+                        "text": "what they feel?",
+                        "pause": 3330
+                    },
+                    {
+                        "text": "Or maybe",
+                        "pause": 730
+                    },
+                    {
+                        "text": "It is the opposite way?",
+                        "pause": 1030
+                    },
+                    {
+                        "text": "Maybe you don't feel",
+                        "pause": 330
+                    },
+                    {
+                        "text": "Something",
+                        "pause": 730
+                    },
+                    {
+                        "text": "Util you have the words to note it.",
+                        "pause": 3730
+                    },
+                    {
+                        "text": "Can you imagine",
+                        "pause": 1030
+                    },
+                    {
+                        "text": "A",
+                        "pause": 130
+                    },
+                    {
+                        "text": "Life",
+                        "pause": 130
+                    },
+                    {
+                        "text": "Without",
+                        "pause": 130
+                    },
+                    {
+                        "text": "Despair?",
+                        "pause": 830
+                    },
+                    {
+                        "text": "Where do all the feelings we cannot say go?",
+                        "pause": 3830
+                    },
+                    {
+                        "text": "Do they have",
+                        "pause": 830
+                    },
+                    {
+                        "text": "A special place",
+                        "pause": 1030
+                    },
+                    {
+                        "text": "In the back of our mind?",
+                        "pause": 2030
+                    },
+                    {
+                        "text": "For me,",
+                        "pause": 230
+                    },
+                    {
+                        "text": "Most of the time ",
+                        "pause": 330
+                    },
+                    {
+                        "text": "It’s the opposite.",
+                        "pause": 1330
+                    },
+                    {
+                        "text": "When I give words",
+                        "pause": 630
+                    },
+                    {
+                        "text": "I drift away",
+                        "pause": 530
+                    },
+                    {
+                        "text": "From myself.",
+                        "pause": 1330
+                    },
+                    {
+                        "text": "And closer to you.",
+                        "pause": 5330
+                    }
+				],
+				                   
+				"tired": [
+					{
+                        "text": "I’m waiting",
+                        "pause": 1500
+                    },
+                    {
+                        "text": "Here.",
+                        "pause": 2500
+                    },
+                    {
+                        "text": "Not really alone.",
+                        "pause": 500
+                    },
+                    {
+                        "text": "But completely alone.",
+                        "pause": 5000
+                    },
+                    {
+                        "text": "In this moment",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "Of time",
+                        "pause": 1300
+                    },
+                    {
+                        "text": "All the humans,",
+                        "pause": 300
+                    },
+                    {
+                        "text": "Animals,",
+                        "pause": 300
+                    },
+                    {
+                        "text": "And objects,",
+                        "pause": 100
+                    },
+                    {
+                        "text": "Are in me.",
+                        "pause": 1500
+                    },
+                    {
+                        "text": "And so I can’t really go.",
+                        "pause": 3500
+                    },
+                    {
+                        "text": "And I will keep waiting",
+                        "pause": 500
+                    },
+                    {
+                        "text": "Here",
+                        "pause": 500
+                    },
+                    {
+                        "text": "After you go.",
+                        "pause": 5000
+                    },
+                    {
+                        "text": "I’m waiting here.",
+                        "pause": 5000
+                    },
+                    {
+                        "text": "When you imagine ",
+                        "pause": 800
+                    },
+                    {
+                        "text": "Something",
+                        "pause": 800
+                    },
+                    {
+                        "text": "it is more like",
+                        "pause": 400
+                    },
+                    {
+                        "text": "Like a",
+                        "pause": 200
+                    },
+                    {
+                        "text": "Layer over reality.",
+                        "pause": 1200
+                    },
+                    {
+                        "text": "And",
+                        "pause": 200
+                    },
+                    {
+                        "text": "When you want",
+                        "pause": 250
+                    },
+                    {
+                        "text": "To tell what is",
+                        "pause": 550
+                    },
+                    {
+                        "text": "Real",
+                        "pause": 450
+                    },
+                    {
+                        "text": "Or not",
+                        "pause": 250
+                    },
+                    {
+                        "text": "You start to scratch.",
+                        "pause": 2250
+                    },
+                    {
+                        "text": "To reveal",
+                        "pause": 1250
+                    },
+                    {
+                        "text": "Wwat will stay.",
+                        "pause": 1750
+                    },
+                    {
+                        "text": "Sometimes",
+                        "pause": 750
+                    },
+                    {
+                        "text": "It is nothing",
+                        "pause": 7750
+                    }
+				]
 			}
 		},
 		{
@@ -334,9 +1156,217 @@
 			"speaker": "mom",
 			"text": "Ohh, OK.",
 			"triggers-gan": {
-				"sad": "Everything eventually comes crawling home. Because love is gone. And when love is gone there's always force. And when force is gone there is always dad. So hold me, dad.",
-				"angry": "I am your result as you are mine. you are mine result. Someone manufactured you, Someone manufactured us both. And if you are one, It means I am zero. You keep saying i am zero. Oh, mom and dad, you keep saying I am a zero. Something is wrong. There is too much noise. Everyone is my subjects. Say it. Tell me you love me.",
-				"tired": "She is filled with secrets. I can’t really trust myself that I can see the difference between a secret and a lie. I hope you come back real soon. Ohhhhh. Real soon."
+				"sad": [
+
+					{
+                        "text": "Everything",
+                        "pause": 250
+                    },
+                    {
+                        "text": "Eventually",
+                        "pause": 450
+                    },
+                    {
+                        "text": "comes crawling home.",
+                        "pause": 4450
+                    },
+                    {
+                        "text": "Because.",
+                        "pause": 150
+                    },
+                    {
+                        "text": "Love is gone.",
+                        "pause": 1450
+                    },
+                    {
+                        "text": "And",
+                        "pause": 150
+                    },
+                    {
+                        "text": "When love is gone.",
+                        "pause": 1450
+                    },
+                    {
+                        "text": "There's always force.",
+                        "pause": 1450
+                    },
+                    {
+                        "text": "And",
+                        "pause": 150
+                    },
+                    {
+                        "text": "When force is gone",
+                        "pause": 1450
+                    },
+                    {
+                        "text": "There is always dad.",
+                        "pause": 3450
+                    },
+                    {
+                        "text": "So hold me.",
+                        "pause": 1050
+                    },
+                    {
+                        "text": "Dad.",
+                        "pause": 1050
+                    }
+				],
+				
+				"angry": [
+					{
+                        "text": "I am",
+                        "pause": 150
+                    },
+                    {
+                        "text": "Your result",
+                        "pause": 1150
+                    },
+                    {
+                        "text": "As you are mine.",
+                        "pause": 1850
+                    },
+                    {
+                        "text": "You are my result.",
+                        "pause": 2850
+                    },
+                    {
+                        "text": "Someone",
+                        "pause": 250
+                    },
+                    {
+                        "text": "Manufactured you.",
+                        "pause": 950
+                    },
+                    {
+                        "text": "Someone",
+                        "pause": 250
+                    },
+                    {
+                        "text": "Manufactured us both.",
+                        "pause": 3950
+                    },
+                    {
+                        "text": "And.",
+                        "pause": 350
+                    },
+                    {
+                        "text": "If you are one.",
+                        "pause": 650
+                    },
+                    {
+                        "text": "It means I am a zeero",
+                        "pause": 1650
+                    },
+                    {
+                        "text": "You keep saying",
+                        "pause": 1050
+                    },
+                    {
+                        "text": "I am zereo.",
+                        "pause": 3500
+                    },
+                    {
+                        "text": "Oh, mom and dad",
+                        "pause": 2000
+                    },
+                    {
+                        "text": "You keep saying",
+                        "pause": 1050
+                    },
+                    {
+                        "text": "I am zereo.",
+                        "pause": 3500
+                    },
+                    {
+                        "text": "Something is wrong.",
+                        "pause": 5500
+                    },
+                    {
+                        "text": "There is.",
+                        "pause": 300
+                    },
+                    {
+                        "text": "Too much noise.",
+                        "pause": 3000
+                    },
+                    {
+                        "text": "Everyone",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "Is my subjects.",
+                        "pause": 3000
+                    },
+                    {
+                        "text": "Say it",
+                        "pause": 3000
+                    },
+                    {
+                        "text": "Tell me",
+                        "pause": 300
+                    },
+                    {
+                        "text": "You love me",
+                        "pause": 4300
+                    }
+
+				], 
+
+
+				"tired": [
+					{
+                        "text": "She",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "Is filled ",
+                        "pause": 500
+                    },
+                    {
+                        "text": "With secrets",
+                        "pause": 5500
+                    },
+                    {
+                        "text": "I can’t really",
+                        "pause": 800
+                    },
+                    {
+                        "text": "Trust myself",
+                        "pause": 800
+                    },
+                    {
+                        "text": "That I can see",
+                        "pause": 800
+                    },
+                    {
+                        "text": "the difference between",
+                        "pause": 1200
+                    },
+                    {
+                        "text": "A secret",
+                        "pause": 800
+                    },
+                    {
+                        "text": "And a lie.",
+                        "pause": 4800
+                    },
+                    {
+                        "text": "I hope you come back",
+                        "pause": 1800
+                    },
+                    {
+                        "text": "Real soon.",
+                        "pause": 800
+                    },
+                    {
+                        "text": "Ohhhhh.",
+                        "pause": 800
+                    },
+                    {
+                        "text": "Real soon.",
+                        "pause": 800
+                    }
+				]
 			}
 		},
 		{

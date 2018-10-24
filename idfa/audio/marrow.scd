@@ -14,3 +14,9 @@ OSCdef.new( \speechreload, { |data,time,source|
 )
 
 
+
+
+
+Server.default.record;
+Server.default.stopRecording
+
