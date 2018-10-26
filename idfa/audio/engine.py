@@ -6,6 +6,7 @@ import argparse
 from pythonosc import osc_message_builder
 from pythonosc import udp_client
 from server import Server
+
 import shutil
 import asyncio
 
@@ -66,6 +67,16 @@ def speech_text(text):
         mental_state.update_script_match(1)
         
 
+def control(data):
+    print("Control command! {}".format(data))
+    if data["command"] == 'start':
+        voice_client.send_message("/control/start",1)
+    elif data["command"] == 'stop':
+        voice_client.send_message("/control/stop",1)
+
+
+def start_intro():
+    print("Start intro!")
 
 
 if __name__ == '__main__':
@@ -85,8 +96,8 @@ if __name__ == '__main__':
 
     args.callback = emotion_update
 
-    live_ser = LiveSer()
-    live_ser.run(args)
+    #live_ser = LiveSer()
+    #live_ser.run(args)
 
     ms_speech = MSSpeech()
 
@@ -99,7 +110,7 @@ if __name__ == '__main__':
     #google_speech.say("Hi")
     #asyncio.get_event_loop().run_until_complete(ms_speech.say("I masturbate 50 times a day to naked nerdy men"))
 
-    server = Server(ms_speech, gain_update, speech_text)
+    server = Server(ms_speech, gain_update, speech_text, control)
 
     main_loop = asyncio.get_event_loop()
 
@@ -110,6 +121,25 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("Stopping everything")
         args.stop = True
+
+
+
+class ScheduleOSC:
+    def __init__(self, timeout, command,  callback):
+        self._timeout = timeout
+        self._callback = callback
+        self._command = command
+        self._task = asyncio.ensure_future(self._job())
+
+    async def _job(self):
+        await asyncio.sleep(self._timeout)
+        await self._callback()
+
+    def cancel(self):
+        self._task.cancel()
+
+
+    
 
 
 

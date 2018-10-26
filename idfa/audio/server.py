@@ -9,11 +9,13 @@ import numpy as np
 
 class Server:
 
-    def __init__(self, ms_speech,gain_callback, speech_callback):
+    def __init__(self, ms_speech,gain_callback, speech_callback, control_callback):
         print("Init server {}".format(ms_speech))
         self.ms_speech = ms_speech
         self.gain_callback = gain_callback
         self.speech_callback = speech_callback
+        self.control_callback = control_callback
+
         self.connected = set()
 
     async def handler(self, websocket, path):
@@ -30,6 +32,8 @@ class Server:
                     self.speech_callback(data['text'])
                 elif (data["action"] == 'update-gain'):
                     self.gain_callback(data["min"], data["max"])
+                elif (data["action"] == 'control'):
+                    self.control_callback(data)
 
         finally:
             print("Unregistering Websocket")

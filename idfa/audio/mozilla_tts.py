@@ -75,16 +75,17 @@ class MozillaTTS:
         for segment in data:
             print(segment)
             for sen in segment["text"].split('.'):
-                if len(sen) < 3:
+                if len(sen) < 2:
                     continue
                 sen+='.'
                 sen = sen.strip()
                 print(sen)
                 wav = self.tts(model, sen, CONFIG, use_cuda, ap)
                 wavs.append(wav)
-                wavs.append(np.zeros(10000))
+                if not "pause" in segment:
+                    wavs.append(np.zeros(10000))
             if "pause" in segment:
-                print(segment["pause"] * 10 - 10000)
+                print(segment["pause"] * 10)
                 wavs.append(np.zeros(segment["pause"] * 10))
     #     audio = np.stack(wavs)
     #     IPython.display.display(Audio(audio, rate=CONFIG.sample_rate))  

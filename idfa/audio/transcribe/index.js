@@ -6,6 +6,15 @@ $(document).ready(() => {
     $(".gain-input input").on('input', () => {
         updateGains();
     })
+
+    $("#start-gan").click(() => {
+        console.log("Start GAN!");
+        socket.send(JSON.stringify({action: 'control',command: 'start'}));
+    });
+    $("#stop-gan").click(() => {
+        console.log("Stop GAN!");
+        socket.send(JSON.stringify({action: 'control',command: 'stop'}));
+    });
 });
 
 // Connecting to server
@@ -19,7 +28,7 @@ socket.onopen = (event) => {
 socket.onmessage = (packet) => {
     let message = JSON.parse(packet.data);
     if (message.token) {
-        msListener.listen(message.token)
+        //msListener.listen(message.token)
     }
     else if (message.action == "emotion") {
         updateEmotion(message.data, message.state)

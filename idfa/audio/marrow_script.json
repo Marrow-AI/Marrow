@@ -1,4 +1,69 @@
 {
+    "intro" : 
+        {
+            "1" : [
+                { 
+                    "text": "It.",
+                    "pause": 100
+                },
+                { 
+                    "text": "is a small room.",
+                    "pause": 1200
+                },
+                { 
+                    "text": "Pretending to be a dining room.",
+                    "pause": 1200
+                },
+                { 
+                    "text": "Some consider this room a masterpiece or a simulation",
+                    "pause": 1350
+                },
+                { 
+                    "text": "It.",
+                    "pause": 500
+                },
+                { 
+                    "text": "is for four people.",
+                    "pause": 1100
+                },
+                { 
+                    "text": "Some consider it to be a perfect figure of a perfect family",
+                    "pause": 2300
+                },
+                { 
+                    "text": "You are all free, all entered at the same time",
+                    "pause": 1800
+                },
+                { 
+                    "text": "But you are all asking yourself the same question.",
+                    "pause": 2300
+                },
+                { 
+                    "text": "What",
+                    "pause": 1250
+                },
+                { 
+                    "text": "is underneath",
+                    "pause": 1400
+                },
+                { 
+                    "text": "This table."
+                }
+            ],
+           "2" : [
+                { 
+                    "text": "You are here.",
+                    "pause": 300
+                },
+                { 
+                    "text": "So let's have fun.",
+                    "pause": 300
+                },
+                { 
+                    "text": "So bon appetit"
+                }
+            ]
+    },
 	"script-lines": [
         {
 			"speaker": "mom",
