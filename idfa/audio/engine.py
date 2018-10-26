@@ -24,6 +24,25 @@ from mental_state import MentalState
 #nlp = spacy.load('en')
 #print("Loaded English NLP")
 
+class ScheduleOSC:
+    def __init__(self, timeout, command,  callback):
+        self._timeout = timeout
+        self._callback = callback
+        self._command = command
+        self._task = asyncio.ensure_future(self._job())
+
+    async def _job(self):
+        await asyncio.sleep(self._timeout)
+        print("Shoot command! {}".format(self._command))
+        voice_client.send_message(self._command,1)
+        if (self._callback):
+            await self._callback()
+
+    def cancel(self):
+        self._task.cancel()
+
+
+
 
 def emotion_update(data):
     print("Emotion update! {}".format(data))
@@ -70,13 +89,15 @@ def speech_text(text):
 def control(data):
     print("Control command! {}".format(data))
     if data["command"] == 'start':
-        voice_client.send_message("/control/start",1)
+        asyncio.ensure_future(start_intro())
     elif data["command"] == 'stop':
         voice_client.send_message("/control/stop",1)
 
 
-def start_intro():
+async def start_intro():
     print("Start intro!")
+    start_command = ScheduleOSC(0,"/control/start", None )
+    start_command = ScheduleOSC(3,"/control/stop", None )
 
 
 if __name__ == '__main__':
@@ -122,21 +143,6 @@ if __name__ == '__main__':
         print("Stopping everything")
         args.stop = True
 
-
-
-class ScheduleOSC:
-    def __init__(self, timeout, command,  callback):
-        self._timeout = timeout
-        self._callback = callback
-        self._command = command
-        self._task = asyncio.ensure_future(self._job())
-
-    async def _job(self):
-        await asyncio.sleep(self._timeout)
-        await self._callback()
-
-    def cancel(self):
-        self._task.cancel()
 
 
     
