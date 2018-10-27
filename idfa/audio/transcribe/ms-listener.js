@@ -19,6 +19,7 @@ export default class MSListener {
         recognizer.startContinuousRecognitionAsync()
         recognizer.recognizing = (r,event) => {
             console.log('(' + event.result.text + ')');
+            this.socket.send(JSON.stringify({action: 'mid-speech', text: event.result.text}));
         }
         recognizer.recognized = (r,event) => {
             if (event.result && event.result.text) {

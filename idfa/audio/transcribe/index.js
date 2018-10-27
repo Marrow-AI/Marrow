@@ -28,7 +28,7 @@ socket.onopen = (event) => {
 socket.onmessage = (packet) => {
     let message = JSON.parse(packet.data);
     if (message.token) {
-        //msListener.listen(message.token)
+        msListener.listen(message.token)
     }
     else if (message.action == "emotion") {
         updateEmotion(message.data, message.state)

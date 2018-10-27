@@ -60,7 +60,6 @@ def gain_update(min, max):
 
 def speech_text(text):
     print("Speech! {}".format(text))
-    t2i_client.send_message("/speech", text)
     match = script.match(text)
     if match:
         if match['match'] < 0.5:
@@ -80,6 +79,9 @@ def speech_text(text):
     else:
         mental_state.update_script_match(1)
 
+def mid_speech_text(text):
+    print("Mid Speech! {}".format(text))
+    t2i_client.send_message("/speech", text)
 
 def say(file_name):
     shutil.copyfile(
@@ -138,7 +140,7 @@ if __name__ == '__main__':
     #google_speech.say("Hi")
     #asyncio.get_event_loop().run_until_complete(ms_speech.say("I masturbate 50 times a day to naked nerdy men"))
 
-    server = Server(ms_speech, gain_update, speech_text, control)
+    server = Server(ms_speech, gain_update, mid_speech_text, speech_text, control)
 
     main_loop = asyncio.get_event_loop()
 
