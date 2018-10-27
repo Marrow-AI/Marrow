@@ -59,8 +59,8 @@ def gain_update(min, max):
     live_ser.feat_ext.max = float(max)
 
 def speech_text(text):
-    print("Speech! {}".format(text))
     match = script.match(text)
+    print("Speech Match: {} ({})".format(match['match'],text))
     if match:
         if match['match'] < 0.5:
             print("Match! {}".format(match))
@@ -68,7 +68,7 @@ def speech_text(text):
             next_line = script.data["script-lines"][match["index"] + 1]
             if next_line:
                 t2i_client.send_message("/spotlight", next_line["speaker"])
-            print("Next line {}".format(next_line))
+                print("Next Speaker {}".format(next_line["speaker"]))
             if "triggers-gan" in line:
                 trigger = line["triggers-gan"]
                 current_metnal_state = mental_state.get_current_state()
@@ -84,7 +84,6 @@ def speech_text(text):
         mental_state.update_script_match(1)
 
 def mid_speech_text(text):
-    print("Mid Speech! {}".format(text))
     t2i_client.send_message("/speech", text)
 
 def say(file_name):
