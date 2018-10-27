@@ -69,22 +69,27 @@ def speech_text(text):
             if "triggers-gan" in line:
                 trigger = line["triggers-gan"]
                 current_metnal_state = mental_state.get_current_state()
-                if current_metnal_state in trigger:
-                    shutil.copyfile(
-                            "gan_responses/{}-{}.wav".format(
-                                match['index'], 
-                                current_metnal_state
-                            ), 
-                            "tmp/gan_response.wav"
+                if current_mental_state in trigger:
+                    say("gan_responses/{}-{}.wav".format(
+                            match['index'], 
+                            current_metnal_state
+                        )
                     )
-                    print("Copied")
-                    voice_client.send_message("/speech/reload",1)
-                    voice_client.send_message("/speech/play",1)
 
         mental_state.update_script_match(match['match'])
     else:
         mental_state.update_script_match(1)
-        
+
+
+def say(file_name):
+    shutil.copyfile(
+            file_name,             
+            "tmp/gan.wav"
+    )
+    print("Copied")
+    voice_client.send_message("/speech/reload",1)
+    voice_client.send_message("/speech/play",1)
+
 
 def control(data):
     print("Control command! {}".format(data))
@@ -96,8 +101,10 @@ def control(data):
 
 async def start_intro():
     print("Start intro!")
-    start_command = ScheduleOSC(0,"/control/start", None )
-    start_command = ScheduleOSC(3,"/control/stop", None )
+    say("gan_intro/1.wav")
+    start_command = ScheduleOSC(27.5,"/control/start", None )
+    table_command = ScheduleOSC(47,"/control/table", None )
+    #start_command = ScheduleOSC(3,"/control/stop", None )
 
 
 if __name__ == '__main__':
