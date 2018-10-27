@@ -1,0 +1,24 @@
+[LOG]: [FFmpegLib]: DEST URL: /Users/laurachen/RockVR/Video/2018-10-21-18-05-30-CL0CL.mp4
+[LOG]: [FFmpegLib]: Build command: "/Users/laurachen/Documents/Projects/Marrow/github/Marrow/idfa/unity/marrow/Assets/StreamingAssets/RockVR/FFmpeg/OSX/ffmpeg" -f rawvideo -pix_fmt rgb24 -r 30 -s 1470x766 -i - -y -preset ultrafast -pix_fmt yuv420p -vcodec libx264 -crf 18 -vf vflip -framerate 30 -tune zerolatency "/Users/laurachen/RockVR/Video/2018-10-21-18-05-30-CL0CL.mp4"
+[LOG]: [FFmpegLib]: DEST URL: /Users/laurachen/RockVR/Video/2018-10-21-18-05-30-NBPTT.wav
+[LOG]: [FFmpegLib]: Build command: "/Users/laurachen/Documents/Projects/Marrow/github/Marrow/idfa/unity/marrow/Assets/StreamingAssets/RockVR/FFmpeg/OSX/ffmpeg" -f f32le -ar 44100 -ac 2 -i - -y -preset ultrafast -tune zerolatency "/Users/laurachen/RockVR/Video/2018-10-21-18-05-30-NBPTT.wav"
+[ERROR]: [FFmpegLib]: Failed to close ffmpeg process
+[ERROR]: [FFmpegLib]: Failed to close ffmpeg process
+[LOG]: [FFmpegLib]: DEST URL: /Users/laurachen/RockVR/Video/2018-10-21-18-06-28-1HIR2.mp4
+[LOG]: [FFmpegLib]: Build command: "/Users/laurachen/Documents/Projects/Marrow/github/Marrow/idfa/unity/marrow/Assets/StreamingAssets/RockVR/FFmpeg/OSX/ffmpeg" -f rawvideo -pix_fmt rgb24 -r 30 -s 1470x766 -i - -y -preset ultrafast -pix_fmt yuv420p -vcodec libx264 -crf 18 -vf vflip -framerate 30 -tune zerolatency "/Users/laurachen/RockVR/Video/2018-10-21-18-06-28-1HIR2.mp4"
+[LOG]: [FFmpegLib]: DEST URL: /Users/laurachen/RockVR/Video/2018-10-21-18-06-28-843FU.wav
+[LOG]: [FFmpegLib]: Build command: "/Users/laurachen/Documents/Projects/Marrow/github/Marrow/idfa/unity/marrow/Assets/StreamingAssets/RockVR/FFmpeg/OSX/ffmpeg" -f f32le -ar 44100 -ac 2 -i - -y -preset ultrafast -tune zerolatency "/Users/laurachen/RockVR/Video/2018-10-21-18-06-28-843FU.wav"
+[ERROR]: [FFmpegLib]: Failed to close ffmpeg process
+[ERROR]: [FFmpegLib]: Failed to close ffmpeg process
+[LOG]: [FFmpegLib]: DEST URL: /Users/laurachen/RockVR/Video/2018-10-21-18-08-40-N3Y0K.mp4
+[LOG]: [FFmpegLib]: Build command: "/Users/laurachen/Documents/Projects/Marrow/github/Marrow/idfa/unity/marrow/Assets/StreamingAssets/RockVR/FFmpeg/OSX/ffmpeg" -f rawvideo -pix_fmt rgb24 -r 30 -s 1470x766 -i - -y -preset ultrafast -pix_fmt yuv420p -vcodec libx264 -crf 18 -vf vflip -framerate 30 -tune zerolatency "/Users/laurachen/RockVR/Video/2018-10-21-18-08-40-N3Y0K.mp4"
+[LOG]: [FFmpegLib]: DEST URL: /Users/laurachen/RockVR/Video/2018-10-21-18-08-40-YTNHS.wav
+[LOG]: [FFmpegLib]: Build command: "/Users/laurachen/Documents/Projects/Marrow/github/Marrow/idfa/unity/marrow/Assets/StreamingAssets/RockVR/FFmpeg/OSX/ffmpeg" -f f32le -ar 44100 -ac 2 -i - -y -preset ultrafast -tune zerolatency "/Users/laurachen/RockVR/Video/2018-10-21-18-08-40-YTNHS.wav"
+[ERROR]: [FFmpegLib]: Failed to close ffmpeg process
+[ERROR]: [FFmpegLib]: Failed to close ffmpeg process
+[LOG]: [FFmpegLib]: DEST URL: /Users/laurachen/RockVR/Video/2018-10-21-18-10-20-Y5E1O.mp4
+[LOG]: [FFmpegLib]: Build command: "/Users/laurachen/Documents/Projects/Marrow/github/Marrow/idfa/unity/marrow/Assets/StreamingAssets/RockVR/FFmpeg/OSX/ffmpeg" -f rawvideo -pix_fmt rgb24 -r 30 -s 1470x766 -i - -y -preset ultrafast -pix_fmt yuv420p -vcodec libx264 -crf 18 -vf vflip -framerate 30 -tune zerolatency "/Users/laurachen/RockVR/Video/2018-10-21-18-10-20-Y5E1O.mp4"
+[LOG]: [FFmpegLib]: DEST URL: /Users/laurachen/RockVR/Video/2018-10-21-18-10-20-5SZQG.wav
+[LOG]: [FFmpegLib]: Build command: "/Users/laurachen/Documents/Projects/Marrow/github/Marrow/idfa/unity/marrow/Assets/StreamingAssets/RockVR/FFmpeg/OSX/ffmpeg" -f f32le -ar 44100 -ac 2 -i - -y -preset ultrafast -tune zerolatency "/Users/laurachen/RockVR/Video/2018-10-21-18-10-20-5SZQG.wav"
+[ERROR]: [FFmpegLib]: Failed to close ffmpeg process
+[ERROR]: [FFmpegLib]: Failed to close ffmpeg process
