@@ -65,6 +65,10 @@ def speech_text(text):
         if match['match'] < 0.5:
             print("Match! {}".format(match))
             line = script.data["script-lines"][match["index"]]
+            next_line = script.data["script-lines"][match["index"] + 1]
+            if next_line:
+                t2i_client.send_message("/spotlight", next_line["speaker"])
+            print("Next line {}".format(next_line))
             if "triggers-gan" in line:
                 trigger = line["triggers-gan"]
                 current_metnal_state = mental_state.get_current_state()
