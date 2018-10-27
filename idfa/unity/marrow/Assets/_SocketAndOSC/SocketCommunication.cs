@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using BestHTTP;
 using BestHTTP.SocketIO;
 using Newtonsoft.Json;
@@ -15,6 +16,7 @@ namespace Marrow
 
 	public class SocketCommunication : MonoBehaviour
 	{
+		public UnityEvent AttnGanUpdateResponded = new UnityEvent();
 
 		public string attnGanUrl; //http://api.marrow.raycaster.studio:3333/socket.io/
 		public int attnGanImageWidth = 256;
@@ -112,6 +114,16 @@ namespace Marrow
 			attnGanSocket.Emit("update_request", attnGanRequestData);
 
 			lastTypingTimecode = Time.time;
+			Debug.LogFormat("socket emit request: {0}", stringToSend);
+		}
+
+		public void EmitAttnGanRequest(string inputText)
+		{
+			AttnGanRequestData attnGanRequestData = new AttnGanRequestData();
+            string stringToSend = inputText.ToLower();
+            stringToSend += " ";
+            attnGanRequestData.caption = inputText.ToLower();
+            attnGanSocket.Emit("update_request", attnGanRequestData);
 			Debug.LogFormat("socket emit request: {0}", stringToSend);
 		}
 	}

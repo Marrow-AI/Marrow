@@ -51,13 +51,18 @@ namespace Marrow
 		private IEnumerator titleSequencePart1Coroutine;
 		private IEnumerator titleSequencePart2Coroutine;
 		private Material tableNormalMaterial;
+
 		private Material plateNormalMaterial;
+		private IEnumerator platesDissovleCoroutine;
 
 		private float startTimecode;
 
 		[Header("Dev")]
 		public bool devMode;
-        
+		public Texture[] plateDevTextures;
+		private int textureSwapCount;
+		private WaitForSeconds stayWait;
+
         void Start()
         {
 			textMeshProTitle = title.GetComponent<TextMeshPro>();
@@ -65,6 +70,8 @@ namespace Marrow
 			tableNormalMaterial = tableRenderer.sharedMaterial;
 			plateNormalMaterial = plates[0].GetComponent<Renderer>().sharedMaterial;
 			videoPlayer.Events.AddListener(OnVideoEvent);
+
+			stayWait = new WaitForSeconds(1f);
 
 			Setup();
 			if (devMode)
@@ -102,6 +109,10 @@ namespace Marrow
             {
 				nameTags[i].SetActive(false);
             }
+
+			plateNormalMaterial.SetTexture("_MainTex", null);
+			plateNormalMaterial.SetTexture("_SecondTex", null);
+			plateNormalMaterial.SetFloat("_Blend", 0);
 
             // re-position stuff
 
@@ -218,6 +229,12 @@ namespace Marrow
 			Debug.Log("Table sequence ends! Wait for talking.");
 			float totalTime = Time.time - startTimecode;
 			Debug.Log("Total time: " + totalTime);
+
+			if (devMode)
+			{
+				platesDissovleCoroutine = AutoDissolvePlates();
+				StartCoroutine(platesDissovleCoroutine);
+			}
 		}
 
 		void OnVideoEvent(MediaPlayer mp, MediaPlayerEvent.EventType et, ErrorCode errorCode)
@@ -235,5 +252,32 @@ namespace Marrow
                     break;
             }
         }
+        
+		IEnumerator AutoDissolvePlates()
+		{
+			while (true)
+			{
+				yield return stayWait;
+
+                int targetBlend;
+                textureSwapCount++;
+                if (textureSwapCount % 2 == 1)
+                {
+                    plateNormalMaterial.SetTexture("_SecondTex", plateDevTextures[textureSwapCount % plateDevTextures.Length]);
+                    targetBlend = 1;
+                }
+                else
+                {
+                    plateNormalMaterial.SetTexture("_MainTex", plateDevTextures[textureSwapCount % plateDevTextures.Length]);
+                    targetBlend = 0;
+                }
+
+                LeanTween.value(plates[0], plateNormalMaterial.GetFloat("_Blend"), targetBlend, 1f)
+                         .setOnUpdate((float val) =>
+                         {
+                             plateNormalMaterial.SetFloat("_Blend", val);
+                         });
+			}
+		}
     }
 }
