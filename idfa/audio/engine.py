@@ -106,10 +106,16 @@ def control(data):
 
 async def start_intro():
     print("Start intro!")
-    say("gan_intro/1.wav")
-    start_command = ScheduleOSC(27.5,"/control/start", None )
-    table_command = ScheduleOSC(47,"/control/table", None )
+    #start_command = ScheduleOSC(27.5,"/control/start", None )
+    #start_command = ScheduleOSC(27.5,"/control/start", None )
+    #table_command = ScheduleOSC(47,"/control/table", None )
     #start_command = ScheduleOSC(3,"/control/stop", None )
+    say("gan_intro/1.wav")
+    start_command = ScheduleOSC(0 + 27.5,"/control/start", None )
+    start_command = ScheduleOSC(12.1 + 27.5,"/control/synthbass", None )
+    start_command = ScheduleOSC(24.1 + 27.5,"/control/table", None )
+    start_command = ScheduleOSC(45.1 + 27.5,"/intro/end", None )
+    start_command = ScheduleOSC(55.1 + 27.5,"/gan/start", None )
 
 
 if __name__ == '__main__':
