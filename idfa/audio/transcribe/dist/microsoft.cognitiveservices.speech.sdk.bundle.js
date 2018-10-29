@@ -8365,6 +8365,7 @@ var SpeechRecognizer = /** @class */ (function (_super) {
          Alternative syntax for typescript devs.
          if (event instanceof SDK.RecognitionTriggeredEvent)
         */
+       console.log(event.Name)
         switch (event.Name) {
             case "RecognitionEndedEvent":
                 {
@@ -8403,7 +8404,8 @@ var SpeechRecognizer = /** @class */ (function (_super) {
                     var evResult = event;
                     var reason = Exports_1.EnumTranslation.implTranslateRecognitionResult(evResult.Result.RecognitionStatus);
                     var result = new Exports_2.SpeechRecognitionResult(undefined, reason, evResult.Result.DisplayText, evResult.Result.Duration, evResult.Result.Offset, undefined, JSON.stringify(evResult.Result), undefined);
-                    if (reason === Exports_2.ResultReason.Canceled) {
+                    console.log("Reason", reason)
+                    if (reason === Exports_2.ResultReason.Canceled || reason == Exports_2.ResultReason.NoMatch) {
                         var ev = new Exports_2.SpeechRecognitionCanceledEventArgs(Exports_1.EnumTranslation.implTranslateCancelResult(evResult.Result.RecognitionStatus), "", 0, /*todo*/ evResult.SessionId);
                         if (!!this.canceled) {
                             try {
@@ -8518,6 +8520,7 @@ var SpeechRecognizer = /** @class */ (function (_super) {
                         /* tslint:disable:no-empty */
                     }
                     catch (error) {
+                        console.error("Unhandled excpetion", error)
                         // Not going to let errors in the event handler
                         // trip things up.
                     }

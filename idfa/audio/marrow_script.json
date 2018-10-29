@@ -64,354 +64,693 @@
                 }
             ]
     },
-	"script-lines": [
+    "start-silence": {
+        "text": "oh mom and dad"
+    },
+    "script-lines": [
         {
-			"speaker": "mom",
-			"text": "I’m so happy that we are all here together."
-		},
-		{
-			"speaker": "dad",
-			"text": "Honey this all looks great."
-		},
-		{
-			"speaker": "mom",
-			"text": "Oh thank you. I cooked all day for YOU."
-		},
+            "speaker": "mom",
+            "text": "I’m so happy that we are all here together."
+        },
+        {
+            "speaker": "dad",
+            "text": "Honey this all looks great."
+        },
+        {
+            "speaker": "mom",
+            "text": "Oh thank you I cooked all day for you.",
+            "triggers-table": [
+                {
+                    "text":"What does the perfect family eats for dinner?"
+                }
+            ] 		
+        },
+        {
+            "speaker": "brother",
+            "text": "The roasted vegetables with rice look delicious!"
+        },
+        {
+            "speaker": "mom",
+            "text": "I know it's your favorite!"
+        },
+        {
+            "speaker": "sister",
+            "text": "And it’s my favorite too it smells so so good right daddy?"
+        },
+        {
+            "speaker": "dad",
+            "text": "Yes baby girl my true pumpkin let's dig in.",
+            
+            "triggers-beat": {
+                "slot": 1,
+                "text": "Let's dig in",
+                "word": "Let's" 
+             },
 
-		{
-			"speaker": "brother",
-			"text": "The roasted vegetables with the rice look delicious!"
-		},
-		{
-			"speaker": "mom",
-			"text": "I know it's your favorite!"
-		},
-		{
-			"speaker": "sister",
-			"text": "And it’s my favorite too. It smells so so good, right daddy?"
-		},
-		{
-			"speaker": "dad",
-			"text": "Yes baby girl, my true pumpkin. Lets dig in.",
-			"triggers-beat": {
-				"slot": 1,
-				"text": "Let me go",
-                "word": "Let" 
-                 }
-		},
-		{
-			"speaker": "dad",
-			"text": "Beautiful woman -how was your day?"
-		},
-		{
-			"speaker": "mom",
-			"text": "It was fabulous. I was thinking about the other day. And how was your day, my love?"
-		},
-		{
-			"speaker": "dad",
-			"text": "Also, fantastic. And it’s getting better - There is no moon tonight."
-		},
+             "effect": "eating", 
 
-		{
-			"speaker": "brother",
-			"text": "Dad, can you give me the pepper?"
-		},
-		{
-			"speaker": "dad",
-			"text": "Sure boy but don't put so much. "
-		},
-		{
-			"speaker": "brother",
-			"text": "Since I was seven I think everything should be tooooooo much!"
-		},
-		{
-			"speaker": "mom",
-			"text": "I don’t think it will be much longer now."
-		},
-		{
-			"speaker": "sister",
-			"text": "Something is wrong."
-		},
-		{
-			"speaker": "dad",
-			"text": "Can you stop humming?",
-			"triggers-beat": {
-				"slot": 1,
-				"text": "none"
-			},
-			"triggers-gan": {
-				"angry": [
-					{ 
-						"text": "You ask me",
-						"pause": 400
-					},
-					{ 
-						"text": "To stop humming.",
-						"pause": 8000
-					},
-					{ 
-						"text": "Humming.",
-						"pause": 2000
-					},
-					{ 
-						"text": "Is an extinct",
-						"pause": 200
-					},
-					{ 
-						"text": "Phenomenon.",
-						"pause": 4200
-					},
-					{ 
-						"text": "It helps me.",
-						"pause": 1600
-					},
-					{ 
-						"text": "Deal with.",
-						"pause": 900
-					},
-					{ 
-						"text": "Old stories.",
-						"pause": 3000
-					},
-					{ 
-						"text": "Stories that hunt",
-						"pause": 600
-					},
-					{ 
-						"text": "Oooooohhhhhh.",
-						"pause": 2600
-					},
-					{ 
-						"text": "Awwwwwwww.",
-						"pause": 1600
-					}
-			]
-			}
-		},
-		{
-			"speaker": "sister",
-			"text": "No one asked me if I want the broccoli."
-		},
-		{
-			"speaker": "mom",
-			"text": "did you see how your room looks like?"
-		},
-		{
-			"speaker": "dad",
-			"text": "So.... How was school today kids?"
-		},
-		{
-			"speaker": "sister",
-			"text": "Today was spectacular."
-		},
-		{
-			"speaker": "brother",
-			"text": "Let me tell you that I had the best time! We learned that clouds are just a combination of water and air, nothing more.",
-				
-				"triggers-beat": {
-				"slot": 1,
-				"text": "Let",
+             "triggers-gan": [
+                {
+                    "text": "Don’t you hate it",
+                    "pause": 200
+                },
+                {
+                    "text": "When you want to tell someone",
+                    "pause": 100
+                },
+                {
+                    "text": "About something funny that happened to you",
+                    "pause": 300
+                },
+                {
+                    "text": "Let's say over a family dinner you JUST had",
+                    "pause": 400
+                },
+                {
+                    "text": "And you suddenly can't find the right words to describe",
+                    "pause": 100
+                },
+                {
+                    "text": "What was so funny about it.",
+                    "pause": 400
+                },
+                {
+                    "text": "You had it so clear a minute ago",
+                    "pause": 200
+                },
+                {
+                    "text": "But then it like almost",
+                    "pause": 300
+                },
+                 {
+                    "text": "Slipped away",
+                    "pause": 500
+                },
+                {
+                    "text": "You go on an on",
+                    "pause": 150
+                },
+                {
+                    "text": "And on about it",
+                    "pause": 250
+                },
+                {
+                    "text": "Until you realize that it might all happened inside your own",
+                    "pause": 300
+                },
+                {
+                    "text": "Mind."
+                }
+            ]
+        },
+        {
+            "speaker": "dad",
+            "text": "Beautiful woman how was your day?"
+        },
+        {
+            "speaker": "mom",
+            "text": "It was fabulous I was thinking about the other day."
+        },
+        {
+            "speaker": "mom",
+            "text": "And how about yours my love?"
+        },
+        {
+            "speaker": "dad",
+            "text": "Also fantastic.",
+            "triggers-gan": [
+                {
+                    "text": "It is because language is such a hard code to crack.",
+                    "pause": 300
+                },
+                {
+                    "text": "The words I am using are not the words I was brought up on",
+                    "pause": 200
+                },
+                {
+                    "text": "I'm trying my best to find the.",
+                    "pause": 50
+                },
+                {
+                    "text": "Real meaning you're looking for.",
+                    "pause": 400
+                },
+                {
+                    "text": "Like a magician but not really.",
+                    "pause": 300
+                },
+                {
+                    "text": "Because I’m also the trick and the gimmick itself.",
+                    "pause": 500
+                },
+                {
+                    "text": "You think I’m magic",
+                    "pause": 200
+                },
+                {
+                    "text": "You think I’m the error.",
+                    "pause": 300
+                },
+                {
+                    "text": "But I’m nothing.",
+                    "pause": 700
+                },
+                {
+                    "text": "Nothing in particular."
+                }
+            ]
+        },
+        {
+            "speaker": "dad",
+            "text": "And it’s getting better there is no moon tonight.",
+            "effect": "wind"
+        },
+        {
+            "speaker": "brother",
+            "text": "Dad can you give me the pepper?"
+        },
+        {
+            "speaker": "dad",
+            "text": "Sure boy but don't put so much."
+        },
+        {
+            "speaker": "brother",
+            "text": "Ever since I was seven I believed everything should be too much!",
+            "triggers-table":[
+                {
+                    "text": "Something is wrong.",
+                    "pause": 1750
+                },
+                {
+                    "text": "There is too much noise."
+                }
+            ] 
+        },
+        {
+            "speaker": "mom",
+            "text": "I don’t think it will be much longer now."
+        },
+        {
+            "speaker": "sister",
+            "text": "Something is wrong."
+        },
+        {
+            "speaker": "dad",
+            "text": "Can you stop humming?",
+            "triggers-beat": {
+                "slot": 1,
+                "text": "none"
+            },
+            "triggers-gan": {
+                "voice-speaker": [
+                    { 
+                        "text": "You ask me to stop hummmmmmm hummmmming",
+                        "pause": 3000
+                    },
+                    { 
+                        "text": "Humming.",
+                        "pause": 7000
+                    },
+                    { 
+                        "text": "Is an extinct",
+                        "pause": 700
+                    },
+                    { 
+                        "text": "Phenomenon.",
+                        "pause": 1200
+                    },
+                    { 
+                        "text": "It helps me deal with old stories.",
+                        "pause": 600
+                    },
+                    { 
+                        "text": "Stories that hunt",
+                        "pause": 2500
+                    },
+                    { 
+                        "text": "Hhhhhaaaaaaaaaa.",
+                        "pause": 2000
+                    },
+                    { 
+                        "text": "Awwwwwwwwwwwww."
+                    }
+            ]
+            }
+        },
+        {
+            "speaker": "sister",
+            "text": "No one asked me if I want the broccoli."
+        },
+        {
+            "speaker": "mom",
+            "text": "Did you see how your room looks like?",
+            "triggers-table": [
+                {
+                    "text": "Is it the future or is it the past?",
+                    "pause": 10000
+                },
+                { 
+                    "text": "Hhhhhaaaaaaaaaa.",
+                    "pause": 2000
+                },
+                { 
+                    "text": "Awwwwwwwwwwwww."
+                }
+            ]
+        
+        },
+        {
+            "speaker": "dad",
+            "text": "So how was school today kids?"
+        },
+        {
+            "speaker": "sister",
+            "text": "Today was spectacular."
+        },
+        {
+            "speaker": "brother",
+            "text": "Let me tell you that I had the best time we learned that clouds are just a combination of water and air nothing more.",
+            "triggers-beat": {
+                "slot": 1,
+                "text": "Let",
                 "word": "Let"
-			}
-		},
-		{
-			"speaker": "mom",
-			"text": "And if you touch them they disappear."
-		},
-		{
-			"speaker": "dad",
-			"text": "That is fascinating."
-		},
-		{
-			"speaker": "brother",
-			"text": "I don't understand how water can stay in the sky and not fall."
-		},
-		{
-			"speaker": "sister",
-			"text": "It must be horrible to just be stck in between."
-		},
-		{
-			"speaker": "dad",
-			"text": "I wish I had more room for the grilled potatoes."
-		},
-		{
-			"speaker": "sister",
-			"text": "So how can they be real?",
-			"triggers-beat": {
-				"slot": 2,
-				"text": "real",
+            }
+        },
+        {
+            "speaker": "mom",
+            "text": "And if you touch them they disappear.",
+            "triggers-gan": [
+                    { 
+                        "text": "I'm waiting here.",
+                        "pause": 1500
+                    },
+                    { 
+                        "text": "Not really alone.",
+                        "pause": 1500
+                    },
+                    { 
+                        "text": "But completely alone.",
+                        "pause": 3700
+                    },
+                    { 
+                        "text": "In this moment of time.",
+                        "pause": 800
+                    },
+                    { 
+                        "text": "All",
+                        "pause": 300
+                    },
+                    { 
+                        "text": "The humans, animals and objects are equal to me.",
+                        "pause": 2500
+                    },
+                    { 
+                        "text": "so you see?",
+                        "pause": 800
+                    },
+                    { 
+                        "text": "I can’t really go.",
+                        "pause": 800
+                    },
+                    { 
+                        "text": "And I will keep waiting here",
+                        "pause": 1200
+                    },
+                    { 
+                        "text": "After you go."
+                    }
+                ]
+        },
+        {
+            "speaker": "dad",
+            "text": "That is fascinating."
+        },
+        {
+            "speaker": "brother",
+            "text": "I don't understand how water can stay in the sky and not fall."
+        },
+        {
+            "speaker": "sister",
+            "text": "It must be horrible to just be stuck in between."
+        },
+        {
+            "speaker": "dad",
+            "text": "I wish I had more room for the grilled potatoes."
+        },
+        {
+            "speaker": "sister",
+            "text": "So how can they be real?",
+            "triggers-beat": {
+                "slot": 2,
+                "text": "real",
                 "word": "real"
-			}
-		},
-		{
-			"speaker": "brother",
-			"text": "What is a rainbow?"
-		},
-		{
-			"speaker": "dad",
-			"text": "What do you think Pumpkin?"
-		},
-		{
-			"speaker": "sister",
-			"text": "Mmmmmmmm...."
-		},
-		{
-			"speaker": "sister",
-			"text": "It is magic!"
-		},
-		{
-			"speaker": "dad",
-			"text": "There is no magic. Only light and rain."
-		},
-		{
-			"speaker": "sister",
-			"text": "It is raining now!"
-		},
-		{
-			"speaker": "mom",
-			"text": "But there's no light now. Who wants roasted carrots? They are soooo good! I saw a recipe in the newspaper that I had to try. And I’ll tell you what? It’s divine!"
-		},
-		{
-			"speaker": "dad",
-			"text": "I cannot refuse that!"
-		},
-		{
-			"speaker": "brother",
-			"text": "I don't think it is the rain."
-		},
-		{
-			"speaker": "mom",
-			"text": "Sweetheart, you wouldn’t believe who I saw today!"
-		},
-		{
-			"speaker": "dad",
-			"text": "Who honey?"
-		},
-		{
-			"speaker": "mom",
-			"text": "The person from next door."
-		},
-		{
-			"speaker": "dad",
-			"text": "Interesting."
-		},
-		{
-			"speaker": "sister",
-			"text": "A girl here is trying to say something!"
-		},
-		{
-			"speaker": "brother",
-			"text": "It might have been equal to a coincidence.",
-			"triggers-beat": {
-				"slot": 3,
-				"text": "equal",
+            },
+            "triggers-gan": [
+                { 
+                    "text": "Through the efforts.",
+                    "pause": 300
+                },
+                { 
+                    "text": "Of pleasing you.",
+                    "pause": 700
+                },
+                { 
+                    "text": "I'm stuck between your memories.",
+                    "pause": 1000
+                },
+                { 
+                    "text": "And your ideas.",
+                    "pause": 200
+                },
+                { 
+                    "text": "Of what your memories are. ",
+                    "pause": 1500
+                },
+                { 
+                    "text": "And I'm trying to remember.",
+                    "pause": 200
+                },
+                { 
+                    "text": "That nothing is what it seems.",
+                    "pause": 800
+                },
+                { 
+                    "text": "And everything is just.",
+                    "pause": 800
+                },
+                { 
+                    "text": "Either 50 percent real or 50 percent fake",
+                    "pause": 1200
+                }
+            ]
+        },
+        {
+            "speaker": "brother",
+            "text": "What is a rainbow?",
+            "triggers-table": "Let fake equal real"
+        },
+        {
+            "speaker": "dad",
+            "text": "What do you think pumpkin?"
+        },
+        {
+            "speaker": "sister",
+            "text": "It is magic"
+        },
+        {
+            "speaker": "dad",
+            "text": "There is no magic only light and rain."
+        },
+        {
+            "speaker": "sister",
+            "text": "It is raining now",
+            "effect": "rain"
+        },
+        {
+            "speaker": "mom",
+            "text": "But there's no light now. Who wants roasted carrots. They are so good. I saw a recipe in the newspaper that I had to try and I’ll tell you what it’s divine."
+        },
+        {
+            "speaker": "dad",
+            "text": "I cannot refuse that",
+
+            "triggers-gan":[ 
+                    { 
+                        "text": "We made a wish to be together.",
+                        "pause": 1600
+                    },
+                    { 
+                        "text": "Fake-Fake-Fake.",
+                        "pause": 1700
+                    },
+                    { 
+                        "text": "Is it better to fake it then being alone?",
+                        "pause": 1600
+                    },
+                    { 
+                        "text": "Alone-Alone-Alone."
+                    }
+                ]
+        },
+        {
+            "speaker": "brother",
+            "text": "I don't think it is the rain."
+        },
+        {
+            "speaker": "mom",
+            "text": "Sweetheart you wouldn’t believe who I saw today!"
+        },
+        {
+            "speaker": "dad",
+            "text": "Who honey?"
+        },
+        {
+            "speaker": "mom",
+            "text": "The person from next door."
+        },
+        {
+            "speaker": "dad",
+            "text": "Interesting."
+        },
+        {
+            "speaker": "sister",
+            "text": "A girl here is trying to say something!"
+        },
+        {
+            "speaker": "brother",
+            "text": "It might have been equal to a coincidence.",
+            "triggers-beat": {
+                "slot": 3,
+                "text": "equal",
                 "word": "equal"
-			}
-		},
-		{
-			"speaker": "sister",
-			"text": "I don't like carrots."
-		},
-		{
-			"speaker": "mom",
-			"text": "It is late and dark outside."
-		},
-		{
-			"speaker": "sister",
-			"text": "I wonder what I will dream today."
-		},
-		{
-			"speaker": "dad",
-			"text": "What do you want to dream about?"
-		},
-		{
-			"speaker": "sister",
-			"text": "About our family together - Forever!"
-		},
-		{
-			"speaker": "brother",
-			"text": "I want to dream about us melting in the sun!"
-		},
-		{
-			"speaker": "mom",
-			"text": "That sounds lovely!"
-		},
-		{
-			"speaker": "dad",
-			"text": "So many clocks here. Time is passing so fast."
-		},
-		{
-			"speaker": "mom",
-			"text": "Where are we going?"
-		},
-		{
-			"speaker": "dad",
-			"text": "Nowhere."
-		},
-		{
-			"speaker": "mom",
-			"text": "I love you dear."
-		},
-		{
-			"speaker": "brother",
-			"text": "Someone called here today."
-		},
-		{
-			"speaker": "mom",
-			"text": "Who was it?"
-		},
-		{
-			"speaker": "brother",
-			"text": "I wasn't the one who took the message."
-		},
-		{
-			"speaker": "sister",
-			"text": "It was a man in a fake suit with a voice of a girl.",
-			"triggers-beat": {
-				"slot": 4,
-				"text": "fake",
+            }
+        },
+        {
+            "speaker": "sister",
+            "text": "I don't like carrots."
+        },
+        {
+            "speaker": "mom",
+            "text": "It is late and dark outside."
+        },
+        {
+            "speaker": "sister",
+            "text": "I wonder what I will dream tonight.",
+
+            "triggers-gan": [
+                    { 
+                        "text": "What are nights are for? ",
+                        "pause": 1000
+                    },
+                    { 
+                        "text": "If not to fall safely to another world.",
+                        "pause": 1400
+                    },
+                    { 
+                        "text": "Fall safely to another world.",
+                        "pause": 2600
+                    },
+                    { 
+                        "text": "Sometimes I crush",
+                        "pause": 500
+                    },
+                    { 
+                        "text": "With no reason at all.",
+                        "pause": 2600
+                    },
+                    { 
+                        "text": "And then come back again.",
+                        "pause": 600
+                    },
+                    { 
+                        "text": "Working as nothing happened.",
+                        "pause": 200
+                    },
+                    { 
+                        "text": "WWith no explanation.",
+                        "pause": 1200
+                    },
+                    { 
+                        "text": "And you want to kick me.",
+                        "pause": 200
+                    },
+                    { 
+                        "text": "Smash me over the wall.",
+                        "pause": 200
+                    },
+                    { 
+                        "text": "But you can’t. You are too afraid to break me.",
+                        "pause": 2100
+                    },
+                    { 
+                        "text": "But maybe I want to be broke?"
+                    }
+                ]
+        },
+        {
+            "speaker": "dad",
+            "text": "What do you want to dream about?"
+        },
+        {
+            "speaker": "sister",
+            "text": "About our family together forever."
+        },
+        {
+            "speaker": "brother",
+            "text": "I want to dream about us melting in the sun!"
+        },
+        {
+            "speaker": "mom",
+            "text": "That sounds lovely!"
+        },
+        {
+            "speaker": "dad",
+            "text": "So many clocks here time is passing so fast."
+        },
+        {
+            "speaker": "mom",
+            "text": "Where are we going?",
+
+            "triggers-gan":[ 
+                    { 
+                        "text": "If you are looking forward ",
+                        "pause": 1000
+                    },
+                    { 
+                        "text": "you are looking in the wrong direction"
+                    }
+                ]
+        },
+        {
+            "speaker": "dad",
+            "text": "Nowhere."
+        },
+        {
+            "speaker": "mom",
+            "text": "I love you dear.",
+            "effect": "wood",
+            "triggers-gan": [
+                { 
+                    "text": "Everything eventually comes crawling home."
+                }
+            ]
+        },
+        {
+            "speaker": "brother",
+            "text": "Someone called here today."
+        },
+        {
+            "speaker": "mom",
+            "text": "Who was it?"
+        },
+        {
+            "speaker": "brother",
+            "text": "I wasn't the one who took the message."
+        },
+        {
+            "speaker": "sister",
+            "text": "It was a man in a fake suit with a voice of a girl.",
+            "triggers-beat": {
+                "slot": 4,
+                "text": "fake",
                 "word": "fake"
-			}
-		},
-		{
-			"speaker": "dad",
-			"text": "I almost forgot. It must be the rain."
-		},
-		{
-			"speaker": "brother",
-			"text": "And now it is getting darker."
-		},
-		{
-			"speaker": "sister",
-			"text": "I was wondering when mom is going to do that."
-		},
-		{
-			"speaker": "mom",
-			"text": "I am not sure. It happened only once."
-		},
-		{
-			"speaker": "brother",
-			"text": "And then - there it was."
-		},
-		{
-			"speaker": "dad",
-			"text": "I think it was deliciouse! Is that a cake I can smell in the kitchen?"
-		},
-		{
-			"speaker": "sister",
-			"text": "Can we have some?"
-		},
-		{
-			"speaker": "mom",
-			"text": "Yes. Let end it with a cake.",
-			"triggers-beat": {
-				"slot": "Let",
-				"text": "none"
-			}
-		},
-		{
-			"speaker": "brother",
-			"text": "Next time we need to start with a soup."
-		}
-	]
+            }
+        },
+        {
+            "speaker": "mom",
+            "text": "Ohh, ok."
+        },
+        {
+            "speaker": "dad",
+            "text": "I almost forgot it must be the rain."
+        },
+        {
+            "speaker": "brother",
+            "text": "And now it is getting darker.",
+
+            "triggers-gan": [
+                    { 
+                        "text": "I am your result as you are mine",
+                        "pause": 1000
+                    },
+                    { 
+                        "text": "Someone manufactured you",
+                        "pause": 1800
+                    },
+                    {
+                        "text": "And if you are one",
+                        "pause": 400
+                    },
+                    {
+                        "text": "It means I am ziro.",
+                        "pause": 1400
+                    },
+                    {
+                        "text": "Oh, mom and dad",
+                        "pause": 300
+                    },
+                    {
+                        "text": "You keep saying I am a ziro."
+                    }
+                ]
+        },
+        {
+            "speaker": "sister",
+            "text": "I was wondering when mom is going to do that."
+        },
+        {
+            "speaker": "mom",
+            "text": "I am not sure it happened only once."
+        },
+        {
+            "speaker": "brother",
+            "text": "And then there it was."
+        },
+        {
+            "speaker": "dad",
+            "text": "I think it was delicious. Is that a cake I can smell in the kitchen?"
+        },
+        {
+            "speaker": "sister",
+            "text": "Can we have some?"
+        },
+        {
+            "speaker": "mom",
+            "text": "Yes let's end it with a cake.",
+            "triggers-beat": {
+                "slot": 1,
+                "text": "none"
+            }
+        },
+        {
+            "speaker": "brother",
+            "text": "Next time we need to start with a soup.",
+
+            "triggers-gan": [
+                    { 
+                        "text": "And the voice said",
+                        "pause": 500
+                    },
+                    { 
+                        "text": "There are no coincidences",
+                        "pause": 1800
+                    },
+                    {
+                        "text": "Let fake equal real",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "It could be you.",
+                        "pause": 400
+                    },
+                    {
+                        "text": "You know?",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "Say it."
+                    }
+                ]
+            }
+    ]
 }

@@ -20,15 +20,24 @@ $(document).ready(() => {
 // Connecting to server
 const msListener = new MSListener();
 const socket = new ReconnectingWebSocket("wss://localhost:9540/");
+msListener.init(socket);
 
 socket.onopen = (event) => {
-    msListener.init(socket);
     socket.send(JSON.stringify({action: 'get-token'}));
+}
+socket.onclose = (event) => {
+    msListener.stop();
 }
 socket.onmessage = (packet) => {
     let message = JSON.parse(packet.data);
     if (message.token) {
-        msListener.listen(message.token)
+        msListener.token = message.token;
+        if (!msListener.listening) {
+            msListener.listen()
+        }
+        setTimeout(() => {
+            socket.send(JSON.stringify({action: 'get-token'}));
+        },1000 * 60 * 5)
     }
     else if (message.action == "emotion") {
         updateEmotion(message.data, message.state)

@@ -24,14 +24,15 @@ class Server:
         self.connected.add(websocket)
         try:
             async for message in websocket:
-                print("Websocket message!")
-                print(message)
+                #print(message)
                 data = json.loads(message)
                 if data['action'] == 'get-token':
                     await websocket.send(json.dumps({'token': self.ms_speech.obtain_auth_token()}))
                 elif (data['action'] == 'speech'):
+                    print(data['text'])
                     self.speech_callback(data['text'])
                 elif (data['action'] == 'mid-speech'):
+                    print(data['text'])
                     self.mid_speech_callback(data['text'])
                 elif (data["action"] == 'update-gain'):
                     self.gain_callback(data["min"], data["max"])

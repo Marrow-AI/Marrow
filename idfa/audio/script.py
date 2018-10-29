@@ -12,6 +12,16 @@ class Script:
         with open("marrow_script.json", 'r') as file:
             self.data = json.load(file)
 
+    def reset(self):
+        self.awaiting_index = 0
+        self.update()
+
+    def update(self):
+        self.awaiting = self.data["script-lines"][self.awaiting_index]
+        self.awaiting["words"] = len(self.awaiting["text"].split())
+        if self.awaiting_index > 0:
+            self.awaiting["previous"] = self.data["script-lines"][self.awaiting_index -1]["text"]
+
     def load_space(self):
         self.nlp = spacy.load('en')
         self.script_lines = {}
@@ -57,10 +67,18 @@ class Script:
         try:
             nearest = self.text_space.get_nns_by_vector(
                     self.meanvector(text), 
-                    n=1, 
+                    n=3,
                     include_distances=True
             )
-            return {"match": nearest[1][0], "index": nearest[0][0]}
+            
+            matches = []
+            for i in range(0, len(nearest[0])):
+                matches.append({
+                    "index": nearest[0][i],
+                    "distance": nearest[1][i]
+                 })
+
+            return matches
         except:
             return None
 

@@ -9,6 +9,8 @@ from server import Server
 
 import shutil
 import asyncio
+import threading
+import time
 
 from ms_speech import MSSpeech
 from google_speech import GoogleSpeech
@@ -43,83 +45,196 @@ class ScheduleOSC:
         self._task.cancel()
 
 
+class Engine:
+    def __init__(self,args):
+
+        self.args = args
+
+        self.script = Script()
+        self.script.load_space()
+        self.script.reset()
 
 
-def emotion_update(data):
-    print("Emotion update! {}".format(data))
-    if (data["status"] == "silence"):
-        mental_state.update_silence()
-    else:
-        mental_state.update_emotion(data["analysis"])
-        
-    conc = asyncio.run_coroutine_threadsafe(server.emotion_update(data, mental_state.get_current_state()), main_loop)
+        self.args.stop = False
 
-def gain_update(min, max):
-    print("Update gain! {} : {}".format(min, max))
-    live_ser.feat_ext.min = float(min)
-    live_ser.feat_ext.max = float(max)
+        self.args.callback = self.emotion_update
 
-def speech_text(text):
-    match = script.match(text)
-    print("Speech Match: {} ({})".format(match['match'],text))
-    if match:
-        if match['match'] < 0.5:
-            print("Match! {}".format(match))
-            line = script.data["script-lines"][match["index"]]
-            next_line = script.data["script-lines"][match["index"] + 1]
-            if next_line:
-                t2i_client.send_message("/spotlight", next_line["speaker"])
-                print("Next Speaker {}".format(next_line["speaker"]))
-            if "triggers-gan" in line:
-                trigger = line["triggers-gan"]
-                current_metnal_state = mental_state.get_current_state()
-                if current_mental_state in trigger:
-                    say("gan_responses/{}-{}.wav".format(
-                            match['index'], 
-                            current_metnal_state
+        #self.live_ser = LiveSer()
+        #self.live_ser.run(self.args)
+
+        self.ms_speech = MSSpeech()
+
+        self.mid_text = None
+        self.last_mid = None
+        self.mid_match = False
+
+        self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
+        self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
+
+        self.mental_state = MentalState()
+
+        #google_speech = GoogleSpeech()
+        #google_speech.say("Hi")
+        #asyncio.get_event_loop().run_until_complete(ms_speech.say("I masturbate 50 times a day to naked nerdy men"))
+
+        self.server = Server(
+                self.ms_speech, 
+                self.gain_update, 
+                self.mid_speech_text, 
+                self.speech_text, 
+                self.control
+        )
+
+        #self.time_check()
+
+        self.main_loop = asyncio.get_event_loop()
+
+        asyncio.get_event_loop().run_until_complete(self.server.start())
+
+
+    def time_check(self):
+        # recognition timeout
+        now =  int(round(time.time() * 1000))
+        if self.mid_match and self.last_mid and now - self.last_mid > 1000:
+            print("BABBLE TIMEOUT")
+            self.last_mid = now
+            self.lookup(self.mid_text)
+        if not args.stop:
+            threading.Timer(0.1, self.time_check).start()
+
+
+
+    def emotion_update(self, data):
+        print("Emotion update! {}".format(data))
+        if (data["status"] == "silence"):
+            self.mental_state.update_silence()
+        else:
+            self.mental_state.update_emotion(data["analysis"])
+            
+        conc = asyncio.run_coroutine_threadsafe(self.server.emotion_update(data, self.mental_state.get_current_state()), self.main_loop)
+
+    def gain_update(self, min, max):
+        print("Update gain! {} : {}".format(min, max))
+        self.live_ser.feat_ext.min = float(min)
+        self.live_ser.feat_ext.max = float(max)
+
+    def speech_text(self, text):
+        if self.mid_text is not None:
+            self.lookup(text)
+
+        self.mid_match = False
+        self.matched_to_word = 0
+        """
+        match = script.match(text)
+        print("Speech Match: {} ({})".format(match['match'],text))
+        if match:
+            if match['match'] < 0.5:
+                print("Match! {}".format(match))
+                line = script.data["script-lines"][match["index"]]
+                next_line = script.data["script-lines"][match["index"] + 1]
+                if next_line:
+                    t2i_client.send_message("/spotlight", next_line["speaker"])
+                    print("Next Speaker {}".format(next_line["speaker"]))
+                if "triggers-gan" in line:
+                    trigger = line["triggers-gan"]
+                    current_metnal_state = mental_state.get_current_state()
+                    if current_mental_state in trigger:
+                        say("gan_responses/{}-{}.wav".format(
+                                match['index'], 
+                                current_metnal_state
+                            )
                         )
-                    )
 
-        mental_state.update_script_match(match['match'])
-    else:
-        mental_state.update_script_match(1)
+            mental_state.update_script_match(match['match'])
+        else:
+            mental_state.update_script_match(1)
+            """
 
-def mid_speech_text(text):
-    t2i_client.send_message("/speech", text)
+    def mid_speech_text(self, text):
+        self.last_mid = int(round(time.time() * 1000))
+        self.mid_text = text
+        self.t2i_client.send_message("/speech", text)
+        if self.lookup(text):
+            self.mid_match = True
+        
+    def lookup(self, text):
+       # print("REACT: {}".format(text))
+        # update last speech time
+        # First get the top line matches
+        tries = []
+        if self.mid_match:
+            # We have to try all combinations
+            words = text.split()
+            for i in range(self.matched_to_word + 1, len(words)):
+                tries.append(" ".join(words[i:]))
+        else:
+            tries.append(text)
 
-def say(file_name):
-    shutil.copyfile(
-            file_name,             
-            "tmp/gan.wav"
-    )
-    print("Copied")
-    voice_client.send_message("/speech/reload",1)
-    voice_client.send_message("/speech/play",1)
+        # try up to 3 lines aheead
+        for i in range(self.script.awaiting_index, self.script.awaiting_index + 1):
+            if self.lookup_index(tries, i):
+                self.react(i)
+                return True
+
+    def lookup_index(self, tries, index):
+        for s in tries:
+            if self.match(s, index):
+                # Which word was it?
+                self.matched_to_word = len(s.split()) - 1
+                return True
 
 
-def control(data):
-    print("Control command! {}".format(data))
-    if data["command"] == 'start':
-        asyncio.ensure_future(start_intro())
-    elif data["command"] == 'stop':
-        voice_client.send_message("/control/stop",1)
+    def match(self, text, index):
+        matches = self.script.match(text)
+        if matches:
+            for match in matches:
+                if match["distance"] < 0.7 and match["index"] == index:
+                    return True
+        return False
 
 
-async def start_intro():
-    print("Start intro!")
-    first_speech = 28
-    #start_command = ScheduleOSC(27.5,"/control/start", None )
-    #start_command = ScheduleOSC(27.5,"/control/start", None )
-    #table_command = ScheduleOSC(47,"/control/table", None )
-    #start_command = ScheduleOSC(3,"/control/stop", None )
-    command = ScheduleOSC(0,"/gan/feedback", 0.0, None )
-    say("gan_intro/1.wav")
-    command = ScheduleOSC(first_speech - 1,"/gan/feedback", 0.2, None )
-    command = ScheduleOSC(0 + first_speech,"/control/start", 1, None )
-    command = ScheduleOSC(12.1 + first_speech,"/control/synthbass", 1, None )
-    command = ScheduleOSC(24.1 + first_speech,"/control/table", 1,  None )
-    command = ScheduleOSC(45.1 + first_speech,"/intro/end", 1, None )
-    command = ScheduleOSC(55.1 + first_speech,"/gan/start", 1, None )
+
+    def react(self, index):
+        print("BOOM")
+        print("Said {} ({})".format(index, self.script.data["script-lines"][index]["text"]))
+        self.script.awaiting_index = index + 1 
+        self.script.update()
+
+
+    def say(self, file_name):
+        shutil.copyfile(
+                file_name,             
+                "tmp/gan.wav"
+        )
+        print("Copied")
+        self.voice_client.send_message("/speech/reload",1)
+        self.voice_client.send_message("/speech/play",1)
+
+
+    def control(self, data):
+        print("Control command! {}".format(data))
+        if data["command"] == 'start':
+            asyncio.ensure_future(self.start_intro())
+        elif data["command"] == 'stop':
+            self.voice_client.send_message("/control/stop",1)
+
+
+    async def start_intro(self):
+        print("Start intro!")
+        self.script.reset()
+        first_speech = 28
+        #start_command = ScheduleOSC(27.5,"/control/start", None )
+        #start_command = ScheduleOSC(27.5,"/control/start", None )
+        #table_command = ScheduleOSC(47,"/control/table", None )
+        #start_command = ScheduleOSC(3,"/control/stop", None )
+        command = ScheduleOSC(0,"/gan/feedback", 0.0, None )
+        say("gan_intro/1.wav")
+        command = ScheduleOSC(first_speech - 1,"/gan/feedback", 0.2, None )
+        command = ScheduleOSC(0 + first_speech,"/control/start", 1, None )
+        command = ScheduleOSC(12.1 + first_speech,"/control/synthbass", 1, None )
+        command = ScheduleOSC(24.1 + first_speech,"/control/table", 1,  None )
+        command = ScheduleOSC(45.1 + first_speech,"/intro/end", 1, None )
+        command = ScheduleOSC(55.1 + first_speech,"/gan/start", 1, None )
 
 
 if __name__ == '__main__':
@@ -131,33 +246,10 @@ if __name__ == '__main__':
     parser.add_argument("-g_min", "--gain_min", dest= 'g_min', type=float, help="the min value of automatic gain normalisation")
     parser.add_argument("-g_max", "--gain_max", dest= 'g_max', type=float, help="the max value of automatic gain normalisation")
 
-    script = Script()
-    script.load_space()
-
     args = parser.parse_args()
-    args.stop = False
 
-    args.callback = emotion_update
+    engine = Engine(args)
 
-    #live_ser = LiveSer()
-    #live_ser.run(args)
-
-    ms_speech = MSSpeech()
-
-    t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
-    voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
-
-    mental_state = MentalState()
-
-    #google_speech = GoogleSpeech()
-    #google_speech.say("Hi")
-    #asyncio.get_event_loop().run_until_complete(ms_speech.say("I masturbate 50 times a day to naked nerdy men"))
-
-    server = Server(ms_speech, gain_update, mid_speech_text, speech_text, control)
-
-    main_loop = asyncio.get_event_loop()
-
-    asyncio.get_event_loop().run_until_complete(server.start())
 
     try:
         asyncio.get_event_loop().run_forever()
