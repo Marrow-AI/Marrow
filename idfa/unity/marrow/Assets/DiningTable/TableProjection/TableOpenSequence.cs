@@ -11,9 +11,10 @@ namespace Marrow
 		/*
 		 * 1. Gan talk + music
 		 * 2. Lights on * 4
-		 * 3. Title in & out
-		 * 3-1. black
-		 * 3.2. swap table's ordinary material to video material
+		 * 3. Main title in & out
+		 * 3-1. Starting titles
+		 * 3-2. black
+		 * 3.3. swap table's ordinary material to video material
 		 * 4. play table video
 		 * 4-1. table video end
 		 * 4-2. swap back to ordinary material
@@ -27,13 +28,13 @@ namespace Marrow
 		 * 8. name tags fade out
 		 * 9. time to display texts & t2i images
 		 */
-		public TableSpotLight mainLight;
-		public TableSpotLight spotLightA;
-		public TableSpotLight spotLightB;
-		public TableSpotLight spotLightC;
+		public TableSpotLight[] spotLights;
+		public TableSpotLight platesOnlySpotlight;
 
 		public GameObject title;
 		public GameObject timeTitle;
+		public string mainTitleTexts;
+		public string[] staringTitleTexts;
 
 		public MediaPlayer videoPlayer;
 		public Material videoMaterial;
@@ -46,8 +47,11 @@ namespace Marrow
 		public GameObject[] plates;
 		public GameObject[] plateTexts;
 
+		public Texture tableCookie;
+
 		private TextMeshPro textMeshProTitle;
 		private TextMeshPro textMeshProTimeTitle;
+		private TextMeshPro[] textMeshProNameTags;
 		private IEnumerator titleSequencePart1Coroutine;
 		private IEnumerator titleSequencePart2Coroutine;
 		private Material tableNormalMaterial;
@@ -56,9 +60,12 @@ namespace Marrow
 		private IEnumerator platesDissovleCoroutine;
 
 		private float startTimecode;
+		private LightFlicker[] lightFlickers;
 
 		[Header("Dev")]
+		public AudioSource bgAudio;
 		public bool devMode;
+		public bool skipGanTalk;
 		public Texture[] plateDevTextures;
 		private int textureSwapCount;
 		private WaitForSeconds stayWait;
@@ -67,15 +74,31 @@ namespace Marrow
         {
 			textMeshProTitle = title.GetComponent<TextMeshPro>();
 			textMeshProTimeTitle = timeTitle.GetComponent<TextMeshPro>();
+			textMeshProNameTags = new TextMeshPro[nameTags.Length];
+			for (int i = 0; i < textMeshProNameTags.Length; i++)
+				textMeshProNameTags[i] = nameTags[i].GetComponent<TextMeshPro>();
+			
 			tableNormalMaterial = tableRenderer.sharedMaterial;
 			plateNormalMaterial = plates[0].GetComponent<Renderer>().sharedMaterial;
 			videoPlayer.Events.AddListener(OnVideoEvent);
 
+			lightFlickers = new LightFlicker[spotLights.Length];
+			for (int i = 0; i < lightFlickers.Length; i++)
+				lightFlickers[i] = spotLights[i].GetComponent<LightFlicker>();
+
 			stayWait = new WaitForSeconds(1f);
 
 			Setup();
+
 			if (devMode)
+			{
+				if (skipGanTalk)
+					bgAudio.time = 31.7f;
+
+				bgAudio.Play();
 				StartTitle();
+			}
+				
         }
 
 		private void OnDestroy()
@@ -88,14 +111,14 @@ namespace Marrow
 			// reset
 			textMeshProTitle.color = Color.clear;
 			textMeshProTimeTitle.color = Color.clear;
+			UpdateNameTagsColor(Color.clear);
+
 			title.SetActive(false);
 			timeTitle.SetActive(false);
 
-			mainLight.Restart();
-            spotLightA.Restart();
-            spotLightB.Restart();
-            spotLightC.Restart();
-
+			for (int i = 0; i < spotLights.Length; i++)
+				spotLights[i].Restart();
+			platesOnlySpotlight.Restart();
 			// cancel all coroutine
 
 			// toggle off stuff
@@ -131,38 +154,52 @@ namespace Marrow
 		IEnumerator TitleSequence()
         {
 			// Temp
-			yield return new WaitForSeconds(3f);
+			if(!skipGanTalk)
+			    yield return new WaitForSeconds(32f);
 
-			Debug.Log("Lights on * 4");
-			mainLight.ToggleOn(true, 1f, 2f, 0);
-			spotLightA.ToggleOn(true, 1f, 1.5f, 2.5f);
-			spotLightB.ToggleOn(true, 1f, 1f, 4f);
-			spotLightC.ToggleOn(true, 1f, 1f, 4.5f);
+			LogCurrentTimecode("Lights on * 4");
+			spotLights[0].ToggleOn(true, 1.5f, 2f, 0);
+			spotLights[1].ToggleOn(true, 1.5f, 1f, 2.5f);
+			spotLights[2].ToggleOn(true, 1.5f, 1.5f, 3.5f);
+			spotLights[3].ToggleOn(true, 1.5f, 1f, 5f);
             
-            yield return new WaitForSeconds(6.5f);
+            yield return new WaitForSeconds(6f);
 
-			Debug.Log("Title fade in");
+			LogCurrentTimecode("Main title");
+			textMeshProTitle.text = mainTitleTexts.Replace("\\n", "\n");
 			title.SetActive(true);
-			LeanTween.value(title, Color.clear, Color.white, 2f)
-			         .setOnUpdate((Color col) => {
-                         textMeshProTitle.color = col;
-                     });
+			LeanTween.value(title, UpdateMainTitleColor, Color.clear, Color.white, 2f);
+            
+			yield return new WaitForSeconds(5.5f);
 
-			yield return new WaitForSeconds(6f);
-
-			Debug.Log("Lights off one by one");
-			spotLightB.ToggleOn(false, 0f, 0.2f, 0f);
-			spotLightA.ToggleOn(false, 0f, 0.2f, 0.5f);
-			spotLightC.ToggleOn(false, 0f, 0.2f, 1f);
-			mainLight.ToggleOn(false, 0f, 0.2f, 1.5f);
+			LogCurrentTimecode("Staring title");
+			for (int i = 0; i < staringTitleTexts.Length; i++)
+			{
+				for (int j = 0; j < spotLights.Length; j++)
+					spotLights[j].BlinkOnce();
+				LeanTween.value(title, UpdateMainTitleColor, Color.white, Color.clear, .5f);
+				//TurnOnFlicker(true);
+				yield return new WaitForSeconds(.5f);
+				//TurnOnFlicker(false);
+				textMeshProTitle.text = staringTitleTexts[i].Replace("\\n", "\n");
+				LeanTween.value(title, UpdateMainTitleColor, Color.clear, Color.white, .5f);
+				yield return new WaitForSeconds(2.5f);
+			}
+                        
+			LogCurrentTimecode("Lights off one by one");
+			LeanTween.value(title, UpdateMainTitleColor, Color.white, Color.clear, 2f);
+			spotLights[0].ToggleOn(false, 0f, 0.2f, 1.5f);
+			spotLights[1].ToggleOn(false, 0f, 0.2f, 1.75f);
+			spotLights[2].ToggleOn(false, 0f, 0.2f, 2f);
+			spotLights[3].ToggleOn(false, 0f, 0.2f, 2.25f);
 
 			yield return new WaitForSeconds(3f);
 
-			Debug.Log("Title off");
+			LogCurrentTimecode("Title off");
 			textMeshProTitle.color = Color.clear;
 			title.SetActive(false);
             
-			Debug.Log("Table change to video materia; play video");
+			LogCurrentTimecode("Table change to video materia; play video");
 			tableRenderer.material = videoMaterial;
 			videoPlayer.Play();
 
@@ -171,7 +208,7 @@ namespace Marrow
 
 		IEnumerator TitleSequencePart2()
 		{
-			Debug.Log("Table material change back");
+			LogCurrentTimecode("Table material change back");
 			tableRenderer.material = tableNormalMaterial;
 			for (int i = 0; i < plates.Length; i++)
             {
@@ -179,55 +216,74 @@ namespace Marrow
 				plates[i].SetActive(true);
             }
 
-			Debug.Log("Lights-on onto plates");
+			LogCurrentTimecode("Lights-on onto plates");
 			// TODO: turn to unlit texture material
-			mainLight.SetLightColor("#FEFFDD");
-			spotLightA.SetLightColor("#FEFFDD");
-			spotLightB.SetLightColor("#FEFFDD");
-			spotLightC.SetLightColor("#FEFFDD");
-			mainLight.TargetOnPlate(0);
-			spotLightA.TargetOnPlate(1f);
-			spotLightB.TargetOnPlate(2f);
-			spotLightC.TargetOnPlate(3f);
+			for (int i = 0; i < spotLights.Length; i++)
+			{
+				spotLights[i].SetLightColor("#FEFFDD");
+				spotLights[i].TargetOnPlate(i*0.25f);
+			}
 
 			yield return new WaitForSeconds(5f);
 
 			// Table be well lit by main light
-			Debug.Log("Table be well lit by main light");
-			mainLight.BecomeGeneralMainLight();
+			LogCurrentTimecode("Table be well lit by main light");
+			spotLights[0].ToggleOn(false, 0, 1f, 0);
 			// Others turn down
-			spotLightA.ToggleOn(false, 0, 2f, 0);
-			spotLightB.ToggleOn(false, 0, 2f, 0);
-			spotLightC.ToggleOn(false, 0, 2f, 0);
+			for (int i = 1; i < spotLights.Length; i++)
+	    		spotLights[i].ToggleOn(false, 0, 2f, 0);
+
+			yield return new WaitForSeconds(1f);
+
+			spotLights[0].BecomeGeneralMainLight(tableCookie);
 
 			yield return new WaitForSeconds(3f);
+            
+			platesOnlySpotlight.ToggleOn(true, .5f, 4f, 1f);
 
             // Show name tags/titles
-			Debug.Log("Show name tags");
+			LogCurrentTimecode("Show name tags");
 			for (int i = 0; i < nameTags.Length; i++)
-            {
 				nameTags[i].SetActive(true);
-            }
+			LeanTween.value(nameTags[0], UpdateNameTagsColor, Color.clear, Color.white, 2f);
 
 			yield return new WaitForSeconds(3f);
 
 			// Show title & time
-			Debug.Log("Show title & time");
+			LogCurrentTimecode("Show title & time");
 			timeTitle.SetActive(true);
 			LeanTween.value(timeTitle, Color.clear, Color.white, 2f)
 			         .setOnUpdate((Color col) => {
                          textMeshProTimeTitle.color = col;
                      });
 
-			yield return new WaitForSeconds(2f);
-            
-			Debug.Log("Spotlight on mom");
-			spotLightC.TargetOnPlate(0);
+			yield return new WaitForSeconds(4f);
+
+			LeanTween.value(timeTitle, Color.white, Color.clear, 2f)
+					 .setOnUpdate((Color col) => {
+						 textMeshProTimeTitle.color = col;
+					 })
+			         .setOnComplete(() => {
+                         timeTitle.SetActive(false);
+                     });
 
 			yield return new WaitForSeconds(3f);
 
-			Debug.Log("Table sequence ends! Wait for talking.");
-			float totalTime = Time.time - startTimecode;
+			LogCurrentTimecode("Spotlight on mom");
+			spotLights[3].TargetOnPlate(0, 2.4f, 3f);
+
+			//yield return new WaitForSeconds(2f);
+
+			LeanTween.value(nameTags[0], UpdateNameTagsColor, Color.white, Color.clear, 2f);
+
+			yield return new WaitForSeconds(2f);
+
+			for (int i = 0; i < nameTags.Length; i++)
+				nameTags[i].SetActive(false);
+			platesOnlySpotlight.ToggleOn(true, 2f, 2f, 0f);
+
+			LogCurrentTimecode("Table sequence ends! Wait for talking.");
+			int totalTime = Mathf.FloorToInt(Time.time - startTimecode);
 			Debug.Log("Total time: " + totalTime);
 
 			if (devMode)
@@ -278,6 +334,29 @@ namespace Marrow
                              plateNormalMaterial.SetFloat("_Blend", val);
                          });
 			}
+		}
+
+		void LogCurrentTimecode(string info)
+		{
+			int currTime = Mathf.FloorToInt(Time.time - startTimecode);
+			Debug.Log(currTime + ": " + info);
+		}
+
+		void UpdateMainTitleColor(Color col)
+        {
+			textMeshProTitle.color = col;
+        }
+
+		void UpdateNameTagsColor(Color col)
+		{
+			for (int i = 0; i < textMeshProNameTags.Length; i++)
+				textMeshProNameTags[i].color = col;
+		}
+
+		void TurnOnFlicker(bool turnOn)
+		{
+			for (int i = 0; i < lightFlickers.Length; i++)
+				lightFlickers[i].enabled = turnOn;
 		}
     }
 }

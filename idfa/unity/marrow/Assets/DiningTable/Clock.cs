@@ -35,6 +35,6 @@ public class Clock : MonoBehaviour
 		//minute.localEulerAngles = Vector3.right * (offset - _m * minuteAngle);
 		//second.localEulerAngles = Vector3.right * (offset - _s * secondAngle);
 
-		timeTitle.text = currTime.ToString("HH") + ":" + currTime.ToString("mm") + "\n" + currTime.ToString("MMM") + " " + currTime.ToString("dd");
+		timeTitle.text = currTime.ToString("HH") + ":" + currTime.ToString("mm") + " - " + currTime.ToString("MMM") + " " + currTime.ToString("dd");
     }
 }

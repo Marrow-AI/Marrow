@@ -19,14 +19,14 @@ namespace Marrow
 		private Texture2D attnGanTextureA;
 		private Texture2D attnGanTextureB;
 
-
         private void Start()
         {
 			// Image convert related
-			attnGanTextureA = new Texture2D(attnGanImageWidth, attnGanImageHeight);
-			plateMaterial.SetTexture("_MainTex", attnGanTextureA);
-			attnGanTextureB = new Texture2D(attnGanImageWidth, attnGanImageHeight);
-			plateMaterial.SetTexture("_SecondTex", attnGanTextureB);
+
+			//attnGanTextureA = new Texture2D(attnGanImageWidth, attnGanImageHeight);
+			//plateMaterial.SetTexture("_MainTex", attnGanTextureA);
+			//attnGanTextureB = new Texture2D(attnGanImageWidth, attnGanImageHeight);
+			//plateMaterial.SetTexture("_SecondTex", attnGanTextureB);
         }
 
 		public void OnAttnGanInputUpdate(string inputText)
