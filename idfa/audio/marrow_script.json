@@ -95,7 +95,11 @@
         },
         {
             "speaker": "sister",
-            "text": "And it’s my favorite too it smells so so good right daddy?"
+            "text": "And it’s my favorite too."
+        },
+        {
+            "speaker": "sister",
+            "text": "It smells so good right daddy?"
         },
         {
             "speaker": "dad",
@@ -177,7 +181,7 @@
         },
         {
             "speaker": "dad",
-            "text": "Also fantastic.",
+            "text": "Mine was also fantastic.",
             "triggers-gan": [
                 {
                     "text": "It is because language is such a hard code to crack.",
@@ -329,7 +333,7 @@
         },
         {
             "speaker": "brother",
-            "text": "Let me tell you that I had the best time we learned that clouds are just a combination of water and air nothing more.",
+            "text": "Let me tell you that I had the best time.",
             "triggers-beat": {
                 "slot": 1,
                 "text": "Let",
@@ -337,8 +341,12 @@
             }
         },
         {
+            "speaker": "brother",
+            "text": "We learned that clouds are just a combination of water and air nothing more."
+        },        
+        {
             "speaker": "mom",
-            "text": "And if you touch them they disappear.",
+            "text": "If you touch them they disappear.",
             "triggers-gan": [
                     { 
                         "text": "I'm waiting here.",
@@ -469,6 +477,15 @@
         {
             "speaker": "mom",
             "text": "But there's no light now. Who wants roasted carrots. They are so good. I saw a recipe in the newspaper that I had to try and I’ll tell you what it’s divine."
+        },
+        {
+            "speaker": "mom",
+            "text": "Who wants roasted carrots? They are so good."
+        },
+        {
+            "speaker": "mom",
+            "text": "I saw a recipe in the newspaper that I had to try and I’ll tell you what it’s divine."
+        
         },
         {
             "speaker": "dad",
@@ -708,7 +725,11 @@
         },
         {
             "speaker": "dad",
-            "text": "I think it was delicious. Is that a cake I can smell in the kitchen?"
+            "text": "I think it was delicious."
+        },
+        {
+            "speaker": "dad",
+            "text": "Is that a cake I can smell in the kitchen?"
         },
         {
             "speaker": "sister",

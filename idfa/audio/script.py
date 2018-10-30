@@ -13,7 +13,7 @@ class Script:
             self.data = json.load(file)
 
     def reset(self):
-        self.awaiting_index = 0
+        self.awaiting_index = 0 
         self.update()
 
     def update(self):
@@ -48,7 +48,7 @@ class Script:
             finally:
                 line_i += 1
 
-        self.text_space.build(100)
+        self.text_space.build(10)
         print("{} items in vector space for {} lines".format(self.text_space.get_n_items(), len(inserted_lines)))
         assert(self.text_space.get_n_items() == len(inserted_lines))
 
@@ -67,7 +67,7 @@ class Script:
         try:
             nearest = self.text_space.get_nns_by_vector(
                     self.meanvector(text), 
-                    n=3,
+                    n=2,
                     include_distances=True
             )
             

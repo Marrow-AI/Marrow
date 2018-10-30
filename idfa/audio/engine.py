@@ -77,20 +77,30 @@ class Engine:
         #google_speech.say("Hi")
         #asyncio.get_event_loop().run_until_complete(ms_speech.say("I masturbate 50 times a day to naked nerdy men"))
 
-        self.server = Server(
-                self.ms_speech, 
-                self.gain_update, 
-                self.mid_speech_text, 
-                self.speech_text, 
-                self.control
-        )
 
         #self.time_check()
 
         self.main_loop = asyncio.get_event_loop()
 
-        asyncio.get_event_loop().run_until_complete(self.server.start())
+        self.queue = asyncio.Queue(loop=self.main_loop)
 
+        self.server = Server(
+                self.ms_speech, 
+                self.gain_update, 
+                self.queue,
+                self.control
+        )
+
+        self.main_loop.run_until_complete(self.server.start())
+        self.main_loop.run_until_complete(self.consume_speech())
+
+    async def consume_speech(self):
+        while True:
+            item = await self.queue.get()
+            if item["action"] == "speech":
+                self.speech_text(item["text"])
+            else:
+                self.mid_speech_text(item["text"])
 
     def time_check(self):
         # recognition timeout
@@ -119,6 +129,7 @@ class Engine:
         self.live_ser.feat_ext.max = float(max)
 
     def speech_text(self, text):
+        #print("<{}>".format(text))
         if self.mid_text is not None:
             self.lookup(text)
 
@@ -151,6 +162,7 @@ class Engine:
             """
 
     def mid_speech_text(self, text):
+        #print("({})".format(text))
         self.last_mid = int(round(time.time() * 1000))
         self.mid_text = text
         self.t2i_client.send_message("/speech", text)
@@ -158,21 +170,27 @@ class Engine:
             self.mid_match = True
         
     def lookup(self, text):
-       # print("REACT: {}".format(text))
+        # print("REACT: {}".format(text))
         # update last speech time
         # First get the top line matches
         tries = []
         if self.mid_match:
             # We have to try all combinations
             words = text.split()
-            for i in range(self.matched_to_word + 1, len(words)):
+            for i in range(len(words) - 2, self.matched_to_word, -1):
                 tries.append(" ".join(words[i:]))
         else:
             tries.append(text)
 
-        # try up to 3 lines aheead
-        for i in range(self.script.awaiting_index, self.script.awaiting_index + 1):
-            if self.lookup_index(tries, i):
+        self.matches_cache = []
+
+        if self.lookup_index(tries, self.script.awaiting_index):
+            self.react(self.script.awaiting_index)
+            return True
+
+        # try up to 2 lines aheead
+        for i in range(self.script.awaiting_index + 1, self.script.awaiting_index + 3):
+            if self.match_cache(i):
                 self.react(i)
                 return True
 
@@ -184,21 +202,35 @@ class Engine:
                 return True
 
 
+    def match_cache(self, index):
+        for matches in self.matches_cache:
+            for match in matches:
+                if match["distance"] < 0.6 and match["index"] == index:
+                    # MAKE NOTE OF MATCHED WORD
+                    print("BOOM")
+                    return True
+
+
     def match(self, text, index):
+        #print("[{}]".format(text))
         matches = self.script.match(text)
         if matches:
             for match in matches:
-                if match["distance"] < 0.7 and match["index"] == index:
-                    return True
+                self.matches_cache.append(matches)
+                if match["distance"] < 0.6 and match["index"] == index:
+                    print("BOOM ({})".format(text))
+                    return True 
         return False
 
 
 
+
+
     def react(self, index):
-        print("BOOM")
         print("Said {} ({})".format(index, self.script.data["script-lines"][index]["text"]))
         self.script.awaiting_index = index + 1 
         self.script.update()
+        self.t2i_client.send_message("/spotlight", self.script.awaiting["speaker"])
 
 
     def say(self, file_name):
@@ -248,10 +280,8 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    engine = Engine(args)
-
-
     try:
+        engine = Engine(args)
         asyncio.get_event_loop().run_forever()
     except KeyboardInterrupt:
         print("Stopping everything")
