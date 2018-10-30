@@ -74,11 +74,11 @@
         },
         {
             "speaker": "dad",
-            "text": "Honey this all looks great."
+            "text": "honey everything looks great."
         },
         {
             "speaker": "mom",
-            "text": "Oh thank you I cooked all day for you.",
+            "text": "oh thank you I cooked all day for you.",
             "triggers-table": [
                 {
                     "text":"What does the perfect family eats for dinner?"
@@ -87,7 +87,7 @@
         },
         {
             "speaker": "brother",
-            "text": "The roasted vegetables with rice look delicious!"
+            "text": "the roasted vegetables with rice look delicious!"
         },
         {
             "speaker": "mom",
@@ -265,8 +265,7 @@
                 "slot": 1,
                 "text": "none"
             },
-            "triggers-gan": {
-                "voice-speaker": [
+            "triggers-gan": [
                     { 
                         "text": "You ask me to stop hummmmmmm hummmmming",
                         "pause": 3000
@@ -299,7 +298,6 @@
                         "text": "Awwwwwwwwwwwww."
                     }
             ]
-            }
         },
         {
             "speaker": "sister",

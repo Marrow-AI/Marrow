@@ -9,9 +9,7 @@ for line in script.data["script-lines"]:
     try:
         if "triggers-gan" in line:
             utterance = line["triggers-gan"]
-            for state in utterance:
-                print("State: {}".format(state))
-                moz_tts.say(utterance[state], "gan_responses/{}-{}.wav".format(index, state))
+            moz_tts.say(utterance, "gan_responses/{}.wav".format(index))
     except:
         continue
     finally:

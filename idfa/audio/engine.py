@@ -19,6 +19,10 @@ sys.path.append(os.path.abspath('./emotion'))
 from offline_ser import LiveSer
 from mental_state import MentalState
 
+import wave
+import contextlib
+
+import math
 
 # Load English tokenizer, tagger, parser, NER and word vectors
 #nlp = spacy.load('en')
@@ -192,6 +196,7 @@ class Engine:
         now =  int(round(time.time() * 1000))
         if self.last_react > 0 and now - self.last_react > 1000  * 20:
             index = self.match_cache_any()
+            print(index)
             if index:
                 self.react(index)
                 return True
@@ -224,9 +229,10 @@ class Engine:
 
 
     def match(self, text, index):
-        #print("[{}]".format(text))
+        print("[{}]".format(text))
         matches = self.script.match(text)
         if matches:
+            print(matches)
             for match in matches:
                 self.matches_cache.append(matches)
                 if match["distance"] < 0.6 and match["index"] == index:
@@ -241,6 +247,11 @@ class Engine:
     def react(self, index):
         self.last_react = int(round(time.time() * 1000))
         print("Said {} ({})".format(index, self.script.data["script-lines"][index]["text"]))
+        line = self.script.data["script-lines"][index]
+        if "triggers-gan" in self.script.awaiting:
+            print("Say response!")
+            self.say("gan_responses/{}.wav".format(index))
+
         if index < self.script.length - 1:
             self.script.awaiting_index = index + 1 
             self.script.update()
@@ -252,6 +263,15 @@ class Engine:
         print("END")
 
     def say(self, file_name):
+
+        # Send a pause
+        
+        with contextlib.closing(wave.open(file_name,'r')) as f:
+            frames = f.getnframes()
+            rate = f.getframerate()
+            duration = frames / float(rate)
+            asyncio.ensure_future(self.server.pause_listening(math.ceil(duration)))
+
         shutil.copyfile(
                 file_name,             
                 "tmp/gan.wav"

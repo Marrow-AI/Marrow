@@ -37,9 +37,19 @@ socket.onmessage = (packet) => {
         if (!listener.listening) {
             listener.listen()
         }
+        if (listener.tokenCommand == "get-token") {
+            // Microsoft renewal
+            setTimeout(() => {
+                socket.send(JSON.stringify({action: 'get-token'}));
+            },1000 * 60 * 5)
+        }
+    }
+    else if (message.action == "pause") {
+        console.log("Pause listening!", message.seconds);
+        listener.stop();
         setTimeout(() => {
-            socket.send(JSON.stringify({action: 'get-token'}));
-        },1000 * 60 * 5)
+            listener.listen();            
+        },message.seconds * 1000)
     }
     else if (message.action == "emotion") {
         updateEmotion(message.data, message.state)

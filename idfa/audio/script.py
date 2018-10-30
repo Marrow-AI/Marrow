@@ -13,7 +13,7 @@ class Script:
             self.data = json.load(file)
 
     def reset(self):
-        self.awaiting_index = 0 
+        self.awaiting_index = 0
         self.length = len(self.data["script-lines"])
         self.update()
 

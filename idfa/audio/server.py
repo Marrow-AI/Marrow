@@ -59,6 +59,13 @@ class Server:
         for client in self.connected:
             tasks.add(client.send(json.dumps({'action': 'emotion', 'data':data, 'state': state}, cls=NumpyEncoder)))
         await asyncio.gather(*tasks)
+
+    async def pause_listening(self,seconds):
+        print("Sending pause listening")
+        tasks = set()
+        for client in self.connected:
+            tasks.add(client.send(json.dumps({'action': 'pause', 'seconds':seconds})))
+        await asyncio.gather(*tasks)
         
 
 class NumpyEncoder(json.JSONEncoder):
