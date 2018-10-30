@@ -14,6 +14,7 @@ class Script:
 
     def reset(self):
         self.awaiting_index = 0 
+        self.length = len(self.data["script-lines"])
         self.update()
 
     def update(self):

@@ -95,7 +95,7 @@
         },
         {
             "speaker": "sister",
-            "text": "And it’s my favorite too."
+            "text": "It's also my favorite"
         },
         {
             "speaker": "sister",
@@ -181,7 +181,7 @@
         },
         {
             "speaker": "dad",
-            "text": "Mine was also fantastic.",
+            "text": "My day was also fantastic.",
             "triggers-gan": [
                 {
                     "text": "It is because language is such a hard code to crack.",
@@ -346,7 +346,7 @@
         },        
         {
             "speaker": "mom",
-            "text": "If you touch them they disappear.",
+            "text": "You know if you touch them they disappear.",
             "triggers-gan": [
                     { 
                         "text": "I'm waiting here.",
@@ -473,10 +473,6 @@
             "speaker": "sister",
             "text": "It is raining now",
             "effect": "rain"
-        },
-        {
-            "speaker": "mom",
-            "text": "But there's no light now. Who wants roasted carrots. They are so good. I saw a recipe in the newspaper that I had to try and I’ll tell you what it’s divine."
         },
         {
             "speaker": "mom",
@@ -640,7 +636,7 @@
         },
         {
             "speaker": "dad",
-            "text": "Nowhere."
+            "text": "We're not going anywhere."
         },
         {
             "speaker": "mom",
@@ -733,11 +729,11 @@
         },
         {
             "speaker": "sister",
-            "text": "Can we have some?"
+            "text": "Please can we have some?"
         },
         {
             "speaker": "mom",
-            "text": "Yes let's end it with a cake.",
+            "text": "Yes let's end with the cake.",
             "triggers-beat": {
                 "slot": 1,
                 "text": "none"

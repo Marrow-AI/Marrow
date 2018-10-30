@@ -7,6 +7,7 @@ export default class MSListener {
         this.socket = socket
         this.token = null
         this.listening = false;
+        this.tokenCommand = "get-token";
     }
     listen() {
         this.listening = true;
@@ -42,7 +43,9 @@ export default class MSListener {
         }
     }
     stop() {
-        this.recognizer.stopContinuousRecognitionAsync()
+        if (this.recognizer) {
+            this.recognizer.stopContinuousRecognitionAsync()
+        }
         this.listening = false;
     }
 }

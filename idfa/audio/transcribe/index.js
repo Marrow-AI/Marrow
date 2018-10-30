@@ -1,4 +1,5 @@
 import MSListener from './ms-listener'
+import WatsonListener from './watson-listener'
 
 $(document).ready(() => {
     console.log("Hello Marrow");
@@ -18,22 +19,23 @@ $(document).ready(() => {
 });
 
 // Connecting to server
-const msListener = new MSListener();
+const listener = new WatsonListener();
+//const listener = new MSListener();
 const socket = new ReconnectingWebSocket("wss://localhost:9540/");
-msListener.init(socket);
+listener.init(socket);
 
 socket.onopen = (event) => {
-    socket.send(JSON.stringify({action: 'get-token'}));
+    socket.send(JSON.stringify({action: listener.tokenCommand}));
 }
 socket.onclose = (event) => {
-    msListener.stop();
+    listener.stop();
 }
 socket.onmessage = (packet) => {
     let message = JSON.parse(packet.data);
     if (message.token) {
-        msListener.token = message.token;
-        if (!msListener.listening) {
-            msListener.listen()
+        listener.token = message.token;
+        if (!listener.listening) {
+            listener.listen()
         }
         setTimeout(() => {
             socket.send(JSON.stringify({action: 'get-token'}));

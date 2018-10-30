@@ -12,8 +12,6 @@ import asyncio
 import threading
 import time
 
-from ms_speech import MSSpeech
-from google_speech import GoogleSpeech
 from script import Script
 
 sys.path.append(os.path.abspath('./emotion'))
@@ -62,10 +60,8 @@ class Engine:
         #self.live_ser = LiveSer()
         #self.live_ser.run(self.args)
 
-        self.ms_speech = MSSpeech()
-
         self.mid_text = None
-        self.last_mid = None
+        self.last_react = 0
         self.mid_match = False
 
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
@@ -75,7 +71,7 @@ class Engine:
 
         #google_speech = GoogleSpeech()
         #google_speech.say("Hi")
-        #asyncio.get_event_loop().run_until_complete(ms_speech.say("I masturbate 50 times a day to naked nerdy men"))
+        #asyncio.get_event_loop().run_until_complete(ms_speech.say("Pewdiepie"))
 
 
         #self.time_check()
@@ -85,7 +81,6 @@ class Engine:
         self.queue = asyncio.Queue(loop=self.main_loop)
 
         self.server = Server(
-                self.ms_speech, 
                 self.gain_update, 
                 self.queue,
                 self.control
@@ -163,7 +158,6 @@ class Engine:
 
     def mid_speech_text(self, text):
         #print("({})".format(text))
-        self.last_mid = int(round(time.time() * 1000))
         self.mid_text = text
         self.t2i_client.send_message("/speech", text)
         if self.lookup(text):
@@ -189,10 +183,20 @@ class Engine:
             return True
 
         # try up to 2 lines aheead
-        for i in range(self.script.awaiting_index + 1, self.script.awaiting_index + 3):
+        for i in range(self.script.awaiting_index + 1, self.script.awaiting_index + 4):
             if self.match_cache(i):
                 self.react(i)
                 return True
+
+        # If it has been too long accept whatever
+        now =  int(round(time.time() * 1000))
+        if self.last_react > 0 and now - self.last_react > 1000  * 20:
+            index = self.match_cache_any()
+            if index:
+                self.react(index)
+                return True
+
+
 
     def lookup_index(self, tries, index):
         for s in tries:
@@ -201,6 +205,14 @@ class Engine:
                 self.matched_to_word = len(s.split()) - 1
                 return True
 
+
+    def match_cache_any(self):
+        for matches in self.matches_cache:
+            for match in matches:
+                if match["distance"] < 0.6:
+                    # MAKE NOTE OF MATCHED WORD
+                    print("EMERGECNY BOOM")
+                    return match["index"]
 
     def match_cache(self, index):
         for matches in self.matches_cache:
@@ -227,11 +239,17 @@ class Engine:
 
 
     def react(self, index):
+        self.last_react = int(round(time.time() * 1000))
         print("Said {} ({})".format(index, self.script.data["script-lines"][index]["text"]))
-        self.script.awaiting_index = index + 1 
-        self.script.update()
-        self.t2i_client.send_message("/spotlight", self.script.awaiting["speaker"])
+        if index < self.script.length - 1:
+            self.script.awaiting_index = index + 1 
+            self.script.update()
+            self.t2i_client.send_message("/spotlight", self.script.awaiting["speaker"])
+        else:
+            self.end()
 
+    def end(self):
+        print("END")
 
     def say(self, file_name):
         shutil.copyfile(

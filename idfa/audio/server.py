@@ -6,15 +6,18 @@ import requests
 import ssl
 import pathlib
 import numpy as np
+from ms_speech import MSSpeech
+from watson_speech import WatsonSpeech
 
 class Server:
 
-    def __init__(self, ms_speech,gain_callback, queue, control_callback):
-        print("Init server {}".format(ms_speech))
-        self.ms_speech = ms_speech
+    def __init__(self, gain_callback, queue, control_callback):
+        print("Init server")
         self.gain_callback = gain_callback
         self.control_callback = control_callback
         self.queue = queue
+        self.ms_speech = MSSpeech()
+        self.watson_speech = WatsonSpeech()
 
         self.connected = set()
 
@@ -27,6 +30,11 @@ class Server:
                 data = json.loads(message)
                 if data['action'] == 'get-token':
                     await websocket.send(json.dumps({'token': self.ms_speech.obtain_auth_token()}))
+                elif data['action'] == 'get-watson-token':
+                    token = self.watson_speech.obtain_auth_token()
+                    print(token)
+                    await websocket.send(json.dumps({'token': token}))
+                    
                 elif (data['action'] == 'speech' or data['action'] == 'mid-speech'):
                     #print(data['text'])
                     await self.queue.put(data)
