@@ -115,7 +115,11 @@
 
              "triggers-gan": [
                 {
-                    "text": "Don’t you hate it",
+                    "text": "Don't you hate it?",
+                    "pause": 2000
+                },
+                {
+                    "text": "Don’t you hate it?",
                     "pause": 100
                 },
                 {
@@ -187,6 +191,10 @@
             "speaker": "dad",
             "text": "My day was also fantastic.",
             "triggers-gan": [
+                {
+                    "text": "It is because of language.",
+                    "pause": "2000" 
+                },
                 {
                     "text": "It",
                     "pause": 10
@@ -277,8 +285,7 @@
                 "slot": 1,
                 "text": "none"
             },
-            "triggers-gan": {
-                "voice-speaker": [
+            "triggers-gan": [
                     { 
                         "text": "You ask me to stop hummmmmmm hummmmming",
                         "pause": 3000
@@ -311,7 +318,6 @@
                         "text": "Awwwwwwwwwwwww."
                     }
             ]
-            }
         },
         {
             "speaker": "sister",
@@ -363,6 +369,10 @@
             "speaker": "mom",
             "text": "You know if you touch them they disappear.",
             "triggers-gan": [
+                    { 
+                        "text": "I'm waiting here.",
+                        "pause": 2000
+                    },
                     { 
                         "text": "I'm waiting here.",
                         "pause": 1500
@@ -450,6 +460,10 @@
             },
             "triggers-gan": [
                 { 
+                    "text": "Pleasing you.",
+                    "pause": 2000
+                },
+                { 
                     "text": "Through the efforts of pleasing you.",
                     "pause": 400
                 },
@@ -510,6 +524,10 @@
             "text": "How can I refuse that?",
 
             "triggers-gan":[ 
+                    { 
+                        "text": "We made a wish.",
+                        "pause": 2000
+                    },
                     { 
                         "text": "We made a wish to be together.",
                         "pause": 2000
@@ -602,7 +620,7 @@
                         "pause": 200
                     },
                     { 
-                        "text": "WWith no explanation.",
+                        "text": "With no explanation.",
                         "pause": 1200
                     },
                     { 
@@ -646,9 +664,13 @@
             "speaker": "mom",
             "text": "Where are we going?",
 
-            "triggers-gan":[ 
+                "triggers-gan":[ 
                     { 
-                        "text": "If you are looking forward ",
+                        "text": "If you are looking forward.",
+                        "pause": 2000
+                    },
+                    { 
+                        "text": "If you are looking forward.",
                         "pause": 1000
                     },
                     { 
@@ -737,7 +759,7 @@
                         "pause": 1300
                     },
                     {
-                        "text": "You keep saying I am a zero."
+                        "text": "You keep saying I am zero."
                     }
                 ]
         },

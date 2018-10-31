@@ -20,7 +20,8 @@ export default class WatsonListener {
             objectMode: true,
             format: false,
             profanity_filter: false,
-            keepMicrophone: true
+            keepMicrophone: true,
+            inactivity_timeout: -1
         });
         this.stream.on('data', (data) => {
             if (data.results[0]) {

@@ -70,6 +70,7 @@ class Engine:
         self.mid_text = None
         self.last_react = 0
         self.mid_match = False
+        self.beating = False
 
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
@@ -266,9 +267,19 @@ class Engine:
 
 
         line = self.script.data["script-lines"][index]
+        
+        if self.response_coming(index):
+            if not self.beating:
+                self.voice_client.send_message("/gan/heartbeat", 0.5)
+        else:
+            self.beating = False
+
+
         if "triggers-gan" in line:
             print("Say response!")
-            self.say("gan_responses/{}.wav".format(index))
+            # Send a pause the average person speaks at somewhere between 125 and 150 words per minute (2-2.5 per sec)
+        
+            self.say("gan_responses/{}.wav".format(index), words_ahead / 2.5 )
 
         if index < self.script.length - 1:
             self.script.awaiting_index = index + 1 
@@ -280,24 +291,37 @@ class Engine:
     def end(self):
         print("END")
 
-    def say(self, file_name):
+    def response_coming(self, index):
+        for i in range(index + 3, index, -1):
+            if i < self.script.length - 1 and "triggers-gan" in self.script.data["script-lines"][i]:
+                print("Response coming in index {}!".format(i))
+                return True
+        return False
 
-        # Send a pause
-        
+
+    def say(self, file_name, delay_sec):
+
         with contextlib.closing(wave.open(file_name,'r')) as f:
             frames = f.getnframes()
             rate = f.getframerate()
             duration = frames / float(rate)
-            self.last_react += math.ceil(duration) * 1000
-            asyncio.ensure_future(self.server.pause_listening(math.ceil(duration)))
+            asyncio.ensure_future(self.server.pause_listening(math.ceil(duration + delay_sec)))
 
         shutil.copyfile(
                 file_name,             
                 "tmp/gan.wav"
         )
-        print("Copied")
+        print("Copied. Saying with {} delay".format(delay_sec))
+
+        now =  int(round(time.time() * 1000))
+        self.last_react = now + math.ceil(duration) * 1000 + delay_sec * 1000
+
         self.voice_client.send_message("/speech/reload",1)
-        self.voice_client.send_message("/speech/play",1)
+        self.voice_client.send_message("/gan/feedback", 0.0)
+        effect_time = 0.05
+        cmd = ScheduleOSC(delay_sec,self.voice_client, "/gan/delay", [effect_time , effect_time, effect_time], None )
+        cmd2 = ScheduleOSC(delay_sec,self.voice_client, "/speech/play", 1, None )
+        cmd3 = ScheduleOSC(duration + delay_sec, self.voice_client, "/gan/heartbeat", 0, None )
 
 
     def control(self, data):
