@@ -95,7 +95,7 @@
         },
         {
             "speaker": "sister",
-            "text": "It's also my favorite"
+            "text": "They're also my favorite!"
         },
         {
             "speaker": "sister",
@@ -353,7 +353,11 @@
         },
         {
             "speaker": "brother",
-            "text": "We learned that clouds are just a combination of water and air nothing more."
+            "text": "We learned about clouds."
+        },        
+        {
+            "speaker": "brother",
+            "text": "They are just a combination of water and air nothing more."
         },        
         {
             "speaker": "mom",

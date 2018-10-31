@@ -29,17 +29,18 @@ import math
 #print("Loaded English NLP")
 
 class ScheduleOSC:
-    def __init__(self, timeout, command, args,  callback):
+    def __init__(self, timeout, client, command, args,  callback):
         self._timeout = timeout
         self._callback = callback
         self._command = command
         self._args = args
         self._task = asyncio.ensure_future(self._job())
+        self._client = client
 
     async def _job(self):
         await asyncio.sleep(self._timeout)
         print("Shoot command! {}".format(self._command))
-        voice_client.send_message(self._command,self._args)
+        self._client.send_message(self._command,self._args)
         if (self._callback):
             await self._callback()
 
@@ -248,7 +249,7 @@ class Engine:
         self.last_react = int(round(time.time() * 1000))
         print("Said {} ({})".format(index, self.script.data["script-lines"][index]["text"]))
         line = self.script.data["script-lines"][index]
-        if "triggers-gan" in self.script.awaiting:
+        if "triggers-gan" in line:
             print("Say response!")
             self.say("gan_responses/{}.wav".format(index))
 
@@ -270,6 +271,7 @@ class Engine:
             frames = f.getnframes()
             rate = f.getframerate()
             duration = frames / float(rate)
+            self.last_react += math.ceil(duration) * 1000
             asyncio.ensure_future(self.server.pause_listening(math.ceil(duration)))
 
         shutil.copyfile(
@@ -297,14 +299,14 @@ class Engine:
         #start_command = ScheduleOSC(27.5,"/control/start", None )
         #table_command = ScheduleOSC(47,"/control/table", None )
         #start_command = ScheduleOSC(3,"/control/stop", None )
-        command = ScheduleOSC(0,"/gan/feedback", 0.0, None )
+        command = ScheduleOSC(0, self.voice_client, "/gan/feedback", 0.0, None )
         self.say("gan_intro/1.wav")
-        command = ScheduleOSC(first_speech - 1,"/gan/feedback", 0.2, None )
-        command = ScheduleOSC(0 + first_speech,"/control/start", 1, None )
-        command = ScheduleOSC(12.1 + first_speech,"/control/synthbass", 1, None )
-        command = ScheduleOSC(24.1 + first_speech,"/control/table", 1,  None )
-        command = ScheduleOSC(45.1 + first_speech,"/intro/end", 1, None )
-        command = ScheduleOSC(55.1 + first_speech,"/gan/start", 1, None )
+        command = ScheduleOSC(first_speech - 1, self.voice_client, "/gan/feedback", 0.2, None )
+        command = ScheduleOSC(0 + first_speech, self.voice_client, "/control/start", 1, None )
+        command = ScheduleOSC(12.1 + first_speech, self.voice_client, "/control/synthbass", 1, None )
+        command = ScheduleOSC(24.1 + first_speech, self.voice_client, "/control/table", 1,  None )
+        command = ScheduleOSC(45.1 + first_speech, self.voice_client, "/intro/end", 1, None )
+        command = ScheduleOSC(55.1 + first_speech, self.voice_client, "/gan/start", 1, None )
 
 
 if __name__ == '__main__':
