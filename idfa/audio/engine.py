@@ -28,6 +28,8 @@ import math
 #nlp = spacy.load('en')
 #print("Loaded English NLP")
 
+DISTANCE_THRESHOLD = 0.6
+
 class ScheduleOSC:
     def __init__(self, timeout, client, command, args,  callback):
         self._timeout = timeout
@@ -183,71 +185,86 @@ class Engine:
 
         self.matches_cache = []
 
-        if self.lookup_index(tries, self.script.awaiting_index):
-            self.react(self.script.awaiting_index)
+        try_i = self.lookup_index(tries, self.script.awaiting_index)
+        if try_i != -1:
+            self.react(text, self.script.awaiting_index)
             return True
 
         # try up to 2 lines aheead
         for i in range(self.script.awaiting_index + 1, self.script.awaiting_index + 4):
-            if self.match_cache(i):
-                self.react(i)
+            try_i = self.match_cache(i) 
+            if try_i != -1:
+                self.react(text, i)
                 return True
 
         # If it has been too long accept whatever
         now =  int(round(time.time() * 1000))
         if self.last_react > 0 and now - self.last_react > 1000  * 20:
-            index = self.match_cache_any()
-            print(index)
-            if index:
-                self.react(index)
+            (index, try_i) = self.match_cache_any()
+            if try_i != -1:
+                self.react(text, index)
                 return True
 
 
 
     def lookup_index(self, tries, index):
-        for s in tries:
-            if self.match(s, index):
-                # Which word was it?
-                self.matched_to_word = len(s.split()) - 1
-                return True
+        for i in range(0, len(tries)):
+            s = tries[i]
+            try_i = self.match(s, index, i)
+            if try_i != -1:
+                return try_i
+
+        return -1
 
 
     def match_cache_any(self):
         for matches in self.matches_cache:
-            for match in matches:
-                if match["distance"] < 0.6:
-                    # MAKE NOTE OF MATCHED WORD
+            for match in matches["data"]:
+                if match["distance"] < DISTANCE_THRESHOLD:
                     print("EMERGECNY BOOM")
-                    return match["index"]
+                    return (matches["try_index"], match["index"])
+
+        return (-1, -1)
 
     def match_cache(self, index):
         for matches in self.matches_cache:
-            for match in matches:
-                if match["distance"] < 0.6 and match["index"] == index:
-                    # MAKE NOTE OF MATCHED WORD
-                    print("BOOM")
-                    return True
+            for match in matches["data"]:
+                if match["distance"] < DISTANCE_THRESHOLD and match["index"] == index:
+                    print("CACHE BOOM")
+                    return matches["try_index"]
+        return -1
 
 
-    def match(self, text, index):
-        print("[{}]".format(text))
+    def match(self, text, index, try_index):
+        #print("[{}]".format(text))
         matches = self.script.match(text)
         if matches:
-            print(matches)
+            self.matches_cache.append({
+                    "data": matches,
+                    "try_index": try_index
+            })
+            #print(matches)
             for match in matches:
-                self.matches_cache.append(matches)
-                if match["distance"] < 0.6 and match["index"] == index:
-                    print("BOOM ({})".format(text))
-                    return True 
-        return False
+                if match["distance"] < DISTANCE_THRESHOLD and match["index"] == index:
+                    print("BOOM")
+                    return try_index
+        return -1
 
 
 
 
 
-    def react(self, index):
+    def react(self, matched_utterance, index):
+
+        # Which word was it?
+        self.last_matched_word = self.matched_to_word
+        self.matched_to_word = len(matched_utterance.split()) - 1
         self.last_react = int(round(time.time() * 1000))
-        print("Said {} ({})".format(index, self.script.data["script-lines"][index]["text"]))
+        script_text = self.script.data["script-lines"][index]["text"]
+        words_ahead = max(0, len(script_text.split()) - (len(matched_utterance.split()) - self.last_matched_word))
+        print("Said {} ({}) Matched: {}. Words ahead {}".format(index, script_text, matched_utterance, words_ahead))
+
+
         line = self.script.data["script-lines"][index]
         if "triggers-gan" in line:
             print("Say response!")
