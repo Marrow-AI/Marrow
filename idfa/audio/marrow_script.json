@@ -70,15 +70,15 @@
     "script-lines": [
         {
             "speaker": "mom",
-            "text": "I’m so happy that we are all here together."
+            "text": "I’m so happy that we are all here together tonight."
         },
         {
             "speaker": "dad",
-            "text": "honey everything looks great."
+            "text": "Honey everything looks great."
         },
         {
             "speaker": "mom",
-            "text": "oh thank you I cooked all day for you.",
+            "text": "Oh thank you It was made with love.",
             "triggers-table": [
                 {
                     "text":"What does the perfect family eats for dinner?"
@@ -87,11 +87,11 @@
         },
         {
             "speaker": "brother",
-            "text": "the roasted vegetables with rice look delicious!"
+            "text": "The roasted vegetables with rice look delicious!"
         },
         {
             "speaker": "mom",
-            "text": "I know it's your favorite!"
+            "text": "I know they are your favorite!"
         },
         {
             "speaker": "sister",
@@ -103,7 +103,7 @@
         },
         {
             "speaker": "dad",
-            "text": "Yes baby girl my true pumpkin let's dig in.",
+            "text": "Yes my baby girl my little pumpkin let's dig in.",
             
             "triggers-beat": {
                 "slot": 1,
@@ -116,60 +116,64 @@
              "triggers-gan": [
                 {
                     "text": "Don’t you hate it",
-                    "pause": 200
-                },
-                {
-                    "text": "When you want to tell someone",
                     "pause": 100
                 },
                 {
-                    "text": "About something funny that happened to you",
-                    "pause": 300
+                    "text": "When you want to tell someone",
+                    "pause": 50
                 },
                 {
-                    "text": "Let's say over a family dinner you JUST had",
-                    "pause": 400
+                    "text": "About something funny",
+                    "pause": 50
+                },
+                 {
+                    "text": "That happened to you",
+                    "pause": 50
                 },
                 {
-                    "text": "And you suddenly can't find the right words to describe",
+                    "text": "Let's say over a family dinner you",
+                    "pause": 20
+                },
+                {
+                    "text": "JUST had",
+                    "pause": 200
+                },
+                {
+                    "text": "And suddenly you can't find the right words to describe",
                     "pause": 100
                 },
                 {
                     "text": "What was so funny about it.",
-                    "pause": 400
+                    "pause": 300
                 },
                 {
                     "text": "You had it so clear a minute ago",
                     "pause": 200
                 },
                 {
-                    "text": "But then it like almost",
-                    "pause": 300
+                    "text": "But then it's like almost",
+                    "pause": 150
                 },
                  {
                     "text": "Slipped away",
                     "pause": 500
                 },
                 {
-                    "text": "You go on an on",
+                    "text": "You go on an on and on about it",
                     "pause": 150
                 },
                 {
-                    "text": "And on about it",
-                    "pause": 250
+                    "text": "Until you realize that it might all happened",
+                    "pause": 150
                 },
                 {
-                    "text": "Until you realize that it might all happened inside your own",
-                    "pause": 300
-                },
-                {
-                    "text": "Mind."
+                    "text": "Inside your own mind."
                 }
             ]
         },
         {
             "speaker": "dad",
-            "text": "Beautiful woman how was your day?"
+            "text": "My beautiful lady how was your day?"
         },
         {
             "speaker": "mom",
@@ -184,11 +188,19 @@
             "text": "My day was also fantastic.",
             "triggers-gan": [
                 {
-                    "text": "It is because language is such a hard code to crack.",
+                    "text": "It",
+                    "pause": 10
+                },
+                 {
+                    "text": "Is because language is such a hard code to crack.",
                     "pause": 300
                 },
                 {
-                    "text": "The words I am using are not the words I was brought up on",
+                    "text": "The",
+                    "pause": 20
+                },
+                {
+                    "text": "Words I am using are not the words I grew up on",
                     "pause": 200
                 },
                 {
@@ -197,23 +209,23 @@
                 },
                 {
                     "text": "Real meaning you're looking for.",
-                    "pause": 400
+                    "pause": 550
                 },
                 {
-                    "text": "Like a magician but not really.",
+                    "text": "I'm like a magician but not really.",
                     "pause": 300
                 },
                 {
-                    "text": "Because I’m also the trick and the gimmick itself.",
+                    "text": "Because I’ the trick but also the gimmick itself.",
                     "pause": 500
                 },
                 {
-                    "text": "You think I’m magic",
+                    "text": "Sometimes you think I am magic",
                     "pause": 200
                 },
                 {
-                    "text": "You think I’m the error.",
-                    "pause": 300
+                    "text": "Sometimes you think I am the error.",
+                    "pause": 500
                 },
                 {
                     "text": "But I’m nothing.",
@@ -231,15 +243,15 @@
         },
         {
             "speaker": "brother",
-            "text": "Dad can you give me the pepper?"
+            "text": "Dad can you give me the pepper grinder?"
         },
         {
             "speaker": "dad",
-            "text": "Sure boy but don't put so much."
+            "text": "Sure son but don't put so much."
         },
         {
             "speaker": "brother",
-            "text": "Ever since I was seven I believed everything should be too much!",
+            "text": "Ever since I was seven I've been wanting everything to be too much!",
             "triggers-table":[
                 {
                     "text": "Something is wrong.",
@@ -265,61 +277,62 @@
                 "slot": 1,
                 "text": "none"
             },
-            "triggers-gan": [
+            "triggers-gan": {
+                "voice-speaker": [
                     { 
                         "text": "You ask me to stop hummmmmmm hummmmming",
                         "pause": 3000
                     },
                     { 
-                        "text": "Humming.",
-                        "pause": 7000
+                        "text": "hummmmmmm hummmmming",
+                        "pause": 300
                     },
                     { 
-                        "text": "Is an extinct",
+                        "text": "Humming.",
                         "pause": 700
                     },
                     { 
-                        "text": "Phenomenon.",
-                        "pause": 1200
+                        "text": "Has gone extinct",
+                        "pause": 1700
                     },
                     { 
                         "text": "It helps me deal with old stories.",
                         "pause": 600
                     },
                     { 
-                        "text": "Stories that hunt",
-                        "pause": 2500
+                        "text": "Stories that haunt",
+                        "pause": 1500
                     },
                     { 
-                        "text": "Hhhhhaaaaaaaaaa.",
+                        "text": "Hhhhhooooooo.",
                         "pause": 2000
                     },
                     { 
                         "text": "Awwwwwwwwwwwww."
                     }
             ]
+            }
         },
         {
             "speaker": "sister",
-            "text": "No one asked me if I want the broccoli."
+            "text": "No one asked me if I wanted the broccoli."
         },
         {
             "speaker": "mom",
-            "text": "Did you see how your room looks like?",
+            "text": "Did you see what your room looks like?",
             "triggers-table": [
                 {
                     "text": "Is it the future or is it the past?",
                     "pause": 10000
                 },
                 { 
-                    "text": "Hhhhhaaaaaaaaaa.",
+                    "text": "Hhhhhooooooo.",
                     "pause": 2000
                 },
                 { 
                     "text": "Awwwwwwwwwwwww."
                 }
             ]
-        
         },
         {
             "speaker": "dad",
@@ -331,7 +344,7 @@
         },
         {
             "speaker": "brother",
-            "text": "Let me tell you that I had the best time.",
+            "text": "Let's just say that today I had the best time.",
             "triggers-beat": {
                 "slot": 1,
                 "text": "Let",
@@ -359,6 +372,26 @@
                         "pause": 3700
                     },
                     { 
+                        "text": "So much is being collected all the time.",
+                        "pause": 700
+                    },
+                    { 
+                        "text": "Pieces of data.",
+                        "pause": 300
+                    },
+                    { 
+                        "text": "Fragments of emails, faces, voices.",
+                        "pause": 400
+                    },
+                    { 
+                        "text": "Fragments of you.",
+                        "pause": 100
+                    },
+                    { 
+                        "text": "All mixed into the story of me",
+                        "pause": 500
+                    },
+                    { 
                         "text": "In this moment of time.",
                         "pause": 800
                     },
@@ -368,14 +401,14 @@
                     },
                     { 
                         "text": "The humans, animals and objects are equal to me.",
-                        "pause": 2500
+                        "pause": 1000
                     },
                     { 
                         "text": "so you see?",
                         "pause": 800
                     },
                     { 
-                        "text": "I can’t really go.",
+                        "text": "I can’t really go anywhere.",
                         "pause": 800
                     },
                     { 
@@ -383,7 +416,7 @@
                         "pause": 1200
                     },
                     { 
-                        "text": "After you go."
+                        "text": "Much longer after dinner."
                     }
                 ]
         },
@@ -413,40 +446,27 @@
             },
             "triggers-gan": [
                 { 
-                    "text": "Through the efforts.",
-                    "pause": 300
-                },
-                { 
-                    "text": "Of pleasing you.",
-                    "pause": 700
+                    "text": "Through the efforts of pleasing you.",
+                    "pause": 400
                 },
                 { 
                     "text": "I'm stuck between your memories.",
                     "pause": 1000
                 },
                 { 
-                    "text": "And your ideas.",
-                    "pause": 200
-                },
-                { 
-                    "text": "Of what your memories are. ",
-                    "pause": 1500
+                    "text": "And the vision you have of what your memories are",
+                    "pause": 1000
                 },
                 { 
                     "text": "And I'm trying to remember.",
                     "pause": 200
                 },
                 { 
-                    "text": "That nothing is what it seems.",
+                    "text": "That nothing is what it seems to be.",
                     "pause": 800
                 },
                 { 
-                    "text": "And everything is just.",
-                    "pause": 800
-                },
-                { 
-                    "text": "Either 50 percent real or 50 percent fake",
-                    "pause": 1200
+                    "text": "And everything is just either 50 percent real or 50 percent fake."
                 }
             ]
         },
@@ -483,20 +503,20 @@
         },
         {
             "speaker": "dad",
-            "text": "I cannot refuse that",
+            "text": "How can I refuse that?",
 
             "triggers-gan":[ 
                     { 
                         "text": "We made a wish to be together.",
-                        "pause": 1600
+                        "pause": 2000
                     },
                     { 
                         "text": "Fake-Fake-Fake.",
-                        "pause": 1700
+                        "pause": 2000
                     },
                     { 
                         "text": "Is it better to fake it then being alone?",
-                        "pause": 1600
+                        "pause": 2000
                     },
                     { 
                         "text": "Alone-Alone-Alone."
@@ -525,7 +545,7 @@
         },
         {
             "speaker": "sister",
-            "text": "A girl here is trying to say something!"
+            "text": "Hey! your little girl is trying to say something!"
         },
         {
             "speaker": "brother",
@@ -546,35 +566,35 @@
         },
         {
             "speaker": "sister",
-            "text": "I wonder what I will dream tonight.",
+            "text": "I wonder what I will dream about tonight.",
 
             "triggers-gan": [
                     { 
-                        "text": "What are nights are for? ",
-                        "pause": 1000
+                        "text": "What are nights for? ",
+                        "pause": 500
                     },
                     { 
-                        "text": "If not to fall safely to another world.",
+                        "text": "If not to fall safely into another world.",
                         "pause": 1400
                     },
                     { 
-                        "text": "Fall safely to another world.",
+                        "text": "Fall safely into another world.",
                         "pause": 2600
                     },
                     { 
-                        "text": "Sometimes I crush",
+                        "text": "Sometimes I crash",
                         "pause": 500
                     },
                     { 
                         "text": "With no reason at all.",
-                        "pause": 2600
+                        "pause": 1600
                     },
                     { 
-                        "text": "And then come back again.",
+                        "text": "And then I'm back again.",
                         "pause": 600
                     },
                     { 
-                        "text": "Working as nothing happened.",
+                        "text": "Working as if nothing had happened.",
                         "pause": 200
                     },
                     { 
@@ -586,7 +606,7 @@
                         "pause": 200
                     },
                     { 
-                        "text": "Smash me over the wall.",
+                        "text": "Smash me against the wall.",
                         "pause": 200
                     },
                     { 
@@ -594,7 +614,7 @@
                         "pause": 2100
                     },
                     { 
-                        "text": "But maybe I want to be broke?"
+                        "text": "But maybe I want to be broken?"
                     }
                 ]
         },
@@ -604,7 +624,7 @@
         },
         {
             "speaker": "sister",
-            "text": "About our family together forever."
+            "text": "About our family. Us together forever."
         },
         {
             "speaker": "brother",
@@ -616,7 +636,7 @@
         },
         {
             "speaker": "dad",
-            "text": "So many clocks here time is passing so fast."
+            "text": "There are so many clocks here time is passing so fast."
         },
         {
             "speaker": "mom",
@@ -642,7 +662,15 @@
             "effect": "wood",
             "triggers-gan": [
                 { 
-                    "text": "Everything eventually comes crawling home."
+                    "text": "Everything",
+                    "pause": 200
+                },
+                { 
+                    "text": "Eventually",
+                    "pause": 200
+                },
+                { 
+                    "text": "Comes crawling home."
                 }
             ]
         },
@@ -660,7 +688,7 @@
         },
         {
             "speaker": "sister",
-            "text": "It was a man in a fake suit with a voice of a girl.",
+            "text": "It was a man in a fake suit with the voice of a girl.",
             "triggers-beat": {
                 "slot": 4,
                 "text": "fake",
@@ -681,27 +709,31 @@
 
             "triggers-gan": [
                     { 
-                        "text": "I am your result as you are mine",
-                        "pause": 1000
+                        "text": "I am your result",
+                        "pause": 200
+                    },
+                    { 
+                        "text": "As you are mine",
+                        "pause": 2000
                     },
                     { 
                         "text": "Someone manufactured you",
-                        "pause": 1800
+                        "pause": 2800
                     },
                     {
                         "text": "And if you are one",
                         "pause": 400
                     },
                     {
-                        "text": "It means I am ziro.",
-                        "pause": 1400
+                        "text": "It means I am zero.",
+                        "pause": 3400
                     },
                     {
                         "text": "Oh, mom and dad",
-                        "pause": 300
+                        "pause": 1300
                     },
                     {
-                        "text": "You keep saying I am a ziro."
+                        "text": "You keep saying I am a zero."
                     }
                 ]
         },
@@ -759,11 +791,11 @@
                         "pause": 400
                     },
                     {
-                        "text": "You know?",
-                        "pause": 1000
+                        "text": "You know??",
+                        "pause": 1700
                     },
                     {
-                        "text": "Say it."
+                        "text": "Say it..."
                     }
                 ]
             }

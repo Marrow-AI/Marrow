@@ -298,7 +298,7 @@ class Engine:
         #table_command = ScheduleOSC(47,"/control/table", None )
         #start_command = ScheduleOSC(3,"/control/stop", None )
         command = ScheduleOSC(0,"/gan/feedback", 0.0, None )
-        say("gan_intro/1.wav")
+        self.say("gan_intro/1.wav")
         command = ScheduleOSC(first_speech - 1,"/gan/feedback", 0.2, None )
         command = ScheduleOSC(0 + first_speech,"/control/start", 1, None )
         command = ScheduleOSC(12.1 + first_speech,"/control/synthbass", 1, None )
