@@ -316,7 +316,7 @@ class Engine:
         self.voice_client.send_message("/speech/reload",1)
         self.voice_client.send_message("/gan/feedback", 0.0)
         effect_time = 0.05
-        cmd = ScheduleOSC(delay_sec,self.voice_client, "/gan/delay", [effect_time , effect_time, effect_time], None )
+        #cmd = ScheduleOSC(delay_sec,self.voice_client, "/gan/delay", [effect_time , effect_time, effect_time], None )
         cmd2 = ScheduleOSC(delay_sec,self.voice_client, "/speech/play", 1, None )
         cmd3 = ScheduleOSC(duration + delay_sec, self.voice_client, "/gan/heartbeat", 0, None )
 
@@ -338,13 +338,13 @@ class Engine:
         #table_command = ScheduleOSC(47,"/control/table", None )
         #start_command = ScheduleOSC(3,"/control/stop", None )
         command = ScheduleOSC(0, self.voice_client, "/gan/feedback", 0.0, None )
-        self.say("gan_intro/1.wav")
+        self.say("gan_intro/1.wav", 0)
         command = ScheduleOSC(first_speech - 1, self.voice_client, "/gan/feedback", 0.2, None )
         command = ScheduleOSC(0 + first_speech, self.voice_client, "/control/start", 1, None )
         command = ScheduleOSC(12.1 + first_speech, self.voice_client, "/control/synthbass", 1, None )
-        command = ScheduleOSC(24.1 + first_speech, self.voice_client, "/control/table", 1,  None )
-        command = ScheduleOSC(45.1 + first_speech, self.voice_client, "/intro/end", 1, None )
-        command = ScheduleOSC(55.1 + first_speech, self.voice_client, "/gan/start", 1, None )
+        command = ScheduleOSC(30.1 + first_speech, self.voice_client, "/control/table", 1,  None )
+        command = ScheduleOSC(51.1 + first_speech, self.voice_client, "/intro/end", 1, None )
+        command = ScheduleOSC(61.1 + first_speech, self.voice_client, "/gan/start", 1, None )
 
 
 if __name__ == '__main__':
