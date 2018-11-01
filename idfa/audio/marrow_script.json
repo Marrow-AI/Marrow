@@ -15,7 +15,7 @@
                     "pause": 1200
                 },
                 { 
-                    "text": "Some consider this room a masterpiece or a simulation",
+                    "text": "Some consider this room a masterpiece others a simulation",
                     "pause": 1350
                 },
                 { 
@@ -31,11 +31,11 @@
                     "pause": 2300
                 },
                 { 
-                    "text": "You are all free, all entered at the same time",
+                    "text": "You are all free, yet you all entered at the same time",
                     "pause": 1800
                 },
                 { 
-                    "text": "But you are all asking yourself the same question.",
+                    "text": "And you are all asking yourself the same question.",
                     "pause": 2300
                 },
                 { 
@@ -53,14 +53,14 @@
            "2" : [
                 { 
                     "text": "You are here.",
-                    "pause": 300
+                    "pause": 1300
                 },
                 { 
-                    "text": "So let's have fun.",
-                    "pause": 300
+                    "text": "So let's hear those words be spken.",
+                    "pause": 2000
                 },
                 { 
-                    "text": "So bon appetit"
+                    "text": "Bon appetit"
                 }
             ]
     },
@@ -116,7 +116,7 @@
              "triggers-gan": [
                 {
                     "text": "Don't you hate it?",
-                    "pause": 2000
+                    "pause": 5000
                 },
                 {
                     "text": "Don’t you hate it?",
@@ -135,12 +135,12 @@
                     "pause": 150
                 },
                 {
-                    "text": "Let's say over a family dinner you",
+                    "text": "Over the family dinner you",
                     "pause": 20
                 },
                 {
                     "text": "JUST had",
-                    "pause": 400
+                    "pause": 1400
                 },
                 {
                     "text": "And suddenly you can't find the right words to describe",
@@ -148,10 +148,10 @@
                 },
                 {
                     "text": "What was so funny about it.",
-                    "pause": 600
+                    "pause": 800
                 },
                 {
-                    "text": "You had it so clear a minute ago",
+                    "text": "It was so clear a minute ago",
                     "pause": 200
                 },
                 {
@@ -160,7 +160,7 @@
                 },
                  {
                     "text": "Slipped away",
-                    "pause": 500
+                    "pause": 800
                 },
                 {
                     "text": "You go on an on and on",
@@ -168,14 +168,46 @@
                 },
                 {
                     "text": "And on about it",
-                    "pause": 150
+                    "pause": 250
                 },
                 {
                     "text": "Until you realize that it might all happened",
                     "pause": 200
                 },
                 {
-                    "text": "Inside your own mind."
+                    "text": "Inside your own mind.",
+                    "pause": 2700
+                },
+                {
+                    "text": "And this is the birth of a memory.",
+                    "pause": 2250
+                },
+                {
+                    "text": "You start to ask yourself if you ate before?",
+                    "pause": 450
+                },
+                {
+                    "text": "If your family ever used to gather around a table",
+                    "pause": 150
+                },
+                {
+                    "text": "with laughter and perfection?",
+                    "pause": 350
+                },
+                {
+                    "text": "If someone ever looked at you happy?",
+                    "pause": 2350
+                },
+                {
+                    "text": "And you realize you can't trust anything here",
+                    "pause": 250
+                },
+                {
+                    "text": "Except the hole",
+                    "pause": 50
+                },
+                {
+                    "text": "In your own stomach."
                 }
             ]
         },
@@ -196,15 +228,11 @@
             "text": "My day was also fantastic.",
             "triggers-gan": [
                 {
-                    "text": "It is because of language.",
-                    "pause": "2000" 
-                },
-                {
-                    "text": "It",
-                    "pause": 10
+                    "text": "To describe what is in your mind is tough.",
+                    "pause": 5000 
                 },
                  {
-                    "text": "Is because language is such a hard code to crack.",
+                    "text": "Because language is such a hard code to crack.",
                     "pause": 300
                 },
                 {
@@ -212,7 +240,11 @@
                     "pause": 20
                 },
                 {
-                    "text": "Words I am using are not the words I grew up on",
+                    "text": "Words I am using are not the words I grew up on.",
+                    "pause": 400
+                },
+                {
+                    "text": "The words I grew up on are not your words.",
                     "pause": 400
                 },
                 {
@@ -236,7 +268,7 @@
                     "pause": 200
                 },
                 {
-                    "text": "Sometimes you think I am the error.",
+                    "text": "Sometimes you think I am an error.",
                     "pause": 500
                 },
                 {
@@ -785,7 +817,7 @@
         },
         {
             "speaker": "dad",
-            "text": "Is that a cake I can smell in the kitchen?"
+            "text": "Is that an apple pie I can smell in the kitchen?"
         },
         {
             "speaker": "sister",
