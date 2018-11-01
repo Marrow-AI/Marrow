@@ -8,29 +8,78 @@ namespace Marrow
     {
 		public SocketCommunication socketCommunication;
 		public OSCCommunication oSCCommunication;
-		public float speechTimerLength = 0.5f;
+		public float speechTimerLength = 0.1f;
 		public bool startText2Image;
-		private float lastSpeechTimecode;
+
+		private bool socketIsConnected;
 
 		[Header("T2I related")]
 		public Material plateMaterial;
 		public int attnGanImageWidth = 256;
         public int attnGanImageHeight = 256;
+		private float lastSpeechTimecode;
 		private Texture2D attnGanTextureA;
 		private Texture2D attnGanTextureB;
+		private int textureSwapCount;
+		private int plateTweenId;
 
-        private void Start()
+		private void OnEnable()
+		{
+			EventBus.TableSequenceEnded.AddListener(EnableText2Image);
+			EventBus.DiningRoomEnded.AddListener(DisableText2Image);
+			EventBus.ExperienceRestarted.AddListener(DisableText2Image);
+            
+			EventBus.WebsocketConnected.AddListener(OnWebsocketConnected);
+			EventBus.WebsocketDisconnected.AddListener(OnWebsocketDisconnected);
+
+			socketCommunication.AttnGanUpdateResponded.AddListener(OnAttnGanUpdateResponse);
+		}
+
+		private void OnDisable()
+		{
+			EventBus.TableSequenceEnded.RemoveListener(EnableText2Image);
+			EventBus.DiningRoomEnded.RemoveListener(DisableText2Image);
+			EventBus.ExperienceRestarted.RemoveListener(DisableText2Image);
+
+			EventBus.WebsocketConnected.RemoveListener(OnWebsocketConnected);
+			EventBus.WebsocketDisconnected.RemoveListener(OnWebsocketDisconnected);
+
+			socketCommunication.AttnGanUpdateResponded.RemoveListener(OnAttnGanUpdateResponse);
+		}
+
+		private void Start()
         {
 			// Image convert related
-
-			//attnGanTextureA = new Texture2D(attnGanImageWidth, attnGanImageHeight);
-			//plateMaterial.SetTexture("_MainTex", attnGanTextureA);
-			//attnGanTextureB = new Texture2D(attnGanImageWidth, attnGanImageHeight);
-			//plateMaterial.SetTexture("_SecondTex", attnGanTextureB);
+			attnGanTextureA = new Texture2D(attnGanImageWidth, attnGanImageHeight);
+			plateMaterial.SetTexture("_MainTex", attnGanTextureA);
+			attnGanTextureB = new Texture2D(attnGanImageWidth, attnGanImageHeight);
+			plateMaterial.SetTexture("_SecondTex", attnGanTextureB);
         }
+
+		void EnableText2Image()
+		{
+			startText2Image = true;
+		}
+
+		void DisableText2Image()
+        {
+			startText2Image = false;
+        }
+
+		void OnWebsocketConnected()
+		{
+			socketIsConnected = true;
+		}
+
+		void OnWebsocketDisconnected()
+		{
+			socketIsConnected = false;
+		}
 
 		public void OnAttnGanInputUpdate(string inputText)
         {
+			if (!startText2Image || !socketIsConnected)
+				return;
 			if ((Time.time - lastSpeechTimecode) <= speechTimerLength)
                 return;
 
@@ -41,7 +90,30 @@ namespace Marrow
 
 		public void OnAttnGanUpdateResponse(byte[] receivedBase64Img)
         {
-			attnGanTextureA.LoadImage(receivedBase64Img);
+			if (!startText2Image)
+                return;
+			if (LeanTween.isTweening(plateTweenId))
+				return;
+			
+			int targetBlend;
+            textureSwapCount++;
+            if (textureSwapCount % 2 == 1)
+            {
+				attnGanTextureB.LoadImage(receivedBase64Img);
+                targetBlend = 1;
+            }
+            else
+            {
+				attnGanTextureA.LoadImage(receivedBase64Img);
+                targetBlend = 0;
+            }
+
+			plateTweenId = LeanTween.value(gameObject, plateMaterial.GetFloat("_Blend"), targetBlend, .5f)
+			                        .setOnUpdate((float val) =>
+                                     {
+                                         plateMaterial.SetFloat("_Blend", val);
+                                     })
+			                        .id;
         }
     }
 }

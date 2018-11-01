@@ -32,6 +32,7 @@ namespace Marrow
 		public TableSpotLight platesOnlySpotlight;
 
 		public GameObject title;
+		public GameObject starringTitle;
 		public GameObject timeTitle;
 		public string mainTitleTexts;
 		public string[] staringTitleTexts;
@@ -48,14 +49,16 @@ namespace Marrow
 		public GameObject[] plateTexts;
 
 		public Texture tableCookie;
+		//public Shader textMeshProSurfaceShader;
+		//public Shader textMeshProOverlayShader;
 
 		private TextMeshPro textMeshProTitle;
+		private TextMeshPro textMeshProStarringTitle;
 		private TextMeshPro textMeshProTimeTitle;
 		private TextMeshPro[] textMeshProNameTags;
 		private IEnumerator titleSequencePart1Coroutine;
 		private IEnumerator titleSequencePart2Coroutine;
 		private Material tableNormalMaterial;
-
 		private Material plateNormalMaterial;
 		private IEnumerator platesDissovleCoroutine;
 
@@ -73,6 +76,7 @@ namespace Marrow
         void Start()
         {
 			textMeshProTitle = title.GetComponent<TextMeshPro>();
+			textMeshProStarringTitle = starringTitle.GetComponent<TextMeshPro>();
 			textMeshProTimeTitle = timeTitle.GetComponent<TextMeshPro>();
 			textMeshProNameTags = new TextMeshPro[nameTags.Length];
 			for (int i = 0; i < textMeshProNameTags.Length; i++)
@@ -87,7 +91,7 @@ namespace Marrow
 				lightFlickers[i] = spotLights[i].GetComponent<LightFlicker>();
 
 			stayWait = new WaitForSeconds(1f);
-
+            
 			Setup();
 
 			if (devMode)
@@ -101,19 +105,17 @@ namespace Marrow
 				
         }
 
-		private void OnDestroy()
-		{
-			
-		}
-
 		public void Setup()
 		{
 			// reset
+			//textMeshProTitle.GetComponent<Renderer>().sharedMaterial.shader = textMeshProSurfaceShader;
 			textMeshProTitle.color = Color.clear;
+			textMeshProStarringTitle.color = Color.clear;
 			textMeshProTimeTitle.color = Color.clear;
 			UpdateNameTagsColor(Color.clear);
 
 			title.SetActive(false);
+			starringTitle.SetActive(false);
 			timeTitle.SetActive(false);
 
 			for (int i = 0; i < spotLights.Length; i++)
@@ -137,6 +139,9 @@ namespace Marrow
 			plateNormalMaterial.SetTexture("_SecondTex", null);
 			plateNormalMaterial.SetFloat("_Blend", 0);
 
+			for (int i = 0; i < plateTexts.Length; i++)
+				plateTexts[i].SetActive(false);
+				
             // re-position stuff
 
             // clean stuff
@@ -172,32 +177,40 @@ namespace Marrow
             
 			yield return new WaitForSeconds(5.5f);
 
+			LogCurrentTimecode("Lights off one by one");
+            LeanTween.value(title, UpdateMainTitleColor, Color.white, Color.clear, 2f);
+            spotLights[0].ToggleOn(false, 0f, 0.2f, 1.5f);
+            spotLights[1].ToggleOn(false, 0f, 0.2f, 1.75f);
+            spotLights[2].ToggleOn(false, 0f, 0.2f, 2f);
+            spotLights[3].ToggleOn(false, 0f, 0.2f, 2.25f);
+            
+			yield return new WaitForSeconds(3.5f);
+
 			LogCurrentTimecode("Staring title");
+			//textMeshProTitle.GetComponent<Renderer>().sharedMaterial.shader = textMeshProOverlayShader;
+			UpdateMainTitleColor(Color.clear);
+			starringTitle.SetActive(true);
+
 			for (int i = 0; i < staringTitleTexts.Length; i++)
 			{
-				for (int j = 0; j < spotLights.Length; j++)
-					spotLights[j].BlinkOnce();
-				LeanTween.value(title, UpdateMainTitleColor, Color.white, Color.clear, .5f);
-				//TurnOnFlicker(true);
+				//for (int j = 0; j < spotLights.Length; j++)
+					//spotLights[j].BlinkOnce();
+                if(i!=0)
+					LeanTween.value(starringTitle, UpdateStarringTitleColor, Color.white, Color.clear, .5f);
 				yield return new WaitForSeconds(.5f);
-				//TurnOnFlicker(false);
-				textMeshProTitle.text = staringTitleTexts[i].Replace("\\n", "\n");
-				LeanTween.value(title, UpdateMainTitleColor, Color.clear, Color.white, .5f);
+				textMeshProStarringTitle.text = staringTitleTexts[i].Replace("\\n", "\n");
+				LeanTween.value(starringTitle, UpdateStarringTitleColor, Color.clear, Color.white, .5f);
 				yield return new WaitForSeconds(2.5f);
 			}
-                        
-			LogCurrentTimecode("Lights off one by one");
-			LeanTween.value(title, UpdateMainTitleColor, Color.white, Color.clear, 2f);
-			spotLights[0].ToggleOn(false, 0f, 0.2f, 1.5f);
-			spotLights[1].ToggleOn(false, 0f, 0.2f, 1.75f);
-			spotLights[2].ToggleOn(false, 0f, 0.2f, 2f);
-			spotLights[3].ToggleOn(false, 0f, 0.2f, 2.25f);
-
+            
+			LeanTween.value(title, UpdateStarringTitleColor, Color.white, Color.clear, 2f);
+            
 			yield return new WaitForSeconds(3f);
+			//textMeshProTitle.GetComponent<Renderer>().sharedMaterial.shader = textMeshProSurfaceShader;
 
 			LogCurrentTimecode("Title off");
-			textMeshProTitle.color = Color.clear;
 			title.SetActive(false);
+			starringTitle.SetActive(false);
             
 			LogCurrentTimecode("Table change to video materia; play video");
 			tableRenderer.material = videoMaterial;
@@ -216,30 +229,29 @@ namespace Marrow
 				plates[i].SetActive(true);
             }
 
+			//yield return new WaitForSeconds(2f);
+
 			LogCurrentTimecode("Lights-on onto plates");
 			// TODO: turn to unlit texture material
 			for (int i = 0; i < spotLights.Length; i++)
 			{
 				spotLights[i].SetLightColor("#FEFFDD");
-				spotLights[i].TargetOnPlate(i*0.25f);
+				spotLights[i].TargetOnPlate(i);
 			}
 
-			yield return new WaitForSeconds(5f);
+			yield return new WaitForSeconds(6f);
 
 			// Table be well lit by main light
 			LogCurrentTimecode("Table be well lit by main light");
-			spotLights[0].ToggleOn(false, 0, 1f, 0);
+			spotLights[0].BecomeGeneralMainLight(tableCookie);
+
 			// Others turn down
 			for (int i = 1; i < spotLights.Length; i++)
 	    		spotLights[i].ToggleOn(false, 0, 2f, 0);
 
-			yield return new WaitForSeconds(1f);
-
-			spotLights[0].BecomeGeneralMainLight(tableCookie);
-
-			yield return new WaitForSeconds(3f);
+			//yield return new WaitForSeconds(4f);
             
-			platesOnlySpotlight.ToggleOn(true, .5f, 4f, 1f);
+			platesOnlySpotlight.ToggleOn(true, .5f, 2f, 1f);
 
             // Show name tags/titles
 			LogCurrentTimecode("Show name tags");
@@ -270,27 +282,35 @@ namespace Marrow
 			yield return new WaitForSeconds(3f);
 
 			LogCurrentTimecode("Spotlight on mom");
-			spotLights[3].TargetOnPlate(0, 2.4f, 3f);
+			spotLights[3].TargetOnPlateBlink(2.4f, 1f);
 
-			//yield return new WaitForSeconds(2f);
-
+			yield return new WaitForSeconds(3f);
+            
 			LeanTween.value(nameTags[0], UpdateNameTagsColor, Color.white, Color.clear, 2f);
 
 			yield return new WaitForSeconds(2f);
+            
+			// TODO: nameTags => change to speech2text
 
-			for (int i = 0; i < nameTags.Length; i++)
-				nameTags[i].SetActive(false);
+			//for (int i = 0; i < nameTags.Length; i++)
+				//nameTags[i].SetActive(false);
+			
 			platesOnlySpotlight.ToggleOn(true, 2f, 2f, 0f);
 
 			LogCurrentTimecode("Table sequence ends! Wait for talking.");
 			int totalTime = Mathf.FloorToInt(Time.time - startTimecode);
 			Debug.Log("Total time: " + totalTime);
 
-			if (devMode)
-			{
-				platesDissovleCoroutine = AutoDissolvePlates();
-				StartCoroutine(platesDissovleCoroutine);
-			}
+			//if (devMode)
+			//{
+			//	platesDissovleCoroutine = AutoDissolvePlates();
+			//	StartCoroutine(platesDissovleCoroutine);
+			//}
+
+			for (int i = 0; i < plateTexts.Length; i++)
+				plateTexts[i].SetActive(true);
+			
+			EventBus.TableSequenceEnded.Invoke();
 		}
 
 		void OnVideoEvent(MediaPlayer mp, MediaPlayerEvent.EventType et, ErrorCode errorCode)
@@ -345,6 +365,11 @@ namespace Marrow
 		void UpdateMainTitleColor(Color col)
         {
 			textMeshProTitle.color = col;
+        }
+
+		void UpdateStarringTitleColor(Color col)
+        {
+			textMeshProStarringTitle.color = col;
         }
 
 		void UpdateNameTagsColor(Color col)

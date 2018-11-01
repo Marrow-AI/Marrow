@@ -92,9 +92,17 @@ namespace Marrow
 
 		public void TargetOnPlate(float delay, float intensity, float time)
         {
+			transform.position = targetPlateLocation.position;
+            m_light.spotAngle = 30f;
+            ToggleOn(true, intensity, time, delay);
+        }
+
+		public void TargetOnPlateBlink(float intensity, float time)
+        {
             transform.position = targetPlateLocation.position;
             m_light.spotAngle = 30f;
-			ToggleOn(true, intensity, time, delay);
+			LeanTween.value(gameObject, CallOnIntensityUpdate, 0, intensity, time);
+			LeanTween.value(gameObject, CallOnIntensityUpdate, intensity, 0, time).setDelay(time+2f);
         }
 
 		public void SetLightColor(string hex)
@@ -122,16 +130,16 @@ namespace Marrow
 		public void BecomeGeneralMainLight(Texture cookie)
 		{
 			// position
-			//LeanTween.moveLocal(gameObject, new Vector3(0, 5.5f, 0), 1f);
-			transform.localPosition = new Vector3(0, 5.5f, 0);
-			m_light.spotAngle = 10f;
-			m_light.cookie = cookie;
+			LeanTween.moveLocal(gameObject, new Vector3(0, 5.5f, 0), 1f);
+			//transform.localPosition = new Vector3(0, 5.5f, 0);
+			//m_light.spotAngle = 10f;
+			//m_light.cookie = cookie;
 
 			// spot angle
-			SetSpotAngle(93f, 4f);
+			SetSpotAngle(130f);
 
 			// intensity
-			ToggleOn(true, 1.5f, 4f, 0);
+			ToggleOn(true, 1.5f, 1f, 0);
             
 			// color
 			Color generalLightColor;

@@ -15,16 +15,28 @@ namespace TMPro.Examples
         public float SpeedMultiplier = 1.0f;
         public float CurveScale = 1.0f;
 
+		private IEnumerator wartTextCoroutine;
+
         void Awake()
         {
             m_TextComponent = gameObject.GetComponent<TMP_Text>();
         }
 
+		private void OnEnable()
+		{
+			wartTextCoroutine = WarpText();
+			StartCoroutine(WarpText());
+		}
 
-        void Start()
-        {
-            StartCoroutine(WarpText());
-        }
+		private void OnDisable()
+		{
+			StopCoroutine(WarpText());
+		}
+
+		//void Start()
+        //{
+        //    StartCoroutine(WarpText());
+        //}
 
 
         private AnimationCurve CopyAnimationCurve(AnimationCurve curve)
@@ -53,24 +65,29 @@ namespace TMPro.Examples
             Matrix4x4 matrix;
 
             m_TextComponent.havePropertiesChanged = true; // Need to force the TextMeshPro Object to be updated.
-            CurveScale *= 10;
+            //CurveScale *= 10;
+   
             float old_CurveScale = CurveScale;
             AnimationCurve old_curve = CopyAnimationCurve(VertexCurve);
 
             while (true)
             {
+				TMP_TextInfo textInfo = m_TextComponent.textInfo;
+				CurveScale = Mathf.Clamp(textInfo.characterCount * 0.02f, 0.02f, 0.6f);
+
                 if (!m_TextComponent.havePropertiesChanged && old_CurveScale == CurveScale && old_curve.keys[1].value == VertexCurve.keys[1].value)
                 {
                     yield return null;
                     continue;
                 }
+				//Debug.Log(textInfo.characterCount);
 
                 old_CurveScale = CurveScale;
                 old_curve = CopyAnimationCurve(VertexCurve);
 
                 m_TextComponent.ForceMeshUpdate(); // Generate the mesh and populate the textInfo with data we can use and manipulate.
 
-                TMP_TextInfo textInfo = m_TextComponent.textInfo;
+				textInfo = m_TextComponent.textInfo;
                 int characterCount = textInfo.characterCount;
 
 
