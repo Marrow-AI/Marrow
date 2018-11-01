@@ -65,7 +65,7 @@
             ]
     },
     "start-silence": {
-        "text": "oh mom and dad!!"
+        "text": "oh mom and dad"
     },
     "script-lines": [
         {
@@ -304,11 +304,11 @@
                     },
                     { 
                         "text": "Has gone extinct",
-                        "pause": 1700
+                        "pause": 2700
                     },
                     { 
                         "text": "It helps me deal with old stories.",
-                        "pause": 600
+                        "pause": 1300
                     },
                     { 
                         "text": "Stories that haunt",
