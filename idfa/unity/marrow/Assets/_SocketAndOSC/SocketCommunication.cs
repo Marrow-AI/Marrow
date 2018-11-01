@@ -20,9 +20,12 @@ namespace Marrow
         public string data;
     }
 
+	[System.Serializable]
+	public class ByteArrayEvent : UnityEvent<byte[]> { }
+
 	public class SocketCommunication : MonoBehaviour
 	{
-		public UnityEvent AttnGanUpdateResponded = new UnityEvent();
+		public ByteArrayEvent AttnGanUpdateResponded = new ByteArrayEvent();
 
 		public enum ServerType { Pix2Pix, AttnGan }
 
@@ -38,6 +41,7 @@ namespace Marrow
         private Socket attnGanSocket;
 		private Texture2D attnGanTexture;
         private float lastTypingTimecode;
+		private bool attnGanIsConnected;
 
         [Space(10)]
 		public string pix2pixUrl; //http://pix2pix.api.marrow.raycaster.studio:3333/socket.io/
@@ -78,13 +82,14 @@ namespace Marrow
                 attnGanSocket.On("connecting", (socket, packet, args) => Debug.Log("Connecting AttnGan"));
                 attnGanSocket.On(SocketIOEventTypes.Connect, OnAttnGanConnect);
                 attnGanSocket.On("update_response", OnAttnGanUpdateResponse);
+				attnGanSocket.On(SocketIOEventTypes.Disconnect, OnAttnGanDisconnect);
                 attnGanSocket.On(SocketIOEventTypes.Error, OnAttnGanError);
 
                 attnGanSocketManager.Open();
 
                 // Image convert related
-                attnGanTexture = new Texture2D(attnGanImageWidth, attnGanImageHeight);
-                attnGanMaterial.mainTexture = attnGanTexture;
+                //attnGanTexture = new Texture2D(attnGanImageWidth, attnGanImageHeight);
+                //attnGanMaterial.mainTexture = attnGanTexture;
 			}
 			else
 			{
@@ -95,6 +100,7 @@ namespace Marrow
 				pix2pixSocket.On("connecting", (socket, packet, args) => Debug.Log("Connecting Pix2Pix"));
 				pix2pixSocket.On(SocketIOEventTypes.Connect, OnPix2PixConnect);
 				pix2pixSocket.On("update_response", OnPix2PixUpdateResponse);
+				pix2pixSocket.On(SocketIOEventTypes.Disconnect, OnPix2PixDisconnect);
 				pix2pixSocket.On(SocketIOEventTypes.Error, OnPix2PixError);
 
 				pix2pixSocketManager.Open();
@@ -147,8 +153,8 @@ namespace Marrow
 		{
 			Debug.Log("Connected to AttnGAN.");
 			Debug.Log(socket.Id);
-			pix2pixIsConnected = true;
-                        
+			attnGanIsConnected = true;
+			EventBus.WebsocketConnected.Invoke();
 			//EmitPix2PixRequest();
 		}
 
@@ -157,7 +163,8 @@ namespace Marrow
 			Dictionary<string, object> data = args[0] as Dictionary<string, object>;
 			string base64Image = data["image"] as string;
 			byte[] receivedBase64Img = Convert.FromBase64String(base64Image);
-			attnGanTexture.LoadImage(receivedBase64Img);
+			//attnGanTexture.LoadImage(receivedBase64Img);
+			AttnGanUpdateResponded.Invoke(receivedBase64Img);
 		}
 
 		void OnAttnGanError(Socket socket, Packet packet, params object[] args)
@@ -190,6 +197,12 @@ namespace Marrow
 			Debug.LogFormat("socket emit request: {0}", stringToSend);
 		}
 
+		void OnAttnGanDisconnect(Socket socket, Packet packet, params object[] args)
+		{
+			Debug.Log("AttnGan disonnected!!!");
+			EventBus.WebsocketDisconnected.Invoke();
+		}
+
         /////////////////////////////////////////////////
 		/////////////////////////////////////////////////
 		///////////////////////////////////////////////// 
@@ -198,6 +211,8 @@ namespace Marrow
         {
             Debug.Log("Connected to pix2pix.");
             Debug.Log(socket.Id);
+			pix2pixIsConnected = true;
+            EventBus.WebsocketConnected.Invoke();
         }
 
         void OnPix2PixUpdateResponse(Socket socket, Packet packet, params object[] args)
@@ -225,6 +240,12 @@ namespace Marrow
 			string base64Image = Convert.ToBase64String(imageData);
 			pix2pixSocket.Emit("update_request", base64Image);
 			Debug.LogFormat("socket emit pix2pix request");
+        }
+
+		void OnPix2PixDisconnect(Socket socket, Packet packet, params object[] args)
+        {
+            Debug.Log("Pix2Pix websocket disonnected!!!");
+            EventBus.WebsocketDisconnected.Invoke();
         }
 	}
 }

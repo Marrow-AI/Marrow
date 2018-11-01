@@ -5,9 +5,19 @@ using UnityEngine;
 public class MoveSpotLight : MonoBehaviour {
 
 	public Transform[] lightPositions;
+	private Light m_light;
+
+	private void Start()
+	{
+		m_light = GetComponent<Light>();
+	}
 
 	public void UpdateSpotlightPosition(string role)
 	{
+		LeanTween.value(gameObject, m_light.intensity, 2.4f, 1f)
+                     .setLoopPingPong(1)
+                     .setOnUpdate(CallOnIntensityUpdate);
+		
 		switch(role)
 		{
 			case "dad":
@@ -24,4 +34,9 @@ public class MoveSpotLight : MonoBehaviour {
                 break;
 		}
 	}
+
+	private void CallOnIntensityUpdate(float val)
+    {
+        m_light.intensity = val;
+    }
 }
