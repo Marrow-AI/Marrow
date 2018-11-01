@@ -71,6 +71,7 @@ class Engine:
         self.last_react = 0
         self.mid_match = False
         self.beating = False
+        self.matched_to_word = 0
 
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
@@ -168,21 +169,17 @@ class Engine:
         #print("({})".format(text))
         self.mid_text = text
         self.t2i_client.send_message("/speech", text)
-        if self.lookup(text):
-            self.mid_match = True
+        self.lookup(text)
         
     def lookup(self, text):
         # print("REACT: {}".format(text))
         # update last speech time
         # First get the top line matches
         tries = []
-        if self.mid_match:
-            # We have to try all combinations
-            words = text.split()
-            for i in range(len(words) - 2, self.matched_to_word, -1):
-                tries.append(" ".join(words[i:]))
-        else:
-            tries.append(text)
+        # We have to try all combinations
+        words = text.split()
+        for i in range(len(words) - 2, self.matched_to_word, -1):
+            tries.append(" ".join(words[i:]))
 
         self.matches_cache = []
 

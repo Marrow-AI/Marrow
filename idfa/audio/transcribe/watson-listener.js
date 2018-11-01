@@ -24,25 +24,39 @@ export default class WatsonListener {
             inactivity_timeout: -1
         });
         this.stream.on('data', (data) => {
-            if (data.results[0]) {
-                let text = data.results[0].alternatives[0].transcript.replace("%HESITATION", "");
-                if (data.results[0].final) {
-                    this.socket.send(JSON.stringify({action: 'speech', text: text}));
-                }
-                else if (text != this.lastText) {
-                    this.socket.send(JSON.stringify({action: 'mid-speech', text: text}));
-                    console.log(text);
-                    this.lastText = text;
+            if (this.socket && this.socket.readyState == 1) {
+                if (data.results[0]) {
+                    let text = data.results[0].alternatives[0].transcript.replace("%HESITATION", "");
+                    if (data.results[0].final) {
+                        this.socket.send(JSON.stringify({action: 'speech', text: text}));
+                    }
+                    else if (text != this.lastText) {
+                        this.socket.send(JSON.stringify({action: 'mid-speech', text: text}));
+                        console.log(text);
+                        this.lastText = text;
+                    }
                 }
             }
+            else {
+                console.log("Socket not connected!");
+            }
         });
-        this.stream.on('error', function(err) {
+        this.stream.on('error', (err) => {
             console.log("ERROR!", err);
+            this.stream.stop();
+            this.stream.removeAllListeners('data');
+            this.stream.removeAllListeners('error');
+            if (this.listening) {
+                // Here we go again
+                this.listen();
+            }
         });
     }
     stop() {
         if (this.stream) {
             this.stream.stop();
+            this.stream.removeAllListeners('data');
+            this.stream.removeAllListeners('error');
         }
         this.listening = false;
     }

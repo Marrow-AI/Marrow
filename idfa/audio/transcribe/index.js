@@ -19,8 +19,8 @@ $(document).ready(() => {
 });
 
 // Connecting to server
-const listener = new WatsonListener();
-//const listener = new MSListener();
+//const listener = new WatsonListener();
+const listener = new MSListener();
 const socket = new ReconnectingWebSocket("wss://localhost:9540/");
 listener.init(socket);
 
@@ -37,11 +37,12 @@ socket.onmessage = (packet) => {
         if (!listener.listening) {
             listener.listen()
         }
-        if (listener.tokenCommand == "get-token") {
+        if (listener instanceof MSListener) {
             // Microsoft renewal
+            console.log("Renewing token in 9 minutes");
             setTimeout(() => {
                 socket.send(JSON.stringify({action: 'get-token'}));
-            },1000 * 60 * 5)
+            },1000 * 60 * 9)
         }
     }
     else if (message.action == "pause") {

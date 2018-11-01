@@ -24,12 +24,20 @@ export default class MSListener {
         this.recognizer.startContinuousRecognitionAsync()
         this.recognizer.recognizing = (r,event) => {
             console.log('(' + event.result.text + ')');
-            this.socket.send(JSON.stringify({action: 'mid-speech', text: event.result.text}));
+            if (this.socket && this.socket.readyState == 1) {
+                this.socket.send(JSON.stringify({action: 'mid-speech', text: event.result.text}));
+            } else {
+                console.log("Socket not connected!");
+            }
         }
         this.recognizer.recognized = (r,event) => {
             if (event.result && event.result.text) {
                 console.log(event.result.text);
-                this.socket.send(JSON.stringify({action: 'speech', text: event.result.text}));
+                if (this.socket && this.socket.readyState == 1) {
+                    this.socket.send(JSON.stringify({action: 'speech', text: event.result.text}));
+                } else {
+                    console.log("Socket not connected!");
+                }
             }
         }
         this.recognizer.canceled = (r,event) => {
@@ -43,6 +51,7 @@ export default class MSListener {
         }
     }
     stop() {
+        console.log("Stopping");
         if (this.recognizer) {
             this.recognizer.stopContinuousRecognitionAsync()
         }
