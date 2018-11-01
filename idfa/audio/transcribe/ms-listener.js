@@ -12,7 +12,7 @@ export default class MSListener {
     listen() {
         this.listening = true;
         console.log("LISTEN", this.token);
-        let speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(this.token, "westus");
+        let speechConfig = SpeechSDK.SpeechConfig.fromAuthorizationToken(this.token, "eastus");
         speechConfig.language = "en-US";
         speechConfig.properties.setProperty('SpeechServiceResponse_RequestProfanityFilterTrueFalse', 'True');
         console.log(speechConfig.properties)

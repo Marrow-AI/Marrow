@@ -265,18 +265,25 @@ class Engine:
 
         line = self.script.data["script-lines"][index]
         
-        if self.response_coming(index):
+        response_i = self.response_coming(index)
+        if response_i != -1:
             if not self.beating:
                 self.voice_client.send_message("/gan/heartbeat", 0.5)
+                self.preload_speech("gan_responses/{}.wav".format(response_i))
         else:
             self.beating = False
 
 
         if "triggers-gan" in line:
             print("Say response!")
+
             # Send a pause the average person speaks at somewhere between 125 and 150 words per minute (2-2.5 per sec)
-        
-            self.say("gan_responses/{}.wav".format(index), words_ahead / 2.5 )
+            self.say(words_ahead / 2.5 )
+
+        else:
+            # Normal react feedback
+            self.voice_client.send_message("/gan/react",1)
+
 
         if index < self.script.length - 1:
             self.script.awaiting_index = index + 1 
@@ -292,33 +299,37 @@ class Engine:
         for i in range(index + 3, index, -1):
             if i < self.script.length - 1 and "triggers-gan" in self.script.data["script-lines"][i]:
                 print("Response coming in index {}!".format(i))
-                return True
-        return False
+                return i
+        return -1
 
 
-    def say(self, file_name, delay_sec):
+    def say(self, delay_sec):
 
+
+        print("Saying line with {} delay".format(delay_sec))
+
+        now =  int(round(time.time() * 1000))
+        self.last_react = now + math.ceil(self.speech_duration) * 1000 + delay_sec * 1000
+        asyncio.ensure_future(self.server.pause_listening(math.ceil(self.speech_duration + delay_sec)))
+
+        effect_time = 0.05
+        cmd = ScheduleOSC(delay_sec,self.voice_client, "/gan/delay", 1, None )
+        cmd2 = ScheduleOSC(delay_sec,self.voice_client, "/speech/play", 1, None )
+        cmd3 = ScheduleOSC(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0, None )
+
+    def preload_speech(self, file_name):
         with contextlib.closing(wave.open(file_name,'r')) as f:
             frames = f.getnframes()
             rate = f.getframerate()
-            duration = frames / float(rate)
-            asyncio.ensure_future(self.server.pause_listening(math.ceil(duration + delay_sec)))
+            self.speech_duration = frames / float(rate)
 
         shutil.copyfile(
                 file_name,             
                 "tmp/gan.wav"
         )
-        print("Copied. Saying with {} delay".format(delay_sec))
-
-        now =  int(round(time.time() * 1000))
-        self.last_react = now + math.ceil(duration) * 1000 + delay_sec * 1000
-
+        print("Copied")
         self.voice_client.send_message("/speech/reload",1)
-        self.voice_client.send_message("/gan/feedback", 0.0)
-        effect_time = 0.05
-        #cmd = ScheduleOSC(delay_sec,self.voice_client, "/gan/delay", [effect_time , effect_time, effect_time], None )
-        cmd2 = ScheduleOSC(delay_sec,self.voice_client, "/speech/play", 1, None )
-        cmd3 = ScheduleOSC(duration + delay_sec, self.voice_client, "/gan/heartbeat", 0, None )
+
 
 
     def control(self, data):
@@ -345,6 +356,7 @@ class Engine:
         command = ScheduleOSC(30.1 + first_speech, self.voice_client, "/control/table", 1,  None )
         command = ScheduleOSC(51.1 + first_speech, self.voice_client, "/intro/end", 1, None )
         command = ScheduleOSC(61.1 + first_speech, self.voice_client, "/gan/start", 1, None )
+        command = ScheduleOSC(61.5 + first_speech, self.voice_client, "/gan/feedback", 0, None )
 
 
 if __name__ == '__main__':
