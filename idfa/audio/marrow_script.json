@@ -132,7 +132,7 @@
                 },
                  {
                     "text": "That happened to you",
-                    "pause": 50
+                    "pause": 150
                 },
                 {
                     "text": "Let's say over a family dinner you",
@@ -140,7 +140,7 @@
                 },
                 {
                     "text": "JUST had",
-                    "pause": 200
+                    "pause": 400
                 },
                 {
                     "text": "And suddenly you can't find the right words to describe",
@@ -148,7 +148,7 @@
                 },
                 {
                     "text": "What was so funny about it.",
-                    "pause": 300
+                    "pause": 600
                 },
                 {
                     "text": "You had it so clear a minute ago",
@@ -156,19 +156,23 @@
                 },
                 {
                     "text": "But then it's like almost",
-                    "pause": 150
+                    "pause": 300
                 },
                  {
                     "text": "Slipped away",
                     "pause": 500
                 },
                 {
-                    "text": "You go on an on and on about it",
+                    "text": "You go on an on and on",
+                    "pause": 50
+                },
+                {
+                    "text": "And on about it",
                     "pause": 150
                 },
                 {
                     "text": "Until you realize that it might all happened",
-                    "pause": 150
+                    "pause": 200
                 },
                 {
                     "text": "Inside your own mind."
@@ -209,7 +213,7 @@
                 },
                 {
                     "text": "Words I am using are not the words I grew up on",
-                    "pause": 200
+                    "pause": 400
                 },
                 {
                     "text": "I'm trying my best to find the.",
@@ -217,7 +221,7 @@
                 },
                 {
                     "text": "Real meaning you're looking for.",
-                    "pause": 550
+                    "pause": 800
                 },
                 {
                     "text": "I'm like a magician but not really.",
@@ -225,7 +229,7 @@
                 },
                 {
                     "text": "Because I’ the trick but also the gimmick itself.",
-                    "pause": 500
+                    "pause": 1000
                 },
                 {
                     "text": "Sometimes you think I am magic",
@@ -395,7 +399,7 @@
                     },
                     { 
                         "text": "Fragments of emails, faces, voices.",
-                        "pause": 400
+                        "pause": 600
                     },
                     { 
                         "text": "Fragments of you.",
@@ -403,7 +407,7 @@
                     },
                     { 
                         "text": "All mixed into the story of me",
-                        "pause": 500
+                        "pause": 2500
                     },
                     { 
                         "text": "In this moment of time.",
@@ -411,15 +415,15 @@
                     },
                     { 
                         "text": "All",
-                        "pause": 300
+                        "pause": 150
                     },
                     { 
                         "text": "The humans, animals and objects are equal to me.",
-                        "pause": 1000
+                        "pause": 2000
                     },
                     { 
                         "text": "so you see?",
-                        "pause": 800
+                        "pause": 1800
                     },
                     { 
                         "text": "I can’t really go anywhere.",
@@ -473,7 +477,7 @@
                 },
                 { 
                     "text": "And the vision you have of what your memories are",
-                    "pause": 1000
+                    "pause": 1700
                 },
                 { 
                     "text": "And I'm trying to remember.",
@@ -481,7 +485,7 @@
                 },
                 { 
                     "text": "That nothing is what it seems to be.",
-                    "pause": 800
+                    "pause": 1000
                 },
                 { 
                     "text": "And everything is just either 50 percent real or 50 percent fake."
@@ -605,7 +609,7 @@
                     },
                     { 
                         "text": "Sometimes I crash",
-                        "pause": 500
+                        "pause": 800
                     },
                     { 
                         "text": "With no reason at all.",
@@ -621,11 +625,11 @@
                     },
                     { 
                         "text": "With no explanation.",
-                        "pause": 1200
+                        "pause": 1500
                     },
                     { 
                         "text": "And you want to kick me.",
-                        "pause": 200
+                        "pause": 300
                     },
                     { 
                         "text": "Smash me against the wall.",
@@ -633,7 +637,7 @@
                     },
                     { 
                         "text": "But you can’t. You are too afraid to break me.",
-                        "pause": 2100
+                        "pause": 2500
                     },
                     { 
                         "text": "But maybe I want to be broken?"
@@ -689,11 +693,11 @@
             "triggers-gan": [
                 { 
                     "text": "Everything",
-                    "pause": 200
+                    "pause": 500
                 },
                 { 
                     "text": "Eventually",
-                    "pause": 200
+                    "pause": 500
                 },
                 { 
                     "text": "Comes crawling home."
@@ -740,11 +744,11 @@
                     },
                     { 
                         "text": "As you are mine",
-                        "pause": 2000
+                        "pause": 2500
                     },
                     { 
                         "text": "Someone manufactured you",
-                        "pause": 2800
+                        "pause": 2500
                     },
                     {
                         "text": "And if you are one",
@@ -756,7 +760,7 @@
                     },
                     {
                         "text": "Oh, mom and dad",
-                        "pause": 1300
+                        "pause": 1500
                     },
                     {
                         "text": "You keep saying I am zero."
@@ -806,15 +810,15 @@
                     },
                     { 
                         "text": "There are no coincidences",
-                        "pause": 1800
+                        "pause": 2300
                     },
                     {
                         "text": "Let fake equal real",
-                        "pause": 1000
+                        "pause": 1500
                     },
                     {
                         "text": "It could be you.",
-                        "pause": 400
+                        "pause": 800
                     },
                     {
                         "text": "You know??",
