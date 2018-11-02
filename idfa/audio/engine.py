@@ -389,6 +389,11 @@ class Engine:
         ####
         self.voice_client.send_message("/gan/strings", max(0, self.mental_state.value - 0.5))
         self.voice_client.send_message("/gan/lfo2", max(0, self.mental_state.value - 0.5) * 0.3)
+        self.voice_client.send_message("/gan/lfo1", max(0, 1-(self.mental_state.value * 2)))
+        bassheart = 0 if self.mental_state.value < 0.4 else 0.01
+        self.voice_client.send_message("/gan/bassheart", bassheart)
+
+
 
 
 
