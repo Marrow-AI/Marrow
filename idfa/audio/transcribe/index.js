@@ -11,13 +11,10 @@ $(document).ready(() => {
         updateMood();
     })
 
-    $("#start-gan").click(() => {
-        console.log("Start GAN!");
-        socket.send(JSON.stringify({action: 'control',command: 'start'}));
-    });
-    $("#stop-gan").click(() => {
-        console.log("Stop GAN!");
-        socket.send(JSON.stringify({action: 'control',command: 'stop'}));
+    $("#control button").click((e) => {
+        let command = $(e.target).data("command");
+        console.log("Command! " + command);
+        socket.send(JSON.stringify({action: 'control',command: command}));
     });
 });
 

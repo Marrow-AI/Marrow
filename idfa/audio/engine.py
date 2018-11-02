@@ -43,10 +43,11 @@ class ScheduleOSC:
         await asyncio.sleep(self._timeout)
         print("Shoot command! {}".format(self._command))
         self._client.send_message(self._command,self._args)
-        if (self._callback):
-            await self._callback()
+        if self._callback:
+            self._callback(self._command, self._timeout)
 
     def cancel(self):
+        print("Cacnel command! {}".format(self._command))
         self._task.cancel()
 
 
@@ -73,6 +74,8 @@ class Engine:
         self.beating = False
         self.matched_to_word = 0
 
+        self.osc_commands = {}
+
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
 
@@ -98,6 +101,19 @@ class Engine:
 
         self.main_loop.run_until_complete(self.server.start())
         self.main_loop.run_until_complete(self.consume_speech())
+
+    def schedule_osc(self, timeout, client, command, args):
+        osc_command = ScheduleOSC(timeout,client, command, args, self.del_osc )
+        self.osc_commands[command + str(timeout)] = osc_command
+
+    def del_osc(self,command,timeout):
+        print("del {}".format(command + str(timeout)))
+        del self.osc_commands[command + str(timeout)]
+
+    def purge_osc(self):
+        for command in self.osc_commands:
+            self.osc_commands[command].cancel()
+        self.osc_commands.clear()
 
     async def consume_speech(self):
         while True:
@@ -304,7 +320,7 @@ class Engine:
         return -1
 
 
-    def say(self, delay_sec):
+    def say(self, delay_sec, delay_effect = True):
 
 
         print("Saying line with {} delay".format(delay_sec))
@@ -314,9 +330,10 @@ class Engine:
         asyncio.ensure_future(self.server.pause_listening(math.ceil(self.speech_duration + delay_sec)))
 
         effect_time = 0.05
-        cmd = ScheduleOSC(delay_sec,self.voice_client, "/gan/delay", 1, None )
-        cmd2 = ScheduleOSC(delay_sec,self.voice_client, "/speech/play", 1, None )
-        cmd3 = ScheduleOSC(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0, None )
+        if delay_effect:
+            self.schedule_osc(delay_sec,self.voice_client, "/gan/delay", 1)
+        self.schedule_osc(delay_sec,self.voice_client, "/speech/play", 1)
+        self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
 
     def preload_speech(self, file_name):
         with contextlib.closing(wave.open(file_name,'r')) as f:
@@ -339,25 +356,28 @@ class Engine:
             asyncio.ensure_future(self.start_intro())
         elif data["command"] == 'stop':
             self.voice_client.send_message("/control/stop",1)
+            self.voice_client.send_message("/gan/delay",1)
+            self.preload_speech("gan_intro/1.wav")
+        elif data["command"] == 'skip-intro':
+            self.purge_osc()
+            self.voice_client.send_message("/control/start",1)
+            self.voice_client.send_message("/control/synthbass",1)
+            self.voice_client.send_message("/intro/end",1)
+            self.voice_client.send_message("/gan/start",1)
 
 
     async def start_intro(self):
         print("Start intro!")
         self.script.reset()
         first_speech = 28
-        #start_command = ScheduleOSC(27.5,"/control/start", None )
-        #start_command = ScheduleOSC(27.5,"/control/start", None )
-        #table_command = ScheduleOSC(47,"/control/table", None )
-        #start_command = ScheduleOSC(3,"/control/stop", None )
-        command = ScheduleOSC(0, self.voice_client, "/gan/feedback", 0.0, None )
-        self.say("gan_intro/1.wav", 0)
-        command = ScheduleOSC(first_speech - 1, self.voice_client, "/gan/feedback", 0.2, None )
-        command = ScheduleOSC(0 + first_speech, self.voice_client, "/control/start", 1, None )
-        command = ScheduleOSC(12.1 + first_speech, self.voice_client, "/control/synthbass", 1, None )
-        command = ScheduleOSC(30.1 + first_speech, self.voice_client, "/control/table", 1,  None )
-        command = ScheduleOSC(51.1 + first_speech, self.voice_client, "/intro/end", 1, None )
-        command = ScheduleOSC(61.1 + first_speech, self.voice_client, "/gan/start", 1, None )
-        command = ScheduleOSC(61.5 + first_speech, self.voice_client, "/gan/feedback", 0, None )
+        self.say(0, delay_effect = False)
+        self.schedule_osc(first_speech - 1, self.voice_client, "/gan/feedback", 0.2 )
+        self.schedule_osc(0 + first_speech, self.voice_client, "/control/start", 1)
+        self.schedule_osc(12.1 + first_speech, self.voice_client, "/control/synthbass", 1)
+        self.schedule_osc(30.1 + first_speech, self.voice_client, "/control/table", 1)
+        self.schedule_osc(51.1 + first_speech, self.voice_client, "/intro/end", 1,)
+        self.schedule_osc(61.1 + first_speech, self.voice_client, "/gan/start", 1)
+        self.schedule_osc(61.5 + first_speech, self.voice_client, "/gan/feedback", 0)
 
     def mood_update(self, data):
         self.mental_state.value = data["value"]
