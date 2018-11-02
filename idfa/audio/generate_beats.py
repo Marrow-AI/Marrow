@@ -9,7 +9,8 @@ for line in script.data["script-lines"]:
     try:
         if "triggers-beat" in line:
             utterance = line["triggers-beat"]
-            moz_tts.say([utterance], "gan_beats/{}-{}.wav".format(index, utterance["text"]))
+            if utterance["text"] != "none":
+                moz_tts.say([utterance], "gan_beats/{}.wav".format(utterance["slot"]))
     except:
         continue
     finally:
