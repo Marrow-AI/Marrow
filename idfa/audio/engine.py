@@ -92,7 +92,8 @@ class Engine:
         self.server = Server(
                 self.gain_update, 
                 self.queue,
-                self.control
+                self.control,
+                self.mood_update
         )
 
         self.main_loop.run_until_complete(self.server.start())
@@ -357,6 +358,14 @@ class Engine:
         command = ScheduleOSC(51.1 + first_speech, self.voice_client, "/intro/end", 1, None )
         command = ScheduleOSC(61.1 + first_speech, self.voice_client, "/gan/start", 1, None )
         command = ScheduleOSC(61.5 + first_speech, self.voice_client, "/gan/feedback", 0, None )
+
+    def mood_update(self, data):
+        self.mental_state.value = data["value"]
+        self.mental_state_updated()
+
+    def mental_state_updated(self):
+        print("Mental state {}".format(self.mental_state.value))
+
 
 
 if __name__ == '__main__':

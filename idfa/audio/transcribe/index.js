@@ -7,6 +7,9 @@ $(document).ready(() => {
     $(".gain-input input").on('input', () => {
         updateGains();
     })
+    $(".mood-input").on('input', () => {
+        updateMood();
+    })
 
     $("#start-gan").click(() => {
         console.log("Start GAN!");
@@ -93,5 +96,12 @@ function updateGains() {
     $("#gain-input-max span").text(max);
 
     socket.send(JSON.stringify({action: 'update-gain', min: min, max: max}));
+}
+function updateMood() {
+    let mood = $("#mood-input input").val();
+
+    $("#mood-input span").text(mood);
+
+    socket.send(JSON.stringify({action: 'update-mood', value: mood}));
 }
 

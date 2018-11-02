@@ -11,13 +11,14 @@ from watson_speech import WatsonSpeech
 
 class Server:
 
-    def __init__(self, gain_callback, queue, control_callback):
+    def __init__(self, gain_callback, queue, control_callback, mood_callback):
         print("Init server")
         self.gain_callback = gain_callback
         self.control_callback = control_callback
         self.queue = queue
         self.ms_speech = MSSpeech()
         self.watson_speech = WatsonSpeech()
+        self.mood_callback = mood_callback
 
         self.connected = set()
 
@@ -28,20 +29,23 @@ class Server:
             async for message in websocket:
                 #print(message)
                 data = json.loads(message)
-                if data['action'] == 'get-token':
+                action = data["action"]
+                if action == 'get-token':
                     await websocket.send(json.dumps({'token': self.ms_speech.obtain_auth_token()}))
-                elif data['action'] == 'get-watson-token':
+                elif action == 'get-watson-token':
                     token = self.watson_speech.obtain_auth_token()
                     print(token)
                     await websocket.send(json.dumps({'token': token}))
                     
-                elif (data['action'] == 'speech' or data['action'] == 'mid-speech'):
+                elif (action == 'speech' or action == 'mid-speech'):
                     #print(data['text'])
                     await self.queue.put(data)
-                elif (data["action"] == 'update-gain'):
+                elif (action == 'update-gain'):
                     self.gain_callback(data["min"], data["max"])
-                elif (data["action"] == 'control'):
+                elif (action == 'control'):
                     self.control_callback(data)
+                elif action == 'update-mood':
+                    self.mood_callback(data)
 
         finally:
             print("Unregistering Websocket")
