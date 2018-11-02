@@ -380,11 +380,15 @@ class Engine:
         self.schedule_osc(61.5 + first_speech, self.voice_client, "/gan/feedback", 0)
 
     def mood_update(self, data):
-        self.mental_state.value = data["value"]
+        self.mental_state.value = float(data["value"])
         self.mental_state_updated()
 
     def mental_state_updated(self):
         print("Mental state {}".format(self.mental_state.value))
+
+        ####
+        self.voice_client.send_message("/gan/strings", max(0, self.mental_state.value - 0.5))
+        self.voice_client.send_message("/gan/lfo2", max(0, self.mental_state.value - 0.5) * 0.3)
 
 
 
