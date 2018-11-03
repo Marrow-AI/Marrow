@@ -26,45 +26,51 @@ namespace Marrow
 	public class SocketCommunication : MonoBehaviour
 	{
 		public ByteArrayEvent AttnGanUpdateResponded = new ByteArrayEvent();
+		public ByteArrayEvent Pix2PixUpdateResponded = new ByteArrayEvent();
 
 		public enum ServerType { Pix2Pix, AttnGan }
 
 		public ServerType serverType = ServerType.AttnGan;
+		public bool devMode;
 
-		public string attnGanUrl; //http://api.marrow.raycaster.studio:3333/socket.io/
-		public int attnGanImageWidth = 256;
-		public int attnGanImageHeight = 256;
-		public float typingTimerLength = 0.5f;
-		public Material attnGanMaterial;
+		[Header("AttnGan")]
+		//public string attnGanUrl; //http://t2i.api.marrow.raycaster.studio/socket.io/
+		//public int attnGanImageWidth = 256;
+		//public int attnGanImageHeight = 256;
+		public float typingTimerLength = 0.4f;
 
-		private SocketManager attnGanSocketManager;
-        private Socket attnGanSocket;
+		//private SocketManager attnGanSocketManager;
+        //private Socket attnGanSocket;
 		private Texture2D attnGanTexture;
         private float lastTypingTimecode;
 		private bool attnGanIsConnected;
 
-        [Space(10)]
-		public string pix2pixUrl; //http://pix2pix.api.marrow.raycaster.studio:3333/socket.io/
-		public int pix2pixImageWidth = 256;
-        public int pix2pixImageHeight = 256;
-		public Material pix2pixMaterial;
-		public Material webcamMaterial;
+		[Header("Pix2Pix")]
+		//public string pix2pixUrl; //https://pix2pix.api.marrow.raycaster.studio/socket.io/
+		//public int pix2pixImageWidth = 1280;
+		//public int pix2pixImageHeight = 720;
+		//public Material pix2pixMaterial;
+		public WebcamAccess webcamAccess;
         
-		private SocketManager pix2pixSocketManager;
-		private Socket pix2pixSocket;
-		private Texture2D pix2pixTexture;
+		//private SocketManager pix2pixSocketManager;
+		//private Socket pix2pixSocket;
+		//private Texture2D pix2pixTexture;
 		private bool pix2pixIsConnected;
-        //private float lastTypingTimecode;
+		private Color32[] pix2pixWebcamData;
+		private bool emitFirstPix2PixRequest;
 
 		[Space(10)]
         public string serverUrl; //http://pix2pix.api.marrow.raycaster.studio:3333/socket.io/
+		[Tooltip("t2i: 256x256; pix2pix: 1280*720")]
         public int imageWidth = 256;
         public int imageHeight = 256;
-        public Material imageMaterial;
+        public Material genImageMaterial;
         
 		private SocketManager genSocketManager;
         private Socket genSocket;
         private Texture2D genTexture;
+
+		private float getPix2PixTimecode;
 
 		private void Start()
 		{
@@ -72,45 +78,46 @@ namespace Marrow
 			options.AutoConnect = false;
 			//options.ConnectWith = BestHTTP.SocketIO.Transports.TransportTypes.WebSocket;
 
+			genSocketManager = new SocketManager(new Uri(serverUrl), options);
+			genSocketManager.Encoder = new BestHTTP.SocketIO.JsonEncoders.LitJsonEncoder();
+            
 			if (serverType==ServerType.AttnGan)
 			{
-				attnGanSocketManager = new SocketManager(new Uri(attnGanUrl), options);
-                attnGanSocketManager.Encoder = new BestHTTP.SocketIO.JsonEncoders.LitJsonEncoder();
-                //attnGanSocket = attnGanSocketManager.Socket;
-                attnGanSocket = attnGanSocketManager["/query"];
+				genSocket = genSocketManager["/query"];
 
-                attnGanSocket.On("connecting", (socket, packet, args) => Debug.Log("Connecting AttnGan"));
-                attnGanSocket.On(SocketIOEventTypes.Connect, OnAttnGanConnect);
-                attnGanSocket.On("update_response", OnAttnGanUpdateResponse);
-				attnGanSocket.On(SocketIOEventTypes.Disconnect, OnAttnGanDisconnect);
-                attnGanSocket.On(SocketIOEventTypes.Error, OnAttnGanError);
+				genSocket.On("connecting", (socket, packet, args) => Debug.Log("Connecting AttnGan"));
+				genSocket.On(SocketIOEventTypes.Connect, OnAttnGanConnect);
+				genSocket.On("update_response", OnAttnGanUpdateResponse);
+				genSocket.On(SocketIOEventTypes.Disconnect, OnAttnGanDisconnect);
+				genSocket.On(SocketIOEventTypes.Error, OnAttnGanError);
 
-                attnGanSocketManager.Open();
-
-                // Image convert related
-                //attnGanTexture = new Texture2D(attnGanImageWidth, attnGanImageHeight);
-                //attnGanMaterial.mainTexture = attnGanTexture;
+				genSocketManager.Open();
 			}
 			else
 			{
-				pix2pixSocketManager = new SocketManager(new Uri(pix2pixUrl), options);
-				pix2pixSocketManager.Encoder = new BestHTTP.SocketIO.JsonEncoders.LitJsonEncoder();
-				pix2pixSocket = pix2pixSocketManager["/generate"];
+				genSocket = genSocketManager["/generate"];
 
-				pix2pixSocket.On("connecting", (socket, packet, args) => Debug.Log("Connecting Pix2Pix"));
-				pix2pixSocket.On(SocketIOEventTypes.Connect, OnPix2PixConnect);
-				pix2pixSocket.On("update_response", OnPix2PixUpdateResponse);
-				pix2pixSocket.On(SocketIOEventTypes.Disconnect, OnPix2PixDisconnect);
-				pix2pixSocket.On(SocketIOEventTypes.Error, OnPix2PixError);
+				genSocket.On("connecting", (socket, packet, args) => Debug.Log("Connecting Pix2Pix"));
+				genSocket.On(SocketIOEventTypes.Connect, OnPix2PixConnect);
+				genSocket.On("update_response", OnPix2PixUpdateResponse);
+				genSocket.On(SocketIOEventTypes.Disconnect, OnPix2PixDisconnect);
+				genSocket.On(SocketIOEventTypes.Error, OnPix2PixError);
 
-				pix2pixSocketManager.Open();
-				pix2pixTexture = new Texture2D(pix2pixImageWidth, pix2pixImageHeight);
-				pix2pixMaterial.SetTexture("_ShadowTex", pix2pixTexture);
+				genSocketManager.Open();
+				genTexture = new Texture2D(imageWidth, imageHeight);
+				genImageMaterial.SetTexture("_ShadowTex", genTexture);
+
+				pix2pixWebcamData = new Color32[imageWidth * imageHeight];
+
+				Debug.Log("pix2pixSocketManager setup");
 			}
 		}
 
 		private void Update()
 		{
+			if (!devMode)
+				return;
+			
 			if (serverType == ServerType.AttnGan && Input.GetKeyDown("a"))
 			{
 				AttnGanRequestData attnGanRequestData = new AttnGanRequestData();
@@ -126,22 +133,28 @@ namespace Marrow
 				// v.2 - send as object
 				//string json = JsonConvert.SerializeObject(attnGanRequestData);
 				//string json = JsonUtility.ToJson(attnGanRequestData);
-				attnGanSocket.Emit("update_request", attnGanRequestData);
+				genSocket.Emit("update_request", attnGanRequestData);
 				Debug.Log("AttnGanSocket emit update_request");
+			}
+
+			if (serverType == ServerType.Pix2Pix && pix2pixIsConnected && !emitFirstPix2PixRequest && webcamAccess.webcamTexture.didUpdateThisFrame)
+			{
+				EmitPix2PixRequest();
+				emitFirstPix2PixRequest = true;
 			}
 		}
 
 		private void OnDestroy()
 		{
-			if (serverType == ServerType.AttnGan)
+			if (serverType == ServerType.AttnGan && genSocketManager != null)
 			{
 				Debug.Log("Close AttnGAN socket");
-                attnGanSocketManager.Close();
+                genSocketManager.Close();
 			}
-			else
+			if (serverType == ServerType.AttnGan && genSocketManager != null)
 			{
 				Debug.Log("Close pix2pix socket");
-				pix2pixSocketManager.Close();
+				genSocketManager.Close();
 			}
 		}
 
@@ -155,7 +168,6 @@ namespace Marrow
 			Debug.Log(socket.Id);
 			attnGanIsConnected = true;
 			EventBus.WebsocketConnected.Invoke();
-			//EmitPix2PixRequest();
 		}
 
 		void OnAttnGanUpdateResponse(Socket socket, Packet packet, params object[] args)
@@ -181,10 +193,10 @@ namespace Marrow
 			string stringToSend = inputText.ToLower();
 			stringToSend += " ";
 			attnGanRequestData.caption = inputText.ToLower();
-			attnGanSocket.Emit("update_request", attnGanRequestData);
+			genSocket.Emit("update_request", attnGanRequestData);
 
 			lastTypingTimecode = Time.time;
-			Debug.LogFormat("socket emit request: {0}", stringToSend);
+			//Debug.LogFormat("socket emit request: {0}", stringToSend);
 		}
 
 		public void EmitAttnGanRequest(string inputText)
@@ -193,8 +205,8 @@ namespace Marrow
             string stringToSend = inputText.ToLower();
             stringToSend += " ";
             attnGanRequestData.caption = inputText.ToLower();
-            attnGanSocket.Emit("update_request", attnGanRequestData);
-			Debug.LogFormat("socket emit request: {0}", stringToSend);
+			genSocket.Emit("update_request", attnGanRequestData);
+			//Debug.LogFormat("socket emit request: {0}", stringToSend);
 		}
 
 		void OnAttnGanDisconnect(Socket socket, Packet packet, params object[] args)
@@ -209,21 +221,29 @@ namespace Marrow
 
 		void OnPix2PixConnect(Socket socket, Packet packet, params object[] args)
         {
-            Debug.Log("Connected to pix2pix.");
+			Debug.LogWarning("Connected to pix2pix.");
             Debug.Log(socket.Id);
 			pix2pixIsConnected = true;
+
             EventBus.WebsocketConnected.Invoke();
+			//EmitPix2PixRequest();
         }
 
         void OnPix2PixUpdateResponse(Socket socket, Packet packet, params object[] args)
         {
+			float p2pDuration = Time.time - getPix2PixTimecode; 
+			Debug.Log("got pix2pix response!: " + p2pDuration);
+			getPix2PixTimecode = Time.time;
+
             Dictionary<string, object> data = args[0] as Dictionary<string, object>;
             string base64Image = data["results"] as string;
             byte[] receivedBase64Img = Convert.FromBase64String(base64Image);
-            pix2pixTexture.LoadImage(receivedBase64Img);
+			//genTexture.LoadImage(receivedBase64Img);
 
-			//
-			EmitPix2PixRequest();
+			//genImageMaterial.SetTexture("_ShadowTex", genTexture);
+			Pix2PixUpdateResponded.Invoke(receivedBase64Img);
+            
+			//EmitPix2PixRequest();
         }
 
         void OnPix2PixError(Socket socket, Packet packet, params object[] args)
@@ -233,18 +253,33 @@ namespace Marrow
         
 		public void EmitPix2PixRequest()
         {
+			// Send webcam image
 			Pix2PixRequestData pix2PixRequestData = new Pix2PixRequestData();
-			Texture2D webTex = (Texture2D) webcamMaterial.mainTexture;
+			webcamAccess.webcamTexture.GetPixels32(pix2pixWebcamData);
+
+			// TODO: try resize to reset, instead of create new texture
+			Destroy(genTexture);
+			genTexture = null;
+			genTexture = new Texture2D(imageWidth, imageHeight);
+			//pix2pixTexture.Resize(pix2pixImageWidth, pix2pixImageHeight);
+			genTexture.SetPixels32(pix2pixWebcamData);
+			//pix2pixTexture.Apply();
+
+            // Scale down seems to crash the server???
+
+			//TextureScale.Bilinear(genTexture, imageWidth/2, imageHeight/2);
             
-			byte[] imageData = webTex.EncodeToJPG();
+			byte[] imageData = genTexture.EncodeToJPG();
 			string base64Image = Convert.ToBase64String(imageData);
-			pix2pixSocket.Emit("update_request", base64Image);
-			Debug.LogFormat("socket emit pix2pix request");
+			pix2PixRequestData.data = base64Image;
+			genSocket.Emit("update_request", pix2PixRequestData);
+			//Debug.LogFormat("socket emit pix2pix request: {0}", base64Image);
+			Debug.Log("socket emit pix2pix request");
         }
 
 		void OnPix2PixDisconnect(Socket socket, Packet packet, params object[] args)
         {
-            Debug.Log("Pix2Pix websocket disonnected!!!");
+			Debug.LogWarning("Pix2Pix websocket disonnected!!!");
             EventBus.WebsocketDisconnected.Invoke();
         }
 	}

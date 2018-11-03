@@ -1,14 +1,1 @@
-<root>
-  <message info="Receiver: 3838. From: 192.168.1.13:49614" type="Received">
-    <packet>L3NwZWVjaAAscwAAYXBwbGUgYmFuYW5hIHBpZQAAAAA=</packet>
-  </message>
-  <message info="Receiver: 3838. From: 192.168.1.13:58967" type="Received">
-    <packet>L3NwZWVjaAAscwAAYXBwbGUgYmFuYW5hIHBpZQAAAAA=</packet>
-  </message>
-  <message info="Receiver: 3838. From: 192.168.1.13:52586" type="Received">
-    <packet>L3NwZWVjaAAscwAAYXBwbGUgYmFuYW5hIHBpZQAAAAA=</packet>
-  </message>
-  <message info="Receiver: 3838. From: 192.168.1.13:64461" type="Received">
-    <packet>L3NwZWVjaAAscwAAYXBwbGUgYmFuYW5hIHBpZQAAAAA=</packet>
-  </message>
-</root>
+<root />
