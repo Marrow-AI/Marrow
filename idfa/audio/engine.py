@@ -82,8 +82,8 @@ class Engine:
 
         self.args.callback = self.emotion_update
 
-        self.live_ser = LiveSer()
-        self.live_ser.run(self.args)
+        #self.live_ser = LiveSer()
+        #self.live_ser.run(self.args)
 
         self.mid_text = None
         self.last_react = 0
