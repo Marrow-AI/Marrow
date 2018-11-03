@@ -141,7 +141,7 @@ class Engine:
             self.mental_state.update_silence()
         else:
             self.mental_state.update_emotion(data["analysis"])
-            self.mental_state_updated()
+            #self.mental_state_updated()
             
         conc = asyncio.run_coroutine_threadsafe(self.server.emotion_update(data, self.mental_state.value), self.main_loop)
 
