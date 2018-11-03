@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using extOSC;
 
 namespace Marrow
 {
@@ -26,8 +27,9 @@ namespace Marrow
 		private void OnEnable()
 		{
 			EventBus.TableSequenceEnded.AddListener(EnableText2Image);
-			EventBus.DiningRoomEnded.AddListener(DisableText2Image);
-			EventBus.ExperienceRestarted.AddListener(DisableText2Image);
+
+			EventBus.DiningRoomEnded.AddListener(OnDiningRoomEnded);
+			EventBus.ExperienceEnded.AddListener(DisableText2Image);
             
 			EventBus.WebsocketConnected.AddListener(OnWebsocketConnected);
 			EventBus.WebsocketDisconnected.AddListener(OnWebsocketDisconnected);
@@ -38,8 +40,9 @@ namespace Marrow
 		private void OnDisable()
 		{
 			EventBus.TableSequenceEnded.RemoveListener(EnableText2Image);
-			EventBus.DiningRoomEnded.RemoveListener(DisableText2Image);
-			EventBus.ExperienceRestarted.RemoveListener(DisableText2Image);
+
+			EventBus.DiningRoomEnded.RemoveListener(OnDiningRoomEnded);
+			EventBus.ExperienceEnded.RemoveListener(DisableText2Image);
 
 			EventBus.WebsocketConnected.RemoveListener(OnWebsocketConnected);
 			EventBus.WebsocketDisconnected.RemoveListener(OnWebsocketDisconnected);
@@ -114,6 +117,34 @@ namespace Marrow
                                          plateMaterial.SetFloat("_Blend", val);
                                      })
 			                        .id;
+        }
+
+        void OnDiningRoomEnded()
+		{
+			DisableText2Image();
+            // Roll credits happen in TableOpenSequence script
+		}
+
+        ///////////////////////////
+        ///     OSC related     ///
+		///////////////////////////
+
+		public void ReceivedOscControlStart(OSCMessage message)
+		{
+			Debug.Log(message);
+			EventBus.TableSequenceStarted.Invoke();
+		}
+
+		public void ReceivedOscControlStop(OSCMessage message)
+        {
+			Debug.Log(message);
+			EventBus.ExperienceEnded.Invoke();
+        }
+
+		public void ReceivedOscGanEnd(OSCMessage message)
+        {
+            Debug.Log(message);
+			EventBus.DiningRoomEnded.Invoke();
         }
     }
 }

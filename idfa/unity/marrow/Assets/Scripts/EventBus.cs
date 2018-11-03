@@ -20,7 +20,8 @@ namespace Marrow
 		public static UnityEvent TableSequenceEnded = new UnityEvent();
 		public static UnityEvent DiningRoomStarted = new UnityEvent();
 		public static UnityEvent DiningRoomEnded = new UnityEvent();
-		public static UnityEvent ExperienceRestarted = new UnityEvent();
+		public static UnityEvent ExperienceEnded = new UnityEvent();
+		public static UnityEvent ExperienceRestarted = new UnityEvent();    // ???
         
 		// Websocket related
 		public static UnityEvent WebsocketConnected = new UnityEvent();

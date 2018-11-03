@@ -1054,6 +1054,36 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114247679611380326, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: remoteHost
+      value: 127.0.0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114247679611380326, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: remotePort
+      value: 57120
+      objectReference: {fileID: 0}
+    - target: {fileID: 114247679611380326, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: workInEditor
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114247679611380326, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114247679611380326, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: autoConnect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114247679611380326, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: localPortMode
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 893195b03ab504b70bd182502da4350e, type: 2}
   m_IsPrefabAsset: 0
@@ -1353,6 +1383,12 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100028, guid: 5fcaeaa7e110f44e08aa4fa63e2fec52,
     type: 3}
   m_PrefabInternal: {fileID: 2099116610}
+--- !u!114 &633162514 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114247679611380326, guid: 893195b03ab504b70bd182502da4350e,
+    type: 2}
+  m_PrefabInternal: {fileID: 483687586}
+  m_Script: {fileID: 11500000, guid: 464088183d2a1484ab8fb64e356c9f5c, type: 3}
 --- !u!1 &728543542 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100038, guid: 5fcaeaa7e110f44e08aa4fa63e2fec52,
@@ -1387,6 +1423,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a10fe5440de974f74b7b1a3e3031ad40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  oSCTransmitter: {fileID: 633162514}
+  showPlateOscAddress: /intro/plate
   spotLights:
   - {fileID: 1919435101}
   - {fileID: 2094718447}
@@ -1427,8 +1465,8 @@ MonoBehaviour:
   - {fileID: 1938218610}
   tableCookie: {fileID: 2800000, guid: 51ac40507bd6040fe845adb50bce094e, type: 3}
   bgAudio: {fileID: 1907999612}
-  devMode: 1
-  skipGanTalk: 1
+  devMode: 0
+  skipGanTalk: 0
   plateDevTextures:
   - {fileID: 2800000, guid: 7915d644fbd43445b8d1a09fcb04c435, type: 3}
   - {fileID: 2800000, guid: 5fb48de230a00431db2eed4486a92dcc, type: 3}
@@ -1682,6 +1720,10 @@ GameObject:
   - component: {fileID: 952249938}
   - component: {fileID: 952249939}
   - component: {fileID: 952249940}
+  - component: {fileID: 952249941}
+  - component: {fileID: 952249943}
+  - component: {fileID: 952249942}
+  - component: {fileID: 952249944}
   m_Layer: 0
   m_Name: ExperienceManager
   m_TagString: Untagged
@@ -1761,7 +1803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdbad2d6d94bf4c7fbce143744b3480e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  receiver: {fileID: 0}
+  receiver: {fileID: 483687587}
   address: /spotlight
   mapBundle: {fileID: 0}
   onReceive:
@@ -1779,6 +1821,126 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: extOSC.Core.Events.OSCEventString, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &952249941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 952249936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5937ce4de6a4254b9249339eea0c2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  receiver: {fileID: 483687587}
+  address: /gan/speaks
+  mapBundle: {fileID: 0}
+  onReceive:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1222911185}
+        m_MethodName: GanSpeaks
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: extOSC.Core.Events.OSCEventInt, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &952249942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 952249936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6729ebfc7bf403f9f3afb0c93ed10d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  receiver: {fileID: 483687587}
+  address: /control/stop
+  mapBundle: {fileID: 0}
+  onReceive:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 952249938}
+        m_MethodName: ReceivedOscControlStop
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: extOSC.Core.Events.OSCEventMessage, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &952249943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 952249936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6729ebfc7bf403f9f3afb0c93ed10d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  receiver: {fileID: 483687587}
+  address: /control/start
+  mapBundle: {fileID: 0}
+  onReceive:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 952249938}
+        m_MethodName: ReceivedOscControlStart
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: extOSC.Core.Events.OSCEventMessage, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &952249944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 952249936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6729ebfc7bf403f9f3afb0c93ed10d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  receiver: {fileID: 483687587}
+  address: /gan/end
+  mapBundle: {fileID: 0}
+  onReceive:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 952249938}
+        m_MethodName: ReceivedOscGanEnd
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: extOSC.Core.Events.OSCEventMessage, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &989952883
 GameObject:
@@ -2208,6 +2370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1222911184}
   - component: {fileID: 1222911183}
+  - component: {fileID: 1222911185}
   m_Layer: 8
   m_Name: PostProcessing_Volume
   m_TagString: Untagged
@@ -2244,6 +2407,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1222911185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1222911182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f721fb7bd0144a72856c395fc6131de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 1
 --- !u!1 &1349064892
 GameObject:
   m_ObjectHideFlags: 0
@@ -3650,6 +3825,16 @@ Prefab:
       propertyPath: attnGanMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 806e86fe64f06490eb9407af06ec69f4, type: 2}
+    - target: {fileID: 114277856245125272, guid: a29a0d3e457da4f8db82723b3b860f14,
+        type: 2}
+      propertyPath: genImageMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 806e86fe64f06490eb9407af06ec69f4, type: 2}
+    - target: {fileID: 114277856245125272, guid: a29a0d3e457da4f8db82723b3b860f14,
+        type: 2}
+      propertyPath: serverUrl
+      value: http://t2i.api.marrow.raycaster.studio/socket.io/
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a29a0d3e457da4f8db82723b3b860f14, type: 2}
   m_IsPrefabAsset: 0
