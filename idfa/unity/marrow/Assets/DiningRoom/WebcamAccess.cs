@@ -7,6 +7,8 @@ namespace Marrow
 	// doc: https://docs.unity3d.com/ScriptReference/WebCamTexture.html
 	public class WebcamAccess : MonoBehaviour
     {
+        public bool useWebCam;
+        [Space(10)]
 		public Material webCamMaterial;
 		public int requestWidth = 1280; // 1280, 640
 		public int requestHeight = 720; // 720, 360

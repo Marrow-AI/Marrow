@@ -13,6 +13,7 @@ namespace Marrow
 
 		private bool startPix2Pix;
 		private bool socketIsConnected;
+        private bool socketIsDisconnectedWillTryReconnect;
 
 		[Header("Pix2Pix related")]
 		public Material projectorMaterial;
@@ -166,12 +167,23 @@ namespace Marrow
 		void OnWebsocketConnected()
 		{
 			socketIsConnected = true;
+            if (socketIsDisconnectedWillTryReconnect)
+            {
+                RestartWebsocketConnection();
+                socketIsDisconnectedWillTryReconnect = false;
+            }
 		}
 
 		void OnWebsocketDisconnected()
 		{
 			socketIsConnected = false;
-		}
+            socketIsDisconnectedWillTryReconnect = true;
+        }
+
+        void RestartWebsocketConnection()
+        {
+            emitFirstPix2PixRequest = false;
+        }
 
 		public void OnPix2PixInputUpdate()
         {
@@ -194,14 +206,14 @@ namespace Marrow
             {
 				pix2pixTextureB.LoadImage(receivedBase64Img);
                 targetBlend = 1;
-				Debug.Log("do b");
+				// Debug.Log("do b");
 				projectorMaterial.SetTexture("_SecondShadowTex", pix2pixTextureB);    // ???
             }
             else
             {
 				pix2pixTextureA.LoadImage(receivedBase64Img);
                 targetBlend = 0;
-				Debug.Log("do a");
+				// Debug.Log("do a");
 				projectorMaterial.SetTexture("_ShadowTex", pix2pixTextureA);    // ???
             }
 

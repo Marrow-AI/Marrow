@@ -1504,14 +1504,14 @@ Projector:
   serializedVersion: 2
   m_NearClipPlane: 2.74
   m_FarClipPlane: 13
-  m_FieldOfView: 58.2
-  m_AspectRatio: 1.5
+  m_FieldOfView: 40
+  m_AspectRatio: -1.5
   m_Orthographic: 0
   m_OrthographicSize: 10
   m_Material: {fileID: 2100000, guid: b3e723c76e31b48208bb973c372827e9, type: 2}
   m_IgnoreLayers:
     serializedVersion: 2
-    m_Bits: 3895
+    m_Bits: 0
 --- !u!4 &797907771
 Transform:
   m_ObjectHideFlags: 0
@@ -4668,6 +4668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1389e73757a0d4091a9c2e438b38a934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useWebCam: 0
   webCamMaterial: {fileID: 2100000, guid: ff3b1ab9345d14120a87444094a2b6b8, type: 2}
   requestWidth: 1280
   requestHeight: 720
