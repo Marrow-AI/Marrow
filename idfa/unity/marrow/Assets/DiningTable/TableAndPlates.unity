@@ -125,7 +125,6 @@ GameObject:
   - component: {fileID: 19683973}
   - component: {fileID: 19683972}
   - component: {fileID: 19683971}
-  - component: {fileID: 19683975}
   m_Layer: 0
   m_Name: Name C
   m_TagString: Untagged
@@ -314,36 +313,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 19683969}
   m_Mesh: {fileID: 0}
---- !u!114 &19683975
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 19683969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdbad2d6d94bf4c7fbce143744b3480e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  receiver: {fileID: 483687587}
-  address: /speech
-  mapBundle: {fileID: 0}
-  onReceive:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 19683971}
-        m_MethodName: set_text
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: extOSC.Core.Events.OSCEventString, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &105212256
 GameObject:
   m_ObjectHideFlags: 0
@@ -1465,8 +1434,8 @@ MonoBehaviour:
   - {fileID: 1938218610}
   tableCookie: {fileID: 2800000, guid: 51ac40507bd6040fe845adb50bce094e, type: 3}
   bgAudio: {fileID: 1907999612}
-  devMode: 0
-  skipGanTalk: 0
+  devMode: 1
+  skipGanTalk: 1
   plateDevTextures:
   - {fileID: 2800000, guid: 7915d644fbd43445b8d1a09fcb04c435, type: 3}
   - {fileID: 2800000, guid: 5fb48de230a00431db2eed4486a92dcc, type: 3}
@@ -1490,7 +1459,6 @@ GameObject:
   - component: {fileID: 876264807}
   - component: {fileID: 876264806}
   - component: {fileID: 876264805}
-  - component: {fileID: 876264809}
   m_Layer: 0
   m_Name: Name A
   m_TagString: Untagged
@@ -1679,36 +1647,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 876264803}
   m_Mesh: {fileID: 0}
---- !u!114 &876264809
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 876264803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdbad2d6d94bf4c7fbce143744b3480e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  receiver: {fileID: 483687587}
-  address: /speech
-  mapBundle: {fileID: 0}
-  onReceive:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 876264805}
-        m_MethodName: set_text
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: extOSC.Core.Events.OSCEventString, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &952249936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2431,7 +2369,6 @@ GameObject:
   - component: {fileID: 1349064896}
   - component: {fileID: 1349064895}
   - component: {fileID: 1349064894}
-  - component: {fileID: 1349064898}
   m_Layer: 0
   m_Name: Name D
   m_TagString: Untagged
@@ -2620,36 +2557,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1349064892}
   m_Mesh: {fileID: 0}
---- !u!114 &1349064898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1349064892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdbad2d6d94bf4c7fbce143744b3480e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  receiver: {fileID: 483687587}
-  address: /speech
-  mapBundle: {fileID: 0}
-  onReceive:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1349064894}
-        m_MethodName: set_text
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: extOSC.Core.Events.OSCEventString, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1387442604
 GameObject:
   m_ObjectHideFlags: 0
@@ -3856,7 +3763,6 @@ GameObject:
   - component: {fileID: 1809442952}
   - component: {fileID: 1809442951}
   - component: {fileID: 1809442950}
-  - component: {fileID: 1809442954}
   m_Layer: 0
   m_Name: Name B
   m_TagString: Untagged
@@ -4045,36 +3951,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1809442948}
   m_Mesh: {fileID: 0}
---- !u!114 &1809442954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1809442948}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bdbad2d6d94bf4c7fbce143744b3480e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  receiver: {fileID: 483687587}
-  address: /speech
-  mapBundle: {fileID: 0}
-  onReceive:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1809442950}
-        m_MethodName: set_text
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: extOSC.Core.Events.OSCEventString, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!1 &1907999611
 GameObject:
   m_ObjectHideFlags: 0
