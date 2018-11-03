@@ -65,8 +65,8 @@ class Engine:
 
         self.args.callback = self.emotion_update
 
-        #self.live_ser = LiveSer()
-        #self.live_ser.run(self.args)
+        self.live_ser = LiveSer()
+        self.live_ser.run(self.args)
 
         self.mid_text = None
         self.last_react = 0
@@ -141,8 +141,9 @@ class Engine:
             self.mental_state.update_silence()
         else:
             self.mental_state.update_emotion(data["analysis"])
+            self.mental_state_updated()
             
-        conc = asyncio.run_coroutine_threadsafe(self.server.emotion_update(data, self.mental_state.get_current_state()), self.main_loop)
+        conc = asyncio.run_coroutine_threadsafe(self.server.emotion_update(data, self.mental_state.value), self.main_loop)
 
     def gain_update(self, min, max):
         print("Update gain! {} : {}".format(min, max))

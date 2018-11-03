@@ -76,13 +76,12 @@ function updateEmotion(data, state) {
         }
     }
 
-   $($("#arousal-average").find("td")[1]).text(Number((state.arousal).toFixed(3)));
-   $($("#valence-average").find("td")[1]).text(Number((state.valence).toFixed(3)));
+   $($("#mood-average").find("td")[1]).text(Number((state).toFixed(3)));
+   $("#mood-input input").val(Number((state).toFixed(3)));
+   $("#mood-input span").text((state).toFixed(3));
 
-   $("#script-match").find("span").text(Number((state.script_match).toFixed(3)));
+   //$("#script-match").find("span").text(Number((state.script_match).toFixed(3)));
 
-
-   $("#mood").find("span").text(state.mood.toUpperCase());
 }
 
 function updateGains() {

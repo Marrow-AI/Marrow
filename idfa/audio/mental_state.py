@@ -25,14 +25,14 @@ class MentalState:
 
     def update_emotion(self,analysis):
         maxes = np.argmax(analysis,axis=1)
-#        if maxes[0] == 0: # Low arousal
-#            self.arousal = max(0, self.arousal - 0.05 * analysis[0][0])
-#        elif maxes[0] == 2: # High arousal
-#            self.arousal = min(1, self.arousal + 0.05 * analysis[0][2])
-#
-#        if analysis[1][0] >= 0.5: # Low valence
-#            self.valence = max(0, self.valence - 0.05 * analysis[1][0])
-#        else: # High valence
-#            self.valence = min(1, self.valence + 0.1 * analysis[1][2])
+        if analysis[0][0] >= 0.8: # Low arousal
+            self.value = max(0, self.value - 0.05 * analysis[0][0])
+        else : # High arousal
+            self.value = min(1, self.value + 0.05 * analysis[0][2])
+
+        if analysis[1][0] >= 0.5: # Low valence
+            self.value = max(0, self.value - 0.05 * analysis[1][0])
+        else: # High valence
+            self.value = min(1, self.value + 0.1 * analysis[1][2])
 
         return
