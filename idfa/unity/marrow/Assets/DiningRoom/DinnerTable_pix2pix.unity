@@ -1672,10 +1672,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   socketCommunication: {fileID: 1866354670}
   devMode: 1
+  simpleAnimation: 1
   projectorMaterial: {fileID: 2100000, guid: b3e723c76e31b48208bb973c372827e9, type: 2}
   pix2pixImageWidth: 1280
   pix2pixImageHeight: 720
   webcamAccess: {fileID: 2056455757}
+  pix2pixTextureA: {fileID: 0}
+  pix2pixTextureB: {fileID: 0}
   blobAnimator: {fileID: 1541535736}
   spotLight: {fileID: 1919435099}
 --- !u!114 &832185292
@@ -4012,6 +4015,21 @@ Prefab:
         type: 2}
       propertyPath: autoConnect
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114353899663591050, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: localPort
+      value: 8383
+      objectReference: {fileID: 0}
+    - target: {fileID: 114353899663591050, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: closeOnPause
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114353899663591050, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: autoConnect
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 893195b03ab504b70bd182502da4350e, type: 2}

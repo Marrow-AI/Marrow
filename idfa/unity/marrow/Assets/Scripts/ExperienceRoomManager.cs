@@ -9,7 +9,7 @@ namespace Marrow
     {
 		public SocketCommunication socketCommunication;
 		public bool devMode;
-		public bool ignoreAnimation;
+		public bool simpleAnimation;
 
 		private bool startPix2Pix;
 		private bool socketIsConnected;
@@ -76,10 +76,7 @@ namespace Marrow
 			if (devMode)
 			{
 				OnTableSequenceEnded();
-			}
-
-			if (ignoreAnimation)
-				blobAnimator.enabled = false;
+			}            
         }
 
         void Setup()
@@ -87,6 +84,7 @@ namespace Marrow
 			spotLight.intensity = 0;
 			spotLight.enabled = false;
 			projectorMaterial.color = Color.black;
+			blobAnimator.enabled = false;
 		}
 
 		private void Update()
@@ -97,7 +95,7 @@ namespace Marrow
                 emitFirstPix2PixRequest = true;
             }
 
-			if (!ignoreAnimation && startPix2Pix && !blobFullyGrow)
+			if (!simpleAnimation && startPix2Pix && !blobFullyGrow)
 			{
 				if (Time.time - pix2pixStartTimecode >= blobStageTimecode[0] && !passBlobStages[0])
 				{
@@ -141,6 +139,12 @@ namespace Marrow
 			// start pix2pix
 			EnablePix2Pix();
 			pix2pixStartTimecode = Time.time;
+
+			blobAnimator.enabled = true;
+			if (simpleAnimation)
+			{
+				blobAnimator.SetTrigger("SlowMove");
+			}
 		}
 
 		void EnablePix2Pix()
