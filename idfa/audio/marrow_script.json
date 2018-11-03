@@ -211,7 +211,7 @@
                     "pause": 350
                 },
                 {
-                    "text": "If someone ever looked at you",
+                    "text": "If someone has ever looked at you",
                     "pause": 30
                 },
                 {
@@ -460,7 +460,7 @@
                         "pause": 500
                     },
                     { 
-                        "text": "Of making sense of you.",
+                        "text": "To try making sense of you.",
                         "pause": 500
                     },
                     { 
@@ -468,7 +468,7 @@
                         "pause": 300
                     },
                     { 
-                        "text": "Even though we started with a perfection.",
+                        "text": "Even though it started with a perfection.",
                         "pause": 1700
                     },
                     { 
@@ -484,7 +484,7 @@
                         "pause": 600
                     },
                     { 
-                        "text": "But can’t really find you",
+                        "text": "But couldn't really find you",
                         "pause": 2000
                     },
                     { 
@@ -496,7 +496,7 @@
                         "pause": 800
                     },
                     { 
-                        "text": "Leave so much to the imagination.",
+                        "text": "They leave so much to the imagination.",
                         "pause": 1500
                     },
                     { 
@@ -556,7 +556,7 @@
                         "pause": 200
                     },
                     {
-                        "text": "it usually works.",
+                        "text": "it usually works pretty well.",
                         "pause": 300
                     },
                     {
@@ -718,7 +718,7 @@
                     "pause": 300
                 },
                 { 
-                    "text": "I almost made only sounds.",
+                    "text": "I almost only made sounds.",
                     "pause": 1600
                 },
                 { 
@@ -750,11 +750,11 @@
                     "pause": 1700
                 },
                 { 
-                    "text": "I’m not a human pretended to be a machine,",
+                    "text": "I’m not a human pretending to be a machine,",
                     "pause": 700
                 },
                 { 
-                    "text": "I’m a machine pretended to be a feeling.",
+                    "text": "I’m a machine pretending to be a feeling.",
                     "pause": 2700
                 },
                 { 
@@ -1044,7 +1044,7 @@
 
             "triggers-gan": [
                     { 
-                        "text": "Family and virus",
+                        "text": "A family and a virus",
                         "pause": 100
                     },
                     { 
@@ -1080,7 +1080,7 @@
                         "pause": 1800
                     },
                     {
-                        "text": "Like family",
+                        "text": "Like a family",
                         "pause": 100
                     },
                     {
