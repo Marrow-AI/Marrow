@@ -155,7 +155,7 @@
                     "pause": 200
                 },
                 {
-                    "text": "But then it's like almost",
+                    "text": "But then it like almost",
                     "pause": 300
                 },
                 {
@@ -568,7 +568,7 @@
                         "pause": 20
                     },
                     {
-                        "text": "Behind yourself",
+                        "text": "Behind yourself"
                     }
                 ]
         },
@@ -583,7 +583,7 @@
                 "slot": 2,
                 "text": "real",
                 "word": "real"
-            },
+            }
         },
         {
             "speaker": "brother",
