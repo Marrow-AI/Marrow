@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -71,6 +72,7 @@ namespace Marrow
         private Texture2D genTexture;
 
 		private float getPix2PixTimecode;
+		private bool socketIsClosing;
 
 		private void Start()
 		{
@@ -115,6 +117,13 @@ namespace Marrow
 
 		private void Update()
 		{
+			if (Input.GetKeyDown("escape") && !socketIsClosing)
+			{
+				StartCoroutine(CloseSocketBeforeEnd());
+				socketIsClosing = true;
+				return;
+			}
+
 			if (!devMode)
 				return;
 			
@@ -142,6 +151,15 @@ namespace Marrow
 				EmitPix2PixRequest();
 				emitFirstPix2PixRequest = true;
 			}
+		}
+
+		IEnumerator CloseSocketBeforeEnd()
+		{
+            genSocketManager.Close();
+			Debug.Log("Close socket!!");
+			yield return new WaitForSeconds(1f);
+
+            Application.Quit();
 		}
 
 		private void OnDestroy()
@@ -267,8 +285,9 @@ namespace Marrow
 
             // Scale down seems to crash the server???
 
-			//TextureScale.Bilinear(genTexture, imageWidth/2, imageHeight/2);
-            
+			TextureScale.Bilinear(genTexture, imageWidth/2, imageHeight/2);
+			Debug.Log(genTexture.width + ", " + genTexture.height);
+			     
 			byte[] imageData = genTexture.EncodeToJPG();
 			string base64Image = Convert.ToBase64String(imageData);
 			pix2PixRequestData.data = base64Image;
