@@ -301,6 +301,9 @@ class Engine:
             # Normal react feedback
             self.voice_client.send_message("/gan/react",1)
 
+        if "triggers-beat" in line:
+            self.voice_client.send_message("/gan/beat",0.0)
+
 
         if index < self.script.length - 1:
             self.script.awaiting_index = index + 1 
@@ -368,6 +371,7 @@ class Engine:
             self.voice_client.send_message("/gan/noisegrain", 0.035) 
             self.voice_client.send_message("/gan/bassheart", [0.0, 1.0]) 
             self.voice_client.send_message("/gan/synthmode", [0.0, 1.0]) 
+            self.voice_client.send_message("/gan/beat",1.0)
             self.preload_speech("gan_intro/1.wav")
         elif data["command"] == 'skip-intro':
             self.purge_osc()
