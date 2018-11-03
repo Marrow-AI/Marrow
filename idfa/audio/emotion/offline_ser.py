@@ -126,6 +126,7 @@ def predict_file(dec, pyaudio, path, frames, args, rate = 16000, format = pyaudi
 
 class LiveSer:
     def __init__(self): 
+        self.listening = False
         print("Initializing LIVE_SER")
 
     def run(self,args):
@@ -136,36 +137,58 @@ class LiveSer:
             print("Stopping SER")
             ser_thread.join()
 
+    def listen(self, args):
+        if self.listening:
+            return
+        self.listening = True
+        logger = None
+        log("Init audio")
+        p = pyaudio.PyAudio()
 
-    def start(self,args):
-        
-        tasks_string = 'arousal:3,valence:3'
-        tasks = [3,3]
-        
+        #open file (offline mode)
+
+        log("no input wav file! Starting a live mode.")
+        #open mic
+        if args.device_id is None:
+            args.device_id = find_device_id("pulse")
+            if args.device_id == -1:
+                log("There is no default device!, please check the configuration")
+                sys.exit(-1)
+
         #audio device setup
         format = pyaudio.paInt16
-        sample_rate = 16000
         frame_duration = 20
         n_channel = 1
 
-        frame_len = int(sample_rate * (frame_duration / 1000.0))
+        frame_len = int(self.sample_rate * (frame_duration / 1000.0))
         chunk = int(frame_len / n_channel)
 
-        # vad mode, only accept [0|1|2|3], 0 more quiet 3 more noisy"
-        vad_mode = 0
-
-        logger = None
-        
         log("frame_len: %d" % frame_len)
         log("chunk size: %d" % chunk)
 
-        #feature extraction setting
+                
+        f = p.open(
+                format = format, 
+                channels = n_channel, 
+                rate = self.sample_rate, 
+                input = True, 
+                input_device_index = args.device_id,
+                frames_per_buffer = chunk
+        )
 
-        # the minimum length(ms) of speech for emotion detection
+        log("---Starting---")
+
+        is_currently_speech = False
+        total_frame_len = 0
+        frames_16i = ''
+        frames_np = []
+        prev_task_outputs = None
+        speech_frame_len = 0
+        total_frame_count = 0
+
+
         vad_duration = 1000
         min_voice_frame_len = frame_len * (vad_duration / frame_duration)
-
-
 
         log("minimum voice frame length: %d" % min_voice_frame_len)
 
@@ -174,6 +197,82 @@ class LiveSer:
 
         # the minimum energy of speech for emotion detection
         min_energy = 100
+
+        tasks = [3,3]
+
+        file_path = None
+        
+        while True and not args.stop:
+            #read a frame    
+            data = f.read(chunk,exception_on_overflow=False)
+                
+            if data == '':
+                break
+
+            #check gain
+            mx = audioop.max(data, 2)
+            
+            #VAD
+            try:
+                is_speech = self.vad.is_speech(data, self.sample_rate)
+            except:
+                log("end of speech")
+                break
+
+            if mx < min_energy:
+                is_speech = 0
+            
+            #log(str('gain: %d, vad: %d' % (mx, is_speech)))   
+            
+            if is_speech == 1:
+                speech_frame_len = speech_frame_len + chunk #note chunk is a half of frame length.
+
+            frames_np.append(np.fromstring(data, dtype=np.int16))
+            
+            total_frame_len = total_frame_len + chunk
+
+            #only if a sufficient number of frames are collected,
+            if total_frame_len > min_voice_frame_len:       
+                
+                #only if the ratio of speech frames to the total frames is higher than the threshold
+                if float(speech_frame_len)/total_frame_len > speech_ratio:
+                    
+                    #predict
+                    frames_np = np.hstack(frames_np)
+                    outputs = predict_frame(self.dec, frames_np, args)
+                    
+                    vad_result(outputs, args.predict_mode, file_path, logger, args.callback)
+                else:
+                    no_vad_result(tasks, args.predict_mode, "", logger, args.callback)
+                
+                #initialise variables
+                total_frame_len = 0
+                speech_frame_len = 0
+                frames_16i = ''
+                frames_np = []
+
+            total_frame_count = total_frame_count + 1
+            if total_frame_count % 100 == 0:
+                log(str("total frame: %d" %( total_frame_count)))
+
+        log("---done---")
+        self.listening = False
+        p.terminate()   
+
+
+    def start(self,args):
+        
+        tasks_string = 'arousal:3,valence:3'
+        
+        # vad mode, only accept [0|1|2|3], 0 more quiet 3 more noisy"
+        vad_mode = 0
+
+        logger = None
+        
+
+        #feature extraction setting
+
+        # the minimum length(ms) of speech for emotion detection
 
         feat_path = "./temp.csv"
         tmp_data_path = "./tmp"
@@ -185,8 +284,8 @@ class LiveSer:
         
 
         #initialise vad
-        vad = webrtcvad.Vad()
-        vad.set_mode(vad_mode)
+        self.vad = webrtcvad.Vad()
+        self.vad.set_mode(vad_mode)
 
         #automatic gain normalisation
         if args.g_min and args.g_max:
@@ -219,112 +318,25 @@ class LiveSer:
         # 3DCNN
         args.three_d = False
 
-        dec = Decoder(
+        self.sample_rate = 16000
+
+        self.dec = Decoder(
                 model_file = model_file, 
                 elm_model_files = None, 
                 context_len = context_len,
                 max_time_steps = max_time_steps, 
                 tasks = tasks_string,
                 stl = False, 
-                sr = sample_rate, 
+                sr = self.sample_rate, 
                 min_max = g_min_max, 
                 seq2seq = False
         )
 
-        self.feat_ext = dec.feat_ext
+        self.feat_ext = self.dec.feat_ext
+
+        self.listen(args)
         
-        log("Init audio")
-        p = pyaudio.PyAudio()
 
-        #open file (offline mode)
-
-        log("no input wav file! Starting a live mode.")
-
-        #open mic
-        if args.device_id is None:
-            args.device_id = find_device_id("pulse")
-            if args.device_id == -1:
-                log("There is no default device!, please check the configuration")
-                sys.exit(-1)
-                
-            #open mic
-        f = p.open(
-                format = format, 
-                channels = n_channel, 
-                rate = sample_rate, 
-                input = True, 
-                input_device_index = args.device_id,
-                frames_per_buffer = chunk
-        )
-
-        log("---Starting---")
-
-        is_currently_speech = False
-        total_frame_len = 0
-        frames_16i = ''
-        frames_np = []
-        prev_task_outputs = None
-        speech_frame_len = 0
-        total_frame_count = 0
-
-
-        file_path = None
-        
-        while True and not args.stop:
-            #read a frame    
-            data = f.read(chunk,exception_on_overflow=False)
-                
-            if data == '':
-                break
-
-            #check gain
-            mx = audioop.max(data, 2)
-            
-            #VAD
-            try:
-                is_speech = vad.is_speech(data, sample_rate)
-            except:
-                log("end of speech")
-                break
-
-            if mx < min_energy:
-                is_speech = 0
-            
-            #log(str('gain: %d, vad: %d' % (mx, is_speech)))   
-            
-            if is_speech == 1:
-                speech_frame_len = speech_frame_len + chunk #note chunk is a half of frame length.
-
-            frames_np.append(np.fromstring(data, dtype=np.int16))
-            
-            total_frame_len = total_frame_len + chunk
-
-            #only if a sufficient number of frames are collected,
-            if total_frame_len > min_voice_frame_len:       
-                
-                #only if the ratio of speech frames to the total frames is higher than the threshold
-                if float(speech_frame_len)/total_frame_len > speech_ratio:
-                    
-                    #predict
-                    frames_np = np.hstack(frames_np)
-                    outputs = predict_frame(dec, frames_np, args)
-                    
-                    vad_result(outputs, args.predict_mode, file_path, logger, args.callback)
-                else:
-                    no_vad_result(tasks, args.predict_mode, "", logger, args.callback)
-                
-                #initialise variables
-                total_frame_len = 0
-                speech_frame_len = 0
-                frames_16i = ''
-                frames_np = []
-
-            total_frame_count = total_frame_count + 1
-            if total_frame_count % 100 == 0:
-                log(str("total frame: %d" %( total_frame_count)))
-
-        log("---done---")
-        p.terminate()   
 
 if __name__ == '__main__':
 
