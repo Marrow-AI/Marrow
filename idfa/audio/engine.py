@@ -50,6 +50,23 @@ class ScheduleOSC:
         print("Cacnel command! {}".format(self._command))
         self._task.cancel()
 
+class ScheduleFunction:
+    def __init__(self, timeout, callback):
+        self._callback = callback
+        self._task = asyncio.ensure_future(self._job())
+
+    async def _job(self):
+        await asyncio.sleep(self._timeout)
+        if self._callback:
+            print("Shoot function!")
+            self._callback(self._command, self._timeout)
+        else:
+            print("ERROR no function")
+
+    def cancel(self):
+        print("Cacnel function")
+        self._task.cancel()
+
 
 class Engine:
     def __init__(self,args):
@@ -77,6 +94,7 @@ class Engine:
         self.osc_commands = {}
 
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
+        self.pix2pix_client = udp_client.SimpleUDPClient("127.0.0.1", 8383)
         self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
 
         self.mental_state = MentalState()
@@ -130,7 +148,7 @@ class Engine:
             print("BABBLE TIMEOUT")
             self.last_mid = now
             self.lookup(self.mid_text)
-        if not args.stop:
+        if not self.args.stop:
             threading.Timer(0.1, self.time_check).start()
 
 
@@ -317,6 +335,7 @@ class Engine:
     def end(self):
         print("END")
         self.t2i_client.send_message("/gan/end",1)
+        self.pix2pix_client.send_message("/gan/end",1)
 
     def response_coming(self, index):
         for i in range(index + 3, index, -1):
@@ -367,21 +386,36 @@ class Engine:
         if data["command"] == 'start':
             asyncio.ensure_future(self.start_intro())
         elif data["command"] == 'stop':
-            self.voice_client.send_message("/control/stop",1)
-            self.t2i_client.send_message("/control/stop",1)
-            self.voice_client.send_message("/gan/delay",1)
-            self.voice_client.send_message("/gan/feedback",0)
-            self.voice_client.send_message("/gan/noisegrain", 0.035) 
-            self.voice_client.send_message("/gan/bassheart", [0.0, 1.0]) 
-            self.voice_client.send_message("/gan/synthmode", [0.0, 1.0]) 
-            self.voice_client.send_message("/gan/beat",1.0)
-            self.preload_speech("gan_intro/1.wav")
+            self.voice_stop()
         elif data["command"] == 'skip-intro':
             self.purge_osc()
             self.voice_client.send_message("/control/start",1)
             self.voice_client.send_message("/control/synthbass",1)
             self.voice_client.send_message("/intro/end",1)
             self.voice_client.send_message("/gan/start",1)
+        elif data["command"] == 'stop-ser':
+            self.ser_stop()
+        elif data["command"] == 'start-ser':
+            self.ser_start()
+
+    def ser_stop(self):
+        self.args.stop = True
+
+    def ser_start(self):
+        self.args.stop = False
+        self.live_ser.listen(self.args)
+
+    def voice_stop(self):
+        self.voice_client.send_message("/control/stop",1)
+        self.t2i_client.send_message("/control/stop",1)
+        self.pix2pix_client.send_message("/control/stop",1)
+        self.voice_client.send_message("/gan/delay",1)
+        self.voice_client.send_message("/gan/feedback",0)
+        self.voice_client.send_message("/gan/noisegrain", 0.035) 
+        self.voice_client.send_message("/gan/bassheart", [0.0, 1.0]) 
+        self.voice_client.send_message("/gan/synthmode", [0.0, 1.0]) 
+        self.voice_client.send_message("/gan/beat",1.0)
+        self.preload_speech("gan_intro/1.wav")
 
 
     async def start_intro(self):
@@ -389,6 +423,7 @@ class Engine:
         self.voice_client.send_message("/control/init",1)
         self.script.reset()
         self.t2i_client.send_message("/control/start",1)
+        self.pix2pix_client.send_message("/control/start",1)
         first_speech = 28
         self.say(0, delay_effect = False)
         self.schedule_osc(first_speech - 0.5, self.voice_client, "/gan/feedback", 0.2 )
@@ -397,6 +432,7 @@ class Engine:
         self.schedule_osc(30.1 + first_speech, self.voice_client, "/control/table", 1)
         self.schedule_osc(40.1 + first_speech, self.voice_client, "/intro/preend", 1,)
         self.schedule_osc(51.1 + first_speech, self.voice_client, "/intro/end", 1,)
+        self.schedule_osc(51.1 + first_speech, self.pix2pix_client, "/intro/end", 1,)
         self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/start", 1)
         self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/bassheart", [1.0, 0.0])
         self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/synthmode", [1.0, 0.0])
