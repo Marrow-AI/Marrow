@@ -232,12 +232,12 @@ class Engine:
                 return True
 
         # If it has been too long accept whatever
-        now =  int(round(time.time() * 1000))
-        if self.last_react > 0 and now - self.last_react > 1000  * 20:
-            (index, try_i) = self.match_cache_any()
-            if try_i != -1:
-                self.react(text, index)
-                return True
+        #now =  int(round(time.time() * 1000))
+        #if self.last_react > 0 and now - self.last_react > 1000  * 20:
+        #    (index, try_i) = self.match_cache_any()
+        #    if try_i != -1:
+        #        self.react(text, index)
+        #        return True
 
 
 
@@ -406,6 +406,7 @@ class Engine:
         self.live_ser.listen(self.args)
 
     def voice_stop(self):
+        self.script.reset()
         self.voice_client.send_message("/control/stop",1)
         self.t2i_client.send_message("/control/stop",1)
         self.pix2pix_client.send_message("/control/stop",1)
