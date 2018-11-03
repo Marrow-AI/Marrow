@@ -311,6 +311,7 @@ class Engine:
 
     def end(self):
         print("END")
+        self.t2i_client.send_message("/gan/end",1)
 
     def response_coming(self, index):
         for i in range(index + 3, index, -1):
@@ -333,7 +334,12 @@ class Engine:
         if delay_effect:
             self.schedule_osc(delay_sec,self.voice_client, "/gan/delay", 1)
         self.schedule_osc(delay_sec,self.voice_client, "/speech/play", 1)
+
+        self.schedule_osc(delay_sec,self.t2i_client, "/gan/speaks", 1)
+
         self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
+
+        self.schedule_osc(self.speech_duration + delay_sec, self.t2i_client, "/gan/speaks", 0)
 
     def preload_speech(self, file_name):
         with contextlib.closing(wave.open(file_name,'r')) as f:
@@ -356,7 +362,12 @@ class Engine:
             asyncio.ensure_future(self.start_intro())
         elif data["command"] == 'stop':
             self.voice_client.send_message("/control/stop",1)
+            self.t2i_client.send_message("/control/stop",1)
             self.voice_client.send_message("/gan/delay",1)
+            self.voice_client.send_message("/gan/feedback",0)
+            self.voice_client.send_message("/gan/noisegrain", 0.035) 
+            self.voice_client.send_message("/gan/bassheart", [0.0, 1.0]) 
+            self.voice_client.send_message("/gan/synthmode", [0.0, 1.0]) 
             self.preload_speech("gan_intro/1.wav")
         elif data["command"] == 'skip-intro':
             self.purge_osc()
@@ -368,16 +379,21 @@ class Engine:
 
     async def start_intro(self):
         print("Start intro!")
+        self.voice_client.send_message("/control/init",1)
         self.script.reset()
+        self.t2i_client.send_message("/control/start",1)
         first_speech = 28
         self.say(0, delay_effect = False)
-        self.schedule_osc(first_speech - 1, self.voice_client, "/gan/feedback", 0.2 )
+        self.schedule_osc(first_speech - 0.5, self.voice_client, "/gan/feedback", 0.2 )
         self.schedule_osc(0 + first_speech, self.voice_client, "/control/start", 1)
         self.schedule_osc(12.1 + first_speech, self.voice_client, "/control/synthbass", 1)
         self.schedule_osc(30.1 + first_speech, self.voice_client, "/control/table", 1)
+        self.schedule_osc(40.1 + first_speech, self.voice_client, "/intro/preend", 1,)
         self.schedule_osc(51.1 + first_speech, self.voice_client, "/intro/end", 1,)
-        self.schedule_osc(61.1 + first_speech, self.voice_client, "/gan/start", 1)
-        self.schedule_osc(61.5 + first_speech, self.voice_client, "/gan/feedback", 0)
+        self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/start", 1)
+        self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/bassheart", [1.0, 0.0])
+        self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/synthmode", [1.0, 0.0])
+        self.schedule_osc(63.5 + first_speech, self.voice_client, "/gan/feedback", 0)
 
     def mood_update(self, data):
         self.mental_state.value = float(data["value"])
@@ -388,10 +404,15 @@ class Engine:
 
         ####
         self.voice_client.send_message("/gan/strings", max(0, self.mental_state.value - 0.5))
-        self.voice_client.send_message("/gan/lfo2", max(0, self.mental_state.value - 0.5) * 0.3)
-        self.voice_client.send_message("/gan/lfo1", max(0, 1-(self.mental_state.value * 2)))
-        bassheart = 0 if self.mental_state.value < 0.4 else 0.01
+        self.voice_client.send_message("/gan/lfo2", max(0, self.mental_state.value - 0.5) * 0.8)
+        self.voice_client.send_message("/gan/lfo1", max(0, 1-(self.mental_state.value * 3)))
+        bassheart = [0.0, 1.0] if self.mental_state.value < 0.4 else [1.0, 0.0]
         self.voice_client.send_message("/gan/bassheart", bassheart)
+        self.voice_client.send_message("/gan/noisegrain", 0.035 + 0.04 * (max(0, 0.5 - self.mental_state.value )))
+        if self.mental_state.value < 0.3:
+            self.voice_client.send_message("/gan/bells", 0.02)
+        else:
+            self.voice_client.send_message("/gan/bells", 0.01)
 
 
 
