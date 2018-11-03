@@ -123,11 +123,11 @@ namespace Marrow
 		{
 			// prepare to start pix2pix, e.g. room spot light on
 			spotLight.enabled = true;
-			LeanTween.value(0f, 1f, 3f)
+			LeanTween.value(0f, 1f, 5f)
 			         .setOnUpdate((float val) => {
                          spotLight.intensity = val;
                      });
-			LeanTween.value(gameObject, Color.black, Color.white, 3f)
+			LeanTween.value(gameObject, Color.black, Color.white, 5f)
 					 .setOnUpdate((Color col) =>
 					 {
 						 projectorMaterial.SetColor("_Color", col);
