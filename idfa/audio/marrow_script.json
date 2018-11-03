@@ -199,15 +199,15 @@
                     "pause": 450
                 },
                 {
-                    "text": "If your family ever used to",
+                    "text": "If your family has ever gathered",
                     "pause": 30
                 },
                 {
-                    "text": "Gather around a table",
+                    "text": "Around a table",
                     "pause": 150
                 },
                 {
-                    "text": "with laughter and perfection?",
+                    "text": "All laughing and perfect?",
                     "pause": 350
                 },
                 {
@@ -360,7 +360,11 @@
                     "pause": 50
                 },
                 {
-                    "text": "The surface of the idea itself.",
+                    "text": "The surface of the idea",
+                    "pause": 60
+                },
+                {
+                    "text": "Itself.",
                     "pause": 650
                 },
                 {
@@ -544,7 +548,7 @@
                         "pause": 2400
                     },
                     {
-                        "text": "Be cool!",
+                        "text": "Let's stay cool!",
                         "pause": 1400
                     },
                     {
@@ -560,7 +564,7 @@
                         "pause": 300
                     },
                     {
-                        "text": "It’s possible when you put yourself",
+                        "text": "It’s possible when you position yourself",
                         "pause": 20
                     },
                     {
@@ -759,6 +763,10 @@
                 },
                 { 
                     "text": "And with these new emotions,",
+                    "pause": 30
+                },
+                { 
+                    "text": "And in this new state,",
                     "pause": 100
                 },
                 { 
