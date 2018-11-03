@@ -321,8 +321,8 @@ class Engine:
             # Normal react feedback
             self.voice_client.send_message("/gan/react",1)
 
-        if "triggers-beat" in line:
-            self.voice_client.send_message("/gan/beat",0.0)
+       # if "triggers-beat" in line:
+        #    self.voice_client.send_message("/gan/beat",0.0)
 
 
         if index < self.script.length - 1:
