@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using BestHTTP;
 using BestHTTP.SocketIO;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Marrow
 {
@@ -255,6 +256,16 @@ namespace Marrow
 
             Dictionary<string, object> data = args[0] as Dictionary<string, object>;
             string base64Image = data["results"] as string;
+
+            // https://stackoverflow.com/questions/28015442/converting-base64-string-to-gif-image
+            //HashSet<char> whiteSpace = new HashSet<char> { '\t', '\n', '\r', ' ' };
+            //int length = base64Image.Count(c => !whiteSpace.Contains(c));
+            //if (length % 4 != 0)
+            //    base64Image += new string('=', 4 - length % 4); // Pad length to multiple of 4.
+
+            Debug.Log(base64Image.Length);
+            if (base64Image.Length < 10000)
+                return;
             byte[] receivedBase64Img = Convert.FromBase64String(base64Image);
 			//genTexture.LoadImage(receivedBase64Img);
 
@@ -286,7 +297,7 @@ namespace Marrow
             // Scale down seems to crash the server???
 
 			TextureScale.Bilinear(genTexture, imageWidth/2, imageHeight/2);
-			Debug.Log(genTexture.width + ", " + genTexture.height);
+			// Debug.Log(genTexture.width + ", " + genTexture.height);
 			     
 			byte[] imageData = genTexture.EncodeToJPG();
 			string base64Image = Convert.ToBase64String(imageData);
