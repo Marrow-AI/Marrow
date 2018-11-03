@@ -286,6 +286,7 @@ class Engine:
         if response_i != -1:
             if not self.beating:
                 self.voice_client.send_message("/gan/heartbeat", 0.5)
+                self.voice_client.send_message("/gan/bassheart", [0.0, 1.0]) 
                 self.preload_speech("gan_responses/{}.wav".format(response_i))
         else:
             self.beating = False
@@ -341,6 +342,7 @@ class Engine:
         self.schedule_osc(delay_sec,self.t2i_client, "/gan/speaks", 1)
 
         self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
+        self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/bassheart", [1.0, 0.0])
 
         self.schedule_osc(self.speech_duration + delay_sec, self.t2i_client, "/gan/speaks", 0)
 
