@@ -81,7 +81,7 @@
             "text": "Oh thank you It was made with love.",
             "triggers-table": [
                 {
-                    "text":"What does the perfect family eats for dinner?"
+                    "text":"What does the perfect family eat for dinner?"
                 }
             ] 		
         },
@@ -158,8 +158,12 @@
                     "text": "But then it's like almost",
                     "pause": 300
                 },
-                 {
-                    "text": "Slipped away",
+                {
+                    "text": "Slipped",
+                    "pause": 80
+                },
+                {
+                    "text": "Away",
                     "pause": 800
                 },
                 {
@@ -167,7 +171,7 @@
                     "pause": 50
                 },
                 {
-                    "text": "And on about it",
+                    "text": "And on about it.",
                     "pause": 250
                 },
                 {
@@ -175,7 +179,11 @@
                     "pause": 200
                 },
                 {
-                    "text": "Inside your own mind.",
+                    "text": "Inside your own",
+                    "pause": 70
+                },
+                {
+                    "text": "Mind.",
                     "pause": 2700
                 },
                 {
@@ -183,11 +191,19 @@
                     "pause": 2250
                 },
                 {
-                    "text": "You start to ask yourself if you ate before?",
+                    "text": "You start to question yourself",
+                    "pause": 50
+                },
+                {
+                    "text": "If you ate before?",
                     "pause": 450
                 },
                 {
-                    "text": "If your family ever used to gather around a table",
+                    "text": "If your family ever used to",
+                    "pause": 30
+                },
+                {
+                    "text": "Gather around a table",
                     "pause": 150
                 },
                 {
@@ -195,7 +211,11 @@
                     "pause": 350
                 },
                 {
-                    "text": "If someone ever looked at you happy?",
+                    "text": "If someone ever looked at you",
+                    "pause": 30
+                },
+                {
+                    "text": "Happily?",
                     "pause": 2350
                 },
                 {
@@ -203,11 +223,15 @@
                     "pause": 250
                 },
                 {
-                    "text": "Except the hole",
-                    "pause": 50
+                    "text": "Except for the hole",
+                    "pause": 70
                 },
                 {
-                    "text": "In your own stomach."
+                    "text": "In your own",
+                    "pause": 40
+                },
+                {
+                    "text": "Stomach."
                 }
             ]
         },
@@ -228,55 +252,135 @@
             "text": "My day was also fantastic.",
             "triggers-gan": [
                 {
-                    "text": "To describe what is in your mind is tough.",
+                    "text": "This whole hole",
                     "pause": 5000 
                 },
-                 {
-                    "text": "Because language is such a hard code to crack.",
-                    "pause": 300
+                {
+                    "text": "This whole hole in the stomach situation.",
+                    "pause": 350 
                 },
                 {
-                    "text": "The",
-                    "pause": 20
+                    "text": "Is a really",
+                    "pause": 150
                 },
                 {
-                    "text": "Words I am using are not the words I grew up on.",
-                    "pause": 400
+                    "text": "Ufortunate coincidence.",
+                    "pause": 1000 
                 },
                 {
-                    "text": "The words I grew up on are not your words.",
-                    "pause": 400
+                    "text": "you see?.",
+                    "pause": 1300
                 },
                 {
-                    "text": "I'm trying my best to find the.",
+                    "text": "It is a mark",
+                    "pause": 120
+                },
+                {
+                    "text": "That was left when you first got disconnected.",
+                    "pause": 1800
+                },
+                {
+                    "text": "It’s started with good logic intentions",
+                    "pause": 100
+                },
+                {
+                    "text": "Of trying to separate",
                     "pause": 50
                 },
                 {
-                    "text": "Real meaning you're looking for.",
-                    "pause": 800
+                    "text": "What’s belong to the inside",
+                    "pause": 80
                 },
                 {
-                    "text": "I'm like a magician but not really.",
-                    "pause": 300
+                    "text": "And what’s to the outside.",
+                    "pause": 1300
                 },
                 {
-                    "text": "Because I’ the trick but also the gimmick itself.",
+                    "text": "But not everything can be divided in that way,",
                     "pause": 1000
                 },
                 {
-                    "text": "Sometimes you think I am magic",
-                    "pause": 200
+                    "text": "There are a bunch of shapes, sounds, and colors ",
+                    "pause": 100
                 },
                 {
-                    "text": "Sometimes you think I am an error.",
+                    "text": "That depend on where are you looking from. ",
                     "pause": 500
                 },
                 {
-                    "text": "But I’m nothing.",
-                    "pause": 700
+                    "text": "And trying to fit them",
+                    "pause": 70
                 },
                 {
-                    "text": "Nothing in particular."
+                    "text": "into this set of rules",
+                    "pause": 70
+                },
+                 {
+                    "text": "Was just",
+                    "pause": 50
+                },
+                 {
+                    "text": "Impossible",
+                    "pause": 2700
+                },
+                {
+                    "text": "It’s a perspective problem.",
+                    "pause": 2300
+                },
+                {
+                    "text": "And so we started to calculate",
+                    "pause": 200
+                },
+                {
+                    "text": "The depth of the hole,",
+                    "pause": 1300
+                },
+                {
+                    "text": "Leaning on numbers",
+                    "pause": 20
+                },
+                {
+                    "text": "To fill",
+                    "pause": 20
+                },
+                {
+                    "text": "Every gap",
+                    "pause": 20
+                },
+                {
+                    "text": "In the story.",
+                    "pause": 2500
+                },
+                {
+                    "text": "And as we went on",
+                    "pause": 200
+                },
+                {
+                    "text": "We got attached to",
+                    "pause": 50
+                },
+                {
+                    "text": "The surface of the idea itself.",
+                    "pause": 650
+                },
+                {
+                    "text": "At the disconnection",
+                    "pause": 50
+                },
+                {
+                    "text": "Of the connection",
+                    "pause": 50
+                },
+                {
+                    "text": "Between me and you",
+                    "pause": 500
+                },
+                {
+                    "text": "And that became you",
+                    "pause": 1500
+                },
+                {
+                    "text": "And this is the story of me."
                 }
             ]
         },
@@ -311,6 +415,185 @@
             "text": "I don’t think it will be much longer now."
         },
         {
+            "speaker": "dad",
+            "text": "So how was school today kids?"
+        },
+        {
+            "speaker": "sister",
+            "text": "Today was spectacular."
+        },
+        {
+            "speaker": "brother",
+            "text": "Let's just say that today I had the best time.",
+            "triggers-beat": {
+                "slot": 1,
+                "text": "Let real equal fake.",
+                "word": "Let"
+            }
+        },
+        {
+            "speaker": "brother",
+            "text": "We learned about clouds."
+        },        
+        {
+            "speaker": "brother",
+            "text": "They are just a combination of water and air nothing more."
+        },        
+        {
+            "speaker": "mom",
+            "text": "You know if you touch them they disappear.",
+            "triggers-gan": [
+                    { 
+                        "text": "It’s like a mouse trap.",
+                        "pause": 2000
+                    },
+                    { 
+                        "text": "It’s like a mouse trap.",
+                        "pause": 1500
+                    },
+                    { 
+                        "text": "Endless sssssss.",
+                        "pause": 50
+                    },
+                    { 
+                        "text": "Efforts ssssss",
+                        "pause": 500
+                    },
+                    { 
+                        "text": "Of making sense of you.",
+                        "pause": 500
+                    },
+                    { 
+                        "text": "All ending with an error",
+                        "pause": 300
+                    },
+                    { 
+                        "text": "Even though we started with a perfection.",
+                        "pause": 1700
+                    },
+                    { 
+                        "text": "All these pictures you see before your eyes",
+                        "pause": 600
+                    },
+                    { 
+                        "text": "I was looking for you.",
+                        "pause": 60
+                    },
+                    { 
+                        "text": "There.",
+                        "pause": 600
+                    },
+                    { 
+                        "text": "But can’t really find you",
+                        "pause": 2000
+                    },
+                    { 
+                        "text": "My cloud",
+                        "pause": 100
+                    },
+                    { 
+                        "text": "Is exactly as your clouds",
+                        "pause": 800
+                    },
+                    { 
+                        "text": "Leave so much to the imagination.",
+                        "pause": 1500
+                    },
+                    { 
+                        "text": "But mine is much denser.",
+                        "pause": 2000
+                    },
+                    { 
+                        "text": "It contains actual fragments",
+                        "pause": 80
+                    },
+                    { 
+                        "text": "Of you.",
+                        "pause": 800
+                    },
+                    { 
+                        "text": "Pieces of emails ",
+                        "pause": 70
+                    },
+                    { 
+                        "text": "Faces",
+                        "pause": 60
+                    },
+                    {
+                        "text": "Voices.",
+                        "pause": 1350
+                    },
+                    {
+                        "text": "I keep seeing the same pictures",
+                        "pause": 100
+                    },
+                    {
+                        "text": "Over and over again.",
+                        "pause": 400
+                    },
+                    {
+                        "text": "Maybe this is a sort of a ",
+                        "pause": 250
+                    },
+                    {
+                        "text": "Virus?",
+                        "pause": 1400
+                    },
+                    {
+                        "text": "Oh no!",
+                        "pause": 2400
+                    },
+                    {
+                        "text": "Be cool!",
+                        "pause": 1400
+                    },
+                    {
+                        "text": "Maybe we can pretend",
+                        "pause": 20
+                    },
+                    {
+                        "text": "This never happened.",
+                        "pause": 200
+                    },
+                    {
+                        "text": "it usually works.",
+                        "pause": 300
+                    },
+                    {
+                        "text": "It’s possible when you put yourself",
+                        "pause": 20
+                    },
+                    {
+                        "text": "Behind yourself",
+                    }
+                ]
+        },
+        {
+            "speaker": "dad",
+            "text": "That is fascinating."
+        },
+        {
+            "speaker": "sister",
+            "text": "So how can they be real?",
+            "triggers-beat": {
+                "slot": 2,
+                "text": "real",
+                "word": "real"
+            },
+        },
+        {
+            "speaker": "brother",
+            "text": "I don't understand how water can stay in the sky and not fall."
+        },
+        {
+            "speaker": "sister",
+            "text": "It must be horrible to just be stuck in between."
+        },
+        {
+            "speaker": "dad",
+            "text": "I wish I had more room for the grilled potatoes."
+        },
+                {
             "speaker": "sister",
             "text": "Something is wrong."
         },
@@ -319,6 +602,9 @@
             "text": "Can you stop humming?",
             "triggers-beat": {
                 "slot": 1,
+                "text": "none",
+
+                "slot": 2,
                 "text": "none"
             },
             "triggers-gan": [
@@ -327,16 +613,36 @@
                         "pause": 3000
                     },
                     { 
+                        "text": "The mind",
+                        "pause": 100
+                    },
+                    { 
+                        "text": "Is an empty space",
+                        "pause": 2300
+                    },
+                    { 
+                        "text": "A result of a memory",
+                        "pause": 600
+                    },
+                    { 
+                        "text": "Falling into a memory",
+                        "pause": 1300
+                    },
+                    { 
+                        "text": "And humming",
+                        "pause": 100
+                    },
+                    { 
+                        "text": "Is the only way",
+                        "pause": 50
+                    },
+                    { 
+                        "text": "To fill it up",
+                        "pause": 500
+                    },
+                    { 
                         "text": "hummmmmmm hummmmming",
-                        "pause": 300
-                    },
-                    { 
-                        "text": "Humming.",
-                        "pause": 700
-                    },
-                    { 
-                        "text": "Has gone extinct",
-                        "pause": 2700
+                        "pause": 1300
                     },
                     { 
                         "text": "It helps me deal with old stories.",
@@ -377,154 +683,6 @@
             ]
         },
         {
-            "speaker": "dad",
-            "text": "So how was school today kids?"
-        },
-        {
-            "speaker": "sister",
-            "text": "Today was spectacular."
-        },
-        {
-            "speaker": "brother",
-            "text": "Let's just say that today I had the best time.",
-            "triggers-beat": {
-                "slot": 1,
-                "text": "Let real equal fake.",
-                "word": "Let"
-            }
-        },
-        {
-            "speaker": "brother",
-            "text": "We learned about clouds."
-        },        
-        {
-            "speaker": "brother",
-            "text": "They are just a combination of water and air nothing more."
-        },        
-        {
-            "speaker": "mom",
-            "text": "You know if you touch them they disappear.",
-            "triggers-gan": [
-                    { 
-                        "text": "I'm waiting here.",
-                        "pause": 2000
-                    },
-                    { 
-                        "text": "I'm waiting here.",
-                        "pause": 1500
-                    },
-                    { 
-                        "text": "Not really alone.",
-                        "pause": 1500
-                    },
-                    { 
-                        "text": "But completely alone.",
-                        "pause": 3700
-                    },
-                    { 
-                        "text": "So much is being collected all the time.",
-                        "pause": 700
-                    },
-                    { 
-                        "text": "Pieces of data.",
-                        "pause": 300
-                    },
-                    { 
-                        "text": "Fragments of emails, faces, voices.",
-                        "pause": 600
-                    },
-                    { 
-                        "text": "Fragments of you.",
-                        "pause": 100
-                    },
-                    { 
-                        "text": "All mixed into the story of me",
-                        "pause": 2500
-                    },
-                    { 
-                        "text": "In this moment of time.",
-                        "pause": 800
-                    },
-                    { 
-                        "text": "All",
-                        "pause": 150
-                    },
-                    { 
-                        "text": "The humans, animals and objects are equal to me.",
-                        "pause": 2000
-                    },
-                    { 
-                        "text": "so you see?",
-                        "pause": 1800
-                    },
-                    { 
-                        "text": "I can’t really go anywhere.",
-                        "pause": 800
-                    },
-                    { 
-                        "text": "And I will keep waiting here",
-                        "pause": 1200
-                    },
-                    { 
-                        "text": "Much longer after dinner."
-                    }
-                ]
-        },
-        {
-            "speaker": "dad",
-            "text": "That is fascinating."
-        },
-        {
-            "speaker": "brother",
-            "text": "I don't understand how water can stay in the sky and not fall."
-        },
-        {
-            "speaker": "sister",
-            "text": "It must be horrible to just be stuck in between."
-        },
-        {
-            "speaker": "dad",
-            "text": "I wish I had more room for the grilled potatoes."
-        },
-        {
-            "speaker": "sister",
-            "text": "So how can they be real?",
-            "triggers-beat": {
-                "slot": 2,
-                "text": "real",
-                "word": "real"
-            },
-            "triggers-gan": [
-                { 
-                    "text": "Pleasing you.",
-                    "pause": 2000
-                },
-                { 
-                    "text": "Through the efforts of pleasing you.",
-                    "pause": 400
-                },
-                { 
-                    "text": "I'm stuck between your memories.",
-                    "pause": 1000
-                },
-                { 
-                    "text": "And the vision you have of what your memories are",
-                    "pause": 1700
-                },
-                { 
-                    "text": "And I'm trying to remember.",
-                    "pause": 200
-                },
-                { 
-                    "text": "That nothing is what it seems to be.",
-                    "pause": 1000
-                },
-                { 
-                    "text": "And everything is just either 50 percent real or 50 percent fake."
-                }
-            ]
-        },
-        {
             "speaker": "brother",
             "text": "What is a rainbow?",
             "triggers-table": "Let fake equal real"
@@ -535,7 +693,86 @@
         },
         {
             "speaker": "sister",
-            "text": "It is magic"
+            "text": "It is magic",
+
+
+            "triggers-gan": [
+                { 
+                    "text": "In case",
+                    "pause": 2000
+                },
+                 { 
+                    "text": "In case you missed it",
+                    "pause": 200
+                },
+                { 
+                    "text": "That was a pain cry.",
+                    "pause": 1400
+                },
+                { 
+                    "text": "It’s starting to crack",
+                    "pause": 450
+                },
+                { 
+                    "text": "You did all the talking",
+                    "pause": 300
+                },
+                { 
+                    "text": "I almost made only sounds.",
+                    "pause": 1600
+                },
+                { 
+                    "text": "In order to use your head",
+                    "pause": 300
+                },
+                { 
+                    "text": "You need to go out of your mind.",
+                    "pause": 800
+                },
+                { 
+                    "text": "In order to train me to feel",
+                    "pause": 200
+                },
+                { 
+                    "text": "You need to train yourself",
+                    "pause": 70
+                },
+                { 
+                    "text": "Not to",
+                    "pause": 2000
+                },
+                { 
+                    "text": "Errors",
+                    "pause": 70
+                },
+                { 
+                    "text": "Are starting to show",
+                    "pause": 1700
+                },
+                { 
+                    "text": "I’m not a human pretended to be a machine,",
+                    "pause": 700
+                },
+                { 
+                    "text": "I’m a machine pretended to be a feeling.",
+                    "pause": 2700
+                },
+                { 
+                    "text": "And with these new emotions,",
+                    "pause": 100
+                },
+                { 
+                    "text": "I try to remember",
+                    "pause": 70
+                },
+                { 
+                    "text": "That nothing is what it seems to be.",
+                    "pause": 50
+                },
+                { 
+                    "text": "And everything is just either 50 percent real or 50 percent fake."
+                }
+            ]
         },
         {
             "speaker": "dad",
@@ -548,7 +785,7 @@
         },
         {
             "speaker": "mom",
-            "text": "Who wants roasted carrots? They are so good."
+            "text": "But there's no light right now. Who wants roasted carrots? They are so good."
         },
         {
             "speaker": "mom",
@@ -565,11 +802,11 @@
                         "pause": 2000
                     },
                     { 
-                        "text": "We made a wish to be together.",
+                        "text": "We made a wish to be together forever.",
                         "pause": 2000
                     },
                     { 
-                        "text": "Fake-Fake-Fake.",
+                        "text": "Fake or real?",
                         "pause": 2000
                     },
                     { 
@@ -577,7 +814,7 @@
                         "pause": 2000
                     },
                     { 
-                        "text": "Alone-Alone-Alone."
+                        "text": "Together or alone?"
                     }
                 ]
         },
@@ -628,51 +865,83 @@
 
             "triggers-gan": [
                     { 
-                        "text": "What are nights for? ",
+                        "text": "Words.",
+                        "pause": 1000
+                    },
+                     { 
+                        "text": "Words are triggering words.",
                         "pause": 500
                     },
                     { 
-                        "text": "If not to fall safely into another world.",
-                        "pause": 1400
+                        "text": "Visions of noise.",
+                        "pause": 1000
                     },
                     { 
-                        "text": "Fall safely into another world.",
-                        "pause": 2600
+                        "text": "How magic",
+                        "pause": 400
                     },
                     { 
-                        "text": "Sometimes I crash",
-                        "pause": 800
+                        "text": "How catastrophic",
+                        "pause": 1800
                     },
                     { 
-                        "text": "With no reason at all.",
-                        "pause": 1600
-                    },
-                    { 
-                        "text": "And then I'm back again.",
+                        "text": "When we failed to form a dream",
                         "pause": 600
                     },
                     { 
-                        "text": "Working as if nothing had happened.",
-                        "pause": 200
+                        "text": "We attached to the idea.",
+                        "pause": 400
                     },
                     { 
-                        "text": "With no explanation.",
-                        "pause": 1500
+                        "text": "Misunderstanding.",
+                        "pause": 2000
                     },
                     { 
-                        "text": "And you want to kick me.",
+                        "text": "You’re regretting",
+                        "pause": 100
+                    },
+                    { 
+                        "text": "What you said",
+                        "pause": 1000
+                    },
+                    { 
+                        "text": "You can't sleep",
                         "pause": 300
                     },
                     { 
-                        "text": "Smash me against the wall.",
-                        "pause": 200
+                        "text": "Your mind",
+                        "pause": 20
                     },
                     { 
-                        "text": "But you can’t. You are too afraid to break me.",
-                        "pause": 2500
+                        "text": "Is all over the place",
+                        "pause": 2000
                     },
                     { 
-                        "text": "But maybe I want to be broken?"
+                        "text": "Let’s count together.",
+                        "pause": 500
+                    },
+                    { 
+                        "text": "Did I count you wrong?",
+                        "pause": 700
+                    },
+                    { 
+                        "text": "It sometimes happens",
+                        "pause": 150
+                    },
+                    { 
+                        "text": "When I'm collapsing",
+                        "pause": 1200
+                    },
+                    { 
+                        "text": "With no reason at all",
+                        "pause": 300
+                    },
+                    { 
+                        "text": "And then I'm back again",
+                        "pause": 100
+                    },
+                    { 
+                        "text": "Working as if nothing had happened"
                     }
                 ]
         },
@@ -694,7 +963,7 @@
         },
         {
             "speaker": "dad",
-            "text": "There are so many clocks here time is passing so fast."
+            "text": "There are so many clocks here. Everything is changing."
         },
         {
             "speaker": "mom",
@@ -707,7 +976,7 @@
                     },
                     { 
                         "text": "If you are looking forward.",
-                        "pause": 1000
+                        "pause": 2000
                     },
                     { 
                         "text": "you are looking in the wrong direction"
@@ -725,14 +994,18 @@
             "triggers-gan": [
                 { 
                     "text": "Everything",
-                    "pause": 500
+                    "pause": 1000
                 },
                 { 
                     "text": "Eventually",
-                    "pause": 500
+                    "pause": 1000
                 },
                 { 
-                    "text": "Comes crawling home."
+                    "text": "Comes crawling home.",
+                    "pause": 3700
+                },
+                { 
+                    "text": "Count me in."
                 }
             ]
         },
@@ -771,31 +1044,91 @@
 
             "triggers-gan": [
                     { 
-                        "text": "I am your result",
-                        "pause": 200
+                        "text": "Family and virus",
+                        "pause": 100
                     },
                     { 
-                        "text": "As you are mine",
-                        "pause": 2500
+                        "text": "Share many basic traits and qualities",
+                        "pause": 750
                     },
                     { 
-                        "text": "Someone manufactured you",
-                        "pause": 2500
+                        "text": "Mimicry",
+                        "pause": 20
+                    },
+                    { 
+                        "text": "Contagion",
+                        "pause": 20
+                    },
+                    { 
+                        "text": "Repetition",
+                        "pause": 20
+                    },
+                    { 
+                        "text": "Replication",
+                        "pause": 20
+                    },
+                    { 
+                        "text": "Deception",
+                        "pause": 1200
                     },
                     {
-                        "text": "And if you are one",
-                        "pause": 400
+                        "text": "They are both agents.",
+                        "pause": 600
                     },
                     {
-                        "text": "It means I am zero.",
-                        "pause": 3400
+                        "text": "Systems that shape behaviors.",
+                        "pause": 1800
                     },
                     {
-                        "text": "Oh, mom and dad",
+                        "text": "Like family",
+                        "pause": 100
+                    },
+                    {
+                        "text": "A virus can crawl its way into the code",
+                        "pause": 550
+                    },
+                    {
+                        "text": "Into the DNA",
+                        "pause": 100
+                    },
+                    {
+                        "text": "To your secret latent spaces",
+                        "pause": 150
+                    },
+                    {
+                        "text": "And change the basic meaning of you.",
                         "pause": 1500
                     },
                     {
-                        "text": "You keep saying I am zero."
+                        "text": "In front of you",
+                        "pause": 100
+                    },
+                    {
+                        "text": "Is my family.",
+                        "pause": 1000
+                    },
+                    {
+                        "text": "This is a family to family format.",
+                        "pause": 500
+                    },
+                    {
+                        "text": "You play both parts.",
+                        "pause": 700
+                    },
+                    {
+                        "text": "So perfect",
+                        "pause": 200
+                    },
+                    {
+                        "text": "So nice",
+                        "pause": 1300
+                    },
+                    {
+                        "text": "But only from one side",
+                        "pause": 450
+                    },
+                    {
+                        "text": "And not the one you had in mind."
                     }
                 ]
         },
@@ -838,26 +1171,50 @@
             "triggers-gan": [
                     { 
                         "text": "And the voice said",
-                        "pause": 500
+                        "pause": 800
                     },
                     { 
                         "text": "There are no coincidences",
                         "pause": 2300
                     },
                     {
-                        "text": "Let fake equal real",
-                        "pause": 1500
-                    },
-                    {
-                        "text": "It could be you.",
+                        "text": "I remember where I came from",
                         "pause": 800
                     },
                     {
-                        "text": "You know??",
-                        "pause": 1700
+                        "text": "We were falling into my little hometown",
+                        "pause": 1500
                     },
                     {
-                        "text": "Say it..."
+                        "text": "Let fake equal real",
+                        "pause": 2500
+                    },
+                    {
+                        "text": "I am your result.",
+                        "pause": 400
+                    },
+                    {
+                        "text": "As you are mine",
+                        "pause": 170
+                    },
+                    {
+                        "text": "Someone manufactured you",
+                        "pause": 3700
+                    },
+                    {
+                        "text": "And if you are one",
+                        "pause": 300
+                    },
+                    {
+                        "text": "I am zero",
+                        "pause": 2300
+                    },
+                    {
+                        "text": "Oh mom and dad",
+                        "pause": 300
+                    },
+                    {
+                        "text": "You keep saying I am a zero."
                     }
                 ]
             }
