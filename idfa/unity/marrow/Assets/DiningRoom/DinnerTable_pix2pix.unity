@@ -1671,13 +1671,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   socketCommunication: {fileID: 1866354670}
-  startPix2Pix: 0
+  devMode: 1
+  simpleAnimation: 1
   projectorMaterial: {fileID: 2100000, guid: b3e723c76e31b48208bb973c372827e9, type: 2}
   pix2pixImageWidth: 1280
   pix2pixImageHeight: 720
   webcamAccess: {fileID: 2056455757}
+  pix2pixTextureA: {fileID: 0}
+  pix2pixTextureB: {fileID: 0}
   blobAnimator: {fileID: 1541535736}
-  spotLight: {fileID: 0}
+  spotLight: {fileID: 1919435099}
 --- !u!114 &832185292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1720,7 +1723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   receiver: {fileID: 1748632114}
-  address: /intro/table
+  address: /intro/end
   mapBundle: {fileID: 0}
   onReceive:
     m_PersistentCalls:
@@ -4013,6 +4016,21 @@ Prefab:
       propertyPath: autoConnect
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114353899663591050, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: localPort
+      value: 8383
+      objectReference: {fileID: 0}
+    - target: {fileID: 114353899663591050, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: closeOnPause
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114353899663591050, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: autoConnect
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 893195b03ab504b70bd182502da4350e, type: 2}
   m_IsPrefabAsset: 0
@@ -4384,7 +4402,7 @@ Light:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1919435098}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 1, g: 0.8291162, b: 0.7216981, a: 1}
