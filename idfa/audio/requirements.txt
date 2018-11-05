@@ -23,3 +23,4 @@ aiohttp
 google-cloud
 google-cloud-texttospeech
 watson_developer_cloud
+janus

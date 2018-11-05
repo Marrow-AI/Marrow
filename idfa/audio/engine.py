@@ -11,6 +11,7 @@ import shutil
 import asyncio
 import threading
 import time
+import janus
 
 from script import Script
 
@@ -18,6 +19,8 @@ sys.path.append(os.path.abspath('./emotion'))
 
 from offline_ser import LiveSer
 from mental_state import MentalState
+
+from google_recognizer import Recognizer
 
 import wave
 import contextlib
@@ -108,11 +111,14 @@ class Engine:
 
         self.main_loop = asyncio.get_event_loop()
 
-        self.queue = asyncio.Queue(loop=self.main_loop)
+        self.queue = janus.Queue(loop=self.main_loop)
+
+        self.recognizer = Recognizer(self.queue.sync_q, self.args)
+        fut = self.main_loop.run_in_executor(None, self.recognizer.start)
 
         self.server = Server(
                 self.gain_update, 
-                self.queue,
+                self.queue.async_q,
                 self.control,
                 self.mood_update
         )
@@ -135,7 +141,7 @@ class Engine:
 
     async def consume_speech(self):
         while True:
-            item = await self.queue.get()
+            item = await self.queue.async_q.get()
             if item["action"] == "speech":
                 self.speech_text(item["text"])
             else:
@@ -202,7 +208,7 @@ class Engine:
             """
 
     def mid_speech_text(self, text):
-        #print("({})".format(text))
+        print("({})".format(text))
         self.mid_text = text
         self.t2i_client.send_message("/speech", text)
         self.lookup(text)
@@ -433,7 +439,7 @@ class Engine:
         self.schedule_osc(30.1 + first_speech, self.voice_client, "/control/table", 1)
         self.schedule_osc(40.1 + first_speech, self.voice_client, "/intro/preend", 1,)
         self.schedule_osc(51.1 + first_speech, self.voice_client, "/intro/end", 1,)
-        self.schedule_osc(51.1 + first_speech, self.pix2pix_client, "/intro/end", 1,)
+        self.schedule_osc(51.2 + first_speech, self.pix2pix_client, "/intro/end", 1,)
         self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/start", 1)
         self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/bassheart", [1.0, 0.0])
         self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/synthmode", [1.0, 0.0])

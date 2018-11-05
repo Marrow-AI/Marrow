@@ -9,9 +9,10 @@ OSCdef.new( \speechreload, { |data,time,source|
 			TXSamplePlayer5a.arrInstances[0].loadSample(1);
 	}
 }, '/speech/reload');
-)
 
 TXSystem1.start(showAudioOptions: false);
+)
+
 
 
 

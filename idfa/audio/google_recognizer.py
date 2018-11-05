@@ -18,9 +18,10 @@ CHUNK = int(RATE / 10)  # 100ms
 
 class MicrophoneStream(object):
     """Opens a recording stream as a generator yielding the audio chunks."""
-    def __init__(self, rate, chunk):
+    def __init__(self, rate, chunk, args):
         self._rate = rate
         self._chunk = chunk
+        self.args = args
 
         # Create a thread-safe buffer of audio data
         self._buff = queue.Queue()
@@ -62,7 +63,7 @@ class MicrophoneStream(object):
         return None, pyaudio.paContinue
 
     def generator(self):
-        while not self.closed:
+        while not self.closed and not self.args.stop:
             # Use a blocking get() to ensure there's at least one chunk of
             # data, and stop iteration if the chunk is None, indicating the
             # end of the audio stream.
@@ -72,11 +73,11 @@ class MicrophoneStream(object):
             data = [chunk]
 
             # Now consume whatever other data's still buffered.
-            while True:
+            while True and not self.args.stop:
                 current_time = time.time()
                 diff = current_time - self.start_time
                 #print(diff)
-                if (diff > 5):
+                if (diff > 55):
                     self.closed = True
                     break
                 try:
@@ -94,11 +95,12 @@ class MicrophoneStream(object):
 
 class Recognizer(Thread):
 
-    def __init__(self, callback):
+    def __init__(self, queue, args):
 
         Thread.__init__(self)
-        self.callback = callback
         self.client = speech.SpeechClient()
+        self.args = args
+        self.queue = queue
 
         # See http://g.co/cloud/speech/docs/languages
         # for a list of supported languages.
@@ -113,17 +115,18 @@ class Recognizer(Thread):
             config=config,
             interim_results=True)
 
+        self.last_result = None
 
-        while True:
+    def start(self):
+        while not self.args.stop:
             print("Listen again?")
             self.listen()
-
 
 
     def listen(self):
         self.start_time = time.time()
 
-        with MicrophoneStream(RATE, CHUNK) as stream:
+        with MicrophoneStream(RATE, CHUNK, self.args) as stream:
             audio_generator = stream.generator()
             requests = (types.StreamingRecognizeRequest(audio_content=content)
                         for content in audio_generator)
@@ -146,12 +149,7 @@ class Recognizer(Thread):
         multiple alternatives; for details, see https://goo.gl/tjCPAU.  Here we
         print only the transcription for the top alternative of the top result.
 
-        In this case, responses are provided for interim results as well. If the
-        response is an interim one, print a line feed at the end of it, to allow
-        the next result to overwrite it, until the response is a final one. For the
-        final one, print a newline to preserve the finalized transcription.
         """
-        num_chars_printed = 0
         for response in responses:
             if not response.results:
                 continue
@@ -166,32 +164,20 @@ class Recognizer(Thread):
             # Display the transcription of the top alternative.
             transcript = result.alternatives[0].transcript
 
-            # Display interim results, but with a carriage return at the end of the
-            # line, so subsequent lines will overwrite them.
-            #
-            # If the previous result was longer than this one, we need to print
-            # some extra spaces to overwrite the previous result
-            overwrite_chars = ' ' * (num_chars_printed - len(transcript))
 
             if not result.is_final:
                 #sys.stdout.write(transcript + overwrite_chars + '\r')
                 #sys.stdout.flush()
 
-                print("[{}]".format(transcript))
-
-                num_chars_printed = len(transcript)
+                if (transcript != self.last_result):
+                    self.queue.put({
+                        "action": "mid-speech",
+                        "text": transcript                        
+                    })
+                    self.last_result = transcript
 
             else:
-                print(transcript + overwrite_chars)
-                self.callback(transcript)               
-
-
-                # Exit recognition if any of the transcribed phrases could be
-                # one of our keywords.
-                if re.search(r'\b(exit|quit)\b', transcript, re.I):
-                    print('Exiting..')
-                    break
-
-                num_chars_printed = 0
-
-
+                self.queue.put({
+                    "action": "speech",
+                    "text": transcript                        
+                })
