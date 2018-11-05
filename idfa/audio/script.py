@@ -6,6 +6,7 @@ import json
 class Script:
     def __init__(self):
         print("Initializing script engine")
+        self.nlp = spacy.load('en')
         self.load_data()
 
     def load_data(self):
@@ -20,11 +21,11 @@ class Script:
     def update(self):
         self.awaiting = self.data["script-lines"][self.awaiting_index]
         self.awaiting["words"] = len(self.awaiting["text"].split())
+        self.awaiting_nlp = self.nlp(self.awaiting["text"])
         if self.awaiting_index > 0:
             self.awaiting["previous"] = self.data["script-lines"][self.awaiting_index -1]["text"]
 
     def load_space(self):
-        self.nlp = spacy.load('en')
         self.script_lines = {}
 
         dimensions = self.meanvector("I like apples").shape[0]
@@ -65,6 +66,14 @@ class Script:
             return np.array(vecs).mean(axis=0)
 
     def match(self,text):
+        try:
+            text_nlp = self.nlp(text)
+            return self.awaiting_nlp.similarity(text_nlp)
+        except Exception as e:
+            print("Exception {}".format(e))
+            return 0
+
+    def match_space(self,text):
         try:
             nearest = self.text_space.get_nns_by_vector(
                     self.meanvector(text), 

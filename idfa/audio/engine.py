@@ -31,7 +31,7 @@ import math
 #nlp = spacy.load('en')
 #print("Loaded English NLP")
 
-DISTANCE_THRESHOLD = 0.6
+DISTANCE_THRESHOLD = 0.8
 
 class ScheduleOSC:
     def __init__(self, timeout, client, command, args,  callback):
@@ -57,12 +57,12 @@ class ScheduleFunction:
     def __init__(self, timeout, callback):
         self._callback = callback
         self._task = asyncio.ensure_future(self._job())
+        self._timeout = timeout
 
     async def _job(self):
         await asyncio.sleep(self._timeout)
         if self._callback:
-            print("Shoot function!")
-            self._callback(self._command, self._timeout)
+            self._callback()
         else:
             print("ERROR no function")
 
@@ -74,12 +74,11 @@ class ScheduleFunction:
 class Engine:
     def __init__(self,args):
 
+        print("Engine INIT")
+
         self.args = args
 
         self.script = Script()
-        self.script.load_space()
-        self.script.reset()
-
 
         self.args.stop = False
 
@@ -123,12 +122,20 @@ class Engine:
                 self.mood_update
         )
 
+        self.schedule_function(2, self.start_script)
+
+        print("Starting server")
         self.main_loop.run_until_complete(self.server.start())
+
+        print("Consuming speech")
         self.main_loop.run_until_complete(self.consume_speech())
 
     def schedule_osc(self, timeout, client, command, args):
         osc_command = ScheduleOSC(timeout,client, command, args, self.del_osc )
         self.osc_commands[command + str(timeout)] = osc_command
+
+    def schedule_function(self, timeout, callback):
+        func = ScheduleFunction(timeout, callback)
 
     def del_osc(self,command,timeout):
         print("del {}".format(command + str(timeout)))
@@ -181,35 +188,10 @@ class Engine:
 
         self.mid_match = False
         self.matched_to_word = 0
-        """
-        match = script.match(text)
-        print("Speech Match: {} ({})".format(match['match'],text))
-        if match:
-            if match['match'] < 0.5:
-                print("Match! {}".format(match))
-                line = script.data["script-lines"][match["index"]]
-                next_line = script.data["script-lines"][match["index"] + 1]
-                if next_line:
-                    t2i_client.send_message("/spotlight", next_line["speaker"])
-                    print("Next Speaker {}".format(next_line["speaker"]))
-                if "triggers-gan" in line:
-                    trigger = line["triggers-gan"]
-                    current_metnal_state = mental_state.get_current_state()
-                    if current_mental_state in trigger:
-                        say("gan_responses/{}-{}.wav".format(
-                                match['index'], 
-                                current_metnal_state
-                            )
-                        )
-
-            mental_state.update_script_match(match['match'])
-        else:
-            mental_state.update_script_match(1)
-            """
 
     def mid_speech_text(self, text):
-        print("({})".format(text))
         self.mid_text = text
+        #print("({})".format(text))
         self.t2i_client.send_message("/speech", text)
         self.lookup(text)
         
@@ -220,23 +202,24 @@ class Engine:
         tries = []
         # We have to try all combinations
         words = text.split()
-        for i in range(len(words) - 2, self.matched_to_word, -1):
+        for i in range(len(words) - 2, self.matched_to_word -1, -1):
             tries.append(" ".join(words[i:]))
 
         self.matches_cache = []
 
         try_i = self.lookup_index(tries, self.script.awaiting_index)
+
         if try_i != -1:
             self.react(text, self.script.awaiting_index)
             return True
-
-        # try up to 2 lines aheead
-        for i in range(self.script.awaiting_index + 1, self.script.awaiting_index + 4):
-            try_i = self.match_cache(i) 
-            if try_i != -1:
-                self.react(text, i)
-                return True
-
+#
+#        # try up to 2 lines aheead
+#        for i in range(self.script.awaiting_index + 1, self.script.awaiting_index + 4):
+#            try_i = self.match_cache(i) 
+#            if try_i != -1:
+#                self.react(text, i)
+#                return True
+#
         # If it has been too long accept whatever
         #now =  int(round(time.time() * 1000))
         #if self.last_react > 0 and now - self.last_react > 1000  * 20:
@@ -246,8 +229,16 @@ class Engine:
         #        return True
 
 
-
     def lookup_index(self, tries, index):
+        for i in range(0, len(tries)):
+            s = tries[i]
+            try_i = self.match(s, index, i)
+            if try_i != -1:
+                return try_i
+
+        return -1
+
+    def lookup_index_space(self, tries, index):
         for i in range(0, len(tries)):
             s = tries[i]
             try_i = self.match(s, index, i)
@@ -275,9 +266,9 @@ class Engine:
         return -1
 
 
-    def match(self, text, index, try_index):
+    def match_space(self, text, index, try_index):
         #print("[{}]".format(text))
-        matches = self.script.match(text)
+        matches = self.script.match_space(text)
         if matches:
             self.matches_cache.append({
                     "data": matches,
@@ -291,6 +282,12 @@ class Engine:
         return -1
 
 
+    def match(self, text, index, try_index):
+        match = self.script.match(text)
+        if match >= DISTANCE_THRESHOLD:
+            return try_index
+        else:
+            return -1
 
 
 
@@ -298,7 +295,7 @@ class Engine:
 
         # Which word was it?
         self.last_matched_word = self.matched_to_word
-        self.matched_to_word = len(matched_utterance.split()) - 1
+        self.matched_to_word = len(matched_utterance.split()) 
         self.last_react = int(round(time.time() * 1000))
         script_text = self.script.data["script-lines"][index]["text"]
         words_ahead = max(0, len(script_text.split()) - (len(matched_utterance.split()) - self.last_matched_word))
@@ -334,7 +331,7 @@ class Engine:
         if index < self.script.length - 1:
             self.script.awaiting_index = index + 1 
             self.script.update()
-            self.t2i_client.send_message("/spotlight", self.script.awaiting["speaker"])
+            self.show_next_line()
         else:
             self.end()
 
@@ -444,6 +441,18 @@ class Engine:
         self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/bassheart", [1.0, 0.0])
         self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/synthmode", [1.0, 0.0])
         self.schedule_osc(63.5 + first_speech, self.voice_client, "/gan/feedback", 0)
+
+    def start_script(self):
+        self.script.reset()
+        self.show_next_line()
+
+    def show_next_line(self):
+        self.t2i_client.send_message(
+                "/script", 
+                [self.script.awaiting["speaker"], self.script.awaiting["text"]]
+        )
+
+        print("{}, PLEASE SAY: {}".format(self.script.awaiting["speaker"], self.script.awaiting["text"]))
 
     def mood_update(self, data):
         self.mental_state.value = float(data["value"])
