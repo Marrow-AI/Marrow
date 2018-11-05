@@ -32,6 +32,7 @@ import math
 #print("Loaded English NLP")
 
 DISTANCE_THRESHOLD = 0.8
+SCRIPT_TIMEOUT = 5000
 
 class ScheduleOSC:
     def __init__(self, timeout, client, command, args,  callback):
@@ -107,7 +108,7 @@ class Engine:
         #asyncio.get_event_loop().run_until_complete(ms_speech.say("Pewdiepie"))
 
 
-        #self.time_check()
+        self.time_check()
 
         self.main_loop = asyncio.get_event_loop()
 
@@ -158,10 +159,12 @@ class Engine:
     def time_check(self):
         # recognition timeout
         now =  int(round(time.time() * 1000))
-        if self.mid_match and self.last_mid and now - self.last_mid > 1000:
-            print("BABBLE TIMEOUT")
-            self.last_mid = now
-            self.lookup(self.mid_text)
+        if self.script.awaiting_index > -1 and now - self.last_react > SCRIPT_TIMEOUT:
+            if self.script.next_variation():
+                self.last_react = now
+                self.show_next_line()
+            else:
+                self.next_line()
         if not self.args.stop:
             threading.Timer(0.1, self.time_check).start()
 
@@ -208,10 +211,10 @@ class Engine:
 
         self.matches_cache = []
 
-        try_i = self.lookup_index(tries, self.script.awaiting_index)
+        try_i = self.lookup_all(tries)
 
         if try_i != -1:
-            self.react(text, self.script.awaiting_index)
+            self.react(text)
             return True
 #
 #        # try up to 2 lines aheead
@@ -230,10 +233,10 @@ class Engine:
         #        return True
 
 
-    def lookup_index(self, tries, index):
+    def lookup_all(self, tries):
         for i in range(0, len(tries)):
             s = tries[i]
-            try_i = self.match(s, index, i)
+            try_i = self.match(s,i)
             if try_i != -1:
                 return try_i
 
@@ -283,7 +286,7 @@ class Engine:
         return -1
 
 
-    def match(self, text, index, try_index):
+    def match(self, text, try_index):
         match = self.script.match(text)
         if match >= DISTANCE_THRESHOLD:
             return try_index
@@ -292,7 +295,7 @@ class Engine:
 
 
 
-    def react(self, matched_utterance, index):
+    def react(self, matched_utterance):
 
         # restart google
         self.args.restart = True
@@ -300,15 +303,14 @@ class Engine:
         # Which word was it?
         self.last_matched_word = self.matched_to_word
         self.matched_to_word = len(matched_utterance.split()) 
-        self.last_react = int(round(time.time() * 1000))
-        script_text = self.script.data["script-lines"][index]["text"]
+        script_text = self.script.awaiting_text
         words_ahead = max(0, len(script_text.split()) - (len(matched_utterance.split()) - self.last_matched_word))
-        print("Said {} ({}) Matched: {}. Words ahead {}".format(index, script_text, matched_utterance, words_ahead))
+        print("Said {} ({}) Matched: {}. Words ahead {}".format(self.script.awaiting_index, script_text, matched_utterance, words_ahead))
 
 
-        line = self.script.data["script-lines"][index]
+        line = self.script.awaiting
         
-        response_i = self.response_coming(index)
+        response_i = self.response_coming(self.script.awaiting_index)
         if response_i != -1:
             if not self.beating:
                 self.voice_client.send_message("/gan/heartbeat", 0.5)
@@ -331,10 +333,12 @@ class Engine:
        # if "triggers-beat" in line:
         #    self.voice_client.send_message("/gan/beat",0.0)
 
+        self.next_line()
 
-        if index < self.script.length - 1:
-            self.script.awaiting_index = index + 1 
-            self.script.update()
+
+    def next_line(self):
+        self.last_react = int(round(time.time() * 1000))
+        if self.script.next_line():
             self.show_next_line()
         else:
             self.end()
@@ -357,8 +361,6 @@ class Engine:
 
         print("Saying line with {} delay".format(delay_sec))
 
-        now =  int(round(time.time() * 1000))
-        self.last_react = now + math.ceil(self.speech_duration) * 1000 + delay_sec * 1000
         asyncio.ensure_future(self.server.pause_listening(math.ceil(self.speech_duration + delay_sec)))
 
         effect_time = 0.05
@@ -447,16 +449,17 @@ class Engine:
         self.schedule_osc(63.5 + first_speech, self.voice_client, "/gan/feedback", 0)
 
     def start_script(self):
+        self.last_react = int(round(time.time() * 1000))
         self.script.reset()
         self.show_next_line()
 
     def show_next_line(self):
         self.t2i_client.send_message(
                 "/script", 
-                [self.script.awaiting["speaker"], self.script.awaiting["text"]]
+                [self.script.awaiting["speaker"], self.script.awaiting_text]
         )
 
-        print("{}, PLEASE SAY: {}".format(self.script.awaiting["speaker"], self.script.awaiting["text"]))
+        print("{}, PLEASE SAY: {}".format(self.script.awaiting["speaker"], self.script.awaiting_text))
 
     def mood_update(self, data):
         self.mental_state.value = float(data["value"])

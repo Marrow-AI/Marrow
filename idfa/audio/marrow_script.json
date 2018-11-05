@@ -74,7 +74,11 @@
         },
         {
             "speaker": "dad",
-            "text": "Honey everything looks great."
+            "text": "Honey everything looks great.",
+            "variations": [
+                "Honey you're the best.",
+                "Sweetie it's just what I wanted"
+            ]
         },
         {
             "speaker": "mom",

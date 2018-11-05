@@ -7,7 +7,7 @@ class Script:
     def __init__(self):
         print("Initializing script engine")
         self.nlp = spacy.load('en')
-        self.awaiting_index = 0
+        self.awaiting_index = -1
         self.load_data()
 
     def load_data(self):
@@ -16,15 +16,37 @@ class Script:
 
     def reset(self):
         self.awaiting_index = 0
+        self.awaiting = self.data["script-lines"][self.awaiting_index]
+        self.awaiting_text = self.awaiting["text"]
         self.length = len(self.data["script-lines"])
         self.update()
 
     def update(self):
-        self.awaiting = self.data["script-lines"][self.awaiting_index]
-        self.awaiting["words"] = len(self.awaiting["text"].split())
-        self.awaiting_nlp = self.nlp(self.awaiting["text"])
+        self.awaiting["words"] = len(self.awaiting_text.split())
+        self.awaiting_nlp = self.nlp(self.awaiting_text)
         if self.awaiting_index > 0:
             self.awaiting["previous"] = self.data["script-lines"][self.awaiting_index -1]["text"]
+
+    def next_variation(self):
+        if ("variations" in self.awaiting and len(self.awaiting["variations"]) - 1 >= self.awaiting_variation):
+            self.awaiting_text = self.awaiting["variations"][self.awaiting_variation]
+            self.awaiting_variation += 1
+            self.update()
+            return True
+        else:
+            return False
+
+    def next_line(self):
+        if self.awaiting_index < self.length - 1:
+            self.awaiting_index = self.awaiting_index + 1 
+            self.awaiting_variation = 0
+            self.awaiting = self.data["script-lines"][self.awaiting_index]
+            self.awaiting_text = self.awaiting["text"]
+            self.update()
+            return True
+        else:
+            return False
+
 
     def load_space(self):
         self.script_lines = {}
