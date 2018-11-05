@@ -239,7 +239,7 @@ MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 69674492}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -282,7 +282,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 69674492}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.27, y: 2, z: 1.79}
+  m_LocalPosition: {x: 3.27, y: 0.24, z: 1.79}
   m_LocalScale: {x: -1.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -543,6 +543,10 @@ Prefab:
     - target: {fileID: 2300010, guid: 4d1b5b88947fc42a4b685b901ec143db, type: 3}
       propertyPath: m_CastShadows
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: 4d1b5b88947fc42a4b685b901ec143db, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d1b5b88947fc42a4b685b901ec143db, type: 3}
@@ -1503,15 +1507,15 @@ Projector:
   m_Enabled: 1
   serializedVersion: 2
   m_NearClipPlane: 2.74
-  m_FarClipPlane: 13
-  m_FieldOfView: 58.2
-  m_AspectRatio: 1.5
+  m_FarClipPlane: 40
+  m_FieldOfView: 40
+  m_AspectRatio: -1.5
   m_Orthographic: 0
   m_OrthographicSize: 10
   m_Material: {fileID: 2100000, guid: b3e723c76e31b48208bb973c372827e9, type: 2}
   m_IgnoreLayers:
     serializedVersion: 2
-    m_Bits: 3895
+    m_Bits: 0
 --- !u!4 &797907771
 Transform:
   m_ObjectHideFlags: 0
@@ -1519,7 +1523,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 797907769}
   m_LocalRotation: {x: 0.06349235, y: -0, z: -0, w: 0.9979823}
-  m_LocalPosition: {x: 0, y: 1.23, z: -2}
+  m_LocalPosition: {x: 0, y: 2.02, z: -3.34}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1671,13 +1675,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   socketCommunication: {fileID: 1866354670}
-  startPix2Pix: 0
+  devMode: 1
+  simpleAnimation: 1
   projectorMaterial: {fileID: 2100000, guid: b3e723c76e31b48208bb973c372827e9, type: 2}
   pix2pixImageWidth: 1280
   pix2pixImageHeight: 720
   webcamAccess: {fileID: 2056455757}
+  pix2pixTextureA: {fileID: 0}
+  pix2pixTextureB: {fileID: 0}
   blobAnimator: {fileID: 1541535736}
-  spotLight: {fileID: 0}
+  spotLight: {fileID: 1919435099}
 --- !u!114 &832185292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1720,7 +1727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   receiver: {fileID: 1748632114}
-  address: /intro/table
+  address: /intro/end
   mapBundle: {fileID: 0}
   onReceive:
     m_PersistentCalls:
@@ -3135,7 +3142,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5af3a3d8294c640c291bfa23689df6a6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.66
+      value: -1.13
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 5af3a3d8294c640c291bfa23689df6a6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3412,6 +3419,18 @@ Prefab:
     - target: {fileID: 400008, guid: 5af3a3d8294c640c291bfa23689df6a6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.8865
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 5af3a3d8294c640c291bfa23689df6a6, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.7165
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 5af3a3d8294c640c291bfa23689df6a6, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.0805697
+      objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 5af3a3d8294c640c291bfa23689df6a6, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.7165
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5af3a3d8294c640c291bfa23689df6a6, type: 3}
@@ -4013,6 +4032,21 @@ Prefab:
       propertyPath: autoConnect
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114353899663591050, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: localPort
+      value: 8383
+      objectReference: {fileID: 0}
+    - target: {fileID: 114353899663591050, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: closeOnPause
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114353899663591050, guid: 893195b03ab504b70bd182502da4350e,
+        type: 2}
+      propertyPath: autoConnect
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 893195b03ab504b70bd182502da4350e, type: 2}
   m_IsPrefabAsset: 0
@@ -4388,9 +4422,9 @@ Light:
   serializedVersion: 8
   m_Type: 0
   m_Color: {r: 1, g: 0.8291162, b: 0.7216981, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.8
   m_Range: 28
-  m_SpotAngle: 68
+  m_SpotAngle: 73.3
   m_CookieSize: 10
   m_Shadows:
     m_Type: 2
@@ -4650,6 +4684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1389e73757a0d4091a9c2e438b38a934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useWebCam: 0
   webCamMaterial: {fileID: 2100000, guid: ff3b1ab9345d14120a87444094a2b6b8, type: 2}
   requestWidth: 1280
   requestHeight: 720

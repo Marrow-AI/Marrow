@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using BestHTTP;
 using BestHTTP.SocketIO;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Marrow
 {
@@ -71,6 +73,7 @@ namespace Marrow
         private Texture2D genTexture;
 
 		private float getPix2PixTimecode;
+		private bool socketIsClosing;
 
 		private void Start()
 		{
@@ -115,6 +118,13 @@ namespace Marrow
 
 		private void Update()
 		{
+			if (Input.GetKeyDown("escape") && !socketIsClosing)
+			{
+				StartCoroutine(CloseSocketBeforeEnd());
+				socketIsClosing = true;
+				return;
+			}
+
 			if (!devMode)
 				return;
 			
@@ -142,6 +152,15 @@ namespace Marrow
 				EmitPix2PixRequest();
 				emitFirstPix2PixRequest = true;
 			}
+		}
+
+		IEnumerator CloseSocketBeforeEnd()
+		{
+            genSocketManager.Close();
+			Debug.Log("Close socket!!");
+			yield return new WaitForSeconds(1f);
+
+            Application.Quit();
 		}
 
 		private void OnDestroy()
@@ -237,6 +256,16 @@ namespace Marrow
 
             Dictionary<string, object> data = args[0] as Dictionary<string, object>;
             string base64Image = data["results"] as string;
+
+            // https://stackoverflow.com/questions/28015442/converting-base64-string-to-gif-image
+            //HashSet<char> whiteSpace = new HashSet<char> { '\t', '\n', '\r', ' ' };
+            //int length = base64Image.Count(c => !whiteSpace.Contains(c));
+            //if (length % 4 != 0)
+            //    base64Image += new string('=', 4 - length % 4); // Pad length to multiple of 4.
+
+            Debug.Log(base64Image.Length);
+            if (base64Image.Length < 10000)
+                return;
             byte[] receivedBase64Img = Convert.FromBase64String(base64Image);
 			//genTexture.LoadImage(receivedBase64Img);
 
@@ -267,8 +296,9 @@ namespace Marrow
 
             // Scale down seems to crash the server???
 
-			//TextureScale.Bilinear(genTexture, imageWidth/2, imageHeight/2);
-            
+			TextureScale.Bilinear(genTexture, imageWidth/2, imageHeight/2);
+			// Debug.Log(genTexture.width + ", " + genTexture.height);
+			     
 			byte[] imageData = genTexture.EncodeToJPG();
 			string base64Image = Convert.ToBase64String(imageData);
 			pix2PixRequestData.data = base64Image;

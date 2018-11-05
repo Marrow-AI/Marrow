@@ -7,6 +7,8 @@ namespace Marrow
 	// doc: https://docs.unity3d.com/ScriptReference/WebCamTexture.html
 	public class WebcamAccess : MonoBehaviour
     {
+        public bool useWebCam;
+        [Space(10)]
 		public Material webCamMaterial;
 		public int requestWidth = 1280; // 1280, 640
 		public int requestHeight = 720; // 720, 360
@@ -14,24 +16,17 @@ namespace Marrow
         
 		public WebCamTexture webcamTexture;
 		private Color32[] pix2pixWebcamData;
-        
+		private bool donePrep;
+
         private void Start()
 		{
-			// Gets the list of devices
-			WebCamDevice[] devices = WebCamTexture.devices;
-            for (int i = 0; i < devices.Length; i++)
-                Debug.Log(devices[i].name);
+			if(!donePrep)
+			{
+				DoPrep();
+			}
 
-			// (string deviceName, int requestedWidth, int requestedHeight)
-            if(devices.Length==1)
-    			webcamTexture = new WebCamTexture(requestWidth, requestHeight);
-            else
-                webcamTexture = new WebCamTexture(devices[1].name, requestWidth, requestHeight);
-
-            webcamTexture.requestedWidth = requestWidth;
-            webcamTexture.requestedHeight = requestHeight;
 			//webCamMaterial.mainTexture = webcamTexture;
-			webcamTexture.Play();
+			//webcamTexture.Play();
 		}
 
 		private void Update()
@@ -49,8 +44,32 @@ namespace Marrow
 			webcamTexture.Stop();
 		}
 
+        void DoPrep()
+		{
+			// Gets the list of devices
+            WebCamDevice[] devices = WebCamTexture.devices;
+            for (int i = 0; i < devices.Length; i++)
+                Debug.Log(devices[i].name);
+
+            // (string deviceName, int requestedWidth, int requestedHeight)
+            if (devices.Length == 1)
+                webcamTexture = new WebCamTexture(requestWidth, requestHeight);
+            else
+                webcamTexture = new WebCamTexture(devices[1].name, requestWidth, requestHeight);
+
+            webcamTexture.requestedWidth = requestWidth;
+            webcamTexture.requestedHeight = requestHeight;
+
+            donePrep = true;
+		}
+
 		public void StartWebCam()
 		{
+			if (!donePrep)
+            {
+                DoPrep();
+            }
+
 			webcamTexture.Play();
 		}
 

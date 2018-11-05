@@ -8,9 +8,12 @@ namespace Marrow
 	public class ExperienceRoomManager : Manager<ExperienceTableManager>
     {
 		public SocketCommunication socketCommunication;
-		public bool startPix2Pix;
+		public bool devMode;
+		public bool simpleAnimation;
 
+		private bool startPix2Pix;
 		private bool socketIsConnected;
+        private bool socketIsDisconnectedWillTryReconnect;
 
 		[Header("Pix2Pix related")]
 		public Material projectorMaterial;
@@ -18,8 +21,8 @@ namespace Marrow
 		public int pix2pixImageHeight = 720;
 		public WebcamAccess webcamAccess;
 		private float gotPix2PixTimecode;
-		private Texture2D pix2pixTextureA;
-		private Texture2D pix2pixTextureB;
+		public Texture2D pix2pixTextureA;
+		public Texture2D pix2pixTextureB;
 		private int textureSwapCount;
 		private int blobTweenId;
 		private bool emitFirstPix2PixRequest;
@@ -68,12 +71,21 @@ namespace Marrow
 			projectorMaterial.SetTexture("_SecondShadowTex", pix2pixTextureB);
 
 			originalSpotLightIntensity = spotLight.intensity;
+
+			Setup();
+
+			if (devMode)
+			{
+				OnTableSequenceEnded();
+			}            
         }
 
         void Setup()
 		{
 			spotLight.intensity = 0;
+			spotLight.enabled = false;
 			projectorMaterial.color = Color.black;
+			blobAnimator.enabled = false;
 		}
 
 		private void Update()
@@ -84,23 +96,26 @@ namespace Marrow
                 emitFirstPix2PixRequest = true;
             }
 
-			if (startPix2Pix && !blobFullyGrow)
+			if (!simpleAnimation && startPix2Pix && !blobFullyGrow)
 			{
 				if (Time.time - pix2pixStartTimecode >= blobStageTimecode[0] && !passBlobStages[0])
 				{
 					passBlobStages[0] = true;
 					blobAnimator.SetTrigger("GrowB");
+					Debug.Log("Grow B");
 				}
 				else if (Time.time - pix2pixStartTimecode >= blobStageTimecode[1] && !passBlobStages[1])
 				{
 					passBlobStages[1] = true;
 					blobAnimator.SetTrigger("GrowC");
+					Debug.Log("Grow C");
 				}
 				else if (Time.time - pix2pixStartTimecode >= blobStageTimecode[2] && !passBlobStages[2])
                 {
                     passBlobStages[2] = true;
                     blobAnimator.SetTrigger("SlowMove");
 					blobFullyGrow = true;
+					Debug.Log("FullyGrow, SlowMove");
                 }
 			}
 		}
@@ -108,11 +123,12 @@ namespace Marrow
 		void OnTableSequenceEnded()
 		{
 			// prepare to start pix2pix, e.g. room spot light on
-			LeanTween.value(0f, 1f, 3f)
+			spotLight.enabled = true;
+			LeanTween.value(0f, 1f, 5f)
 			         .setOnUpdate((float val) => {
                          spotLight.intensity = val;
                      });
-			LeanTween.value(gameObject, Color.black, Color.white, 3f)
+			LeanTween.value(gameObject, Color.black, Color.white, 5f)
 					 .setOnUpdate((Color col) =>
 					 {
 						 projectorMaterial.SetColor("_Color", col);
@@ -124,6 +140,12 @@ namespace Marrow
 			// start pix2pix
 			EnablePix2Pix();
 			pix2pixStartTimecode = Time.time;
+
+			blobAnimator.enabled = true;
+			if (simpleAnimation)
+			{
+				blobAnimator.SetTrigger("SlowMove");
+			}
 		}
 
 		void EnablePix2Pix()
@@ -145,12 +167,23 @@ namespace Marrow
 		void OnWebsocketConnected()
 		{
 			socketIsConnected = true;
+            if (socketIsDisconnectedWillTryReconnect)
+            {
+                RestartWebsocketConnection();
+                socketIsDisconnectedWillTryReconnect = false;
+            }
 		}
 
 		void OnWebsocketDisconnected()
 		{
 			socketIsConnected = false;
-		}
+            socketIsDisconnectedWillTryReconnect = true;
+        }
+
+        void RestartWebsocketConnection()
+        {
+            emitFirstPix2PixRequest = false;
+        }
 
 		public void OnPix2PixInputUpdate()
         {
@@ -173,13 +206,15 @@ namespace Marrow
             {
 				pix2pixTextureB.LoadImage(receivedBase64Img);
                 targetBlend = 1;
-				//projectorMaterial.SetTexture("_SecondShadowTex", pix2pixTextureB);    // ???
+				// Debug.Log("do b");
+				projectorMaterial.SetTexture("_SecondShadowTex", pix2pixTextureB);    // ???
             }
             else
             {
 				pix2pixTextureA.LoadImage(receivedBase64Img);
                 targetBlend = 0;
-				//projectorMaterial.SetTexture("_ShadowTex", pix2pixTextureA);    // ???
+				// Debug.Log("do a");
+				projectorMaterial.SetTexture("_ShadowTex", pix2pixTextureA);    // ???
             }
 
 

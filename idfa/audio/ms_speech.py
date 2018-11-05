@@ -5,7 +5,7 @@ import aiohttp
 
 class MSSpeech:
     def obtain_auth_token(self):
-        url = 'https://eastus.api.cognitive.microsoft.com/sts/v1.0/issueToken'
+        url = 'https://westus.api.cognitive.microsoft.com/sts/v1.0/issueToken'
         headers = {
             'Content-type': 'application/x-www-form-urlencoded',
             'Content-Length': '0',
