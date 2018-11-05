@@ -1,0 +1,15 @@
+.CinemaMode--Top{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  background: rgb(0, 0, 0);
+}
+
+.CinemaMode--Bottom{
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  background: rgb(0, 0, 0);
+}
