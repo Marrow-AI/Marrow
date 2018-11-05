@@ -1,0 +1,17 @@
+.Subtitle{
+  position: absolute;
+  bottom: 0px;
+  z-index: 9;
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+  color: white;
+  text-shadow: 2px 2px #000000;
+  font-size: 35px;
+  margin-bottom: 3rem;
+}
+
+.Subtitle p{
+  margin: 0px auto;
+  width: 500px;
+}
