@@ -7,6 +7,7 @@ class Script:
     def __init__(self):
         print("Initializing script engine")
         self.nlp = spacy.load('en')
+        self.awaiting_index = 0
         self.load_data()
 
     def load_data(self):

@@ -81,6 +81,7 @@ class Engine:
         self.script = Script()
 
         self.args.stop = False
+        self.args.restart = False
 
         self.args.callback = self.emotion_update
 
@@ -191,7 +192,7 @@ class Engine:
 
     def mid_speech_text(self, text):
         self.mid_text = text
-        #print("({})".format(text))
+        print("({})".format(text))
         self.t2i_client.send_message("/speech", text)
         self.lookup(text)
         
@@ -292,6 +293,9 @@ class Engine:
 
 
     def react(self, matched_utterance, index):
+
+        # restart google
+        self.args.restart = True
 
         # Which word was it?
         self.last_matched_word = self.matched_to_word
