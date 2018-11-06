@@ -78,7 +78,7 @@
                 "line": [
                     {
                         "text": "it can be anything you like",
-                        "pause": 5000
+                        "pause": 2000
                     },                    
                     {
                         "text": "but you need to voice it.",
@@ -94,7 +94,7 @@
                 "line": [
                     {
                         "text": "speak louder please.",
-                        "pause": 5000
+                        "pause": 3000
                     },                    
                     {
                         "text": "what do you think the perfect family eats for dinner?"
@@ -110,11 +110,11 @@
                     },                    
                     {
                         "text": "it is possible i just missed what you said.",
-                        "pause": 4000
+                        "pause": 3000
                     },
                     {
                         "text": "but since dinner is getting cold",
-                        "pause": 2000
+                        "pause": 1000
                     },
                     {
                         "text": "we are having roasted vegetables with rice."
