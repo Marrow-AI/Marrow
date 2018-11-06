@@ -54,7 +54,7 @@
                 },
                 { 
                     "text": "We are at dinner",
-                    "pause": 900
+                    "pause": 1400
                 },
                 { 
                     "text": "The perfect family",
@@ -66,7 +66,7 @@
                 },
                 { 
                     "text": "is running the show",
-                    "pause": 250
+                    "pause": 350
                 },
                 { 
                     "text": "And you and me",
@@ -126,11 +126,11 @@
                 },
                 { 
                     "text": "Kind of",
-                    "pause": 50
+                    "pause": 60
                 },
                 { 
                     "text": "Distorded",
-                    "pause": 300
+                    "pause": 500
                 },
                 { 
                     "text": "All you are left with",
@@ -169,7 +169,7 @@
         },
         "line": [
             { 
-                "text": "what does the perfect family eat?"
+                "text": "What does the perfect family eat?"
             }
         ],
         "timeouts":[
@@ -177,15 +177,15 @@
                 "after": 3000,
                 "line": [
                     {
-                        "text": "it can be anything you like",
-                        "pause": 350
+                        "text": "It can be anything you like",
+                        "pause": 150
                     },                    
                     {
-                        "text": "but you need to voice it.",
+                        "text": "But you need to voice it.",
                         "pause": 800
                     },
                     {
-                        "text": "what are we having for dinner?"
+                        "text": "What are we having for dinner?"
                     }
                 ]
             },
