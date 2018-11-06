@@ -359,21 +359,26 @@ class Engine:
     def say(self, delay_sec, delay_effect = True):
 
 
-        print("Saying line with {} delay".format(delay_sec))
+        if self.speech_duration:
 
-        asyncio.ensure_future(self.server.pause_listening(math.ceil(self.speech_duration + delay_sec)))
+            print("Saying line with {} delay".format(delay_sec))
 
-        effect_time = 0.05
-        if delay_effect:
-            self.schedule_osc(delay_sec,self.voice_client, "/gan/delay", 1)
-        self.schedule_osc(delay_sec,self.voice_client, "/speech/play", 1)
+            asyncio.ensure_future(self.server.pause_listening(math.ceil(self.speech_duration + delay_sec)))
 
-        self.schedule_osc(delay_sec,self.t2i_client, "/gan/speaks", 1)
+            effect_time = 0.05
+            if delay_effect:
+                self.schedule_osc(delay_sec,self.voice_client, "/gan/delay", 1)
+            self.schedule_osc(delay_sec,self.voice_client, "/speech/play", 1)
 
-        self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
-        self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/bassheart", [1.0, 0.0])
+            self.schedule_osc(delay_sec,self.t2i_client, "/gan/speaks", 1)
 
-        self.schedule_osc(self.speech_duration + delay_sec, self.t2i_client, "/gan/speaks", 0)
+            self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
+            self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/bassheart", [1.0, 0.0])
+
+            self.schedule_osc(self.speech_duration + delay_sec, self.t2i_client, "/gan/speaks", 0)
+
+        else:
+            print("Nothing to say!")
 
     def preload_speech(self, file_name):
         with contextlib.closing(wave.open(file_name,'r')) as f:

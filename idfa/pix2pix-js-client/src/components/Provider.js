@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 const AppContext = React.createContext()
 
 // Server IP
-const IP = '0.0.0.0';
+const IP = 'pix2pix.api.marrow.raycaster.studio';
 
 class AppProvider extends Component {
   state = {
@@ -46,7 +46,7 @@ class AppProvider extends Component {
         loop();
         const interval = setInterval(() => loop(), this.state.autoplaySceneDuration * 1000);
         this.setState({ interval })
-      }
+     }
     },
     opacities: {
       scene: 1,
@@ -110,7 +110,7 @@ class AppProvider extends Component {
       }
     },
     setModel: async (name) => {
-      return fetch(`http://${this.state.serverIP}:${this.state.pix2pixPort}/switch_model`, {
+      return fetch(`https://${this.state.serverIP}:${this.state.pix2pixPort}/switch_model`, {
         body: JSON.stringify({ model: name }),
         method: "POST",
         headers: {
@@ -127,8 +127,8 @@ class AppProvider extends Component {
     gotModelSetInServer: (name) => this.setState({ modelInServer: name }),
     serverIP: IP, 
     denseposePort: '22100',
-    pix2pixPort: '23100',
-    queryRoute: '/query',
+    pix2pixPort: '443',
+    queryRoute: '/generate',
     isConnectedToServer: false,
     isSendingFrames: false,
     socket: null,
