@@ -162,12 +162,14 @@ class Engine:
     def time_check(self):
         # recognition timeout
         now =  int(round(time.time() * 1000))
-        if self.script.awaiting_index > -1 and now - self.last_react > SCRIPT_TIMEOUT:
-            if self.script.next_variation():
-                self.last_react = now
-                self.show_next_line()
-            else:
-                self.next_line()
+        if self.state == "SCRIPT":
+            if self.script.awaiting_index > -1 and now - self.last_react > SCRIPT_TIMEOUT:
+                if self.script.next_variation():
+                    self.last_react = now
+                    self.show_next_line()
+                else:
+                    self.next_line()
+
         if not self.args.stop:
             threading.Timer(0.1, self.time_check).start()
 
@@ -364,7 +366,7 @@ class Engine:
         return -1
 
 
-    def say(self, delay_sec = 0, delay_effect = True):
+    def say(self, delay_sec = 0, delay_effect = False, callback = None):
         
         if self.speech_duration:
 
@@ -378,12 +380,16 @@ class Engine:
                 self.schedule_osc(delay_sec,self.voice_client, "/gan/delay", 1)
 
             self.schedule_osc(delay_sec,self.voice_client, "/speech/play", 1)
+            self.schedule_osc(delay_sec + self.speech_duration + 0.2,self.voice_client, "/speech/stop", 1)
             self.schedule_osc(delay_sec,self.t2i_client, "/gan/speaks", 1)
 
             #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
             #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/bassheart", [1.0, 0.0])
 
             self.schedule_osc(self.speech_duration + delay_sec, self.t2i_client, "/gan/speaks", 0)
+
+            if callback:
+                self.schedule_function(self.speech_duration + delay_sec, callback)
 
         else:
             print("Nothing to say!")
@@ -402,7 +408,7 @@ class Engine:
         self.voice_client.send_message("/speech/reload",1)
 
     def pause_listening(self,duration):
-            asyncio.ensure_future(self.server.pause_listening(duration))
+            #asyncio.ensure_future(self.server.pause_listening(duration))
             self.recognizer.stop()
             self.schedule_function(duration - 1, self.start_google)
 
@@ -475,8 +481,25 @@ class Engine:
 
     def start_question(self): 
         print("Start question")
+        self.current_question_timeout = None
+        self.last_asked = int(round(time.time() + self.speech_duration) * 1000)
         self.state = "QUESTION"
+        self.question_timeout_index = 0 
         self.say()
+        self.schedule_function(self.speech_duration + 5, self.load_next_question_timeout)
+
+    def load_next_question_timeout(self):
+        print("Load question timeout")
+        if self.question_timeout_index < len(self.script.data["question"]["timeouts"]):
+            self.current_question_timeout = self.script.data["question"]["timeouts"][self.question_timeout_index]
+            self.preload_speech("gan_question/timeout{}.wav".format(self.question_timeout_index))
+
+    def question_timed_out(self):
+        print("Question timed out!")
+        self.question_timeout_index += 1
+        self.last_asked = int(round(time.time() + self.speech_duration) * 1000)
+        self.say(callback = self.load_next_question_timeout)
+
 
     def show_next_line(self):
         self.t2i_client.send_message(
