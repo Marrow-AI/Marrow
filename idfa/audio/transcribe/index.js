@@ -20,24 +20,31 @@ $(document).ready(() => {
 
 // Connecting to server
 //const listener = new WatsonListener();
-const listener = new MSListener();
 const socket = new ReconnectingWebSocket("wss://localhost:9540/");
-listener.init(socket);
+
+/*
+const listener = new MSListener();
+listener.init(socket); */
+listener = null;
 
 socket.onopen = (event) => {
-    socket.send(JSON.stringify({action: listener.tokenCommand}));
+    if (listener) {
+        socket.send(JSON.stringify({action: listener.tokenCommand}));
+    }
 }
 socket.onclose = (event) => {
-    listener.stop();
+    if (listener) {
+        listener.stop();
+    }
 }
 socket.onmessage = (packet) => {
     let message = JSON.parse(packet.data);
     if (message.token) {
         listener.token = message.token;
-        if (!listener.listening) {
+        if (listener && !listener.listening) {
             listener.listen()
         }
-        if (listener instanceof MSListener) {
+        if (listener && listener instanceof MSListener) {
             // Microsoft renewal
             console.log("Renewing token in 9 minutes");
             setTimeout(() => {
@@ -46,11 +53,13 @@ socket.onmessage = (packet) => {
         }
     }
     else if (message.action == "pause") {
-        console.log("Pause listening!", message.seconds);
-        listener.stop();
-        setTimeout(() => {
-            listener.listen();            
-        },message.seconds * 1000)
+        if (listener) {
+            console.log("Pause listening!", message.seconds);
+            listener.stop();
+            setTimeout(() => {
+                listener.listen();            
+            },message.seconds * 1000)
+        }
     }
     else if (message.action == "emotion") {
         updateEmotion(message.data, message.state)

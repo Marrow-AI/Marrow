@@ -18,9 +18,10 @@ CHUNK = int(RATE / 10)  # 100ms
 
 class MicrophoneStream(object):
     """Opens a recording stream as a generator yielding the audio chunks."""
-    def __init__(self, rate, chunk, args):
+    def __init__(self, rate, chunk, parent, args):
         self._rate = rate
         self._chunk = chunk
+        self.parent = parent
         self.args = args
 
         # Create a thread-safe buffer of audio data
@@ -63,7 +64,7 @@ class MicrophoneStream(object):
         return None, pyaudio.paContinue
 
     def generator(self):
-        while not self.closed and not self.args.stop and not self.args.restart:
+        while not self.closed and not self.parent.stop_recognition and not self.args.restart and not self.args.stop:
             # Use a blocking get() to ensure there's at least one chunk of
             # data, and stop iteration if the chunk is None, indicating the
             # end of the audio stream.
@@ -73,7 +74,7 @@ class MicrophoneStream(object):
             data = [chunk]
 
             # Now consume whatever other data's still buffered.
-            while True and not self.args.stop:
+            while not self.parent.stop_recognition and not self.args.stop:
                 current_time = time.time()
                 diff = current_time - self.start_time
                 #print(diff)
@@ -102,6 +103,8 @@ class Recognizer(Thread):
         self.args = args
         self.queue = queue
 
+        self.stop_recognition = False
+
         # See http://g.co/cloud/speech/docs/languages
         # for a list of supported languages.
         language_code = 'en-US'  # a BCP-47 language tag
@@ -117,8 +120,13 @@ class Recognizer(Thread):
 
         self.last_result = None
 
+
+    def stop(self):
+        self.stop_recognition = True
+
     def start(self):
-        while not self.args.stop:
+        self.stop_recognition = False
+        while not self.stop_recognition and not self.args.stop:
             print("Listen again?")
             self.args.restart = False
             self.listen()
@@ -127,7 +135,7 @@ class Recognizer(Thread):
     def listen(self):
         self.start_time = time.time()
 
-        with MicrophoneStream(RATE, CHUNK, self.args) as stream:
+        with MicrophoneStream(RATE, CHUNK, self, self.args) as stream:
             audio_generator = stream.generator()
             requests = (types.StreamingRecognizeRequest(audio_content=content)
                         for content in audio_generator)
@@ -171,6 +179,7 @@ class Recognizer(Thread):
                 #sys.stdout.flush()
 
                 if (transcript != self.last_result):
+                    print("({})".format(transcript))
                     self.queue.put({
                         "action": "mid-speech",
                         "text": transcript                        
@@ -178,6 +187,7 @@ class Recognizer(Thread):
                     self.last_result = transcript
 
             else:
+                print(" = {}".format(transcript))
                 self.queue.put({
                     "action": "speech",
                     "text": transcript                        

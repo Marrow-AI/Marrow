@@ -77,6 +77,8 @@ class Engine:
 
         print("Engine INIT")
 
+        self.state = "WAITING"
+
         self.args = args
 
         self.script = Script()
@@ -124,8 +126,6 @@ class Engine:
                 self.mood_update
         )
 
-        self.schedule_function(2, self.start_script)
-
         print("Starting server")
         self.main_loop.run_until_complete(self.server.start())
 
@@ -147,6 +147,9 @@ class Engine:
         for command in self.osc_commands:
             self.osc_commands[command].cancel()
         self.osc_commands.clear()
+
+    def start_google(self):
+        fut = self.main_loop.run_in_executor(None, self.recognizer.start)
 
     async def consume_speech(self):
         while True:
@@ -187,17 +190,22 @@ class Engine:
 
     def speech_text(self, text):
         #print("<{}>".format(text))
-        if self.mid_text is not None:
-            self.lookup(text)
+        if self.state == "SCRIPT":
+            if self.mid_text is not None:
+                self.lookup(text)
 
-        self.mid_match = False
-        self.matched_to_word = 0
+            self.mid_match = False
+            self.matched_to_word = 0
+
+        elif self.state == "QUESTION":
+            print("They want to eat {}".format(text))
 
     def mid_speech_text(self, text):
-        self.mid_text = text
-        print("({})".format(text))
-        self.t2i_client.send_message("/speech", text)
-        self.lookup(text)
+        if self.state == "SCRIPT":
+            self.mid_text = text
+            print("({})".format(text))
+            self.t2i_client.send_message("/speech", text)
+            self.lookup(text)
         
     def lookup(self, text):
         # print("REACT: {}".format(text))
@@ -356,24 +364,24 @@ class Engine:
         return -1
 
 
-    def say(self, delay_sec, delay_effect = True):
-
-
+    def say(self, delay_sec = 0, delay_effect = True):
+        
         if self.speech_duration:
 
             print("Saying line with {} delay".format(delay_sec))
 
-            asyncio.ensure_future(self.server.pause_listening(math.ceil(self.speech_duration + delay_sec)))
+            self.pause_listening(math.ceil(self.speech_duration + delay_sec))
 
             effect_time = 0.05
+
             if delay_effect:
                 self.schedule_osc(delay_sec,self.voice_client, "/gan/delay", 1)
-            self.schedule_osc(delay_sec,self.voice_client, "/speech/play", 1)
 
+            self.schedule_osc(delay_sec,self.voice_client, "/speech/play", 1)
             self.schedule_osc(delay_sec,self.t2i_client, "/gan/speaks", 1)
 
-            self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
-            self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/bassheart", [1.0, 0.0])
+            #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
+            #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/bassheart", [1.0, 0.0])
 
             self.schedule_osc(self.speech_duration + delay_sec, self.t2i_client, "/gan/speaks", 0)
 
@@ -393,24 +401,31 @@ class Engine:
         print("Copied")
         self.voice_client.send_message("/speech/reload",1)
 
-
+    def pause_listening(self,duration):
+            asyncio.ensure_future(self.server.pause_listening(duration))
+            self.recognizer.stop()
+            self.schedule_function(duration - 1, self.start_google)
 
     def control(self, data):
         print("Control command! {}".format(data))
-        if data["command"] == 'start':
+        command = data["command"]
+        if command == 'start':
             asyncio.ensure_future(self.start_intro())
-        elif data["command"] == 'stop':
+        elif command == 'stop':
             self.voice_stop()
-        elif data["command"] == 'skip-intro':
+        elif command == 'skip-intro':
             self.purge_osc()
             self.voice_client.send_message("/control/start",1)
             self.voice_client.send_message("/control/synthbass",1)
             self.voice_client.send_message("/intro/end",1)
             self.voice_client.send_message("/gan/start",1)
-        elif data["command"] == 'stop-ser':
+        elif command == 'stop-ser':
             self.ser_stop()
-        elif data["command"] == 'start-ser':
+        elif command == 'start-ser':
             self.ser_start()
+        elif command == 'start-question':
+            self.preload_speech("gan_question/line.wav")
+            self.schedule_function(0.5, self.start_question)
 
     def ser_stop(self):
         self.args.stop = True
@@ -457,6 +472,11 @@ class Engine:
         self.last_react = int(round(time.time() * 1000))
         self.script.reset()
         self.show_next_line()
+
+    def start_question(self): 
+        print("Start question")
+        self.state = "QUESTION"
+        self.say()
 
     def show_next_line(self):
         self.t2i_client.send_message(
