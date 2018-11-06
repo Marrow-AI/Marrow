@@ -1,7 +1,5 @@
 {
-    "intro" : 
-        {
-            "1" : [
+    "intro" :[
                 { 
                     "text": "It.",
                     "pause": 100
@@ -48,9 +46,7 @@
                 },
                 { 
                     "text": "This table."
-                }
-            ],
-           "2" : [
+                },
                 { 
                     "text": "You are here.",
                     "pause": 1300
@@ -62,10 +58,66 @@
                 { 
                     "text": "Bon appetit"
                 }
-            ]
-    },
+    ],
     "start-silence": {
         "text": "oh mom and dad"
+    },
+    "question": {
+        "line": [
+            { 
+                "text": "what does the perfect family eat?"
+            }
+        ],
+        "timeouts":[
+            {
+                "after": 3000,
+                "line": [
+                    {
+                        "text": "it can be anything you like",
+                        "pause": 5000
+                    },                    
+                    {
+                        "text": "but you need to voice it.",
+                        "pause": 2000
+                    },
+                    {
+                        "text": "what are we having for dinner?"
+                    }
+                ]
+            },
+            {
+                "after": 3000,
+                "line": [
+                    {
+                        "text": "speak louder please.",
+                        "pause": 5000
+                    },                    
+                    {
+                        "text": "what do you think the perfect family eats for dinner?"
+                    }
+                ]
+            },
+            {
+                "after": 3000,
+                "line": [
+                    {
+                        "text": "“oh well",
+                        "pause": 2000
+                    },                    
+                    {
+                        "text": "it is possible i just missed what you said.",
+                        "pause": 4000
+                    },
+                    {
+                        "text": "but since dinner is getting cold",
+                        "pause": 2000
+                    },
+                    {
+                        "text": "we are having roasted vegetables with rice."
+                    }
+                ]
+            }
+        ] 
     },
     "script-lines": [
         {
