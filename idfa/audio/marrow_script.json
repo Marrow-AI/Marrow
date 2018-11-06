@@ -63,6 +63,10 @@
         "text": "oh mom and dad"
     },
     "question": {
+        "affects": {
+            "line": 4,
+            "text": "look at the %ANSWER%! it looks delicious"
+        },
         "line": [
             { 
                 "text": "what does the perfect family eat?"
