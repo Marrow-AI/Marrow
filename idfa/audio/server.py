@@ -11,7 +11,7 @@ from watson_speech import WatsonSpeech
 
 class Server:
 
-    def __init__(self, gain_callback, queue, control_callback, mood_callback):
+    def __init__(self, gain_callback, queue, control_callback, mood_callback, pix2pix_callback):
         print("Init server")
         self.gain_callback = gain_callback
         self.control_callback = control_callback
@@ -19,6 +19,7 @@ class Server:
         self.ms_speech = MSSpeech()
         self.watson_speech = WatsonSpeech()
         self.mood_callback = mood_callback
+        self.pix2pix_callback = pix2pix_callback
 
         self.connected = set()
 
@@ -27,10 +28,11 @@ class Server:
         self.connected.add(websocket)
         try:
             async for message in websocket:
-                #print(message)
                 data = json.loads(message)
                 action = data["action"]
-                if action == 'get-token':
+                if action == 'pix2pix':
+                    self.pix2pix_callback()
+                elif action == 'get-token':
                     await websocket.send(json.dumps({'token': self.ms_speech.obtain_auth_token()}))
                 elif action == 'get-watson-token':
                     token = self.watson_speech.obtain_auth_token()

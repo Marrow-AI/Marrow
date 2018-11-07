@@ -86,8 +86,8 @@ class GUI extends Component {
             onChange={(s) => context.setCameraCanvasHeight(s)}
           />
           <dg.Button 
-          label={context.isShowingCameraCanvas ? 'Show Camera' : 'Show Camera'}
-          onClick={() => context.setShowingCameraCanvas(!context.isShowingCameraCanvas)}
+            label={context.isShowingCameraCanvas ? 'Hide Camera' : 'Show Camera'}
+            onClick={() => context.setShowingCameraCanvas(!context.isShowingCameraCanvas)}
         />
         </dg.Folder>
         <dg.Folder label='Pix2Pix' expanded={true}>
@@ -127,6 +127,21 @@ class GUI extends Component {
             onClick={() => context.updateSendingFrameStatus(!context.isSendingFrames)}
           />
         </dg.Folder>
+        <dg.Folder label='Marrow' expanded={true}>
+          <dg.Text label='Server Connection' value={context.isConnectedToMarrow ? 'Connected' : 'Not Connected'}/>
+          <dg.Text label='IP' 
+            value={context.marrowIP}
+            onChange={(value) => context.setMarrowIP(value)}
+          />
+          <dg.Text label='Marrow Port' 
+            value={context.marrowPort}
+            onChange={(value) => context.setMarrowPort(value)}
+          />
+          <dg.Button 
+            label={context.isConnectedToMarrow ? 'Disconnect' : 'Connect to Server'}
+            onClick={() => context.connectToMarrow(context.marrowIP, context.marrowPort, context.marrowRoute)}
+          />
+        </dg.Folder>
         <dg.Folder label='Images' expanded={true}>
           <dg.Number 
             label='Width' 
@@ -151,6 +166,22 @@ class GUI extends Component {
             max={200} 
             step={1}
             onChange={(s) => context.setAmountOfImages(s)}
+          />
+          <dg.Number 
+            label='Opacity' 
+            value={1} 
+            min={0} 
+            max={1} 
+            step={0.1}
+            onChange={(s) => context.setImageSliderOpacity(s)}
+          />
+          <dg.Number 
+            label='Transition Speed' 
+            value={2} 
+            min={0} 
+            max={100} 
+            step={1}
+            onChange={(s) => context.setSliderSpeed(s)}
           />
         </dg.Folder>        
       </dg.GUI>

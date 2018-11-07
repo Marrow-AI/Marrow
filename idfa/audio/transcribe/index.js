@@ -16,55 +16,56 @@ $(document).ready(() => {
         console.log("Command! " + command);
         socket.send(JSON.stringify({action: 'control',command: command}));
     });
+    //
+    // Connecting to server
+    //const listener = new WatsonListener();
+    const socket = new ReconnectingWebSocket("wss://localhost:9540/");
+
+    /*
+    const listener = new MSListener();
+    listener.init(socket); */
+    const listener = null;
+
+    socket.onopen = (event) => {
+        if (listener) {
+            socket.send(JSON.stringify({action: listener.tokenCommand}));
+        }
+    }
+    socket.onclose = (event) => {
+        if (listener) {
+            listener.stop();
+        }
+    }
+    socket.onmessage = (packet) => {
+        let message = JSON.parse(packet.data);
+        if (message.token) {
+            listener.token = message.token;
+            if (listener && !listener.listening) {
+                listener.listen()
+            }
+            if (listener && listener instanceof MSListener) {
+                // Microsoft renewal
+                console.log("Renewing token in 9 minutes");
+                setTimeout(() => {
+                    socket.send(JSON.stringify({action: 'get-token'}));
+                },1000 * 60 * 9)
+            }
+        }
+        else if (message.action == "pause") {
+            if (listener) {
+                console.log("Pause listening!", message.seconds);
+                listener.stop();
+                setTimeout(() => {
+                    listener.listen();            
+                },message.seconds * 1000)
+            }
+        }
+        else if (message.action == "emotion") {
+            updateEmotion(message.data, message.state)
+        }
+    }
 });
 
-// Connecting to server
-//const listener = new WatsonListener();
-const socket = new ReconnectingWebSocket("wss://localhost:9540/");
-
-/*
-const listener = new MSListener();
-listener.init(socket); */
-const listener = null;
-
-socket.onopen = (event) => {
-    if (listener) {
-        socket.send(JSON.stringify({action: listener.tokenCommand}));
-    }
-}
-socket.onclose = (event) => {
-    if (listener) {
-        listener.stop();
-    }
-}
-socket.onmessage = (packet) => {
-    let message = JSON.parse(packet.data);
-    if (message.token) {
-        listener.token = message.token;
-        if (listener && !listener.listening) {
-            listener.listen()
-        }
-        if (listener && listener instanceof MSListener) {
-            // Microsoft renewal
-            console.log("Renewing token in 9 minutes");
-            setTimeout(() => {
-                socket.send(JSON.stringify({action: 'get-token'}));
-            },1000 * 60 * 9)
-        }
-    }
-    else if (message.action == "pause") {
-        if (listener) {
-            console.log("Pause listening!", message.seconds);
-            listener.stop();
-            setTimeout(() => {
-                listener.listen();            
-            },message.seconds * 1000)
-        }
-    }
-    else if (message.action == "emotion") {
-        updateEmotion(message.data, message.state)
-    }
-}
 
 function updateEmotion(data, state) {
     //console.log("Update emotion", data, state);

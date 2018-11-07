@@ -6,10 +6,6 @@
     },
 
     "intro" :[
-                 { 
-                    "text": "Now",
-                    "pause": 200
-                },
                 { 
                     "text": "Now, four people entered a room",
                     "pause": 3500
