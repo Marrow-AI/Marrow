@@ -200,7 +200,8 @@ class Engine:
             self.matched_to_word = 0
 
         elif self.state == "QUESTION":
-            print("They want to eat {}".format(text))
+            self.question_answer = text
+            self.pre_script()
 
     def mid_speech_text(self, text):
         if self.state == "SCRIPT":
@@ -208,6 +209,8 @@ class Engine:
             print("({})".format(text))
             self.t2i_client.send_message("/speech", text)
             self.lookup(text)
+        elif self.state == "QUESTION":
+            question_answer = text
         
     def lookup(self, text):
         # print("REACT: {}".format(text))
@@ -400,12 +403,14 @@ class Engine:
             rate = f.getframerate()
             self.speech_duration = frames / float(rate)
 
-        shutil.copyfile(
-                file_name,             
-                "tmp/gan.wav"
-        )
-        print("Copied")
-        self.voice_client.send_message("/speech/reload",1)
+        #shutil.copyfile(
+        #        file_name,             
+        #        "tmp/gan.wav"
+        #)
+        #print("Copied")
+        #self.voice_client.send_message("/speech/reload",1)
+        absPath = os.path.abspath(file_name)
+        self.voice_client.send_message("/speech/load",absPath)
 
     def pause_listening(self,duration):
             #asyncio.ensure_future(self.server.pause_listening(duration))
@@ -479,20 +484,35 @@ class Engine:
         self.script.reset()
         self.show_next_line()
 
+    ########### QUESTION ###############
     def start_question(self): 
         print("Start question")
         self.current_question_timeout = None
         self.last_asked = int(round(time.time() + self.speech_duration) * 1000)
+        self.question_answer = None
         self.state = "QUESTION"
         self.question_timeout_index = 0 
         self.say()
-        self.schedule_function(self.speech_duration + 5, self.load_next_question_timeout)
+        self.schedule_function(self.speech_duration + 0.2, self.load_next_question_timeout)
+
+    def check_question(self):
+        if self.state != "QUESTION":
+            return
+
+        if self.question_answer is not None:
+            self.pre_script()
+        else:
+            self.question_timed_out()
 
     def load_next_question_timeout(self):
         print("Load question timeout")
         if self.question_timeout_index < len(self.script.data["question"]["timeouts"]):
             self.current_question_timeout = self.script.data["question"]["timeouts"][self.question_timeout_index]
             self.preload_speech("gan_question/timeout{}.wav".format(self.question_timeout_index))
+            self.schedule_function(self.current_question_timeout["after"], self.check_question)
+        else:
+            self.current_question_timeout = None
+            self.pre_script()
 
     def question_timed_out(self):
         print("Question timed out!")
@@ -500,6 +520,12 @@ class Engine:
         self.last_asked = int(round(time.time() + self.speech_duration) * 1000)
         self.say(callback = self.load_next_question_timeout)
 
+    ######### QUESTION ################
+
+
+    def pre_script(self):
+        print("PRE SCRIPT!! Chosen food: {}".format(self.question_answer))
+        self.state = "PRE-SCRIPT"
 
     def show_next_line(self):
         self.t2i_client.send_message(

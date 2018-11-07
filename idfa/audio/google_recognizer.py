@@ -64,7 +64,7 @@ class MicrophoneStream(object):
         return None, pyaudio.paContinue
 
     def generator(self):
-        while not self.closed and not self.parent.stop_recognition and not self.args.restart and not self.args.stop:
+        while not self.closed and not self.args.restart and not self.args.stop and not self.parent.stop_recognition:
             # Use a blocking get() to ensure there's at least one chunk of
             # data, and stop iteration if the chunk is None, indicating the
             # end of the audio stream.
@@ -74,7 +74,7 @@ class MicrophoneStream(object):
             data = [chunk]
 
             # Now consume whatever other data's still buffered.
-            while not self.parent.stop_recognition and not self.args.stop:
+            while not self.args.stop and not self.parent.stop_recognition:
                 current_time = time.time()
                 diff = current_time - self.start_time
                 #print(diff)
@@ -122,11 +122,12 @@ class Recognizer(Thread):
 
 
     def stop(self):
+        print("Stopping recognition")
         self.stop_recognition = True
 
     def start(self):
         self.stop_recognition = False
-        while not self.stop_recognition and not self.args.stop:
+        while not self.args.stop and not self.stop_recognition:
             print("Listen again?")
             self.args.restart = False
             self.listen()

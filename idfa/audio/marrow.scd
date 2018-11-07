@@ -11,9 +11,23 @@ OSCdef.new( \speechreload, { |data,time,source|
 	}
 }, '/speech/reload');
 
-TXSystem1.start(showAudioOptions: false);
 )
 
+
+(
+OSCdef.new( \speechload, { |data,time,source|
+	"loading speech".postln;
+	data.postln;
+	if (TXFilePlayer6.arrInstances.size > 0) {
+			"foundplayer!".postln;
+		    TXFilePlayer6.arrInstances[0].cueSample(data[1].asString);
+	}
+}, '/speech/load');
+)
+
+
+
+TXSystem1.start(showAudioOptions: false);
 
 
 

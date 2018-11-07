@@ -1,4 +1,5 @@
 {
+
     "intro" :[
                 { 
                     "text": "Now",
@@ -174,7 +175,7 @@
         ],
         "timeouts":[
             {
-                "after": 3000,
+                "after": 5,
                 "line": [
                     {
                         "text": "It can be anything you like",
@@ -190,7 +191,7 @@
                 ]
             },
             {
-                "after": 3000,
+                "after": 5,
                 "line": [
                     {
                         "text": "speak louder please.",
@@ -202,7 +203,7 @@
                 ]
             },
             {
-                "after": 3000,
+                "after": 5,
                 "line": [
                     {
                         "text": "“oh well",
@@ -223,7 +224,7 @@
             }
         ] 
     },
-    "triggers-gan": [
+    "pre-script": [
                 {
                     "text": "Dinner",
                     "pause": 50
@@ -247,7 +248,7 @@
                 {
                     "text": "Are they talking about the food they are having?"
                 }
-],
+    ],
     "script-lines": [
         {
             "speaker": "mom",
@@ -295,10 +296,7 @@
             "variations": [
                 "Yes baby! Let's start",
                 "Yes! Eat now"
-            ]
-        },
-    ],
-
+            ],
              "triggers-gan": [
                 {
                     "text": "We hear laughter",
@@ -312,7 +310,7 @@
                     "text": "Knives",
                     "pause": 500,
 
-                    "effect": "eating", 
+                    "effect": "eating"
                 },
                 {
                     "text": "The perfect family is starting to eat",
@@ -497,10 +495,9 @@
                     },
                     { 
                         "text": "Dreams?"
-                    },
+                    }
                 ]
         },
-    },
         {
             "speaker": "sister",
             "text": "I don't like carrots.",
@@ -825,7 +822,7 @@
                     },
                     {
                         "text": "Something of you is left?"
-                    },
+                    }
                 ]
             }
     ]
