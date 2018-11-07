@@ -2,15 +2,11 @@
 
     "intro" :[
                 { 
-                    "text": "Now four people entered a room. This is a perfect figure of a perfect family. Similar, to this one on the wall. Look at them. Look at them. ",
+                    "text": "Now, four people entered a room",
                     "pause": 2300
                 },
                 { 
-                    "text": "Now four people entered a room",
-                    "pause": 2300
-                },
-                { 
-                    "text": "This is a perfect image of a perfect family",
+                    "text": "You are the perfect image of a perfect family",
                     "pause": 1500
                 },
                 { 
@@ -19,38 +15,26 @@
                 },
                 { 
                     "text": "To this one on the wall",
-                    "pause": 2000
+                    "pause": 2200
                 },
                 { 
-                    "text": "Look at them",
+                    "text": "Look at them, so perfect so nice",
                     "pause": 3800
                 },
                 { 
-                    "text": "So perfect, so nice",
-                    "pause": 500
+                    "text": "There is a table in the room too, and chairs, and a voice",
+                    "pause": 430
                 },
                 { 
-                    "text": "There is a table in the room too, and chairs",
-                    "pause": 130
-                },
-                { 
-                    "text": "And a voice",
-                    "pause": 300
-                },
-                { 
-                    "text": "We",
-                    "pause": 40
-                },
-                { 
-                    "text": "Are at dinner",
+                    "text": "We are at dinner",
                     "pause": 2400
                 },
                 { 
-                    "text": "The perfect family, on the wall, is running the show",
+                    "text": "The perfect family, on the wall, is in control",
                     "pause": 650
                 },
                 { 
-                    "text": "And you and me, both, are here to play along",
+                    "text": "And you and me, we are both here to play along",
                     "pause": 9000
                 },
                 { 
