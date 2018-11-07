@@ -1,10 +1,11 @@
 {
+    "intro-effect": {
+        "effect": "applause",
+        "time": 0,
+        "fades": [0.0, 0.0]
+    },
 
     "intro" :[
-                { 
-                    "text": "Now four people entered a room. This is a perfect figure of a perfect family. Similar, to this one on the wall. Look at them. Look at them. ",
-                    "pause": 2300
-                },
                 { 
                     "text": "Now four people entered a room",
                     "pause": 2300
