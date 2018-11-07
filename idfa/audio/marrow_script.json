@@ -10,11 +10,7 @@
                     "pause": 2300
                 },
                 { 
-                    "text": "This is a perfect figure",
-                    "pause": 50
-                },
-                { 
-                    "text": "Of a perfect family.",
+                    "text": "This is a perfect image of a perfect family",
                     "pause": 1500
                 },
                 { 
@@ -50,19 +46,11 @@
                     "pause": 2400
                 },
                 { 
-                    "text": "The perfect family, on the wall",
-                    "pause": 150
+                    "text": "The perfect family, on the wall, is running the show",
+                    "pause": 650
                 },
                 { 
-                    "text": "is running the show",
-                    "pause": 550
-                },
-                { 
-                    "text": "And you and me, both",
-                    "pause": 130
-                },
-                { 
-                    "text": "Are here to play along",
+                    "text": "And you and me, both, are here to play along",
                     "pause": 9000
                 },
                 { 
@@ -86,24 +74,20 @@
                     "pause": 3400
                 },
                 { 
-                    "text": "Watching so many perfect families",
-                    "pause": 40
+                    "text": "Watching so many perfect families all day,",
+                    "pause": 340
                 },
                 { 
-                    "text": "All day, makes your perspective",
-                    "pause": 290
+                    "text": "Makes your perspective",
+                    "pause": 90
                 },
                 { 
                     "text": "Kind of distorded",
                     "pause": 500
                 },
                 { 
-                    "text": "All you are left with",
-                    "pause": 100
-                },
-                { 
-                    "text": "Is trying to be more like them",
-                    "pause": 340
+                    "text": "All you are left with is trying to be more like them",
+                    "pause": 400
                 },
                 { 
                     "text": "Be",
@@ -291,7 +275,7 @@
                     "pause": 1500
                 },
                 {
-                    "text": "And if so does it mean you are not?",
+                    "text": "And if so, does it mean you are not?",
                     "pause": 850
                 },
                 {
@@ -303,7 +287,7 @@
                     "pause": 1350
                 },
                 {
-                    "text": "Do they share profound thoughts on the day they just had?"
+                    "text": "Do they share profound thoughts, on the day they just had?"
                 }
             ]
         },
