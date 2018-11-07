@@ -494,7 +494,11 @@ class Engine:
         self.state = "QUESTION"
         self.question_timeout_index = 0 
         self.say()
+        self.schedule_function(self.speech_duration - 0.5, self.table_fadein)
         self.schedule_function(self.speech_duration + 0.2, self.load_next_question_timeout)
+
+    def table_fadein(self):
+        self.t2i_client.send_message("/table/fadein")
 
     def check_question(self):
         if self.state != "QUESTION":
