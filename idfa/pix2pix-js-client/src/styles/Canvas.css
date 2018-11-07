@@ -10,7 +10,7 @@
   justify-content: center;
 }
 
-#videoCanvas{
+#cameraCanvas{
   position: absolute;
   transform: scaleX(-1);
   /* border: 2px solid green; */
@@ -18,8 +18,9 @@
 
 #pix2pixCanvas{
   position: absolute;
-  width: 100%;
-  height: 100%;
+  /* width: 100%;
+  height: 100%; */
   transform: scaleX(-1);
-  /* border: 2px solid yellow; */
+  z-index: 999;
+  border: 2px solid rgb(19, 19, 19);
 }

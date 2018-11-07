@@ -3,58 +3,47 @@ import { withContext } from './Provider';
 import '../styles/Canvas.css';
 
 class Canvas extends Component {
-
   componentDidMount() {
     window.requestAnimationFrame(this.renderVideoIntoCanvas);
   }
 
   renderVideoIntoCanvas = () => {
-    const { videoCanvasWidth, videoCanvasHeight } = this.props.context;
+    const { context } = this.props;
     const video = document.getElementById('cameraElement');
-    const canvas = document.getElementById('videoCanvas');
+    const canvas = document.getElementById('cameraCanvas');
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0, videoCanvasWidth, videoCanvasHeight);
+    ctx.drawImage(video, 0, 0, context.cameraCanvasWidth, context.cameraCanvasHeight);
     window.requestAnimationFrame(this.renderVideoIntoCanvas);
   }
 
   render() {
-    const { 
-      videoCanvasWidth, 
-      videoCanvasHeight,
-      isShowingVideoCanvas,
-      pix2pixCanvasWidth,
-      pix2pixCanvasHeight,
-      isShowingPix2pixCanvas,
-      opacities
-    } = this.props.context;
+    const { context } = this.props;
 
-    let videoCanvasDisplay = 'none';
-    if (isShowingVideoCanvas) {
-      videoCanvasDisplay = 'inline';
+    let cameraCanvasDisplay = 'none';
+    if (context.isShowingCameraCanvas) {
+      cameraCanvasDisplay = 'inline';
     }
 
     let pix2pixCanvasDisplay = 'none';
-    if (isShowingPix2pixCanvas) {
+    if (context.isShowingPix2pixCanvas) {
       pix2pixCanvasDisplay = 'inline';
     }
 
     return (
       <div className="Canvas">
         <canvas
-          width={videoCanvasWidth}
-          height={videoCanvasHeight}
-          id="videoCanvas"
+          width={context.cameraCanvasWidth}
+          height={context.cameraCanvasHeight}
+          id="cameraCanvas"
           style={{
-            opacity: opacities['transfer'],
-            display: videoCanvasDisplay
+            display: cameraCanvasDisplay
           }}
         />
         <canvas 
-          width={pix2pixCanvasWidth} 
-          height={pix2pixCanvasHeight} 
+          width={context.pix2pixCanvasWidth} 
+          height={context.pix2pixCanvasHeight} 
           id="pix2pixCanvas"
-          style={{ 
-            opacity: opacities['transfer'],
+          style={{             
             display: pix2pixCanvasDisplay
           }}
         />

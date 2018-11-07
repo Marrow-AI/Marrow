@@ -3,6 +3,9 @@
 # dependencies
 /node_modules
 
+# images in public 
+public/images
+
 # testing
 /coverage
 

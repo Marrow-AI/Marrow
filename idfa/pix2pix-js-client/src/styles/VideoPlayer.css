@@ -14,12 +14,12 @@
 
 #cameraElement{
   position: absolute;
-  bottom: 5rem;
-  left: 0px;
+  bottom: -30px;
+  right: 10px;
   width: 200px;
   height: 200px;
   z-index: 2;
-  left: 2rem;
+  display: none;
 }
 
 #sceneElement{

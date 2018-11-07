@@ -6,8 +6,7 @@ class Camera extends Component {
   render() {
     return (
       <div className="VideoPlayer">
-        <video 
-          style={{opacity: this.props.context.opacities[this.props.type]}}
+        <video
           autoPlay="true" 
           id={this.props.type + 'Element'}/>
       </div>
