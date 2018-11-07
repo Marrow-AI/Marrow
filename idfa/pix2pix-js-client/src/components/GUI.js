@@ -128,18 +128,18 @@ class GUI extends Component {
           />
         </dg.Folder>
         <dg.Folder label='Marrow' expanded={true}>
-          <dg.Text label='Server Connection' value={isConnectedToMarrow ? 'Connected' : 'Not Connected'}/>
+          <dg.Text label='Server Connection' value={context.isConnectedToMarrow ? 'Connected' : 'Not Connected'}/>
           <dg.Text label='IP' 
-            value={marrowIP}
-            onChange={(value) => setMarrowIP(value)}
+            value={context.marrowIP}
+            onChange={(value) => context.setMarrowIP(value)}
           />
           <dg.Text label='Marrow Port' 
-            value={marrowPort}
-            onChange={(value) => setMarrowPort(value)}
+            value={context.marrowPort}
+            onChange={(value) => context.setMarrowPort(value)}
           />
           <dg.Button 
-            label={isConnectedToServer ? 'Disconnect' : 'Connect to Server'}
-            onClick={() => connectToMarrow(marrowIP, marrowPort, marrowRoute)}
+            label={context.isConnectedToMarrow ? 'Disconnect' : 'Connect to Server'}
+            onClick={() => context.connectToMarrow(context.marrowIP, context.marrowPort, context.marrowRoute)}
           />
         </dg.Folder>
         <dg.Folder label='Images' expanded={true}>

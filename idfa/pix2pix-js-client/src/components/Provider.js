@@ -93,7 +93,7 @@ class AppProvider extends Component {
     marrowSocket: null,
     setServerIP: (ip) => this.setState({serverIP: ip}),
     setMarrowIP: (ip) => this.setState({marrowIP: ip}), 
-    setMarrowPort: (port) => this.setState({marrowPort: port})
+    setMarrowPort: (port) => this.setState({marrowPort: port}),
     imageSliderOpacity: 1,
     setImageSliderOpacity: (v) => this.setState({imageSliderOpacity: v}),
     imagesWidth: 220,
@@ -119,6 +119,9 @@ class AppProvider extends Component {
           const img = new Image();
           img.onload = () => {
             ctx.drawImage(img, 0, 0, this.state.pix2pixCanvasWidth, this.state.pix2pixCanvasHeight);
+            if (this.state.marrowSocket) {
+                this.state.marrowSocket.send(JSON.stringify({action: "pix2pix"}));
+            }
             if (this.state.isSendingFrames) {
               this.state.sendFrames();
             }
@@ -141,9 +144,6 @@ class AppProvider extends Component {
         const marrowSocket = new WebSocket(`wss://${ip}:${port}${route}`);
         marrowSocket.onopen = () => {
           this.setState({ isConnectedToMarrow: true });
-          setInterval(() => {
-             this.state.marrowSocket.send(JSON.stringify({action: "pix2pix"}));
-          }, 2000)
         };
         marrowSocket.onclose =  () => {
           this.setState({ isConnectedToMarrow: false });
