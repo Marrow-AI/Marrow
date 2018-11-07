@@ -297,6 +297,11 @@
                 "Yes baby! Let's start",
                 "Yes! Eat now"
             ],
+            "triggers-effect": {
+                "effect": "dish",
+                "time": 2,
+                "fades": [0.1, 0.1]
+            },
              "triggers-gan": [
                 {
                     "text": "We hear laughter",
@@ -308,9 +313,7 @@
                 },
                 {
                     "text": "Knives",
-                    "pause": 500,
-
-                    "effect": "eating"
+                    "pause": 500
                 },
                 {
                     "text": "The perfect family is starting to eat",

@@ -338,17 +338,25 @@ class Engine:
             print("Say response!")
 
             # Send a pause the average person speaks at somewhere between 125 and 150 words per minute (2-2.5 per sec)
-            self.say(words_ahead / 2.5 )
+            delay = words_ahead / 2.5
+            self.say(delay)
+            if "triggers-effect" in line:
+                self.load_effect(line["triggers-effect"])
+                self.schedule_function(delay + line["triggers-effect"]["time"], self.play_effect)
 
         else:
-            # Normal react feedback
-            self.voice_client.send_message("/gan/react",1)
+            self.next_line()
 
        # if "triggers-beat" in line:
         #    self.voice_client.send_message("/gan/beat",0.0)
 
+
+    def resume_script(self):
+        self.state = "SCRIPT"
         self.next_line()
 
+    def play_effect(self):
+        self.voice_client.send_message("/effect/play", 1)
 
     def next_line(self):
         self.last_react = int(round(time.time() * 1000))
@@ -380,6 +388,8 @@ class Engine:
 
             effect_time = 0.05
 
+            self.state = "GAN"
+
             if delay_effect:
                 self.schedule_osc(delay_sec,self.voice_client, "/gan/delay", 1)
 
@@ -399,6 +409,7 @@ class Engine:
             print("Nothing to say!")
 
     def preload_speech(self, file_name):
+        print("Preload speech {}", file_name)
         with contextlib.closing(wave.open(file_name,'r')) as f:
             frames = f.getnframes()
             rate = f.getframerate()
@@ -438,6 +449,8 @@ class Engine:
         elif command == 'start-question':
             self.preload_speech("gan_question/line.wav")
             self.schedule_function(0.5, self.start_question)
+        elif command == 'start-script':
+            self.start_script()
 
     def ser_stop(self):
         self.args.stop = True
@@ -563,6 +576,13 @@ class Engine:
         )
 
         print("{}, PLEASE SAY: {}".format(self.script.awaiting["speaker"], self.script.awaiting_text))
+
+    def load_effect(self, data):
+        print("Load effect {}".format(data["effect"]))
+        self.voice_client.send_message("/effect/fades", data["fades"])
+        absPath = os.path.abspath("effects/{}.wav".format(data["effect"]))
+        self.voice_client.send_message("/effect/load", absPath)
+
 
     def mood_update(self, data):
         self.mental_state.value = float(data["value"])

@@ -25,6 +25,17 @@ OSCdef.new( \speechload, { |data,time,source|
 }, '/speech/load');
 )
 
+(
+OSCdef.new( \effectload, { |data,time,source|
+	"loading speech".postln;
+	data.postln;
+	if (TXFilePlayer6St.arrInstances.size > 0) {
+			"foundplayer!".postln;
+		    TXFilePlayer6St.arrInstances[0].cueSample(data[1].asString);
+	}
+}, '/effect/load');
+)
+
 
 
 TXSystem1.start(showAudioOptions: false);
