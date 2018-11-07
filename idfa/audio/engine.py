@@ -480,11 +480,6 @@ class Engine:
         self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/synthmode", [1.0, 0.0])
         self.schedule_osc(63.5 + first_speech, self.voice_client, "/gan/feedback", 0)
 
-    def start_script(self):
-        self.last_react = int(round(time.time() * 1000))
-        self.script.reset()
-        self.state = "SCRIPT"
-        self.show_next_line()
 
     ########### QUESTION ###############
     def start_question(self): 
@@ -543,11 +538,23 @@ class Engine:
         self.schedule_function(5.5, self.show_plates)
 
     def say_pre_script(self):
-        self.say(callback = self.start_script)
+        self.say(callback = self.spotlight_mom)
 
     def show_plates(self):
+        print("Show plates")
         self.t2i_client.send_message("/table/showplates")
 
+    def spotlight_mom(self):
+        print("Spotlight on mom")
+        self.t2i_client.send_message("/spotlight", "mom")
+        self.schedule_function(2, self.start_script)
+
+    def start_script(self):
+        print("Start script")
+        self.last_react = int(round(time.time() * 1000))
+        self.script.reset()
+        self.state = "SCRIPT"
+        self.show_next_line()
 
     def show_next_line(self):
         self.t2i_client.send_message(
