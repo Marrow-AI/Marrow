@@ -18,7 +18,7 @@
                     "pause": 2200
                 },
                 { 
-                    "text": "Look at them, so perfect so nice",
+                    "text": "Look at them, so perfect so nice.",
                     "pause": 3800
                 },
                 { 
@@ -31,70 +31,50 @@
                 },
                 { 
                     "text": "The perfect family, on the wall, is in control",
-                    "pause": 650
+                    "pause": 1050
                 },
                 { 
                     "text": "And you and me, we are both here to play along",
                     "pause": 9000
                 },
                 { 
-                    "text": "Look at yourself",
-                    "pause": 290
+                    "text": "Look at yourself, so lovely",
+                    "pause": 1590
                 },
                 { 
-                    "text": "So lovely",
-                    "pause": 1390
+                    "text": "Not as lovely as them, but almost. Almost good enough. Wouldn't you say so?",
+                    "pause": 3390
                 },
                 { 
-                    "text": "Not as lovely as them, but almost",
-                    "pause": 590
+                    "text": "Watching so many perfect families all day makes your perspective kind of,",
+                    "pause": 30
                 },
                 { 
-                    "text": "Almost good enough",
-                    "pause": 490
+                    "text": "Distorted",
+                    "pause": 550
                 },
                 { 
-                    "text": "Wouldn't, you say so?",
-                    "pause": 3400
+                    "text": "All you are left with",
+                    "pause": 40
                 },
                 { 
-                    "text": "Watching so many perfect families all day,",
-                    "pause": 340
+                    "text": "Is trying to be more like them",
+                    "pause": 1700
                 },
                 { 
-                    "text": "Makes your perspective",
-                    "pause": 90
-                },
-                { 
-                    "text": "Kind of distorded",
-                    "pause": 500
-                },
-                { 
-                    "text": "All you are left with is trying to be more like them",
-                    "pause": 400
-                },
-                { 
-                    "text": "Be",
-                    "pause": 100
-                },
-                { 
-                    "text": "More like them",
+                    "text": "Let's be more like them",
                     "pause": 2000
                 },
                 { 
                     "text": "How does the perfect family sit?",
-                    "pause": 1300
+                    "pause": 1500
                 },
                 { 
                     "text": "How close together are they?",
-                    "pause": 1200
+                    "pause": 1500
                 },
                 { 
-                    "text": "Can you",
-                    "pause": 40
-                },
-                { 
-                    "text": "Imitate them?"
+                    "text": "Can you imitate them?",
                 }
     ],
    
