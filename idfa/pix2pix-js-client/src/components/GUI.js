@@ -62,13 +62,20 @@ class GUI extends Component {
       serverIP, 
       denseposePort,
       pix2pixPort,
-      queryRoute,
+       queryRoute,
+      isConnectedToMarrow,
+      marrowIP,
+      marrowPort,
+      marrowRoute,
       isSendingFrames,
       updateSendingFrameStatus,
       setServerIP,
       setDenseposePort,
       setPix2pixPort,
       connectToServer,
+      setMarrowIP,
+      setMarrowPort,
+      connectToMarrow,
       autoplayOn,
       autoplaySceneDuration,
       setModel
@@ -175,6 +182,21 @@ class GUI extends Component {
           <dg.Button 
             label={isSendingFrames ? 'Stop Sending Frames' : 'Start Sending Frames'}
             onClick={() => updateSendingFrameStatus(!isSendingFrames)}
+          />
+        </dg.Folder>
+        <dg.Folder label='Marrow' expanded={true}>
+          <dg.Text label='Server Connection' value={isConnectedToMarrow ? 'Connected' : 'Not Connected'}/>
+          <dg.Text label='IP' 
+            value={marrowIP}
+            onChange={(value) => setMarrowIP(value)}
+          />
+          <dg.Text label='Marrow Port' 
+            value={marrowPort}
+            onChange={(value) => setMarrowPort(value)}
+          />
+          <dg.Button 
+            label={isConnectedToServer ? 'Disconnect' : 'Connect to Server'}
+            onClick={() => connectToMarrow(marrowIP, marrowPort, marrowRoute)}
           />
         </dg.Folder>
         <dg.Folder label='Transitions' expanded={true}>

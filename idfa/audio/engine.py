@@ -117,7 +117,7 @@ class Engine:
         self.queue = janus.Queue(loop=self.main_loop)
 
         self.recognizer = Recognizer(self.queue.sync_q, self.args)
-        fut = self.main_loop.run_in_executor(None, self.recognizer.start)
+        #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
 
         self.server = Server(
                 self.gain_update, 
@@ -388,8 +388,6 @@ class Engine:
 
             effect_time = 0.05
 
-            self.state = "GAN"
-
             if delay_effect:
                 self.schedule_osc(delay_sec,self.voice_client, "/gan/delay", 1)
 
@@ -427,7 +425,7 @@ class Engine:
     def pause_listening(self,duration = 0):
             #asyncio.ensure_future(self.server.pause_listening(duration))
             self.recognizer.stop()
-            if duration > 0:
+            if self.state != "INTRO":
                 # Minus 1 for the time it takes to start listening
                 self.schedule_function(duration - 1, self.start_google)
 
@@ -477,15 +475,22 @@ class Engine:
 
     def start_intro(self):
         print("Start intro!")
+        self.state = "INTRO"
+        self.voice_client.send_message("/control/stop", 1)
         self.pause_listening()
-        self.voice_client.send_message("/control/bells", [0.0, 0.0])
+
+        self.voice_client.send_message("/control/bells", [0.0, 0.2])
+        self.voice_client.send_message("/control/strings", [0.0, 0.0])
+        self.voice_client.send_message("/control/synthbass", [0.0, 0, 1])
+
         self.t2i_client.send_message("/control/start",1)
-        self.load_effect(self.script.data["intro-effect"])
         self.preload_speech("gan_intro/intro.wav")
-        self.schedule_function(0.5, self.play_effect)
-        self.say(delay_sec = 8.5)
-        self.schedule_osc(21.5, self.voice_client, "/control/start", 1)
-        self.schedule_osc(21.5, self.voice_client, "/control/bells", [1.0, 0.2])
+        #self.load_effect(self.script.data["intro-effect"])
+        #self.schedule_function(0.5, self.play_effect)
+        self.say(delay_sec = 0.5)
+        self.schedule_osc(13.4, self.voice_client, "/control/start", 1)
+        self.schedule_osc(31.5, self.voice_client, "/control/strings", [0.5, 0.5])
+        self.schedule_osc(31.5, self.voice_client, "/control/synthbass", [0.2, 0, 1])
 
         """
         self.voice_client.send_message("/control/init",1)

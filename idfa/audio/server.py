@@ -27,7 +27,7 @@ class Server:
         self.connected.add(websocket)
         try:
             async for message in websocket:
-                #print(message)
+                print(message)
                 data = json.loads(message)
                 action = data["action"]
                 if action == 'get-token':

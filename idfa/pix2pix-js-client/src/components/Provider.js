@@ -126,15 +126,22 @@ class AppProvider extends Component {
     modelInServer: '',
     gotModelSetInServer: (name) => this.setState({ modelInServer: name }),
     serverIP: IP, 
+    marrowIP: "localhost",
+    marrowPort: "9540",
     denseposePort: '22100',
     pix2pixPort: '443',
     queryRoute: '/generate',
+    marrowRoute: '/',
     isConnectedToServer: false,
+    isConnectedToMarrow: false,
     isSendingFrames: false,
     socket: null,
+    marrowSocket: null,
     setServerIP: (ip) => this.setState({serverIP: ip}), 
+    setMarrowIP: (ip) => this.setState({marrowIP: ip}), 
     setDenseposePort: (port) => this.setState({denseposePort: port}), 
     setPix2pixPort: (port) => this.setState({pix2pixPort: port}), 
+    setMarrowPort: (port) => this.setState({marrowPort: port}), 
     connectToServer: (ip, port, route) => {
       if (!this.state.socket) {
         const socket = io(`http://${ip}:${port}${route}`);
@@ -165,6 +172,24 @@ class AppProvider extends Component {
       } else {
         this.state.socket.disconnect();
         this.setState({ socket: null });
+      }
+    },
+    connectToMarrow: (ip, port, route) => {
+      if (!this.state.marrowSocket) {
+        const marrowSocket = new WebSocket(`wss://${ip}:${port}${route}`);
+        marrowSocket.onopen = () => {
+          this.setState({ isConnectedToMarrow: true });
+          setInterval(() => {
+             this.state.marrowSocket.send(JSON.stringify({action: "pix2pix"}));
+          }, 2000)
+        };
+        marrowSocket.onclose =  () => {
+          this.setState({ isConnectedToMarrow: false });
+        };
+        this.setState({ marrowSocket: marrowSocket });
+      } else {
+        this.state.marrowSocket.close();
+        this.setState({ marrowSocket: null });
       }
     },
     updateSendingFrameStatus: (state) => {
