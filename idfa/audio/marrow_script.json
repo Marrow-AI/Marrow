@@ -165,8 +165,8 @@
    
     "question": {
         "affects": {
-            "line": 4,
-            "text": "look at the %ANSWER%! it looks delicious"
+            "line": 2,
+            "default": "roasted vegetables with rice"
         },
         "line": [
             { 
@@ -260,7 +260,7 @@
         },
         {
             "speaker": "dad",
-            "text": "Oh, everything looks great.",
+            "text": "Everything looks great.",
             "variations": [
                 "This looks great.",
                 "Really great"
@@ -268,7 +268,7 @@
         },
         {
             "speaker": "brother",
-            "text": "Look at the %ANSWER%! ! It looks delicious!",
+            "text": "Look at the %ANSWER%!! It looks delicious!",
             "variations": [
                 "I mean yummy",
                 "I mean goooood"

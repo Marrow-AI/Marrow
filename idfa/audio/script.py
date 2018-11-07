@@ -18,6 +18,7 @@ class Script:
         self.awaiting_index = 0
         self.awaiting = self.data["script-lines"][self.awaiting_index]
         self.awaiting_text = self.awaiting["text"]
+        self.awaiting_variation = 0
         self.length = len(self.data["script-lines"])
         self.update()
 
@@ -41,6 +42,7 @@ class Script:
             self.awaiting_index = self.awaiting_index + 1 
             self.awaiting_variation = 0
             self.awaiting = self.data["script-lines"][self.awaiting_index]
+            print("Setting awaiting text from {}".format(self.awaiting))
             self.awaiting_text = self.awaiting["text"]
             self.update()
             return True

@@ -32,7 +32,7 @@ import math
 #print("Loaded English NLP")
 
 DISTANCE_THRESHOLD = 0.8
-SCRIPT_TIMEOUT = 5000
+SCRIPT_TIMEOUT = 6000
 
 class ScheduleOSC:
     def __init__(self, timeout, client, command, args,  callback):
@@ -482,6 +482,7 @@ class Engine:
     def start_script(self):
         self.last_react = int(round(time.time() * 1000))
         self.script.reset()
+        self.state = "SCRIPT"
         self.show_next_line()
 
     ########### QUESTION ###############
@@ -520,12 +521,24 @@ class Engine:
         self.last_asked = int(round(time.time() + self.speech_duration) * 1000)
         self.say(callback = self.load_next_question_timeout)
 
+
     ######### QUESTION ################
 
 
     def pre_script(self):
         print("PRE SCRIPT!! Chosen food: {}".format(self.question_answer))
         self.state = "PRE-SCRIPT"
+        self.preload_speech("gan_intro/pre_script.wav")
+        affects = self.script.data["question"]["affects"]
+        target = self.script.data["script-lines"][affects["line"]] 
+        if not self.question_answer:
+            self.question_answer = affects["default"]
+        target["text"] = target["text"].replace("%ANSWER%",self.question_answer)
+        self.schedule_function(0.5, self.say_pre_script)
+
+    def say_pre_script(self):
+        self.say(callback = self.start_script)
+
 
     def show_next_line(self):
         self.t2i_client.send_message(
