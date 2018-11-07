@@ -12,7 +12,7 @@
                 },
                 { 
                     "text": "Now, four people entered a room",
-                    "pause": 2300
+                    "pause": 3500
                 },
                 { 
                     "text": "You are the perfect image of a perfect family",
@@ -36,14 +36,14 @@
                 },
                 { 
                     "text": "There is a table in the room too. and chairs. and a voice",
-                    "pause": 430
+                    "pause": 730
                 },
                 { 
                     "text": "We",
                     "pause": 10
                 },
                 { 
-                    "text": "Are at dinner",
+                    "text": "Are having dinner",
                     "pause": 2800
                 },
                 { 
@@ -52,7 +52,7 @@
                 },
                 { 
                     "text": "And you and me, we are both here to play along",
-                    "pause": 14000
+                    "pause": 16000
                 },
                 { 
                     "text": "Look at yourselves,",
@@ -60,11 +60,11 @@
                 },
                 { 
                     "text": "So lovely",
-                    "pause": 1590
+                    "pause": 1890
                 },
                 { 
                     "text": "Not as lovely as them, but almost. Almost good enough.",
-                    "pause": 390
+                    "pause": 1090
                 },
                 { 
                     "text": "Wouldn't you say so?",
@@ -76,7 +76,7 @@
                 },
                 { 
                     "text": "Kind of, distorted",
-                    "pause": 750
+                    "pause": 1150
                 },
                 { 
                     "text": "All you are left with",
@@ -84,11 +84,11 @@
                 },
                 { 
                     "text": "Is trying to be more like them",
-                    "pause": 2200
+                    "pause": 2800
                 },
                 { 
                     "text": "Let's be more like them",
-                    "pause": 2500
+                    "pause": 3400
                 },
                 { 
                     "text": "How does the perfect family sit?",
@@ -138,7 +138,7 @@
                         "pause": 450
                     },                    
                     {
-                        "text": "what do you think the perfect family eats for dinner?"
+                        "text": "What do you think the perfect family eats for dinner?"
                     }
                 ]
             },
@@ -146,15 +146,15 @@
                 "after": 5,
                 "line": [
                     {
-                        "text": "“oh well, it is possible I didn't hear what you said.",
+                        "text": "“Ohh well, it is possible I didn't hear what you said.",
                         "pause": 500
                     },                    
                     {
-                        "text": "but since dinner is getting cold",
+                        "text": "But since dinner is getting cold",
                         "pause": 100
                     },
                     {
-                        "text": "we are having roasted vegetables with rice."
+                        "text": "We are having roasted vegetables with rice."
                     }
                 ]
             }
@@ -166,16 +166,17 @@
                     "pause": 3700
                 },
                 {
-                    "text": "What does the perfect family talk about?",
+                    "text": "What does the perfect family talk about over dinner?",
                     "pause": 3700
                 },
                 {
-                    "text": "Look at them, what do you think the perfect family talk about over dinner?",
+                    "text": "Are they talking about the food they are eating?",
                     "pause": 2500
                 },
                 {
-                    "text": "Are they talking about the food they are eating?"
+                    "text": "Look at them, what do you think the perfect family talk about?"
                 }
+                
     ],
     "script-lines": [
         {
@@ -191,7 +192,7 @@
             "text": "Everything looks great.",
             "variations": [
                 "This looks great.",
-                "Really great"
+                "Really really great"
             ]
         },
         {
@@ -232,48 +233,40 @@
             },
              "triggers-gan": [
                 {
-                    "text": "We hear laughter, forks, knives",
-                    "pause": 700
+                    "text": "We hear the sound of laughter, forks, knives",
+                    "pause": 1000
 
                 },
                 {
                     "text": "The perfect family is starting to eat",
-                    "pause": 1500
+                    "pause": 1700
                 },
                  {
                     "text": "But not you",
                     "pause": 150
                 },
                 {
-                    "text": "You eat what you say",
-                    "pause": 1500
+                    "text": "You eat, what you say",
+                    "pause": 1700
                 },
                 {
-                    "text": "Look at them",
+                    "text": "They look so happy",
                     "pause": 2400
                 },
                 {
-                    "text": "So happy",
-                    "pause": 2000
-                },
-                {
-                    "text": "Does perfection make one happy?",
+                    "text": "It seems like perfection always make one happy",
                     "pause": 1500
                 },
                 {
                     "text": "And if so, does it mean you are not?",
-                    "pause": 850
+                    "pause": 1550
                 },
                 {
-                    "text": "Look at them",
+                    "text": "Look at them, What does the perfect family talk about?",
                     "pause": 1800
                 },
                 {
-                    "text": "What does the perfect family talk about?",
-                    "pause": 1350
-                },
-                {
-                    "text": "Do they share profound thoughts, on the day they just had?"
+                    "text": "Do they exchange profound thoughts about their day?"
                 }
             ]
         },
@@ -290,7 +283,7 @@
             "text": "It was fabulous I was thinking about the other day. And how about yours my love?",
             "variations": [
                 "Fabulous. And yours?",
-                "My love?"
+                "Yours my love?"
             ]
         },
         {
@@ -313,7 +306,7 @@
             "speaker": "dad",
             "text": "Sure son! How was school today kids?",
             "variations": [
-                "Yes! You had fun at school?",
+                "Yes! Did you have fun at school?",
                 "What did you learn?"
             ]
         },
@@ -330,7 +323,7 @@
             "text": "Let's just say that today I had the best time!",
             "variations": [
                 "It was the best!",
-                "I can't wait to go to school again."
+                "I can't wait to go to school tomorrow."
             ]
         },
         {
