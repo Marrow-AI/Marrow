@@ -152,6 +152,22 @@ class GUI extends Component {
             step={1}
             onChange={(s) => context.setAmountOfImages(s)}
           />
+          <dg.Number 
+            label='Opacity' 
+            value={1} 
+            min={0} 
+            max={1} 
+            step={0.1}
+            onChange={(s) => context.setImageSliderOpacity(s)}
+          />
+          <dg.Number 
+            label='Transition Speed' 
+            value={2} 
+            min={0} 
+            max={100} 
+            step={1}
+            onChange={(s) => context.setSliderSpeed(s)}
+          />
         </dg.Folder>        
       </dg.GUI>
       </div>
