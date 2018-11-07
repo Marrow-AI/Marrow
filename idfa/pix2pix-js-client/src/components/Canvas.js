@@ -1,60 +1,70 @@
 import React, {Component} from 'react';
+import * as posenet from '@tensorflow-models/posenet';
 import { withContext } from './Provider';
 import '../styles/Canvas.css';
 
 class Canvas extends Component {
-
+  constructor(){
+    super();
+    this.state = {
+      peopleDetected: 0,
+      net: null
+    }
+  }
+  
   componentDidMount() {
+    this.loadPoseNet();
     window.requestAnimationFrame(this.renderVideoIntoCanvas);
+  }
+
+  loadPoseNet = () => {
+    posenet.load()
+      .then(net => {
+        this.setState({ net })
+    })
   }
 
   renderVideoIntoCanvas = () => {
-    const { videoCanvasWidth, videoCanvasHeight } = this.props.context;
+    const { context } = this.props;
+    const { net } = this.state;
     const video = document.getElementById('cameraElement');
-    const canvas = document.getElementById('videoCanvas');
+    const canvas = document.getElementById('cameraCanvas');
     const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0, videoCanvasWidth, videoCanvasHeight);
+    ctx.drawImage(video, 0, 0, context.cameraCanvasWidth, context.cameraCanvasHeight);
+    if (net) {
+      net.estimateMultiplePoses(canvas, 0.5, false, 16, 4)
+      .then(r => console.log(r.length))
+    }
     window.requestAnimationFrame(this.renderVideoIntoCanvas);
   }
-
+  
   render() {
-    const { 
-      videoCanvasWidth, 
-      videoCanvasHeight,
-      isShowingVideoCanvas,
-      pix2pixCanvasWidth,
-      pix2pixCanvasHeight,
-      isShowingPix2pixCanvas,
-      opacities
-    } = this.props.context;
+    const { context } = this.props;
 
-    let videoCanvasDisplay = 'none';
-    if (isShowingVideoCanvas) {
-      videoCanvasDisplay = 'inline';
+    let cameraCanvasDisplay = 'none';
+    if (context.isShowingCameraCanvas) {
+      cameraCanvasDisplay = 'inline';
     }
 
     let pix2pixCanvasDisplay = 'none';
-    if (isShowingPix2pixCanvas) {
+    if (context.isShowingPix2pixCanvas) {
       pix2pixCanvasDisplay = 'inline';
     }
-
     return (
       <div className="Canvas">
         <canvas
-          width={videoCanvasWidth}
-          height={videoCanvasHeight}
-          id="videoCanvas"
+          width={context.cameraCanvasWidth}
+          height={context.cameraCanvasHeight}
+          id="cameraCanvas"
           style={{
-            opacity: opacities['transfer'],
-            display: videoCanvasDisplay
+            display: cameraCanvasDisplay
           }}
         />
         <canvas 
-          width={pix2pixCanvasWidth} 
-          height={pix2pixCanvasHeight} 
+          width={context.pix2pixCanvasWidth} 
+          height={context.pix2pixCanvasHeight} 
           id="pix2pixCanvas"
-          style={{ 
-            opacity: opacities['transfer'],
+          style={{             
             display: pix2pixCanvasDisplay
           }}
         />

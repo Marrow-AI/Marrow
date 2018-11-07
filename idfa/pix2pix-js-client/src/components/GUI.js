@@ -45,48 +45,14 @@ class GUI extends Component {
   } 
 
   render() {
-    const { 
-      cameras, 
-      scenes, 
-      setCinemaModeSize, 
-      isScenePlaying,
-      isShowingVideoCanvas,
-      setVideoCanvasWidth,
-      setVideoCanvasHeight,
-      setShowingVideoCanvas,
-      setPix2pixCanvasWidth,
-      setPix2pixCanvasHeight,
-      setShowingPix2pixCanvas,
-      isShowingPix2pixCanvas,
-      isConnectedToServer,
-      serverIP, 
-      denseposePort,
-      pix2pixPort,
-       queryRoute,
-      isConnectedToMarrow,
-      marrowIP,
-      marrowPort,
-      marrowRoute,
-      isSendingFrames,
-      updateSendingFrameStatus,
-      setServerIP,
-      setDenseposePort,
-      setPix2pixPort,
-      connectToServer,
-      setMarrowIP,
-      setMarrowPort,
-      connectToMarrow,
-      autoplayOn,
-      autoplaySceneDuration,
-      setModel
-    } = this.props.context;
+    const { context } = this.props;
   
     return (
       <div className='GUI'>
       <dg.GUI>
         <dg.Select 
           label='Camera' 
-          options={cameras.map(c => c.label)}
+          options={context.cameras.map(c => c.label)}
           onChange={(v) => this.changeCameraSource(v)}
         />
         <dg.Checkbox 
@@ -100,31 +66,16 @@ class GUI extends Component {
           min={0} 
           max={500} 
           step={1}
-          onChange={(s) => setCinemaModeSize(s)}
+          onChange={(s) => context.setCinemaModeSize(s)}
         />
-        <dg.Text label='Model in Server' value={this.props.context.modelInServer}/>
-        <dg.Select
-          label='Model'
-          options={scenes.map(c => c.name)}
-          onChange={(n) => setModel(n)}
-        />
-        <dg.Select 
-          label='Scene' 
-          options={scenes.map(c => c.name)}
-          onChange={(n) => this.setTheScene(n)}
-        />
-        <dg.Button 
-          label={isScenePlaying ? 'Stop' : 'Play Scene'}
-          onClick={this.playOrStopScene}
-        />
-        <dg.Folder label='Video Canvas' expanded={false}>
+        <dg.Folder label='Camera' expanded={true}>
           <dg.Number 
             label='Width' 
             value={256} 
             min={0} 
             max={2000} 
             step={1}
-            onChange={(s) => setVideoCanvasWidth(s)}
+            onChange={(s) => context.setCameraCanvasWidth(s)}
           />
           <dg.Number
             label='Height' 
@@ -132,21 +83,21 @@ class GUI extends Component {
             min={0} 
             max={2000} 
             step={1}
-            onChange={(s) => setVideoCanvasHeight(s)}
+            onChange={(s) => context.setCameraCanvasHeight(s)}
           />
           <dg.Button 
-            label={isShowingVideoCanvas ? 'Hide Canvas' : 'Show Canvas'}
-            onClick={() => setShowingVideoCanvas(!isShowingVideoCanvas)}
-          />
+            label={context.isShowingCameraCanvas ? 'Hide Camera' : 'Show Camera'}
+            onClick={() => context.setShowingCameraCanvas(!context.isShowingCameraCanvas)}
+        />
         </dg.Folder>
-        <dg.Folder label='Pix2Pix Canvas' expanded={false}>
+        <dg.Folder label='Pix2Pix' expanded={true}>
           <dg.Number 
-            label=' Width' 
+            label='Width' 
             value={1280} 
             min={0} 
             max={2000} 
             step={1}
-            onChange={(s) => setPix2pixCanvasWidth(s)}
+            onChange={(s) => context.setPix2pixCanvasWidth(s)}
           />
           <dg.Number 
             label='Height' 
@@ -154,34 +105,26 @@ class GUI extends Component {
             min={0} 
             max={2000} 
             step={1}
-            onChange={(s) => setPix2pixCanvasHeight(s)}
+            onChange={(s) => context.setPix2pixCanvasHeight(s)}
           />
           <dg.Button 
-            label={isShowingPix2pixCanvas ? 'Hide Canvas' : 'Show Canvas'}
-            onClick={() => setShowingPix2pixCanvas(!isShowingPix2pixCanvas)}
+            label={context.isShowingPix2pixCanvas ? 'Hide Canvas' : 'Show Canvas'}
+            onClick={() => context.setShowingPix2pixCanvas(!context.isShowingPix2pixCanvas)}
           />
         </dg.Folder>
         <dg.Folder label='Server' expanded={true}>
-          <dg.Text label='Server Connection' value={isConnectedToServer ? 'Connected' : 'Not Connected'}/>
+          <dg.Text label='Server Connection' value={context.isConnectedToServer ? 'Connected' : 'Not Connected'}/>
           <dg.Text label='IP' 
-            value={serverIP}
-            onChange={(value) => setServerIP(value)}
-          />
-          <dg.Text label='Pix2Pix Port' 
-            value={pix2pixPort}
-            onChange={(value) => setPix2pixPort(value)}
-          />
-          <dg.Text label='DensePose Port' 
-            value={denseposePort}
-            onChange={(value) => setDenseposePort(value)}
+            value={context.serverIP}
+            onChange={(value) => context.setServerIP(value)}
           />
           <dg.Button 
-            label={isConnectedToServer ? 'Disconnect' : 'Connect to Server'}
-            onClick={() => connectToServer(serverIP, denseposePort, queryRoute)}
+            label={context.isConnectedToServer ? 'Disconnect' : 'Connect to Server'}
+            onClick={() => context.connectToServer(context.serverIP)}
           />
           <dg.Button 
-            label={isSendingFrames ? 'Stop Sending Frames' : 'Start Sending Frames'}
-            onClick={() => updateSendingFrameStatus(!isSendingFrames)}
+            label={context.isSendingFrames ? 'Stop Sending Frames' : 'Start Sending Frames'}
+            onClick={() => context.updateSendingFrameStatus(!context.isSendingFrames)}
           />
         </dg.Folder>
         <dg.Folder label='Marrow' expanded={true}>
@@ -199,21 +142,48 @@ class GUI extends Component {
             onClick={() => connectToMarrow(marrowIP, marrowPort, marrowRoute)}
           />
         </dg.Folder>
-        <dg.Folder label='Transitions' expanded={true}>
-          <dg.Checkbox
-            label='Autoplay'
-            checked={autoplayOn}
-            onChange={() => this.props.context.startAutoplay()}
-          />
-          <dg.Number
-            label='Scene Duration'
-            value={autoplaySceneDuration}
-            min={1}
-            max={100}
+        <dg.Folder label='Images' expanded={true}>
+          <dg.Number 
+            label='Width' 
+            value={220} 
+            min={0} 
+            max={2000} 
             step={1}
-            onChange={(v) => this.props.context.setAutoplayDuration('scene', v)}
+            onChange={(s) => context.setImagesWidth(s)}
           />
-        </dg.Folder>
+          <dg.Number 
+            label='Height' 
+            value={133} 
+            min={0} 
+            max={2000} 
+            step={1}
+            onChange={(s) => context.setImagesHeight(s)}
+          />
+          <dg.Number 
+            label='Amount of images' 
+            value={10} 
+            min={0} 
+            max={200} 
+            step={1}
+            onChange={(s) => context.setAmountOfImages(s)}
+          />
+          <dg.Number 
+            label='Opacity' 
+            value={1} 
+            min={0} 
+            max={1} 
+            step={0.1}
+            onChange={(s) => context.setImageSliderOpacity(s)}
+          />
+          <dg.Number 
+            label='Transition Speed' 
+            value={2} 
+            min={0} 
+            max={100} 
+            step={1}
+            onChange={(s) => context.setSliderSpeed(s)}
+          />
+        </dg.Folder>        
       </dg.GUI>
       </div>
     );

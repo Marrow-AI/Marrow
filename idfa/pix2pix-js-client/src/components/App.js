@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import VideoPlayer from './VideoPlayer';
-// import Subtitle from './Subtitle';
+import ImagesSlider from './ImagesSlider';
 import Fader from './Fader';
 import CinemaMode from './CinemaMode';
 import GUI from './GUI';
@@ -10,37 +10,32 @@ import '../styles/App.css';
 
 class App extends Component {
   componentDidMount(){
-    const { setCameraDevices, initCamera, HDConfigs, serverIP, pix2pixPort, gotModelSetInServer } = this.props.context;
+    const { context } = this.props;
     navigator.mediaDevices.enumerateDevices()
       .then(d => {
         const devices = d.filter((device) => (device.kind === 'videoinput'));
         const camera = devices[0].deviceId;
-        const constrains = {...HDConfigs}
+        const constrains = {...context.HDConfigs}
         constrains.video.deviceId = { exact: camera }
-        initCamera(constrains);
-        setCameraDevices(devices);
+        context.initCamera(constrains);
+        context.setCameraDevices(devices);
       })
-    //Get the current scene
-    fetch(`http://${serverIP}:${pix2pixPort}/current_model`)
-      .then(r => r.json())
-      .then(r => gotModelSetInServer(r.current_model))
   }
 
   handleKeyPress = (e) => {
-    const { debugMode, changeDebugMode } = this.props.context;
+    const { context } = this.props;
     if(e.key === 'd') {
-      changeDebugMode(!debugMode);
+      context.changeDebugMode(!context.debugMode);
     }
   }
 
   render() {
     const { debugMode } = this.props.context;
     return <div className="App" tabIndex="0" onKeyDown={this.handleKeyPress}>
+        <ImagesSlider />
         <Canvas />
         <VideoPlayer type='camera' />
-        <VideoPlayer type='scene' />
         <CinemaMode />
-        {/* <Subtitle /> */}
         <Fader />
         {debugMode ? <GUI /> : null}
       </div>;

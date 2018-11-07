@@ -3,15 +3,10 @@ import io from 'socket.io-client';
 const AppContext = React.createContext()
 
 // Server IP
-const IP = 'pix2pix.api.marrow.raycaster.studio';
+const IP = 'https://pix2pix.api.marrow.raycaster.studio/generate';
 
 class AppProvider extends Component {
-  state = {
-    scenes: [],
-    currentScene: null,
-    setCurrentScene: (s) => this.setState({currentScene: s}),
-    isScenePlaying: false,
-    updateScenePlayingStatus: (s) => this.setState({isScenePlaying: s}),
+  state = { 
     debugMode: true,
     changeDebugMode: (s) => this.setState({debugMode: s}),
     cameras: [],
@@ -70,20 +65,14 @@ class AppProvider extends Component {
           console.log("Something went wrong with the camera!", error);
         });
     },
-    initScene: (scene) => {
-      const videoElement = document.getElementById('sceneElement');
-      videoElement.srcObject = null;
-      videoElement.src = scene;
-      videoElement.loop = true;
-      videoElement.play();
-      this.setState({ srcObject: scene });
-    },
-    videoCanvasWidth: 256,
-    videoCanvasHeight: 128,
-    setVideoCanvasWidth: (s) => this.setState({videoCanvasWidth: s}),
-    setVideoCanvasHeight: (s) => this.setState({videoCanvasHeight: s}),
-    isShowingVideoCanvas: true,
-    setShowingVideoCanvas: (s) => this.setState({isShowingVideoCanvas: s}),
+    cameraCanvasWidth: 256,
+    cameraCanvasHeight: 128,
+    setCameraCanvasWidth: (s) => this.setState({cameraCanvasWidth: s}),
+    setCameraCanvasHeight: (s) => this.setState({cameraCanvasHeight: s}),
+    isShowingCamera: true,
+    setShowingCamera: (s) => this.setState({isShowingCamera: s}),
+    isShowingCameraCanvas: true,
+    setShowingCameraCanvas: (s) => this.setState({isShowingCameraCanvas: s}),
     pix2pixCanvasWidth: 1080,
     pix2pixCanvasHeight: 720,
     setPix2pixCanvasWidth: (s) => this.setState({pix2pixCanvasWidth: s}),
@@ -93,58 +82,31 @@ class AppProvider extends Component {
     autoplayOn: false,
     autoplaySceneDuration: 10,
     autoplayCameraDuration: 3,
-    autoplayTransferDuration: 10,
-    setAutoplayDuration: (k, v) => {
-      switch (k) {
-        case "scene":
-          this.setState({ autoplaySceneDuration: v });
-          break;
-
-        case "camera":
-          this.setState({ autoplayCameraDuration: v });
-          break;
-
-        case "transfer":
-          this.setState({ autoplayTransferDuration: v });
-          break;
-      }
-    },
-    setModel: async (name) => {
-      return fetch(`https://${this.state.serverIP}:${this.state.pix2pixPort}/switch_model`, {
-        body: JSON.stringify({ model: name }),
-        method: "POST",
-        headers: {
-          "content-type": "application/json"
-        }
-      })
-      .then(r => r.json())
-      .then(r => { 
-        this.setState({ faderOpacity: 0 });
-        this.state.gotModelSetInServer(r.current_model);
-      })
-    },
-    modelInServer: '',
-    gotModelSetInServer: (name) => this.setState({ modelInServer: name }),
-    serverIP: IP, 
+    serverIP: IP,
+    marrowRoute: '/',
     marrowIP: "localhost",
     marrowPort: "9540",
-    denseposePort: '22100',
-    pix2pixPort: '443',
-    queryRoute: '/generate',
-    marrowRoute: '/',
     isConnectedToServer: false,
     isConnectedToMarrow: false,
     isSendingFrames: false,
     socket: null,
     marrowSocket: null,
-    setServerIP: (ip) => this.setState({serverIP: ip}), 
+    setServerIP: (ip) => this.setState({serverIP: ip}),
     setMarrowIP: (ip) => this.setState({marrowIP: ip}), 
-    setDenseposePort: (port) => this.setState({denseposePort: port}), 
-    setPix2pixPort: (port) => this.setState({pix2pixPort: port}), 
-    setMarrowPort: (port) => this.setState({marrowPort: port}), 
+    setMarrowPort: (port) => this.setState({marrowPort: port})
+    imageSliderOpacity: 1,
+    setImageSliderOpacity: (v) => this.setState({imageSliderOpacity: v}),
+    imagesWidth: 220,
+    imagesHeight: 133,
+    amountOfImages: 7,
+    sliderSpeed: 2,
+    setSliderSpeed: (v) => this.setState({sliderSpeed: v}),
+    setAmountOfImages: (v) => this.setState({amountOfImages: v}),
+    setImagesWidth: (v) => this.setState({imagesWidth: v}),
+    setImagesHeight: (v) => this.setState({imagesHeight: v}),
     connectToServer: (ip, port, route) => {
       if (!this.state.socket) {
-        const socket = io(`http://${ip}:${port}${route}`);
+        const socket = io(ip);
         socket.on('connect', () => {
           this.setState({ isConnectedToServer: true });
         });
@@ -203,7 +165,7 @@ class AppProvider extends Component {
     sendFrames: () => {
       if (this.state.isConnectedToServer) {
         this.setState({ isSendingFrames: true });
-        const canvas = document.getElementById('videoCanvas');
+        const canvas = document.getElementById('cameraCanvas');
         this.state.socket.emit('update_request', {
           data: canvas.toDataURL('image/jpg')
         });
