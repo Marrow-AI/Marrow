@@ -40,7 +40,7 @@ class ImageSlider extends Component {
     const { context } = this.props;
     const { leftImage, xTranslate } = this.state;
     const images = Array.apply(null, Array(context.amountOfImages)).map((x, i) => i);
-    console.log(leftImage);
+    // console.log(leftImage);
     return (
       <div 
         className="ImageSlider" 

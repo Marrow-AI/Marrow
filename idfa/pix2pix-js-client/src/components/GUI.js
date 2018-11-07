@@ -27,23 +27,6 @@ class GUI extends Component {
     }
   }
 
-  setTheScene = (name) => {
-    const { scenes, setCurrentScene } = this.props.context;
-    const scene = scenes.find(c => c.name === name);
-    setCurrentScene(scene);
-  }
-
-  playOrStopScene = () => {
-    const { scenes, currentScene, updateScenePlayingStatus, isScenePlaying, initScene } = this.props.context;
-    const scene = scenes.find(c => c.name === currentScene.name);
-    if (isScenePlaying) {
-      document.getElementById('sceneElement').pause();
-    } else {
-      initScene(scene.src);
-    }
-    updateScenePlayingStatus(!isScenePlaying);
-  } 
-
   render() {
     const { context } = this.props;
   
@@ -86,8 +69,8 @@ class GUI extends Component {
             onChange={(s) => context.setCameraCanvasHeight(s)}
           />
           <dg.Button 
-          label={context.isShowingCameraCanvas ? 'Show Camera' : 'Show Camera'}
-          onClick={() => context.setShowingCameraCanvas(!context.isShowingCameraCanvas)}
+            label={context.isShowingCameraCanvas ? 'Hide Camera' : 'Show Camera'}
+            onClick={() => context.setShowingCameraCanvas(!context.isShowingCameraCanvas)}
         />
         </dg.Folder>
         <dg.Folder label='Pix2Pix' expanded={true}>
