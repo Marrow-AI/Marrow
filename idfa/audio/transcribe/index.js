@@ -25,7 +25,7 @@ const socket = new ReconnectingWebSocket("wss://localhost:9540/");
 /*
 const listener = new MSListener();
 listener.init(socket); */
-listener = null;
+const listener = null;
 
 socket.onopen = (event) => {
     if (listener) {

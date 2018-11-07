@@ -424,16 +424,18 @@ class Engine:
         absPath = os.path.abspath(file_name)
         self.voice_client.send_message("/speech/load",absPath)
 
-    def pause_listening(self,duration):
+    def pause_listening(self,duration = 0):
             #asyncio.ensure_future(self.server.pause_listening(duration))
             self.recognizer.stop()
-            self.schedule_function(duration - 1, self.start_google)
+            if duration > 0:
+                # Minus 1 for the time it takes to start listening
+                self.schedule_function(duration - 1, self.start_google)
 
     def control(self, data):
         print("Control command! {}".format(data))
         command = data["command"]
         if command == 'start':
-            asyncio.ensure_future(self.start_intro())
+            self.start_intro()
         elif command == 'stop':
             self.voice_stop()
         elif command == 'skip-intro':
@@ -473,11 +475,21 @@ class Engine:
         self.preload_speech("gan_intro/1.wav")
 
 
-    async def start_intro(self):
+    def start_intro(self):
         print("Start intro!")
+        self.pause_listening()
+        self.voice_client.send_message("/control/bells", [0.0, 0.0])
+        self.t2i_client.send_message("/control/start",1)
+        self.load_effect(self.script.data["intro-effect"])
+        self.preload_speech("gan_intro/intro.wav")
+        self.schedule_function(0.5, self.play_effect)
+        self.say(delay_sec = 8.5)
+        self.schedule_osc(21.5, self.voice_client, "/control/start", 1)
+        self.schedule_osc(21.5, self.voice_client, "/control/bells", [1.0, 0.2])
+
+        """
         self.voice_client.send_message("/control/init",1)
         self.script.reset()
-        self.t2i_client.send_message("/control/start",1)
         self.pix2pix_client.send_message("/control/start",1)
         first_speech = 28
         self.say(0, delay_effect = False)
@@ -492,7 +504,7 @@ class Engine:
         self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/bassheart", [1.0, 0.0])
         self.schedule_osc(63.1 + first_speech, self.voice_client, "/gan/synthmode", [1.0, 0.0])
         self.schedule_osc(63.5 + first_speech, self.voice_client, "/gan/feedback", 0)
-
+"""
 
     ########### QUESTION ###############
     def start_question(self): 
