@@ -478,11 +478,14 @@ class Engine:
     def start_intro(self):
         print("Start intro!")
         self.pause_listening()
+        self.voice_client.send_message("/control/bells", [0.0, 0.0])
         self.t2i_client.send_message("/control/start",1)
         self.load_effect(self.script.data["intro-effect"])
         self.preload_speech("gan_intro/intro.wav")
         self.schedule_function(0.5, self.play_effect)
         self.say(delay_sec = 8.5)
+        self.schedule_osc(21.5, self.voice_client, "/control/start", 1)
+        self.schedule_osc(21.5, self.voice_client, "/control/bells", [1.0, 0.2])
 
         """
         self.voice_client.send_message("/control/init",1)
