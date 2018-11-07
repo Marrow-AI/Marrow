@@ -38,7 +38,7 @@
                     "pause": 9000
                 },
                 { 
-                    "text": "Look at yourself, so lovely",
+                    "text": "Look at yourselves, so lovely",
                     "pause": 1590
                 },
                 { 
@@ -46,7 +46,7 @@
                     "pause": 3390
                 },
                 { 
-                    "text": "Watching so many perfect families all day makes your perspective kind of,",
+                    "text": "Seeing so many perfect families, makes your perspective kind of,",
                     "pause": 30
                 },
                 { 
@@ -142,26 +142,18 @@
     "pre-script": [
                 {
                     "text": "Dinner is served",
-                    "pause": 3000
+                    "pause": 3500
                 },
                 {
                     "text": "What does the perfect family talk about?",
                     "pause": 3500
                 },
                 {
-                    "text": "Look at them",
+                    "text": "Look at them, what does the perfect family talk about?",
                     "pause": 2300
                 },
                 {
-                    "text": "What does the perfect family talk about?",
-                    "pause": 1500
-                },
-                {
-                    "text": "Are they talking about",
-                    "pause": 50
-                },
-                {
-                    "text": "The food they are having?"
+                    "text": "Are they talking about the food they are eating?",
                 }
     ],
     "script-lines": [
