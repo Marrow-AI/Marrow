@@ -23,7 +23,11 @@
                     "pause": 2200
                 },
                 { 
-                    "text": "Look at them, so perfect so nice.",
+                    "text": "Look at them, so perfect.",
+                    "pause": 1000 
+                },
+                { 
+                    "text": "so nice.",
                     "pause": 4800
                 },
                 { 
@@ -79,7 +83,7 @@
                     "pause": 1500
                 },
                 { 
-                    "text": "Can you imitate them?",
+                    "text": "Can you imitate them?"
                 }
     ],
    
@@ -158,7 +162,7 @@
                     "pause": 2300
                 },
                 {
-                    "text": "Are they talking about the food they are eating?",
+                    "text": "Are they talking about the food they are eating?"
                 }
     ],
     "script-lines": [
