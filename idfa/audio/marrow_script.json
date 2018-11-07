@@ -40,7 +40,7 @@
                 },
                 { 
                     "text": "Are at dinner",
-                    "pause": 2400
+                    "pause": 2800
                 },
                 { 
                     "text": "The perfect family, on the wall, is in control",
@@ -48,7 +48,7 @@
                 },
                 { 
                     "text": "And you and me, we are both here to play along",
-                    "pause": 9000
+                    "pause": 12000
                 },
                 { 
                     "text": "Look at yourselves,",
@@ -88,7 +88,7 @@
                 },
                 { 
                     "text": "How does the perfect family sit?",
-                    "pause": 1500
+                    "pause": 1800
                 },
                 { 
                     "text": "How close together are they?",
