@@ -192,6 +192,7 @@ class Engine:
 
     def speech_text(self, text):
         #print("<{}>".format(text))
+        self.t2i_client.send_message("/speech", text)
         if self.state == "SCRIPT":
             if self.mid_text is not None:
                 self.lookup(text)
@@ -539,9 +540,13 @@ class Engine:
             self.question_answer = affects["default"]
         target["text"] = target["text"].replace("%ANSWER%",self.question_answer)
         self.schedule_function(0.5, self.say_pre_script)
+        self.schedule_function(5.5, self.show_plates)
 
     def say_pre_script(self):
         self.say(callback = self.start_script)
+
+    def show_plates(self):
+        self.t2i_client.send_message("/table/showplates")
 
 
     def show_next_line(self):
