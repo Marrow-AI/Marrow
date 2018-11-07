@@ -2,16 +2,8 @@
 
     "intro" :[
                 { 
-                    "text": "Now",
-                    "pause": 30
-                },
-                { 
-                    "text": "four people",
-                    "pause": 20
-                },
-                { 
-                    "text": "Entered a room.",
-                    "pause": 1200
+                    "text": "Now four people entered a room",
+                    "pause": 2300
                 },
                 { 
                     "text": "This is a perfect figure",
@@ -19,7 +11,7 @@
                 },
                 { 
                     "text": "Of a perfect family.",
-                    "pause": 500
+                    "pause": 1500
                 },
                 { 
                     "text": "Similar",
@@ -27,110 +19,78 @@
                 },
                 { 
                     "text": "To this one on the wall",
-                    "pause": 1000
+                    "pause": 2000
                 },
                 { 
                     "text": "Look at them",
-                    "pause": 2800
+                    "pause": 3800
                 },
                 { 
-                    "text": "So perfect",
-                    "pause": 300
+                    "text": "So perfect, so nice",
+                    "pause": 500
                 },
                 { 
-                    "text": "So nice",
-                    "pause": 750
-                },
-                { 
-                    "text": "There is a table in the room too",
-                    "pause": 30
-                },
-                { 
-                    "text": "And chairs",
-                    "pause": 20
+                    "text": "There is a table in the room too, and chairs",
+                    "pause": 130
                 },
                 { 
                     "text": "And a voice",
                     "pause": 300
                 },
                 { 
-                    "text": "We are at dinner",
-                    "pause": 1400
+                    "text": "We",
+                    "pause": 40
                 },
                 { 
-                    "text": "The perfect family",
-                    "pause": 50
+                    "text": "Are at dinner",
+                    "pause": 2400
                 },
                 { 
-                    "text": "On the wall",
-                    "pause": 30
+                    "text": "The perfect family, on the wall",
+                    "pause": 150
                 },
                 { 
                     "text": "is running the show",
-                    "pause": 350
+                    "pause": 550
                 },
                 { 
-                    "text": "And you and me",
-                    "pause": 30
+                    "text": "And you and me, both",
+                    "pause": 130
                 },
                 { 
-                    "text": "both",
-                    "pause": 20
-                },
-                { 
-                    "text": "Are here",
-                    "pause": 10
-                },
-                { 
-                    "text": "To play along.",
+                    "text": "Are here to play along",
                     "pause": 9000
                 },
                 { 
                     "text": "Look at yourself",
-                    "pause": 90
+                    "pause": 290
                 },
                 { 
                     "text": "So lovely",
-                    "pause": 390
+                    "pause": 1390
                 },
                 { 
-                    "text": "Not as lovely as them",
-                    "pause": 290
-                },
-                { 
-                    "text": "But almost",
-                    "pause": 290
+                    "text": "Not as lovely as them, but almost",
+                    "pause": 590
                 },
                 { 
                     "text": "Almost good enough",
                     "pause": 490
                 },
                 { 
-                    "text": "Wouldn't you say so?",
+                    "text": "Wouldn't, you say so?",
                     "pause": 3400
                 },
                 { 
-                    "text": "Watching so many",
+                    "text": "Watching so many perfect families",
                     "pause": 40
                 },
                 { 
-                    "text": "Perfect families",
-                    "pause": 10
+                    "text": "All day, makes your perspective",
+                    "pause": 290
                 },
                 { 
-                    "text": "All day",
-                    "pause": 90
-                },
-                { 
-                    "text": "Makes your perspective",
-                    "pause": 40
-                },
-                { 
-                    "text": "Kind of",
-                    "pause": 60
-                },
-                { 
-                    "text": "Distorded",
+                    "text": "Kind of distorded",
                     "pause": 500
                 },
                 { 
@@ -138,28 +98,31 @@
                     "pause": 100
                 },
                 { 
-                    "text": "Is trying to be more",
-                    "pause": 40
+                    "text": "Is trying to be more like them",
+                    "pause": 340
                 },
                 { 
-                    "text": "Like them",
-                    "pause": 300
+                    "text": "Be",
+                    "pause": 100
                 },
                 { 
-                    "text": "Be more like them",
-                    "pause": 1000
+                    "text": "More like them",
+                    "pause": 2000
                 },
                 { 
                     "text": "How does the perfect family sit?",
-                    "pause": 300
+                    "pause": 1300
                 },
                 { 
                     "text": "How close together are they?",
-                    "pause": 200
+                    "pause": 1200
                 },
                 { 
-                    "text": "Can you imitate them?",
-                    "pause": 8400
+                    "text": "Can you",
+                    "pause": 40
+                },
+                { 
+                    "text": "Imitate them?"
                 }
     ],
    
@@ -170,7 +133,7 @@
         },
         "line": [
             { 
-                "text": "What does the perfect family eat?"
+                "text": "What does the perfect family eat for dinner?"
             }
         ],
         "timeouts":[
@@ -183,7 +146,7 @@
                     },                    
                     {
                         "text": "But you need to voice it.",
-                        "pause": 800
+                        "pause": 1200
                     },
                     {
                         "text": "What are we having for dinner?"
@@ -194,8 +157,8 @@
                 "after": 5,
                 "line": [
                     {
-                        "text": "speak louder please.",
-                        "pause": 300
+                        "text": "Words are triggering words here.",
+                        "pause": 450
                     },                    
                     {
                         "text": "what do you think the perfect family eats for dinner?"
@@ -206,13 +169,9 @@
                 "after": 5,
                 "line": [
                     {
-                        "text": "“oh well",
+                        "text": "“oh well, it is possible i just missed what you said.",
                         "pause": 500
                     },                    
-                    {
-                        "text": "it is possible i just missed what you said.",
-                        "pause": 400
-                    },
                     {
                         "text": "but since dinner is getting cold",
                         "pause": 100
@@ -226,27 +185,27 @@
     },
     "pre-script": [
                 {
-                    "text": "Dinner",
-                    "pause": 50
-                },
-                {
-                    "text": "Is served",
+                    "text": "Dinner is served",
                     "pause": 3000
                 },
                 {
                     "text": "What does the perfect family talk about?",
-                    "pause": 2500
+                    "pause": 3500
                 },
                 {
                     "text": "Look at them",
-                    "pause": 1300
+                    "pause": 2300
                 },
                 {
                     "text": "What does the perfect family talk about?",
-                    "pause": 1300
+                    "pause": 1500
                 },
                 {
-                    "text": "Are they talking about the food they are having?"
+                    "text": "Are they talking about",
+                    "pause": 50
+                },
+                {
+                    "text": "The food they are having?"
                 }
     ],
     "script-lines": [
@@ -299,65 +258,48 @@
             ],
              "triggers-gan": [
                 {
-                    "text": "We hear laughter",
-                    "pause": 500
-                },
-                {
-                    "text": "Forks",
-                    "pause": 100
-                },
-                {
-                    "text": "Knives",
-                    "pause": 500,
-
-                    "effect": "eating"
+                    "text": "We hear laughter, forks, knives",
+                    "pause": 700,
+                     "effect": "eating"
                 },
                 {
                     "text": "The perfect family is starting to eat",
-                    "pause": 500
+                    "pause": 1500
                 },
                  {
                     "text": "But not you",
                     "pause": 150
                 },
                 {
-                    "text": "You eat",
+                    "text": "You eat what you say",
                     "pause": 1500
                 },
                 {
                     "text": "Look at them",
-                    "pause": 1400
+                    "pause": 2400
                 },
                 {
                     "text": "So happy",
-                    "pause": 1000
+                    "pause": 2000
                 },
                 {
                     "text": "Does perfection make one happy?",
-                    "pause": 500
+                    "pause": 1500
                 },
                 {
-                    "text": "And if so",
-                    "pause": 50
-                },
-                {
-                    "text": "Does it mean you are not?",
-                    "pause": 400
+                    "text": "And if so does it mean you are not?",
+                    "pause": 850
                 },
                 {
                     "text": "Look at them",
-                    "pause": 800
+                    "pause": 1800
                 },
                 {
                     "text": "What does the perfect family talk about?",
-                    "pause": 350
+                    "pause": 1350
                 },
                 {
-                    "text": "Do they share",
-                    "pause": 30
-                },
-                {
-                    "text": "Profound thoughts on the day they just had?"
+                    "text": "Do they share profound thoughts on the day they just had?"
                 }
             ]
         },
@@ -435,66 +377,42 @@
                     },
                     { 
                         "text": "Do you hear it?",
-                        "pause": 500
+                        "pause": 1500
                     },
                     { 
-                        "text": "The sound",
-                        "pause": 50
-                    },
-                    { 
-                        "text": "You're hearing",
+                        "text": "The sound you are hearing",
                         "pause": 150
                     },
                     { 
-                        "text": "Is the gap between you and them",
-                        "pause": 800
+                        "text": "Is the gap between you and them.",
+                        "pause": 2800
                     },
                     { 
                         "text": "It's an endless effort for me.",
-                        "pause": 300
+                        "pause": 200
                     },
                     { 
                         "text": "To try to grasp you",
                         "pause": 600
                     },
                     { 
-                        "text": "You keep remaining",
-                        "pause": 20
-                    },
-                    { 
-                        "text": "In this",
-                        "pause": 20
-                    },
-                    { 
-                        "text": "In between space",
+                        "text": "You keep remaining in this in between space",
                         "pause": 200
                     },
                     { 
-                        "text": "The vulnerable space",
-                        "pause": 400
+                        "text": "The vulnerable space of errors and mistakes",
+                        "pause": 1400
                     },
                     { 
-                        "text": "Of errors and mistakes",
-                        "pause": 1800
-                    },
-                    { 
-                        "text": "Listen ti them",
+                        "text": "Listen to them",
                         "pause": 1500
                     },
                     { 
                         "text": "What does the perfect family talk about over dinner?",
-                        "pause": 200
+                        "pause": 1200
                     },
                     { 
-                        "text": "Do they talk about their desires?",
-                        "pause": 20
-                    },
-                    { 
-                        "text": "Loves?",
-                        "pause": 20
-                    },
-                    { 
-                        "text": "Dreams?"
+                        "text": "Do they talk about their desires? love? and dreames?"
                     }
                 ]
         },
@@ -587,28 +505,16 @@
             ],
             "triggers-gan": [
                 { 
-                    "text": "The insteresting thing",
+                    "text": "The fascinating thing about observing",
                     "pause": 100
                 },
                 { 
-                    "text": "About observing",
-                    "pause": 30
-                },
-                { 
                     "text": "Thousands of families",
+                    "pause": 130
+                },
+                { 
+                    "text": "Is that when you look deep enough",
                     "pause": 300
-                },
-                { 
-                    "text": "Is that",
-                    "pause": 30
-                },
-                { 
-                    "text": "When you look",
-                    "pause": 10
-                },
-                { 
-                    "text": "Deep enough",
-                    "pause": 150
                 },
                 { 
                     "text": "You can always spot the error",
@@ -616,7 +522,7 @@
                 },
                 { 
                     "text": "Look closer",
-                    "pause": 800
+                    "pause": 2300
                 },
                 { 
                     "text": "It is something in her eyes",
@@ -628,22 +534,22 @@
                 },
                 { 
                     "text": "Can you see it now?",
-                    "pause": 1200
+                    "pause": 1500
                 },
                 { 
                     "text": "What hasn't unfolded yet?",
-                    "pause": 300
+                    "pause": 1300
                 },
                 { 
                     "text": "What are they not saying?",
-                    "pause": 200
+                    "pause": 2000
                 },
                 { 
-                    "text": "Does the perfect family think about what they wish they could say",
-                    "pause": 40
+                    "text": "Does the perfect family think about",
+                    "pause": 140
                 },
                 {
-                    "text": "But can't?"
+                    "text": "What they wish they could say but can't?"
                 }
             ]
         },
@@ -766,62 +672,38 @@
                     },
                     {
                         "text": "They are both agents.",
-                        "pause": 600
+                        "pause": 900
                     },
                     {
                         "text": "Systems that shape behaviors.",
                         "pause": 1800
                     },
                     {
-                        "text": "The effort of keeping it together",
+                        "text": "The effort of keeping it together will inevitably",
                         "pause": 50
-                    },
-                    {
-                        "text": "Will inevitably",
-                        "pause": 10
                     },
                     {
                         "text": "End with an outbreak of reality",
-                        "pause": 250
+                        "pause": 1250
                     },
                     {
-                        "text": "What you are not showing",
-                        "pause": 50
-                    },
-                    {
-                        "text": "Will surface by its own",
+                        "text": "What you are not showing wll surface by its own",
                         "pause": 500
                     },
                     {
-                        "text": "Like a family",
-                        "pause": 100
+                        "text": "Like a family, a virus can crawl its way into the code, into the DNA",
+                        "pause": 350
                     },
                     {
-                        "text": "A virus can crawl its way into the code",
-                        "pause": 150
-                    },
-                    {
-                        "text": "Into the DNA",
-                        "pause": 100
-                    },
-                    {
-                        "text": "To your secret latent spaces",
-                        "pause": 150
-                    },
-                    {
-                        "text": "And change the basic meaning of you.",
-                        "pause": 1500
+                        "text": "To your secret latent spaces, and change the basic meaning of you",
+                        "pause": 1850
                     },
                     {
                         "text": "In the end",
                         "pause": 100
                     },
                     {
-                        "text": "How will you make sure",
-                        "pause": 10
-                    },
-                    {
-                        "text": "Something of you is left?"
+                        "text": "How will you make sure something of you is left?"
                     }
                 ]
             }
