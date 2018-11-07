@@ -6,6 +6,10 @@
     },
 
     "intro" :[
+                 { 
+                    "text": "Now",
+                    "pause": 200
+                },
                 { 
                     "text": "Now, four people entered a room",
                     "pause": 2300
@@ -48,7 +52,7 @@
                 },
                 { 
                     "text": "And you and me, we are both here to play along",
-                    "pause": 12000
+                    "pause": 14000
                 },
                 { 
                     "text": "Look at yourselves,",
@@ -80,15 +84,15 @@
                 },
                 { 
                     "text": "Is trying to be more like them",
-                    "pause": 2000
+                    "pause": 2200
                 },
                 { 
                     "text": "Let's be more like them",
-                    "pause": 2300
+                    "pause": 2500
                 },
                 { 
                     "text": "How does the perfect family sit?",
-                    "pause": 1800
+                    "pause": 2000
                 },
                 { 
                     "text": "How close together are they?",
@@ -118,7 +122,7 @@
                         "pause": 150
                     },                    
                     {
-                        "text": "But you need to voice it.",
+                        "text": "But you need to say it out loud",
                         "pause": 1200
                     },
                     {
@@ -142,13 +146,9 @@
                 "after": 5,
                 "line": [
                     {
-                        "text": "“oh well, it is possible i just missed what you said.",
+                        "text": "“oh well, it is possible I didn't hear what you said.",
                         "pause": 500
                     },                    
-                    {
-                        "text": "it is possible i just missed what you said.",
-                        "pause": 400
-                    },
                     {
                         "text": "but since dinner is getting cold",
                         "pause": 100
