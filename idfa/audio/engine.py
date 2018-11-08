@@ -31,8 +31,9 @@ import math
 #nlp = spacy.load('en')
 #print("Loaded English NLP")
 
-DISTANCE_THRESHOLD = 0.8
-SCRIPT_TIMEOUT = 6000
+DISTANCE_THRESHOLD = 0.7
+SCRIPT_TIMEOUT_GLOBAL = 20
+SCRIPT_TIMEOUT_NOSPEECH = 10
 
 class ScheduleOSC:
     def __init__(self, timeout, client, command, args,  callback):
@@ -95,6 +96,7 @@ class Engine:
 
         self.mid_text = None
         self.last_react = 0
+        self.last_speech = 0
         self.mid_match = False
         self.beating = False
         self.matched_to_word = 0
@@ -143,7 +145,7 @@ class Engine:
         func = ScheduleFunction(timeout, callback)
 
     def del_osc(self,command,timeout):
-        print("del {}".format(command + str(timeout)))
+        #print("del {}".format(command + str(timeout)))
         del self.osc_commands[command + str(timeout)]
 
     def purge_osc(self):
@@ -152,6 +154,7 @@ class Engine:
         self.osc_commands.clear()
 
     def start_google(self):
+        print("Resume listening")
         fut = self.main_loop.run_in_executor(None, self.recognizer.start)
 
     async def consume_speech(self):
@@ -164,11 +167,18 @@ class Engine:
 
     def time_check(self):
         # recognition timeout
-        now =  int(round(time.time() * 1000))
+        now =  time.time()
         if self.state == "SCRIPT":
-            if self.script.awaiting_index > -1 and now - self.last_react > SCRIPT_TIMEOUT:
+            if (
+                self.script.awaiting_index > -1 
+                and (
+                        (now - self.last_react) > SCRIPT_TIMEOUT_GLOBAL
+                        or (now - self.last_speech) > SCRIPT_TIMEOUT_NOSPEECH
+                    )
+            ):
+                print("Script TIMEOUT! {}, {}, {}".format(now, self.last_react, self.last_speech))
+                self.last_react = self.last_speech = now
                 if self.script.next_variation():
-                    self.last_react = now
                     self.show_next_line()
                 else:
                     self.next_line()
@@ -208,6 +218,7 @@ class Engine:
             self.pre_script()
 
     def mid_speech_text(self, text):
+        self.last_speech = time.time()
         if self.state == "SCRIPT":
             self.mid_text = text
             print("({})".format(text))
@@ -336,19 +347,20 @@ class Engine:
         else:
             self.beating = False
 
+        # Send a pause the average person speaks at somewhere between 125 and 150 words per minute (2-2.5 per sec)
+        delay = words_ahead / 2.5
 
         if "triggers-gan" in line:
             print("Say response!")
-
-            # Send a pause the average person speaks at somewhere between 125 and 150 words per minute (2-2.5 per sec)
-            delay = words_ahead / 2.5
-            self.say(delay)
+            self.last_react = self.last_speech = time.time()  + delay + self.speech_duration
+            self.state = "GAN"
+            self.say(delay, callback = self.resume_script)
             if "triggers-effect" in line:
                 self.load_effect(line["triggers-effect"])
                 self.schedule_function(delay + line["triggers-effect"]["time"], self.play_effect)
 
         else:
-            self.next_line()
+            self.next_line(delay)
 
        # if "triggers-beat" in line:
         #    self.voice_client.send_message("/gan/beat",0.0)
@@ -361,10 +373,10 @@ class Engine:
     def play_effect(self):
         self.voice_client.send_message("/effect/play", 1)
 
-    def next_line(self):
-        self.last_react = int(round(time.time() * 1000))
+    def next_line(self, delay = 0):
+        self.last_react = self.last_speech = time.time() + delay
         if self.script.next_line():
-            self.show_next_line()
+            self.schedule_function(delay, self.show_next_line)
         else:
             self.end()
 
@@ -398,6 +410,9 @@ class Engine:
             self.schedule_osc(delay_sec + self.speech_duration + 0.2,self.voice_client, "/speech/stop", 1)
             self.schedule_osc(delay_sec,self.t2i_client, "/gan/speaks", 1)
 
+            if self.state == "GAN":
+                self.schedule_osc(delay_sec,self.voice_client, "/control/bassheart", [1.0, 0.5])
+                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/bassheart", [0.8, 0.0])
             #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
             #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/bassheart", [1.0, 0.0])
 
@@ -427,8 +442,9 @@ class Engine:
 
     def pause_listening(self,duration = 0):
             #asyncio.ensure_future(self.server.pause_listening(duration))
+            print("Pause listening for {}".format(duration))
             self.recognizer.stop()
-            if self.state != "INTRO":
+            if self.state != "INTRO" and duration >= 1:
                 # Minus 1 for the time it takes to start listening
                 self.schedule_function(duration - 1, self.start_google)
 
@@ -474,8 +490,9 @@ class Engine:
         self.voice_client.send_message("/control/stop", 1)
         self.pause_listening()
 
-        self.voice_client.send_message("/control/bells", [0.0, 0.2])
+        self.voice_client.send_message("/control/bells", [0.0, 0.2, 0.0])
         self.voice_client.send_message("/control/strings", [0.0, 0.0])
+        self.voice_client.send_message("/control/bassheart", [0.0, 0.0])
         self.voice_client.send_message("/control/synthbass", [0.0, 0.0, 0.0])
 
         self.t2i_client.send_message("/control/start",1)
@@ -484,8 +501,8 @@ class Engine:
         #self.schedule_function(0.5, self.play_effect)
         self.say(delay_sec = 0.5, callback=self.pre_question)
         self.schedule_osc(13.4, self.voice_client, "/control/start", 1)
-        self.schedule_osc(31.4, self.voice_client, "/control/strings", [0.5, 0.5])
-        self.schedule_osc(61.4, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
+        self.schedule_osc(31.5, self.voice_client, "/control/strings", [0.0, 0.5])
+        self.schedule_osc(61.5, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
         self.schedule_function(61.5, self.start_noise)
 
         """
@@ -516,14 +533,15 @@ class Engine:
         self.preload_speech("gan_question/line.wav")
         self.schedule_function(6, self.start_question)
         self.schedule_osc(6, self.voice_client, "/control/strings", [0.9, 0.0])
-        self.schedule_osc(6, self.voice_client, "/control/bells", [0.8, 0.0])
+        self.schedule_osc(6, self.voice_client, "/control/bells", [0.8, 0.0, 0.0])
         self.schedule_osc(6, self.voice_client, "/control/synthbass", [0.8, 0.0, 0.0])
 
 
     def start_question(self): 
         print("Start question")
+        self.send_noise = True
         self.current_question_timeout = None
-        self.last_asked = int(round(time.time() + self.speech_duration) * 1000)
+        self.last_asked = time.time() + self.speech_duration
         self.question_answer = None
         self.state = "QUESTION"
         self.question_timeout_index = 0 
@@ -557,7 +575,7 @@ class Engine:
         if self.question_answer == None:
             print("Question timed out!")
             self.question_timeout_index += 1
-            self.last_asked = int(round(time.time() + self.speech_duration) * 1000)
+            self.last_asked = time.time()  + self.speech_duration
             self.say(callback = self.load_next_question_timeout)
 
 
@@ -584,6 +602,7 @@ class Engine:
     def show_plates(self):
         print("Show plates")
         self.t2i_client.send_message("/table/showplates", 1)
+        self.voice_client.send_message("/control/bells", [0.8, 0.1, 0.01])
 
     def spotlight_mom(self):
         print("Spotlight on mom")
@@ -592,7 +611,7 @@ class Engine:
 
     def start_script(self):
         print("Start script")
-        self.last_react = int(round(time.time() * 1000))
+        self.last_react =  self.last_speech = time.time()
         self.script.reset()
         self.state = "SCRIPT"
         self.show_next_line()

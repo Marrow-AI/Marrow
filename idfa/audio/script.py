@@ -24,6 +24,7 @@ class Script:
 
     def update(self):
         self.awaiting["words"] = len(self.awaiting_text.split())
+        print("AWAITING: {}".format(self.awaiting_text))
         self.awaiting_nlp = self.nlp(self.awaiting_text)
         if self.awaiting_index > 0:
             self.awaiting["previous"] = self.data["script-lines"][self.awaiting_index -1]["text"]
@@ -92,7 +93,9 @@ class Script:
     def match(self,text):
         try:
             text_nlp = self.nlp(text)
-            return self.awaiting_nlp.similarity(text_nlp)
+            distance =  self.awaiting_nlp.similarity(text_nlp)
+            print(distance)
+            return distance
         except Exception as e:
             print("Exception {}".format(e))
             return 0
