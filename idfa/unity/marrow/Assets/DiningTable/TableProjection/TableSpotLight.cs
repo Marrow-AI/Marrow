@@ -93,14 +93,14 @@ namespace Marrow
 		public void TargetOnPlate(float delay, float intensity, float time)
         {
 			transform.position = targetPlateLocation.position;
-            m_light.spotAngle = 30f;
+            m_light.spotAngle = 35f;
             ToggleOn(true, intensity, time, delay);
         }
 
 		public void TargetOnPlateBlink(float intensity, float time)
         {
             transform.position = targetPlateLocation.position;
-            m_light.spotAngle = 30f;
+            m_light.spotAngle = 35f;
 			LeanTween.value(gameObject, CallOnIntensityUpdate, 0, intensity, time);
 			LeanTween.value(gameObject, CallOnIntensityUpdate, intensity, 0, time).setDelay(time+2f);
         }

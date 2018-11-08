@@ -18,8 +18,10 @@ namespace Marrow
         // Scene related
 		public static UnityEvent TableSequenceStarted = new UnityEvent();
 		public static UnityEvent TableSequenceEnded = new UnityEvent();
+
 		public static UnityEvent DiningRoomStarted = new UnityEvent();
 		public static UnityEvent DiningRoomEnded = new UnityEvent();
+
 		public static UnityEvent ExperienceEnded = new UnityEvent();
 		public static UnityEvent ExperienceRestarted = new UnityEvent();    // ???
         
@@ -31,5 +33,11 @@ namespace Marrow
 		public static StringEvent SpeechToTextReceived = new StringEvent();
 		public static StringEvent SpeechToTextRoleReceived = new StringEvent();
 		public static StringEvent SpeechEmotionReceived = new StringEvent();
+
+        // T2I
+		public static UnityEvent T2IEnable = new UnityEvent();
+		public static UnityEvent T2IDisable = new UnityEvent();
+		public static UnityEvent DinnerQuestionStart = new UnityEvent();
+		public static UnityEvent DinnerQuestionEnd = new UnityEvent();
     }
 }

@@ -5,7 +5,7 @@
 
 # images in public 
 public/images
-
+public/images_original
 # testing
 /coverage
 
