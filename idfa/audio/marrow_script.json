@@ -335,24 +335,16 @@
             ],
             "triggers-gan": [
                     { 
-                        "text": "Listen to them.",
-                        "pause": 2000
+                        "text": "While you are playing them, I am playing you.",
+                        "pause": 2500
                     },
                     { 
-                        "text": "And listen to you.",
-                        "pause": 1500
+                        "text": "Can you hear this sound?",
+                        "pause": 1800
                     },
                     { 
-                        "text": "Do you hear it?",
-                        "pause": 1500
-                    },
-                    { 
-                        "text": "The sound you are hearing",
-                        "pause": 150
-                    },
-                    { 
-                        "text": "Is the gap between you and them.",
-                        "pause": 2800
+                        "text": "Chords of gaps, between you and them",
+                        "pause": 3500
                     },
                     { 
                         "text": "It's an endless effort for me.",
@@ -360,26 +352,26 @@
                     },
                     { 
                         "text": "To try to grasp you",
-                        "pause": 600
+                        "pause": 1600
                     },
                     { 
-                        "text": "You keep remaining in this in between space",
-                        "pause": 200
-                    },
-                    { 
-                        "text": "The vulnerable space of errors and mistakes",
-                        "pause": 1400
-                    },
-                    { 
-                        "text": "Listen to them",
-                        "pause": 1500
-                    },
-                    { 
-                        "text": "What does the perfect family talk about over dinner?",
+                        "text": "You keep remaining in this, in between space",
                         "pause": 1200
                     },
                     { 
-                        "text": "Do they talk about their desires? love? and dreames?"
+                        "text": "The vulnerable space, of errors and mistakes",
+                        "pause": 2400
+                    },
+                    { 
+                        "text": "Listen to them",
+                        "pause": 2500
+                    },
+                    { 
+                        "text": "What does the perfect family talk about over dinner?",
+                        "pause": 2200
+                    },
+                    { 
+                        "text": "Do they talk about their desires, loves and dreames?"
                     }
                 ]
         },
