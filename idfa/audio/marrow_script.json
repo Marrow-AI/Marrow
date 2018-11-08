@@ -230,27 +230,31 @@
              "triggers-gan": [
                 {
                     "text": "We hear the sound of laughter, forks, knives",
-                    "pause": 1000
+                    "pause": 1500
 
                 },
                 {
-                    "text": "The perfect family is starting to eat",
-                    "pause": 1700
+                    "text": "The perfect family is starting to eat.",
+                    "pause": 1900
                 },
                  {
-                    "text": "But not you",
-                    "pause": 150
+                    "text": "But not you.",
+                    "pause": 450
                 },
                 {
-                    "text": "You eat, what you say",
-                    "pause": 1700
+                    "text": "You eat, what you say.",
+                    "pause": 2200
+                },
+                {
+                    "text": "How magic, how catastrophic",
+                    "pause": 2700
                 },
                 {
                     "text": "They look so happy",
                     "pause": 2400
                 },
                 {
-                    "text": "It seems like perfection always make one happy",
+                    "text": "Is it because they are perfect?",
                     "pause": 1500
                 },
                 {
@@ -259,7 +263,7 @@
                 },
                 {
                     "text": "Look at them, What does the perfect family talk about?",
-                    "pause": 1800
+                    "pause": 2000
                 },
                 {
                     "text": "Do they exchange profound thoughts about their day?"
