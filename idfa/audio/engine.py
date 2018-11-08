@@ -441,10 +441,6 @@ class Engine:
             self.stop()
         elif command == 'skip-intro':
             self.purge_osc()
-            self.voice_client.send_message("/control/start",1)
-            self.voice_client.send_message("/control/synthbass",1)
-            self.voice_client.send_message("/intro/end",1)
-            self.voice_client.send_message("/gan/start",1)
         elif command == 'stop-ser':
             self.ser_stop()
         elif command == 'start-ser':
@@ -466,6 +462,7 @@ class Engine:
         self.script.reset()
         self.voice_client.send_message("/control/stop",1)
         self.t2i_client.send_message("/control/stop",1)
+        self.voice_client.send_message("/speech/stop",1)
         self.send_noise = False
         #self.pix2pix_client.send_message("/control/stop",1)
 
@@ -479,24 +476,24 @@ class Engine:
 
         self.voice_client.send_message("/control/bells", [0.0, 0.2])
         self.voice_client.send_message("/control/strings", [0.0, 0.0])
-        self.voice_client.send_message("/control/synthbass", [0.0, 0, 1])
+        self.voice_client.send_message("/control/synthbass", [0.0, 0.0, 0, 1])
 
         self.t2i_client.send_message("/control/start",1)
         self.preload_speech("gan_intro/intro.wav")
         #self.load_effect(self.script.data["intro-effect"])
         #self.schedule_function(0.5, self.play_effect)
-        self.say(delay_sec = 0.5)
+        self.say(delay_sec = 0.5, callback=self.pre_question)
         self.schedule_osc(13.4, self.voice_client, "/control/start", 1)
-        self.schedule_osc(31.5, self.voice_client, "/control/strings", [0.5, 0.5])
-        self.schedule_osc(31.5, self.voice_client, "/control/synthbass", [0.2, 0, 1])
-        self.schedule_function(31.5, self.start_noise)
+        self.schedule_osc(31.4, self.voice_client, "/control/strings", [0.5, 0.5])
+        self.schedule_osc(61.4, self.voice_client, "/control/synthbass", [0.0, 0.2, 0, 1])
+        self.schedule_function(61.5, self.start_noise)
 
         """
         self.voice_client.send_message("/control/init",1)
         self.script.reset()
         self.pix2pix_client.send_message("/control/start",1)
         first_speech = 28
-        self.say(0, delay_effect = False)
+        self.say(0, delay_effect = Faself.speech_duration - 0.5lse)
         self.schedule_osc(first_speech - 0.5, self.voice_client, "/gan/feedback", 0.2 )
         self.schedule_osc(0 + first_speech, self.voice_client, "/control/start", 1)
         self.schedule_osc(12.1 + first_speech, self.voice_client, "/control/synthbass", 1)
@@ -514,6 +511,15 @@ class Engine:
         self.send_noise = True
 
     ########### QUESTION ###############
+
+    def pre_question(self):
+        self.preload_speech("gan_question/line.wav")
+        self.schedule_function(6, self.start_question)
+        self.schedule_osc(8, self.voice_client, "/control/strings", [1.0, 0.0])
+        self.schedule_osc(8, self.voice_client, "/control/bells", [1.0, 0.0])
+        self.schedule_osc(8, self.voice_client, "/control/synthbass", [1.0, 0.0, 0, 1])
+
+
     def start_question(self): 
         print("Start question")
         self.current_question_timeout = None
@@ -523,10 +529,10 @@ class Engine:
         self.question_timeout_index = 0 
         self.say()
         self.schedule_function(self.speech_duration - 0.5, self.table_fadein)
-        self.schedule_function(self.speech_duration + 0.2, self.load_next_question_timeout)
+        self.schedule_function(self.speech_duration + 1, self.load_next_question_timeout)
 
     def table_fadein(self):
-        self.t2i_client.send_message("/table/fadein")
+        self.t2i_client.send_message("/table/fadein", 1)
 
     def check_question(self):
         if self.state != "QUESTION":
@@ -558,23 +564,25 @@ class Engine:
 
 
     def pre_script(self):
-        print("PRE SCRIPT!! Chosen food: {}".format(self.question_answer))
         self.state = "PRE-SCRIPT"
         self.preload_speech("gan_intro/pre_script.wav")
         affects = self.script.data["question"]["affects"]
         target = self.script.data["script-lines"][affects["line"]] 
         if not self.question_answer:
             self.question_answer = affects["default"]
+        print("PRE SCRIPT!! Chosen food: {}".format(self.question_answer))
+        self.t2i_client.send_message("/table/dinner", self.question_answer)
+        self.voice_client.send_message("/control/synthbass", [0.0, 0.2, 1, 0])
         target["text"] = target["text"].replace("%ANSWER%",self.question_answer)
-        self.schedule_function(0.5, self.say_pre_script)
-        self.schedule_function(5.5, self.show_plates)
+        self.schedule_function(7, self.say_pre_script)
+        self.schedule_function(13, self.show_plates)
 
     def say_pre_script(self):
         self.say(callback = self.spotlight_mom)
 
     def show_plates(self):
         print("Show plates")
-        self.t2i_client.send_message("/table/showplates")
+        self.t2i_client.send_message("/table/showplates", 1)
 
     def spotlight_mom(self):
         print("Spotlight on mom")
