@@ -177,7 +177,7 @@
     "script-lines": [
         {
             "speaker": "mom",
-            "text": "I’m so happy that we are all here together tonight.",
+            "text": "I am so happy that we are all here together tonight.",
             "variations": [
                 "This really is a happy moment.",
                 "Nothing is better than being together"
@@ -201,10 +201,10 @@
         },
         {
             "speaker": "mom",
-            "text": "It's your favorite!",
+            "text": "It is your favorite!",
             "variations": [
-                "And it's what you wanted",
-                "I'm happy you're happy"
+                "And it is what you wanted",
+                "I am happy you are happy"
             ]
         },
         {
@@ -217,9 +217,9 @@
         },
         {
             "speaker": "dad",
-            "text": "Yes my baby girl, my little pumpkin. Let's dig in.",
+            "text": "Yes my baby girl, my little pumpkin. Lets dig in.",
             "variations": [
-                "Yes baby! Let's start",
+                "Yes baby! Lets start",
                 "Yes! Eat now"
             ],
             "triggers-effect": {
@@ -288,7 +288,7 @@
         },
         {
             "speaker": "dad",
-            "text": "My day was also fantastic. And it’s getting better there is no moon tonight.",
+            "text": "My day was also fantastic. And it is getting better there is no moon tonight.",
             "variations": [
                 "Fantastic. And just getting better",
                 "A great day is a day with no moon"
@@ -320,7 +320,7 @@
         },
         {
             "speaker": "brother",
-            "text": "Let's just say that today I had the best time!",
+            "text": "Lets just say that today I had the best time!",
             "variations": [
                 "It was the best!",
                 "The best time ever!"
@@ -330,7 +330,7 @@
             "speaker": "mom",
             "text": "That is fascinating.",
             "variations": [
-                "I can't wait to hear more.",
+                "I can not wait to hear more.",
                 "I have the most interesting family."
             ],
             "triggers-gan": [
@@ -377,7 +377,7 @@
         },
         {
             "speaker": "sister",
-            "text": "I don't like carrots.",
+            "text": "I do not like carrots.",
              "variations": [
                 "*Sigh* Carrots.",
                 "Can you move them away from me?"
@@ -396,7 +396,7 @@
             "text": "I wonder what I will dream about tonight.",
              "variations": [
                 "Who will visit me in my dreams?",
-                "It's like falling into another world."
+                "It is like falling into another world."
             ]
         },
         {
@@ -443,13 +443,13 @@
             "speaker": "mom",
             "text": "Where are we going?",
              "variations": [
-                "I don’t like surprises",
+                "I do not like surprises",
                 "I like to be in control"
             ]
         },
         {
             "speaker": "dad",
-            "text": "We're not going anywhere.",
+            "text": "We are not going anywhere.",
              "variations": [
                 "You can think of it as like we are going nowhere",
                 "Or anywhere, whatever you like"
@@ -520,7 +520,7 @@
             "speaker": "dad",
             "text": "Can you stop humming?",
             "variations": [
-                "I'm talking to you, son",
+                "I am talking to you, son",
                 "What is this humming?"
             ]
         },
@@ -529,7 +529,7 @@
             "text": "No one asked me if I wanted the broccoli",
             "variations": [
                 "Why is that?",
-                "Don't you care about me?"
+                "Do you not care about me?"
             ]
         },
         {
@@ -558,9 +558,9 @@
         },
         {
             "speaker": "brother",
-            "text": "I wasn't the one who took the message.",
+            "text": "I was not the one who took the message.",
              "variations": [
-                "I didn't answer",
+                "I did not answer",
                 "It was her"
             ]
         },
@@ -568,7 +568,7 @@
             "speaker": "sister",
             "text": "It was a man in a fake suit with the voice of a girl.",
              "variations": [
-                "Didn't like the suit",
+                "I did not like the suit",
                 "The voice was nice though"
             ]
         },
