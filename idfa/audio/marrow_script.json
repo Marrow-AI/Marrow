@@ -264,7 +264,7 @@
                 },
                 {
                     "text": "You eat, what you say.",
-                    "pause": 2200
+                    "pause": 2500
                 },
                 {
                     "text": "How magic, how catastrophic",
@@ -280,7 +280,7 @@
                 },
                 {
                     "text": "And if so, does it mean you are not?",
-                    "pause": 1550
+                    "pause": 1950
                 },
                 {
                     "text": "Look at them, What does the perfect family talk about?",
@@ -362,19 +362,19 @@
             "triggers-gan": [
                     { 
                         "text": "While you are playing them, I am playing you.",
-                        "pause": 2500
+                        "pause": 2600
                     },
                     { 
                         "text": "Can you hear this sound?",
                         "pause": 1800
                     },
                     { 
-                        "text": "Chords of gaps, between you and them",
-                        "pause": 3500
+                        "text": "Chords of gaps between you and them",
+                        "pause": 4000
                     },
                     { 
                         "text": "It's an endless effort for me.",
-                        "pause": 200
+                        "pause": 400
                     },
                     { 
                         "text": "To try to grasp you",
@@ -382,11 +382,11 @@
                     },
                     { 
                         "text": "You keep remaining in this, in between space",
-                        "pause": 1200
+                        "pause": 1400
                     },
                     { 
                         "text": "The vulnerable space, of errors and mistakes",
-                        "pause": 2400
+                        "pause": 2600
                     },
                     { 
                         "text": "Listen to them",
@@ -524,7 +524,7 @@
                 },
                 { 
                     "text": "Can you see it now?",
-                    "pause": 1500
+                    "pause": 1900
                 },
                 { 
                     "text": "What hasn't unfolded yet?",
@@ -532,7 +532,7 @@
                 },
                 { 
                     "text": "What are they not saying?",
-                    "pause": 2500
+                    "pause": 2600
                 },
                 { 
                     "text": "Does the perfect family think about What they wish they could say but don't?"
