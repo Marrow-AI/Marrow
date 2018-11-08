@@ -130,11 +130,11 @@
                 "after": 5,
                 "line": [
                     {
-                        "text": "Words are triggering words here.",
+                        "text": "In this room, words are triggering words.",
                         "pause": 450
                     },                    
                     {
-                        "text": "What do you think the perfect family eats for dinner?"
+                        "text": "Tell me, what do you think the perfect family eats for dinner?"
                     }
                 ]
             },
@@ -142,7 +142,7 @@
                 "after": 5,
                 "line": [
                     {
-                        "text": "“Ohh well, it is possible I didn't hear what you said.",
+                        "text": "It is possible I didn't hear what you said.",
                         "pause": 500
                     },                    
                     {
@@ -323,7 +323,7 @@
             "text": "Let's just say that today I had the best time!",
             "variations": [
                 "It was the best!",
-                "I can't wait to go to school tomorrow."
+                "The best time ever!"
             ]
         },
         {
