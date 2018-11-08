@@ -11,8 +11,10 @@ namespace Marrow
 		public OSCCommunication oSCCommunication;
 		public float speechTimerLength = 0.1f;
 		public bool startText2Image;
+		public TableOpenSequence tableOpenSequence;
 
 		private bool socketIsConnected;
+		private bool tableSceneStarted;
 
 		[Header("T2I related")]
 		public Material plateMaterial;
@@ -26,10 +28,11 @@ namespace Marrow
 
 		private void OnEnable()
 		{
-			EventBus.TableSequenceEnded.AddListener(EnableText2Image);
+			//EventBus.TableSequenceEnded.AddListener(EnableText2Image);
+			EventBus.T2IEnable.AddListener(EnableText2Image);
+			EventBus.T2IDisable.AddListener(DisableText2Image);
 
 			EventBus.DiningRoomEnded.AddListener(OnDiningRoomEnded);
-			EventBus.ExperienceEnded.AddListener(DisableText2Image);
             
 			EventBus.WebsocketConnected.AddListener(OnWebsocketConnected);
 			EventBus.WebsocketDisconnected.AddListener(OnWebsocketDisconnected);
@@ -39,10 +42,11 @@ namespace Marrow
 
 		private void OnDisable()
 		{
-			EventBus.TableSequenceEnded.RemoveListener(EnableText2Image);
-
+			//EventBus.TableSequenceEnded.RemoveListener(EnableText2Image);
+			EventBus.T2IEnable.RemoveListener(EnableText2Image);
+			EventBus.T2IDisable.RemoveListener(DisableText2Image);
+            
 			EventBus.DiningRoomEnded.RemoveListener(OnDiningRoomEnded);
-			EventBus.ExperienceEnded.RemoveListener(DisableText2Image);
 
 			EventBus.WebsocketConnected.RemoveListener(OnWebsocketConnected);
 			EventBus.WebsocketDisconnected.RemoveListener(OnWebsocketDisconnected);
@@ -81,13 +85,15 @@ namespace Marrow
 
 		public void OnAttnGanInputUpdate(string inputText)
         {
+			Debug.Log("OnAttnGanInputUpdate, startText2Image: " + startText2Image + ", socketIsConnected: " + socketIsConnected);
 			if (!startText2Image || !socketIsConnected)
 				return;
 			if ((Time.time - lastSpeechTimecode) <= speechTimerLength)
                 return;
 
 			socketCommunication.EmitAttnGanRequest(inputText);
-
+			Debug.Log("EmitAttnGanRequest");
+            
 			lastSpeechTimecode = Time.time;
         }
 
@@ -132,8 +138,20 @@ namespace Marrow
 		public void ReceivedOscControlStart(OSCMessage message)
 		{
 			Debug.Log(message);
+			tableSceneStarted = true;
 			EventBus.TableSequenceStarted.Invoke();
 		}
+
+		public void ReceivedOscTableDinnerQuestionStart(string text)
+        {
+			Debug.Log(text);
+			EnableText2Image();
+			EventBus.T2IEnable.Invoke();
+			EventBus.DinnerQuestionStart.Invoke();
+
+			tableOpenSequence.UpdateSpeechDetectionText(text);
+			OnAttnGanInputUpdate(text);
+        }
 
 		public void ReceivedOscControlStop(OSCMessage message)
         {
@@ -146,5 +164,29 @@ namespace Marrow
             Debug.Log(message);
 			EventBus.DiningRoomEnded.Invoke();
         }
+
+		public void ReceivedOscGanSpeak(int doSpeak)
+		{
+			if (doSpeak==1)
+			{
+				// hide plates, disable name tag
+				tableOpenSequence.HidePlatesAndNameTags(true);
+				// dim main light
+				tableOpenSequence.mainLight.ToggleOn(true, 0.5f, 1f, 0);
+			}
+			else
+			{
+				// show plates, enable name tag
+				tableOpenSequence.HidePlatesAndNameTags(false);
+				// reset main light
+				tableOpenSequence.mainLight.ToggleOn(true, 1.7f, 1f, 0);
+			}
+		}
+
+		public void ReceivedOscTableTitle(OSCMessage message)
+		{
+			Debug.Log(message);
+			tableSceneStarted = false;
+		}
     }
 }

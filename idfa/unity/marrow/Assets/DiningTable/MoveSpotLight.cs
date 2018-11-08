@@ -2,41 +2,71 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveSpotLight : MonoBehaviour {
-
-	public Transform[] lightPositions;
-	private Light m_light;
-
-	private void Start()
+namespace Marrow
+{
+	public class MoveSpotLight : MonoBehaviour
 	{
-		m_light = GetComponent<Light>();
-	}
 
-	public void UpdateSpotlightPosition(string role)
-	{
-		LeanTween.value(gameObject, m_light.intensity, 2.4f, 1f)
-                     .setLoopPingPong(1)
-                     .setOnUpdate(CallOnIntensityUpdate);
-		
-		switch(role)
+		public Transform[] lightPositions;
+		public NameTag[] nameTags;
+		private Light m_light;
+
+		private void Start()
 		{
-			case "dad":
-				transform.position = lightPositions[0].position;
-				break;
-			case "sister":
-				transform.position = lightPositions[1].position;
-                break;
-			case "brother":
-				transform.position = lightPositions[2].position;
-                break;
-			case "mom":
-				transform.position = lightPositions[3].position;
-                break;
+			m_light = GetComponent<Light>();
+		}
+
+		public void UpdateSpotlightPosition(string role)
+		{
+			float delay=0f;
+			if (m_light.intensity > 0)
+			{
+				delay = 0.5f;
+				LeanTween.value(gameObject, m_light.intensity, 0f, 0.5f)
+				         .setOnUpdate(CallOnIntensityUpdate);
+			}
+			LeanTween.value(gameObject, m_light.intensity, 2.4f, 1f)
+			         .setDelay(delay)
+                     .setOnUpdate(CallOnIntensityUpdate);
+
+			//LeanTween.value(gameObject, m_light.intensity, 2.4f, 1f)
+						 //.setLoopPingPong(1)
+						 //.setOnUpdate(CallOnIntensityUpdate);
+
+			int roleIndex = 0;
+			switch (role)
+			{
+				case "dad":
+					roleIndex = 0;
+					break;
+
+				case "sister":
+					roleIndex = 1;
+					break;
+
+				case "brother":
+					roleIndex = 2;
+					break;
+
+				case "mom":
+					roleIndex = 3;
+					break;
+			}
+
+			transform.position = lightPositions[roleIndex].position;
+			for (int i = 0; i < nameTags.Length; i++)
+			{
+				if (i==roleIndex && !nameTags[roleIndex].IsOn)
+                    nameTags[roleIndex].Show();
+				else if(i != roleIndex && nameTags[roleIndex].IsOn)
+					nameTags[roleIndex].Hide();
+			}
+
+		}
+
+		private void CallOnIntensityUpdate(float val)
+		{
+			m_light.intensity = val;
 		}
 	}
-
-	private void CallOnIntensityUpdate(float val)
-    {
-        m_light.intensity = val;
-    }
 }
