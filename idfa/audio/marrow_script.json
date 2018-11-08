@@ -385,9 +385,9 @@
         },
         {
             "speaker": "mom",
-            "text": "It is late and dark outside.",
+            "text": "It is late and getting dark outside.",
              "variations": [
-                "The day went by so fast",
+                "It is dark and getting late",
                 "Time for bed"
             ]
         },
@@ -395,7 +395,7 @@
             "speaker": "sister",
             "text": "I wonder what I will dream about tonight.",
              "variations": [
-                "What dream will I have tonight?",
+                "Who will visit me in my dreams?",
                 "It's like falling into another world."
             ]
         },
@@ -404,14 +404,14 @@
             "text": "What do you want to dream about?",
              "variations": [
                 "I really want to know",
-                "Oh, dreams"
+                "Oh, listening to other people's dreams"
             ]
         },
         {
             "speaker": "sister",
             "text": "About our family. Us together forever.",
              "variations": [
-                "Family",
+                "About you and you and you",
                 "Together forever"
             ]
         },
@@ -419,15 +419,15 @@
             "speaker": "brother",
             "text": "I want to dream about us melting in the sun!",
              "variations": [
-                "I love melting stuff",
-                "Outside in the sun"
+                "Or about us freezing in the dark",
+                "As long as we are outside"
             ]
         },
         {
             "speaker": "mom",
             "text": "That sounds lovely!",
              "variations": [
-                "Lovely!",
+                "So very much Lovely!",
                 "Really really lovely!"
             ]
         },
@@ -435,73 +435,61 @@
             "speaker": "dad",
             "text": "There are so many clocks here. Everything is changing.",
              "variations": [
-                "Time is an abstract concept",
-                "Tik-tok"
+                "There are so many things here that are constantly moving",
+                "Do you hear this Tik-Tok sound?"
             ]
         },
         {
             "speaker": "mom",
             "text": "Where are we going?",
              "variations": [
-                "I'm worried.",
-                "I wish we could all stay here"
+                "I don’t like surprises",
+                "I like to be in control"
             ]
         },
         {
             "speaker": "dad",
             "text": "We're not going anywhere.",
              "variations": [
-                "Nowhere",
-                "Anywhere"
+                "You can think of it as like we are going nowhere",
+                "Or anywhere, whatever you like"
             ]
         },
         {
             "speaker": "mom",
             "text": "I love you dear.",
              "variations": [
-                "I care for you",
-                "I can't live without you"
+                "I like you",
+                "Look at me when I say it"
             ],
             "triggers-gan": [
                 { 
-                    "text": "The fascinating thing about observing",
-                    "pause": 100
-                },
-                { 
-                    "text": "Thousands of families",
-                    "pause": 130
+                    "text": "The fascinating thing about observing thousands of families",
+                    "pause": 1600
                 },
                 { 
                     "text": "Is that when you look deep enough",
-                    "pause": 300
-                },
-                { 
-                    "text": "Is that",
-                    "pause": 30
-                },
-                { 
-                    "text": "When you look",
-                    "pause": 10
-                },
-                { 
-                    "text": "Deep enough",
-                    "pause": 150
+                    "pause": 900
                 },
                 { 
                     "text": "You can always spot the error",
-                    "pause": 1800
+                    "pause": 3100
                 },
                 { 
                     "text": "Look closer",
-                    "pause": 2300
+                    "pause": 2700
                 },
                 { 
                     "text": "It is something in her eyes",
-                    "pause": 400
+                    "pause": 1400
                 },
                 { 
                     "text": "And the tension in his smile",
                     "pause": 1800
+                },
+                { 
+                    "text": "It is a hint to an existing fever, underneath the error",
+                    "pause": 2200
                 },
                 { 
                     "text": "Can you see it now?",
@@ -509,18 +497,14 @@
                 },
                 { 
                     "text": "What hasn't unfolded yet?",
-                    "pause": 1300
+                    "pause": 3300
                 },
                 { 
                     "text": "What are they not saying?",
-                    "pause": 2000
+                    "pause": 2500
                 },
                 { 
-                    "text": "Does the perfect family think about",
-                    "pause": 140
-                },
-                {
-                    "text": "What they wish they could say but can't?"
+                    "text": "Does the perfect family think about What they wish they could say but don't?"
                 }
             ]
         },
@@ -568,8 +552,8 @@
             "speaker": "mom",
             "text": "Who was it?",
              "variations": [
-                "And?",
-                "Who?"
+                "Do you know?",
+                "Hello?"
             ]
         },
         {
@@ -592,8 +576,8 @@
             "speaker": "mom",
             "text": "Oh, okay.",
              "variations": [
-                "Oh!",
-                "Okay!"
+                "Alright, make sense!",
+                "He will call again."
             ]
         },
         {
@@ -609,7 +593,7 @@
             "text": "And now it is dark.",
              "variations": [
                 "Did someone say this already?",
-                "Anyways, no-one listens"
+                "Anyways, no-one ever listens"
             ],
 
             "triggers-gan": [
@@ -639,7 +623,7 @@
                     },
                     { 
                         "text": "Deception",
-                        "pause": 1200
+                        "pause": 1600
                     },
                     {
                         "text": "They are both agents.",
@@ -647,38 +631,26 @@
                     },
                     {
                         "text": "Systems that shape behaviors.",
-                        "pause": 1800
+                        "pause": 2800
                     },
                     {
-                        "text": "The effort of keeping it together will inevitably",
-                        "pause": 50
+                        "text": "The effort of keeping it together, will inevitably end with an outbreak of reality",
+                        "pause": 1500
                     },
                     {
-                        "text": "Will inevitably",
-                        "pause": 10
-                    },
-                    {
-                        "text": "End with an outbreak of reality",
-                        "pause": 1250
-                    },
-                    {
-                        "text": "What you are not showing wll surface by its own",
+                        "text": "What you are not showing, will surface on its own",
                         "pause": 500
                     },
                     {
-                        "text": "Like a family, a virus can crawl its way into the code, into the DNA",
-                        "pause": 350
+                        "text": "Like a family, a virus can crawl its way into the code, into the DNA, to your secret latent spaces",
+                        "pause": 550
                     },
                     {
-                        "text": "To your secret latent spaces, and change the basic meaning of you",
-                        "pause": 1850
+                        "text": "And change the basic meaning of you",
+                        "pause": 2850
                     },
                     {
-                        "text": "In the end",
-                        "pause": 100
-                    },
-                    {
-                        "text": "How will you make sure something of you is left?"
+                        "text": "In the end, how will you make sure something of you is left?"
                     }
                 ]
             }
