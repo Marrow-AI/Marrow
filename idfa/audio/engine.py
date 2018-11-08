@@ -515,9 +515,9 @@ class Engine:
     def pre_question(self):
         self.preload_speech("gan_question/line.wav")
         self.schedule_function(6, self.start_question)
-        self.schedule_osc(8, self.voice_client, "/control/strings", [1.0, 0.0])
-        self.schedule_osc(8, self.voice_client, "/control/bells", [1.0, 0.0])
-        self.schedule_osc(8, self.voice_client, "/control/synthbass", [1.0, 0.0, 0, 1])
+        self.schedule_osc(6, self.voice_client, "/control/strings", [0.5, 0.0])
+        self.schedule_osc(6, self.voice_client, "/control/bells", [0.5, 0.0])
+        self.schedule_osc(6, self.voice_client, "/control/synthbass", [0.5, 0.0, 0, 1])
 
 
     def start_question(self): 

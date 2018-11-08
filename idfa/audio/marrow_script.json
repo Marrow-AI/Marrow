@@ -181,6 +181,23 @@
             "variations": [
                 "This really is a happy moment.",
                 "Nothing is better than being together"
+            ],
+            "timeout-response": [
+                {
+                    "text": "I’ve assigned roles for you to play out.",
+                    "pause": 1500
+                },
+                {
+                    "text": "Mom",
+                    "pause": 1000
+                },
+                {
+                    "text": "You are first",
+                    "pause": 1000
+                },
+                {
+                    "text": "Shall we start?"
+                }
             ]
         },
         {
