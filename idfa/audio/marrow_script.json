@@ -60,7 +60,7 @@
                 },
                 { 
                     "text": "Not as lovely as them, but almost. Almost good enough.",
-                    "pause": 1090
+                    "pause": 1490
                 },
                 { 
                     "text": "Wouldn't you say so?",
@@ -111,7 +111,7 @@
         ],
         "timeouts":[
             {
-                "after": 5,
+                "after": 12,
                 "line": [
                     {
                         "text": "It can be anything you like",
@@ -127,7 +127,7 @@
                 ]
             },
             {
-                "after": 5,
+                "after": 10,
                 "line": [
                     {
                         "text": "In this room, words are triggering words.",
@@ -139,7 +139,7 @@
                 ]
             },
             {
-                "after": 5,
+                "after": 8,
                 "line": [
                     {
                         "text": "It is possible I didn't hear what you said.",
@@ -189,7 +189,7 @@
                 },
                 {
                     "text": "Mom",
-                    "pause": 1000
+                    "pause": 100
                 },
                 {
                     "text": "You are first",
@@ -293,6 +293,11 @@
             "variations": [
                 "My beautiful woman?",
                 "Tell me about your day"
+            ],
+            "timeout-response": [
+                {
+                    "text": "It is your turn, dad"
+                }
             ]
         },
         {
@@ -398,6 +403,11 @@
              "variations": [
                 "*Sigh* Carrots.",
                 "Can you move them away from me?"
+            ],
+              "timeout-response": [
+                {
+                    "text": "Sister, what's on your mind?"
+                }
             ]
         },
         {
@@ -531,6 +541,11 @@
             "variations": [
                 "Only something",
                 "Very wrong"
+            ],
+              "timeout-response": [
+                {
+                    "text": "Sister...?"
+                }
             ]
         },
         {
