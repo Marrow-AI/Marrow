@@ -64,15 +64,19 @@
                 },
                 { 
                     "text": "Wouldn't you say so?",
-                    "pause": 3390
+                    "pause": 3500
                 },
                 { 
                     "text": "Seeing so many perfect families, makes your perspective",
                     "pause": 30
                 },
                 { 
-                    "text": "Kind of, distorted",
-                    "pause": 1150
+                    "text": "Kind of",
+                    "pause": 50
+                },
+                { 
+                    "text": "Distorted",
+                    "pause": 1550
                 },
                 { 
                     "text": "All you are left with",
@@ -80,7 +84,7 @@
                 },
                 { 
                     "text": "Is trying to be more like them",
-                    "pause": 2800
+                    "pause": 3100
                 },
                 { 
                     "text": "Let's be more like them",
