@@ -141,6 +141,12 @@ class GUI extends Component {
             label={context.isConnectedToMarrow ? 'Disconnect' : 'Connect to Server'}
             onClick={() => context.connectToMarrow(context.marrowIP, context.marrowPort, context.marrowRoute)}
           />
+          { context.isConnectedToMarrow &&
+              <dg.Button 
+                label='Send fake pix2pix updates'
+                  onClick={() => context.sendFakePix2Pix()}
+              />
+          }
         </dg.Folder>
         <dg.Folder label='Images' expanded={true}>
           <dg.Number 

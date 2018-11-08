@@ -476,7 +476,7 @@ class Engine:
 
         self.voice_client.send_message("/control/bells", [0.0, 0.2])
         self.voice_client.send_message("/control/strings", [0.0, 0.0])
-        self.voice_client.send_message("/control/synthbass", [0.0, 0.0, 0, 1])
+        self.voice_client.send_message("/control/synthbass", [0.0, 0.0, 0.0])
 
         self.t2i_client.send_message("/control/start",1)
         self.preload_speech("gan_intro/intro.wav")
@@ -485,7 +485,7 @@ class Engine:
         self.say(delay_sec = 0.5, callback=self.pre_question)
         self.schedule_osc(13.4, self.voice_client, "/control/start", 1)
         self.schedule_osc(31.4, self.voice_client, "/control/strings", [0.5, 0.5])
-        self.schedule_osc(61.4, self.voice_client, "/control/synthbass", [0.0, 0.2, 0, 1])
+        self.schedule_osc(61.4, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
         self.schedule_function(61.5, self.start_noise)
 
         """
@@ -515,9 +515,9 @@ class Engine:
     def pre_question(self):
         self.preload_speech("gan_question/line.wav")
         self.schedule_function(6, self.start_question)
-        self.schedule_osc(6, self.voice_client, "/control/strings", [0.5, 0.0])
-        self.schedule_osc(6, self.voice_client, "/control/bells", [0.5, 0.0])
-        self.schedule_osc(6, self.voice_client, "/control/synthbass", [0.5, 0.0, 0, 1])
+        self.schedule_osc(6, self.voice_client, "/control/strings", [0.9, 0.0])
+        self.schedule_osc(6, self.voice_client, "/control/bells", [0.8, 0.0])
+        self.schedule_osc(6, self.voice_client, "/control/synthbass", [0.8, 0.0, 0.0])
 
 
     def start_question(self): 
@@ -554,10 +554,11 @@ class Engine:
             self.pre_script()
 
     def question_timed_out(self):
-        print("Question timed out!")
-        self.question_timeout_index += 1
-        self.last_asked = int(round(time.time() + self.speech_duration) * 1000)
-        self.say(callback = self.load_next_question_timeout)
+        if self.question_answer == None:
+            print("Question timed out!")
+            self.question_timeout_index += 1
+            self.last_asked = int(round(time.time() + self.speech_duration) * 1000)
+            self.say(callback = self.load_next_question_timeout)
 
 
     ######### QUESTION ################
@@ -572,7 +573,7 @@ class Engine:
             self.question_answer = affects["default"]
         print("PRE SCRIPT!! Chosen food: {}".format(self.question_answer))
         self.t2i_client.send_message("/table/dinner", self.question_answer)
-        self.voice_client.send_message("/control/synthbass", [0.0, 0.2, 1, 0])
+        self.voice_client.send_message("/control/synthbass", [0.0, 0.2, 0.0])
         target["text"] = target["text"].replace("%ANSWER%",self.question_answer)
         self.schedule_function(7, self.say_pre_script)
         self.schedule_function(13, self.show_plates)

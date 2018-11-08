@@ -154,6 +154,13 @@ class AppProvider extends Component {
         this.setState({ marrowSocket: null });
       }
     },
+    sendFakePix2Pix: () => {
+        setInterval(() => {
+            if (this.state.marrowSocket) {
+                this.state.marrowSocket.send(JSON.stringify({action: "pix2pix"}));
+            }
+        },2000)
+    },
     updateSendingFrameStatus: (state) => {
       if (state) {
         this.setState({ isSendingFrames: true });
