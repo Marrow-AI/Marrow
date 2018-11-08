@@ -27,6 +27,23 @@ class GUI extends Component {
     }
   }
 
+  setTheScene = (name) => {
+    const { scenes, setCurrentScene } = this.props.context;
+    const scene = scenes.find(c => c.name === name);
+    setCurrentScene(scene);
+  }
+
+  playOrStopScene = () => {
+    const { scenes, currentScene, updateScenePlayingStatus, isScenePlaying, initScene } = this.props.context;
+    const scene = scenes.find(c => c.name === currentScene.name);
+    if (isScenePlaying) {
+      document.getElementById('sceneElement').pause();
+    } else {
+      initScene(scene.src);
+    }
+    updateScenePlayingStatus(!isScenePlaying);
+  } 
+
   render() {
     const { context } = this.props;
   
@@ -108,6 +125,21 @@ class GUI extends Component {
           <dg.Button 
             label={context.isSendingFrames ? 'Stop Sending Frames' : 'Start Sending Frames'}
             onClick={() => context.updateSendingFrameStatus(!context.isSendingFrames)}
+          />
+        </dg.Folder>
+        <dg.Folder label='Marrow' expanded={true}>
+          <dg.Text label='Server Connection' value={context.isConnectedToMarrow ? 'Connected' : 'Not Connected'}/>
+          <dg.Text label='IP' 
+            value={context.marrowIP}
+            onChange={(value) => context.setMarrowIP(value)}
+          />
+          <dg.Text label='Marrow Port' 
+            value={context.marrowPort}
+            onChange={(value) => context.setMarrowPort(value)}
+          />
+          <dg.Button 
+            label={context.isConnectedToMarrow ? 'Disconnect' : 'Connect to Server'}
+            onClick={() => context.connectToMarrow(context.marrowIP, context.marrowPort, context.marrowRoute)}
           />
         </dg.Folder>
         <dg.Folder label='Images' expanded={true}>

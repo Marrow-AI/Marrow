@@ -21,7 +21,33 @@ class AppProvider extends Component {
     setCinemaModeSize: (s) => this.setState({cinemaModeSize: s}),
     srcObject: null,
     currentConstrains: null,
+    currentSceneIndex: 0,
+    setCurrentSceneIndex: (s) => this.setState({ currentSceneIndex: s }),
     interval: null,
+    startAutoplay: () => {
+      if (this.state.interval){
+        clearInterval(this.state.interval);
+        clearInterval(this.state.faderInterval);
+        this.setState({ interval: null,  faderInterval: null });
+        document.getElementById('sceneElement').pause();
+      } else {
+        const loop = () => {
+          setTimeout(() => this.setState({ faderOpacity: 1 }), (this.state.autoplaySceneDuration - 1.5) * 1000);
+          // this.state.initScene(SCENES[this.state.currentSceneIndex].src);
+          // this.state.setModel(SCENES[this.state.currentSceneIndex].name);
+          // const currentSceneIndex = (this.state.currentSceneIndex + 1) % SCENES.length;
+          // this.state.setCurrentSceneIndex(currentSceneIndex);
+        }
+        loop();
+        const interval = setInterval(() => loop(), this.state.autoplaySceneDuration * 1000);
+        this.setState({ interval })
+     }
+    },
+    opacities: {
+      scene: 1,
+      camera: 0,
+      transfer: 1,
+    },
     faderOpacity: 0,
     initCamera: (constrains) => {
       const videoElement = document.getElementById('cameraElement');
@@ -54,12 +80,20 @@ class AppProvider extends Component {
     isShowingPix2pixCanvas: true,
     setShowingPix2pixCanvas: (s) => this.setState({isShowingPix2pixCanvas: s}),
     autoplayOn: false,
+    autoplaySceneDuration: 10,
     autoplayCameraDuration: 3,
     serverIP: IP,
+    marrowRoute: '/',
+    marrowIP: "localhost",
+    marrowPort: "9540",
     isConnectedToServer: false,
+    isConnectedToMarrow: false,
     isSendingFrames: false,
     socket: null,
+    marrowSocket: null,
     setServerIP: (ip) => this.setState({serverIP: ip}),
+    setMarrowIP: (ip) => this.setState({marrowIP: ip}), 
+    setMarrowPort: (port) => this.setState({marrowPort: port}),
     imageSliderOpacity: 1,
     setImageSliderOpacity: (v) => this.setState({imageSliderOpacity: v}),
     imagesWidth: 220,
@@ -85,6 +119,9 @@ class AppProvider extends Component {
           const img = new Image();
           img.onload = () => {
             ctx.drawImage(img, 0, 0, this.state.pix2pixCanvasWidth, this.state.pix2pixCanvasHeight);
+            if (this.state.marrowSocket) {
+                this.state.marrowSocket.send(JSON.stringify({action: "pix2pix"}));
+            }
             if (this.state.isSendingFrames) {
               this.state.sendFrames();
             }
@@ -100,6 +137,21 @@ class AppProvider extends Component {
       } else {
         this.state.socket.disconnect();
         this.setState({ socket: null });
+      }
+    },
+    connectToMarrow: (ip, port, route) => {
+      if (!this.state.marrowSocket) {
+        const marrowSocket = new WebSocket(`wss://${ip}:${port}${route}`);
+        marrowSocket.onopen = () => {
+          this.setState({ isConnectedToMarrow: true });
+        };
+        marrowSocket.onclose =  () => {
+          this.setState({ isConnectedToMarrow: false });
+        };
+        this.setState({ marrowSocket: marrowSocket });
+      } else {
+        this.state.marrowSocket.close();
+        this.setState({ marrowSocket: null });
       }
     },
     updateSendingFrameStatus: (state) => {

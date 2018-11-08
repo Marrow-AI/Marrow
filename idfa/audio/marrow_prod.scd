@@ -1,16 +1,26 @@
-//TXSystem1.start(0,"/home/avnerus/Projects/gandinner/tx_modular_sample",showAudioOptions: false);
-
 (
-OSCdef.new( \speechreload, { |data,time,source|
-	"reloading speech".postln;
+OSCdef.new( \speechload, { |data,time,source|
+	"loading speech".postln;
 	data.postln;
-	if (TXSamplePlayer5a.arrInstances.size > 0) {
-			"foundsample".postln;
-			TXSamplePlayer5a.arrInstances[0].loadSample(1);
+	if (TXFilePlayer6.arrInstances.size > 0) {
+			"foundplayer!".postln;
+		    TXFilePlayer6.arrInstances[0].cueSample(data[1].asString);
 	}
-}, '/speech/reload');
+}, '/speech/load');
 
-   TXSystem1.start(0,"TX_Modular/tx_marrow_44",showAudioOptions: false);
+
+
+OSCdef.new( \effectload, { |data,time,source|
+	"loading speech".postln;
+	data.postln;
+	if (TXFilePlayer6St.arrInstances.size > 0) {
+			"foundplayer!".postln;
+		    TXFilePlayer6St.arrInstances[0].cueSample(data[1].asString);
+	}
+}, '/effect/load');
+
+TXSystem1.start(0,"/home/avnerus/Projects/Marrow/idfa/audio/TX_Modular/tx_marrow_63",showAudioOptions: false);
 )
+
 
 
