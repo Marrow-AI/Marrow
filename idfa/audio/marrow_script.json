@@ -377,7 +377,11 @@
                         "pause": 400
                     },
                     { 
-                        "text": "To try to grasp you",
+                        "text": "To try to grasp",
+                        "pause": 10
+                    },
+                    { 
+                        "text": "You.",
                         "pause": 1600
                     },
                     { 
