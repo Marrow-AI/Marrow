@@ -29,7 +29,6 @@ class Server:
         try:
             async for message in websocket:
                 data = json.loads(message)
-                #print(data)
                 action = data["action"]
                 if action == 'pix2pix':
                     self.pix2pix_callback()
