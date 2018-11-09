@@ -146,8 +146,6 @@ class Recognizer(Thread):
             # Now, put the transcription responses to use.
             self.listen_print_loop(responses)
 
-            print("End?")
-
 
     def listen_print_loop(self,responses):
         """Iterates through server responses and prints them.

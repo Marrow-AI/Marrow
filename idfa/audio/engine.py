@@ -13,6 +13,8 @@ import threading
 import time
 import janus
 
+import numbers
+
 from script import Script
 
 sys.path.append(os.path.abspath('./emotion'))
@@ -339,22 +341,15 @@ class Engine:
 
         line = self.script.awaiting
 
-        response_i = self.response_coming(self.script.awaiting_index)
-        if response_i != -1:
-            if not self.beating:
-                self.voice_client.send_message("/gan/heartbeat", 0.5)
-                self.voice_client.send_message("/gan/bassheart", [0.0, 1.0])
-                self.preload_speech("gan_responses/{}.wav".format(response_i))
-        else:
-            self.beating = False
-
         # Send a pause the average person speaks at somewhere between 125 and 150 words per minute (2-2.5 per sec)
-        delay = words_ahead / 2.5
+        delay = words_ahead / 2.8
 
         if "triggers-end" in line:
             self.schedule_osc(delay, self.voice_client, "/control/strings", [0.8, 0.0])
             self.schedule_osc(delay, self.voice_client, "/control/bells", [0.5, 0.0, 0.01])
             self.schedule_osc(delay, self.voice_client, "/control/synthbass", [0.75, 0.0, 0.0])
+            self.schedule_function(delay,self.stop_noise)
+
 
         if "triggers-gan" in line:
             print("Say response!")
@@ -364,10 +359,18 @@ class Engine:
             echo = None
             if "triggers-echo" in line:
                echo = line["triggers-echo"]
-            self.say(delay, callback = self.resume_script, echo = echo)
+
+            if self.script.awaiting_index == self.script.length -1:
+                print("Ending sequence!!")
+                self.state = "END"
+                self.schedule_osc(delay, self.voice_client, "/control/start", 1)
+                self.say(delay + 12, callback = self.next_line, echos = echo)
+            else:
+                self.say(delay, callback = self.next_line, echos = echo)
             if "triggers-effect" in line:
                 self.load_effect(line["triggers-effect"])
                 self.schedule_function(delay + line["triggers-effect"]["time"], self.play_effect)
+
 
         else:
             self.next_line(delay)
@@ -376,34 +379,38 @@ class Engine:
         #    self.voice_client.send_message("/gan/beat",0.0)
 
 
-    def resume_script(self):
-        self.state = "SCRIPT"
-        self.next_line()
-
     def play_effect(self):
         self.voice_client.send_message("/effect/play", 1)
 
     def next_line(self, delay = 0):
         self.last_react = self.last_speech = time.time() + delay
         if self.script.next_line():
+            self.state = "SCRIPT"
+            print ("Preload {}/{}?".format(self.script.awaiting_index +1, self.script.length))
+            if (
+                self.script.awaiting_index + 1 <= self.script.length -1 and
+                "triggers-gan" in self.script.data["script-lines"][self.script.awaiting_index + 1]
+            ):
+                self.preload_speech("gan_responses/{}.wav".format(self.script.awaiting_index + 1))
+                if (self.script.awaiting_index + 1 == self.script.length -1):
+                    # Prep for the ending sequence
+                    self.voice_client.send_message("/control/stop", 1)
+                    self.voice_client.send_message("/control/strings", [0.0, 0.5])
+                    self.voice_client.send_message("/control/bells", [0.0, 0.2, 0.0])
+                    self.voice_client.send_message("/control/bassheart", [0.0, 0.0])
+                    self.voice_client.send_message("/control/membrane", [0.0, 0.0])
+
             self.schedule_function(delay, self.show_next_line)
         else:
             self.end()
 
     def end(self):
+        self.state = "END"
         print("END")
         self.t2i_client.send_message("/gan/end",1)
         #self.pix2pix_client.send_message("/gan/end",1)
 
-    def response_coming(self, index):
-        for i in range(index + 3, index, -1):
-            if i < self.script.length - 1 and "triggers-gan" in self.script.data["script-lines"][i]:
-                print("Response coming in index {}!".format(i))
-                return i
-        return -1
-
-
-    def say(self, delay_sec = 0, delay_effect = False, callback = None, echo = None):
+    def say(self, delay_sec = 0, delay_effect = False, callback = None, echos = None):
 
         if self.speech_duration:
 
@@ -420,9 +427,14 @@ class Engine:
             self.schedule_osc(delay_sec + self.speech_duration + 0.2,self.voice_client, "/speech/stop", 1)
             self.schedule_osc(delay_sec,self.t2i_client, "/gan/speaks", 1)
 
-            if echo:
-                self.schedule_osc(delay_sec + echo[0],self.voice_client, "/gan/echo", 3)
-                self.schedule_osc(delay_sec + echo[1],self.voice_client, "/gan/echo", 2)
+            if echos:
+                # one or many?
+                if isinstance(echos[0], numbers.Number):
+                    echos = [echos]
+
+                for echo in echos:
+                    self.schedule_osc(delay_sec + echo[0],self.voice_client, "/gan/echo", 3)
+                    self.schedule_osc(delay_sec + echo[1],self.voice_client, "/gan/echo", 2)
 
 
             if self.state == "GAN":
@@ -548,6 +560,9 @@ class Engine:
 
     def start_noise(self):
         self.send_noise = True
+
+    def stop_noise(self):
+        self.send_noise = False
 
     ########### QUESTION ###############
 
