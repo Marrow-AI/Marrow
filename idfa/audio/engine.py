@@ -124,7 +124,7 @@ class Engine:
         #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
 
         self.server = Server(
-                self.gain_update, 
+                self.gain_update,
                 self.queue.async_q,
                 self.control,
                 self.mood_update,
@@ -170,7 +170,7 @@ class Engine:
         now =  time.time()
         if self.state == "SCRIPT":
             if (
-                self.script.awaiting_index > -1 
+                self.script.awaiting_index > -1
                 and (
                         (now - self.last_react) > SCRIPT_TIMEOUT_GLOBAL
                         or (now - self.last_speech) > SCRIPT_TIMEOUT_NOSPEECH
@@ -195,7 +195,7 @@ class Engine:
         else:
             self.mental_state.update_emotion(data["analysis"])
             #self.mental_state_updated()
-            
+
         conc = asyncio.run_coroutine_threadsafe(self.server.emotion_update(data, self.mental_state.value), self.main_loop)
 
     def gain_update(self, min, max):
@@ -227,7 +227,7 @@ class Engine:
             self.lookup(text)
         elif self.state == "QUESTION":
             question_answer = text
-        
+
     def lookup(self, text):
         # print("REACT: {}".format(text))
         # update last speech time
@@ -248,7 +248,7 @@ class Engine:
 #
 #        # try up to 2 lines aheead
 #        for i in range(self.script.awaiting_index + 1, self.script.awaiting_index + 4):
-#            try_i = self.match_cache(i) 
+#            try_i = self.match_cache(i)
 #            if try_i != -1:
 #                self.react(text, i)
 #                return True
@@ -331,19 +331,19 @@ class Engine:
 
         # Which word was it?
         self.last_matched_word = self.matched_to_word
-        self.matched_to_word = len(matched_utterance.split()) 
+        self.matched_to_word = len(matched_utterance.split())
         script_text = self.script.awaiting_text
         words_ahead = max(0, len(script_text.split()) - (len(matched_utterance.split()) - self.last_matched_word))
         print("Said {} ({}) Matched: {}. Words ahead {}".format(self.script.awaiting_index, script_text, matched_utterance, words_ahead))
 
 
         line = self.script.awaiting
-        
+
         response_i = self.response_coming(self.script.awaiting_index)
         if response_i != -1:
             if not self.beating:
                 self.voice_client.send_message("/gan/heartbeat", 0.5)
-                self.voice_client.send_message("/gan/bassheart", [0.0, 1.0]) 
+                self.voice_client.send_message("/gan/bassheart", [0.0, 1.0])
                 self.preload_speech("gan_responses/{}.wav".format(response_i))
         else:
             self.beating = False
@@ -360,6 +360,7 @@ class Engine:
             print("Say response!")
             self.last_react = self.last_speech = time.time()  + delay + self.speech_duration
             self.state = "GAN"
+            self.matched_to_word = 0
             echo = None
             if "triggers-echo" in line:
                echo = line["triggers-echo"]
@@ -403,7 +404,7 @@ class Engine:
 
 
     def say(self, delay_sec = 0, delay_effect = False, callback = None, echo = None):
-        
+
         if self.speech_duration:
 
             print("Saying line with {} delay".format(delay_sec))
@@ -451,7 +452,7 @@ class Engine:
             self.speech_duration = frames / float(rate)
 
         #shutil.copyfile(
-        #        file_name,             
+        #        file_name,
         #        "tmp/gan.wav"
         #)
         #print("Copied")
@@ -497,6 +498,7 @@ class Engine:
         self.script.reset()
         self.voice_client.send_message("/control/stop",1)
         self.t2i_client.send_message("/control/stop",1)
+        self.t2i_client.send_message("/table/fadeout",1)
         self.voice_client.send_message("/speech/stop",1)
         self.send_noise = False
         #self.pix2pix_client.send_message("/control/stop",1)
@@ -557,14 +559,14 @@ class Engine:
         self.schedule_osc(6, self.voice_client, "/control/synthbass", [0.75, 0.0, 0.0])
 
 
-    def start_question(self): 
+    def start_question(self):
         print("Start question")
         self.send_noise = True
         self.current_question_timeout = None
         self.last_asked = time.time() + self.speech_duration
         self.question_answer = None
         self.state = "QUESTION"
-        self.question_timeout_index = 0 
+        self.question_timeout_index = 0
         self.say()
         self.schedule_function(self.speech_duration - 0.5, self.table_fadein)
         self.schedule_function(self.speech_duration + 1, self.load_next_question_timeout)
@@ -606,7 +608,7 @@ class Engine:
         self.state = "PRE-SCRIPT"
         self.preload_speech("gan_intro/pre_script.wav")
         affects = self.script.data["question"]["affects"]
-        target = self.script.data["script-lines"][affects["line"]] 
+        target = self.script.data["script-lines"][affects["line"]]
         if not self.question_answer:
             self.question_answer = affects["default"]
         print("PRE SCRIPT!! Chosen food: {}".format(self.question_answer))
@@ -638,7 +640,7 @@ class Engine:
 
     def show_next_line(self):
         self.t2i_client.send_message(
-                "/script", 
+                "/script",
                 [self.script.awaiting["speaker"], self.script.awaiting_text]
         )
 
@@ -695,13 +697,3 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("Stopping everything")
         args.stop = True
-
-
-
-    
-
-
-
-
-
-

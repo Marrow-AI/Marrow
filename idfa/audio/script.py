@@ -40,7 +40,7 @@ class Script:
 
     def next_line(self):
         if self.awaiting_index < self.length - 1:
-            self.awaiting_index = self.awaiting_index + 1 
+            self.awaiting_index = self.awaiting_index + 1
             self.awaiting_variation = 0
             self.awaiting = self.data["script-lines"][self.awaiting_index]
             self.awaiting_text = self.awaiting["text"]
@@ -63,14 +63,14 @@ class Script:
         inserted_lines = list()
         for line in self.data["script-lines"]:
             text = line["text"]
-            try:        
-                mean_vector = self.meanvector(text)        
+            try:
+                mean_vector = self.meanvector(text)
                 self.text_space.add_item(i, mean_vector)
                 inserted_lines.append(line)
                 i += 1
             except IndexError:
                 print('NLP error at "{}"'.format(text))
-                continue    
+                continue
 
             finally:
                 line_i += 1
@@ -79,7 +79,7 @@ class Script:
         print("{} items in vector space for {} lines".format(self.text_space.get_n_items(), len(inserted_lines)))
         assert(self.text_space.get_n_items() == len(inserted_lines))
 
-            
+
     def meanvector(self,text):
         s = self.nlp(text)
         vecs = [word.vector for word in s \
@@ -94,7 +94,7 @@ class Script:
         try:
             text_nlp = self.nlp(text)
             distance =  self.awaiting_nlp.similarity(text_nlp)
-            print(distance)
+            print("{} => {}".format(text_nlp,distance))
             return distance
         except Exception as e:
             print("Exception {}".format(e))
@@ -103,11 +103,11 @@ class Script:
     def match_space(self,text):
         try:
             nearest = self.text_space.get_nns_by_vector(
-                    self.meanvector(text), 
+                    self.meanvector(text),
                     n=2,
                     include_distances=True
             )
-            
+
             matches = []
             for i in range(0, len(nearest[0])):
                 matches.append({
@@ -118,6 +118,3 @@ class Script:
             return matches
         except:
             return None
-
-
-    

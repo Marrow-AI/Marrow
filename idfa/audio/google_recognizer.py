@@ -89,7 +89,7 @@ class MicrophoneStream(object):
                 except queue.Empty:
                     break
 
-            
+
             yield b''.join(data)
 
 
@@ -180,16 +180,16 @@ class Recognizer(Thread):
                 #sys.stdout.flush()
 
                 if (transcript != self.last_result):
-                    print("({})".format(transcript))
+                    #print("({})".format(transcript))
                     self.queue.put({
                         "action": "mid-speech",
-                        "text": transcript                        
+                        "text": transcript
                     })
                     self.last_result = transcript
 
             else:
-                print(" = {}".format(transcript))
+                #print(" = {}".format(transcript))
                 self.queue.put({
                     "action": "speech",
-                    "text": transcript                        
+                    "text": transcript
                 })
