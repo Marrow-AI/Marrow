@@ -351,6 +351,11 @@ class Engine:
         # Send a pause the average person speaks at somewhere between 125 and 150 words per minute (2-2.5 per sec)
         delay = words_ahead / 2.5
 
+        if "triggers-end" in line:
+            self.schedule_osc(delay, self.voice_client, "/control/strings", [0.8, 0.0])
+            self.schedule_osc(delay, self.voice_client, "/control/bells", [0.5, 0.0, 0.01])
+            self.schedule_osc(delay, self.voice_client, "/control/synthbass", [0.75, 0.0, 0.0])
+
         if "triggers-gan" in line:
             print("Say response!")
             self.last_react = self.last_speech = time.time()  + delay + self.speech_duration
@@ -547,9 +552,9 @@ class Engine:
     def pre_question(self):
         self.preload_speech("gan_question/line.wav")
         self.schedule_function(6, self.start_question)
-        self.schedule_osc(6, self.voice_client, "/control/strings", [0.9, 0.0])
-        self.schedule_osc(6, self.voice_client, "/control/bells", [0.8, 0.0, 0.0])
-        self.schedule_osc(6, self.voice_client, "/control/synthbass", [0.8, 0.0, 0.0])
+        self.schedule_osc(6, self.voice_client, "/control/strings", [0.8, 0.0])
+        self.schedule_osc(6, self.voice_client, "/control/bells", [0.75, 0.0, 0.0])
+        self.schedule_osc(6, self.voice_client, "/control/synthbass", [0.75, 0.0, 0.0])
 
 
     def start_question(self): 

@@ -563,7 +563,8 @@
             "variations": [
                 "I am talking to you, son",
                 "What is this humming?"
-            ]
+            ],
+            "triggers-end": true
         },
         {
             "speaker": "sister",
