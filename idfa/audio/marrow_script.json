@@ -360,6 +360,7 @@
                 "I can not wait to hear more.",
                 "I have the most interesting family."
             ],
+            "triggers-echo": [20.0, 22.0],
             "triggers-gan": [
                     { 
                         "text": "While you are playing them, I am playing you.",
@@ -370,7 +371,11 @@
                         "pause": 1800
                     },
                     { 
-                        "text": "Chords of gaps between you and them",
+                        "text": "Chords of gaps between you",
+                        "pause": 40
+                    },
+                    { 
+                        "text": "And them",
                         "pause": 4000
                     },
                     { 
@@ -378,11 +383,7 @@
                         "pause": 400
                     },
                     { 
-                        "text": "To try to grasp",
-                        "pause": 10
-                    },
-                    { 
-                        "text": "You.",
+                        "text": "To try to grasp you.",
                         "pause": 1600
                     },
                     { 
@@ -498,6 +499,7 @@
                 "I like you",
                 "Look at me when I say it"
             ],
+           "triggers-echo": [[7.0, 8.0],[19.5, 20.5]],
             "triggers-gan": [
                 { 
                     "text": "The fascinating thing about observing thousands of families",
