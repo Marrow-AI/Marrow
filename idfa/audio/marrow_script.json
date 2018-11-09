@@ -246,8 +246,9 @@
             "triggers-effect": {
                 "effect": "dish",
                 "time": 2,
-                "fades": [0.1, 0.1]
+                "fades": [0.15, 0.15] 
             },
+            "triggers-echo": [2.0, 3.5],
              "triggers-gan": [
                 {
                     "text": "We hear the sound of laughter, forks, knives",
@@ -612,7 +613,7 @@
             "speaker": "mom",
             "text": "Oh, okay.",
              "variations": [
-                "Alright, make sense!",
+                "Makes sense!",
                 "He will call again."
             ]
         },

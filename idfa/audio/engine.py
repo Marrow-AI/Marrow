@@ -31,7 +31,7 @@ import math
 #nlp = spacy.load('en')
 #print("Loaded English NLP")
 
-DISTANCE_THRESHOLD = 0.7
+DISTANCE_THRESHOLD = 0.75
 SCRIPT_TIMEOUT_GLOBAL = 20
 SCRIPT_TIMEOUT_NOSPEECH = 10
 
@@ -208,6 +208,7 @@ class Engine:
         self.t2i_client.send_message("/speech", text)
         if self.state == "SCRIPT":
             if self.mid_text is not None:
+                print("Looking up {}".format(text))
                 self.lookup(text)
 
             self.mid_match = False
@@ -354,7 +355,10 @@ class Engine:
             print("Say response!")
             self.last_react = self.last_speech = time.time()  + delay + self.speech_duration
             self.state = "GAN"
-            self.say(delay, callback = self.resume_script)
+            echo = None
+            if "triggers-echo" in line:
+               echo = line["triggers-echo"]
+            self.say(delay, callback = self.resume_script, echo = echo)
             if "triggers-effect" in line:
                 self.load_effect(line["triggers-effect"])
                 self.schedule_function(delay + line["triggers-effect"]["time"], self.play_effect)
@@ -393,7 +397,7 @@ class Engine:
         return -1
 
 
-    def say(self, delay_sec = 0, delay_effect = False, callback = None):
+    def say(self, delay_sec = 0, delay_effect = False, callback = None, echo = None):
         
         if self.speech_duration:
 
@@ -410,9 +414,19 @@ class Engine:
             self.schedule_osc(delay_sec + self.speech_duration + 0.2,self.voice_client, "/speech/stop", 1)
             self.schedule_osc(delay_sec,self.t2i_client, "/gan/speaks", 1)
 
+            if echo:
+                self.schedule_osc(delay_sec + echo[0],self.voice_client, "/gan/echo", 3)
+                self.schedule_osc(delay_sec + echo[1],self.voice_client, "/gan/echo", 2)
+
+
             if self.state == "GAN":
-                self.schedule_osc(delay_sec,self.voice_client, "/control/bassheart", [1.0, 0.5])
-                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/bassheart", [0.8, 0.0])
+                self.schedule_osc(delay_sec,self.voice_client, "/control/bassheart", [0.8, 0.5])
+                self.schedule_osc(delay_sec,self.voice_client, "/control/membrane", [0.8, 0.3])
+                self.schedule_osc(delay_sec,self.voice_client, "/control/bells", [0.5, 0.0, 0.01])
+
+                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/bassheart", [0.3, 0.0])
+                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/bells", [0.8, 0.1, 0.01])
+                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/membrane", [0.3, 0.0])
             #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
             #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/bassheart", [1.0, 0.0])
 
@@ -493,6 +507,7 @@ class Engine:
         self.voice_client.send_message("/control/bells", [0.0, 0.2, 0.0])
         self.voice_client.send_message("/control/strings", [0.0, 0.0])
         self.voice_client.send_message("/control/bassheart", [0.0, 0.0])
+        self.voice_client.send_message("/control/membrane", [0.0, 0.0])
         self.voice_client.send_message("/control/synthbass", [0.0, 0.0, 0.0])
 
         self.t2i_client.send_message("/control/start",1)
