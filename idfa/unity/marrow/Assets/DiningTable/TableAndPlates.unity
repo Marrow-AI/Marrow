@@ -157,7 +157,11 @@ MonoBehaviour:
 
     OF OTHER
 
-    PEOPLE''S FAMILIES'
+    PEOPLE''S FAMILIES
+
+    <size=40%><line-height=30%>
+
+    prologue to Marrow'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
   m_sharedMaterial: {fileID: 2147374, guid: 0161d805a3764c089bef00bfe00793f5, type: 2}
@@ -195,14 +199,14 @@ MonoBehaviour:
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 0
+  m_lineSpacing: -33.34
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 34
+  m_firstOverflowCharacterIndex: 52
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -225,12 +229,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 0}
-    characterCount: 51
+    characterCount: 71
     spriteCount: 0
-    spaceCount: 7
-    wordCount: 8
+    spaceCount: 11
+    wordCount: 11
     linkCount: 0
-    lineCount: 4
+    lineCount: 6
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
@@ -307,7 +311,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 105212256}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -316,7 +320,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 1}
-  m_SizeDelta: {x: 7, y: 4}
+  m_SizeDelta: {x: 6.5, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &220871030
 GameObject:
@@ -560,7 +564,6 @@ GameObject:
   - component: {fileID: 273349847}
   - component: {fileID: 273349850}
   - component: {fileID: 273349849}
-  - component: {fileID: 273349848}
   m_Layer: 0
   m_Name: Main Spot Light
   m_TagString: Untagged
@@ -581,22 +584,6 @@ Transform:
   m_Father: {fileID: 989952884}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!114 &273349848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 273349846}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13a84d8f0dc434906bb270450b1a057d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  range: 0.1
-  maxIntensity: 1
-  minIntensity: 0.5
-  frequency: 20
-  randomColor: 0
 --- !u!114 &273349849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,8 +605,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 0
-  m_Color: {r: 1, g: 0.7764706, b: 0.84828347, a: 1}
-  m_Intensity: 1.7
+  m_Color: {r: 0.9528302, g: 0.5590206, b: 0.4809096, a: 1}
+  m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 130
   m_CookieSize: 10
@@ -1299,7 +1286,6 @@ MonoBehaviour:
   mainTitleTexts: I'VE ALWAYS BEEN JEALOUS\nOF OTHER PEOPLE'S FAMILIES
   speechDetection: {fileID: 1930046801}
   tableRenderer: {fileID: 1493582765}
-  plateTextMaterial: {fileID: 2100000, guid: af2cc653c575d4b4cb4e55956b30440b, type: 2}
   nameTags:
   - {fileID: 1190723174}
   - {fileID: 1306286295}
@@ -1372,6 +1358,7 @@ GameObject:
   - component: {fileID: 952249942}
   - component: {fileID: 952249944}
   - component: {fileID: 952249946}
+  - component: {fileID: 952249947}
   m_Layer: 0
   m_Name: ExperienceManager
   m_TagString: Untagged
@@ -1409,6 +1396,8 @@ MonoBehaviour:
   startText2Image: 0
   tableOpenSequence: {fileID: 728543544}
   plateMaterial: {fileID: 2100000, guid: 806e86fe64f06490eb9407af06ec69f4, type: 2}
+  plateTransparentMaterial: {fileID: 2100000, guid: dd326314daf5d4aedbfc0fad799fbba9,
+    type: 2}
   attnGanImageWidth: 256
   attnGanImageHeight: 256
 --- !u!114 &952249939
@@ -1477,7 +1466,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 952249936}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f5937ce4de6a4254b9249339eea0c2a, type: 3}
   m_Name: 
@@ -1639,7 +1628,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 952249938}
-        m_MethodName: ReceivedOscTableDinnerQuestionStart
+        m_MethodName: ReceivedOscShowChosenDinner
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1650,6 +1639,36 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: extOSC.Core.Events.OSCEventString, Assembly-CSharp, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &952249947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 952249936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b6729ebfc7bf403f9f3afb0c93ed10d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  receiver: {fileID: 483687587}
+  address: /table/fadeout
+  mapBundle: {fileID: 0}
+  onReceive:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 728543544}
+        m_MethodName: FadeOutTableForEnding
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: extOSC.Core.Events.OSCEventMessage, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &989952883
 GameObject:
@@ -2328,8 +2347,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 0
-  m_Color: {r: 1, g: 0.81528157, b: 0.5518868, a: 1}
-  m_Intensity: 2
+  m_Color: {r: 0.990566, g: 0.82288194, b: 0.4719206, a: 1}
+  m_Intensity: 1.7
   m_Range: 10
   m_SpotAngle: 35
   m_CookieSize: 10
@@ -4209,7 +4228,7 @@ GameObject:
   - component: {fileID: 1930046803}
   - component: {fileID: 1930046802}
   m_Layer: 0
-  m_Name: SpeechDetection
+  m_Name: SpeechDetectionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -15,9 +15,11 @@ namespace Marrow
 
 		private bool socketIsConnected;
 		private bool tableSceneStarted;
+		private bool tableOpeningEnded;
 
 		[Header("T2I related")]
 		public Material plateMaterial;
+		public Material plateTransparentMaterial;
 		public int attnGanImageWidth = 256;
         public int attnGanImageHeight = 256;
 		private float lastSpeechTimecode;
@@ -26,11 +28,21 @@ namespace Marrow
 		private int textureSwapCount;
 		private int plateTweenId;
 
+		private int currentPlateMaterialTargetBlend = 0;
+
+		private bool m_reactToGanSpeak;
+		public bool ReactToGanSpeak
+		{
+			get { return m_reactToGanSpeak; }
+			set { m_reactToGanSpeak = value; }
+		}
+
 		private void OnEnable()
 		{
 			//EventBus.TableSequenceEnded.AddListener(EnableText2Image);
 			EventBus.T2IEnable.AddListener(EnableText2Image);
 			EventBus.T2IDisable.AddListener(DisableText2Image);
+			EventBus.TableSequenceEnded.AddListener(OnTableOpeningEnded);
 
 			EventBus.DiningRoomEnded.AddListener(OnDiningRoomEnded);
             
@@ -45,6 +57,7 @@ namespace Marrow
 			//EventBus.TableSequenceEnded.RemoveListener(EnableText2Image);
 			EventBus.T2IEnable.RemoveListener(EnableText2Image);
 			EventBus.T2IDisable.RemoveListener(DisableText2Image);
+			EventBus.TableSequenceEnded.RemoveListener(OnTableOpeningEnded);
             
 			EventBus.DiningRoomEnded.RemoveListener(OnDiningRoomEnded);
 
@@ -59,8 +72,10 @@ namespace Marrow
 			// Image convert related
 			attnGanTextureA = new Texture2D(attnGanImageWidth, attnGanImageHeight);
 			plateMaterial.SetTexture("_MainTex", attnGanTextureA);
+			plateTransparentMaterial.SetTexture("_MainTex", attnGanTextureA);
 			attnGanTextureB = new Texture2D(attnGanImageWidth, attnGanImageHeight);
 			plateMaterial.SetTexture("_SecondTex", attnGanTextureB);
+			plateTransparentMaterial.SetTexture("_SecondTex", attnGanTextureB);
         }
 
 		void EnableText2Image()
@@ -83,16 +98,20 @@ namespace Marrow
 			socketIsConnected = false;
 		}
 
+		void OnTableOpeningEnded()
+		{
+			tableOpeningEnded = true;
+		}
+
 		public void OnAttnGanInputUpdate(string inputText)
         {
-			Debug.Log("OnAttnGanInputUpdate, startText2Image: " + startText2Image + ", socketIsConnected: " + socketIsConnected);
-			if (!startText2Image || !socketIsConnected)
+			//Debug.Log("OnAttnGanInputUpdate, startText2Image: " + startText2Image + ", socketIsConnected: " + socketIsConnected);
+			if (!startText2Image || !socketIsConnected || !tableOpeningEnded)
 				return;
 			if ((Time.time - lastSpeechTimecode) <= speechTimerLength)
                 return;
 
 			socketCommunication.EmitAttnGanRequest(inputText);
-			Debug.Log("EmitAttnGanRequest");
             
 			lastSpeechTimecode = Time.time;
         }
@@ -104,26 +123,63 @@ namespace Marrow
 			if (LeanTween.isTweening(plateTweenId))
 				return;
 			
-			int targetBlend;
             textureSwapCount++;
             if (textureSwapCount % 2 == 1)
             {
 				attnGanTextureB.LoadImage(receivedBase64Img);
-                targetBlend = 1;
+				currentPlateMaterialTargetBlend = 1;
             }
             else
             {
 				attnGanTextureA.LoadImage(receivedBase64Img);
-                targetBlend = 0;
+				currentPlateMaterialTargetBlend = 0;
             }
 
-			plateTweenId = LeanTween.value(gameObject, plateMaterial.GetFloat("_Blend"), targetBlend, .5f)
+			plateTweenId = LeanTween.value(gameObject, plateMaterial.GetFloat("_Blend"), currentPlateMaterialTargetBlend, .5f)
 			                        .setOnUpdate((float val) =>
                                      {
                                          plateMaterial.SetFloat("_Blend", val);
+										 plateTransparentMaterial.SetFloat("_Blend", val);
                                      })
 			                        .id;
         }
+
+		public void FadeTextureToColor()
+		{
+			if (currentPlateMaterialTargetBlend==0)
+			{
+				// change texB to white + blend to 1
+				SetTextureToWhite(attnGanTextureB);
+				currentPlateMaterialTargetBlend = 1;
+			}
+			else
+			{
+				// change texA to white + blend to 0
+				SetTextureToWhite(attnGanTextureA);
+				currentPlateMaterialTargetBlend = 0;
+			}
+
+			LeanTween.value(gameObject, plateMaterial.GetFloat("_Blend"), currentPlateMaterialTargetBlend, 1f)
+                                    .setOnUpdate((float val) =>
+                                    {
+                                        plateMaterial.SetFloat("_Blend", val);
+                                        plateTransparentMaterial.SetFloat("_Blend", val);
+                                    });
+		}
+
+		void SetTextureToWhite(Texture2D tex)
+		{
+			Color32 resetColor = new Color32(255, 255, 255, 255);
+			Color32[] resetColorArray = tex.GetPixels32();
+
+            for (int i = 0; i < resetColorArray.Length; i++)
+            {
+                resetColorArray[i] = resetColor;
+            }
+
+			tex.SetPixels32(resetColorArray);
+			tex.Apply();
+		}
 
         void OnDiningRoomEnded()
 		{
@@ -142,15 +198,17 @@ namespace Marrow
 			EventBus.TableSequenceStarted.Invoke();
 		}
 
-		public void ReceivedOscTableDinnerQuestionStart(string text)
+		public void ReceivedOscShowChosenDinner(string text)
         {
+			Debug.Log("Received Osc - Show the chosen dinner on the table");
 			Debug.Log(text);
 			EnableText2Image();
 			EventBus.T2IEnable.Invoke();
 			EventBus.DinnerQuestionStart.Invoke();
 
 			tableOpenSequence.UpdateSpeechDetectionText(text);
-			OnAttnGanInputUpdate(text);
+			//OnAttnGanInputUpdate(text);
+			socketCommunication.EmitAttnGanRequest(text);
         }
 
 		public void ReceivedOscControlStop(OSCMessage message)
@@ -167,19 +225,26 @@ namespace Marrow
 
 		public void ReceivedOscGanSpeak(int doSpeak)
 		{
+			if (!ReactToGanSpeak)
+				return;
+			
 			if (doSpeak==1)
 			{
 				// hide plates, disable name tag
-				tableOpenSequence.HidePlatesAndNameTags(true);
+				tableOpenSequence.HideSpotLightAndTexts(true);
 				// dim main light
-				tableOpenSequence.mainLight.ToggleOn(true, 0.5f, 1f, 0);
+				tableOpenSequence.mainLight.ToggleOn(true, 1f, 1f, 0);
+				tableOpenSequence.platesOnlySpotlight.ToggleOn(false, 0f, 1f, 0);
+
+				FadeTextureToColor();
 			}
 			else
 			{
 				// show plates, enable name tag
-				tableOpenSequence.HidePlatesAndNameTags(false);
+				tableOpenSequence.HideSpotLightAndTexts(false);
 				// reset main light
 				tableOpenSequence.mainLight.ToggleOn(true, 1.7f, 1f, 0);
+				tableOpenSequence.platesOnlySpotlight.ToggleOn(true, 2f, 1f, 0);
 			}
 		}
 
