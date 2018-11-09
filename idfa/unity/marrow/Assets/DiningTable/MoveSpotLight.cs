@@ -54,12 +54,25 @@ namespace Marrow
 			}
 
 			transform.position = lightPositions[roleIndex].position;
+
 			for (int i = 0; i < nameTags.Length; i++)
 			{
-				if (i==roleIndex && !nameTags[roleIndex].IsOn)
-                    nameTags[roleIndex].Show();
-				else if(i != roleIndex && nameTags[roleIndex].IsOn)
-					nameTags[roleIndex].Hide();
+				if (i==roleIndex)
+				{
+					if(!nameTags[i].IsOn)
+					{
+						nameTags[i].Show();
+                        //Debug.Log("show name: " + role);
+					}
+				}
+				else
+				{
+					if(nameTags[i].IsOn)
+					{
+						nameTags[i].Hide();
+                        //Debug.Log("hide name: " + role);
+					}
+				}
 			}
 
 		}

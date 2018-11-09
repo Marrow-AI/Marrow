@@ -38,8 +38,7 @@ namespace Marrow
 		public GameObject speechDetection;
 
         public Renderer tableRenderer;
-        public Material plateTextMaterial;
-
+        
         public GameObject[] nameTags;
         public GameObject[] plates;
         public GameObject[] plateTexts;
@@ -62,7 +61,8 @@ namespace Marrow
 		private IEnumerator tableSequenceCoroutine;
 
         private Material tableNormalMaterial;
-        private Material plateNormalMaterial;
+		private Material plateNormalMaterial;
+		private Material plateTransparentMaterial;
         private IEnumerator platesDissovleCoroutine;
 
         private float startTimecode;
@@ -103,7 +103,8 @@ namespace Marrow
  			nameTagAnimator = nameTags[0].transform.parent.GetComponent<Animator>();
 
             tableNormalMaterial = tableRenderer.sharedMaterial;
-            plateNormalMaterial = plates[0].GetComponent<Renderer>().sharedMaterial;
+			plateNormalMaterial = ExperienceTableManager.Instance.plateMaterial;
+			plateTransparentMaterial = ExperienceTableManager.Instance.plateTransparentMaterial;
 
             //lightFlickers = new LightFlicker[spotLights.Length];
             //for (int i = 0; i < lightFlickers.Length; i++)
@@ -114,7 +115,7 @@ namespace Marrow
 			platesOriginalPosition = new Vector3[plates.Length];
 			for (int i = 0; i < platesOriginalPosition.Length; i++)
 				platesOriginalPosition[i] = plates[i].transform.position;
-
+                
             Setup();
 
             //if (devMode)
@@ -140,13 +141,15 @@ namespace Marrow
 			if (Input.GetKeyDown("1"))
 				FadeInTable();
 			else if (Input.GetKeyDown("2"))
-				ExperienceTableManager.Instance.ReceivedOscTableDinnerQuestionStart(null);
+				ExperienceTableManager.Instance.ReceivedOscShowChosenDinner(null);
 			//else if (Input.GetKeyDown("3"))
-                //EndTableDinner();
+			//EndTableDinner();
 			else if (Input.GetKeyDown("4"))
 				ShowPlates();
 			else if (Input.GetKeyDown("l"))
 				SpotlightOnMom();
+			else if (Input.GetKeyDown("f"))
+				FadeOutTableForEnding();
 			else if (Input.GetKeyDown("e"))
 				ShowEndTitles();
         }
@@ -158,6 +161,10 @@ namespace Marrow
 			textMeshProSpeechDetection.color = Color.clear;
             UpdateNameTagsColor(Color.clear);
 			nameTagAnimator.enabled = true;
+			ExperienceTableManager.Instance.ReactToGanSpeak = false;
+
+			// Change table material back
+            tableRenderer.material = tableNormalMaterial;
 
             // Lights
 			spotLight.Restart();
@@ -167,23 +174,25 @@ namespace Marrow
 			title.SetActive(false);
 			speechDetection.SetActive(false);
             scriptText.SetActive(false);
-            for (int i = 0; i < plates.Length; i++)
-            {
-				plates[i].transform.position = new Vector3(
-                    platesOriginalPosition[i].x,
-                    platesOriginalPosition[i].y,
-                    platesOriginalPosition[i].z + 7.15f);
-				
-                // set plates same as table normal
-                plates[i].GetComponent<Renderer>().sharedMaterial = plateNormalMaterial;
-                plates[i].SetActive(false);
-            }
-            for (int i = 0; i < nameTags.Length; i++)
-                nameTags[i].SetActive(false);
 
             plateNormalMaterial.SetTexture("_MainTex", null);
             plateNormalMaterial.SetTexture("_SecondTex", null);
             plateNormalMaterial.SetFloat("_Blend", 0);
+			plateTransparentMaterial.SetTexture("_MainTex", null);
+			plateTransparentMaterial.SetTexture("_SecondTex", null);
+			plateTransparentMaterial.SetFloat("_Blend", 0);
+
+			for (int i = 0; i < plates.Length; i++)
+            {
+				//plates[i].transform.position = new Vector3(
+				//platesOriginalPosition[i].x,
+				//platesOriginalPosition[i].y,
+				//platesOriginalPosition[i].z + 7.15f);
+				plates[i].GetComponent<Renderer>().material = plateNormalMaterial;
+                plates[i].SetActive(false);
+            }
+            for (int i = 0; i < nameTags.Length; i++)
+                nameTags[i].SetActive(false);
 
             for (int i = 0; i < plateTexts.Length; i++)
                 plateTexts[i].SetActive(false);
@@ -230,6 +239,11 @@ namespace Marrow
 			LogCurrentTimecode("Fade In Table");
         }
 
+        void StartReactToGanSpeak()
+		{
+			ExperienceTableManager.Instance.ReactToGanSpeak = true;
+		}
+
 		public void StartT2i()
 		{
 			// ?
@@ -243,6 +257,7 @@ namespace Marrow
 		public void StartTableDinner()
         {
 			mainLight.ToggleOn(true, 1.7f, 1f, 0f);
+			mainLight.ChangeLightColor(Color.white);
 
 			// Show speech detection texts
 			speechDetection.SetActive(true);
@@ -270,8 +285,6 @@ namespace Marrow
 		{
 			yield return new WaitForSeconds(5f);
 
-			mainLight.ToggleOn(false, 0f, 1f, 0f);
-
 			// hide speech detection texts
             LeanTween.value(speechDetection, Color.white, Color.clear, 1f)
                      .setOnUpdate((Color col) => { textMeshProSpeechDetection.color = col; })
@@ -279,14 +292,6 @@ namespace Marrow
                          speechDetection.SetActive(false);
                          textMeshProSpeechDetection.text = "";
                      });
-
-			yield return new WaitForSeconds(1f);
-
-            // Change table material back
-            tableRenderer.material = tableNormalMaterial;
-
-			mainLight.ToggleOn(true, 1f, 1f, 0f);
-
 
             LogCurrentTimecode("End Table Dinner Qs");
 		}
@@ -312,6 +317,13 @@ namespace Marrow
             StartCoroutine(SpotlightOnMomSequence());
         }
 
+		public void FadeOutTableForEnding()
+        {
+			LogCurrentTimecode("Fade Out Table For Ending");
+
+			StartCoroutine(FadeOutTableSequence());
+        }
+
 		public void ShowEndTitles()
 		{
 			LogCurrentTimecode("Show End Titles");
@@ -324,7 +336,8 @@ namespace Marrow
 		{
 			platesOnlySpotlight.ToggleOn(true, .5f, 2f, 1f);
 
-			// Play plates in animation
+			// v1 - Play plates in animation
+            /*
             for (int i = 0; i < plates.Length; i++)
             {
 				plates[i].SetActive(true);
@@ -333,82 +346,114 @@ namespace Marrow
 				         .setOnComplete(()=>{  })
                          .setEaseOutBack();
             }
-            
-			yield return new WaitForSeconds(4.5f);
+            */
+
+            // V2 - Fade in plates
+			for (int i = 0; i < plates.Length; i++)
+            {
+				plates[i].GetComponent<Renderer>().material = plateTransparentMaterial;
+				plateTransparentMaterial.color = Color.clear;
+                plates[i].SetActive(true);
+            }
+			LeanTween.value(plates[0], Color.clear, Color.white, 2f)
+					 .setOnUpdate((Color col) => { plateTransparentMaterial.color = col; });
+
+			yield return new WaitForSeconds(2.1f);
+
+			for (int i = 0; i < plates.Length; i++)
+				plates[i].GetComponent<Renderer>().material = plateNormalMaterial;
+
+			yield return new WaitForSeconds(2.4f);
 
 			for (int i = 0; i < nameTags.Length; i++)
 				nameTags[i].SetActive(true);
-			
 			nameTagAnimator.SetTrigger("Show");
 
-			yield return new WaitForSeconds(3f);
+			yield return new WaitForSeconds(4f);
 
 			// Hide name tags
 			nameTagAnimator.SetTrigger("Hide");
-
-			mainLight.ToggleOn(true, 1.7f, 1f, 0f);
+            
+			mainLight.ResetColor();
 			platesOnlySpotlight.ToggleOn(true, 2f, 2f, 0f);
+            
+			yield return new WaitForSeconds(3f);
+
+			nameTagAnimator.enabled = false;
+
+			// Texture fade out
+			ExperienceTableManager.Instance.FadeTextureToColor();
 
 			yield return new WaitForSeconds(2f);
 
-			nameTagAnimator.enabled = false;
+			Debug.Log("Change table material back");
+            tableRenderer.material = tableNormalMaterial;
 		}
 
 		IEnumerator SpotlightOnMomSequence()
         {
             LogCurrentTimecode("Spotlight on mom");
 			//spotLight.TargetOnPlate(0, 2.4f, 1f);
-			spotLight.GetComponent<MoveSpotLight>().UpdateSpotlightPosition("mom");
+
+			//spotLight.GetComponent<MoveSpotLight>().UpdateSpotlightPosition("mom");
+
 			scriptText.SetActive(true);
 
             yield return null;
-            
+
+			StartReactToGanSpeak();
+
             EventBus.TableSequenceEnded.Invoke();
         }
 
+		IEnumerator FadeOutTableSequence()
+		{
+			mainLight.ToggleOn(false, 0f, 3f, 0f);
+            platesOnlySpotlight.ToggleOn(false, 0f, 3f, 0);
+            spotLight.ToggleOn(false, 0f, 3f, 0);
+
+            yield return new WaitForSeconds(3.1f);
+
+            HideSpotLightAndTexts(true);
+
+            for (int i = 0; i < plates.Length; i++)
+                plates[i].SetActive(false);
+		}
+
 		IEnumerator ShowEndTitlesSequence()
 		{
-			mainLight.ToggleOn(true, 1f, 3f, 0f);
-			platesOnlySpotlight.ToggleOn(false, 0f, 3f, 0);
-			spotLight.ToggleOn(false, 0f, 3f, 0);
-
-			yield return new WaitForSeconds(3f);
-            
-			HidePlatesAndNameTags(true);
-			            
-			yield return new WaitForSeconds(2f);
-
             // fade in main titles
             title.SetActive(true);
             LeanTween.value(title, UpdateMainTitleColor, Color.clear, Color.white, 2f);
 
 			yield return new WaitForSeconds(5f);
-
+            
 			// fade out main titles
 			LeanTween.value(title, UpdateMainTitleColor, Color.white, Color.clear, 3f)
 			         .setOnComplete(()=>{ title.SetActive(false); });
 
-			mainLight.ToggleOn(false, 0f, 2f, 0f);
 			yield return new WaitForSeconds(3f);
 
 			LogCurrentTimecode("Table end end!");
 		}
 
-		public void HidePlatesAndNameTags(bool toHide)
+		public void HideSpotLightAndTexts(bool toHide)
 		{
 			if (toHide)
 			{
+				spotLight.gameObject.SetActive(false);
+				scriptText.SetActive(false);
 				for (int i = 0; i < plates.Length; i++)
                 {
-                    plates[i].SetActive(false);
                     nameTags[i].SetActive(false);
                 }
 			}
 			else
 			{
+				spotLight.gameObject.SetActive(true);
+				scriptText.SetActive(true);
 				for (int i = 0; i < plates.Length; i++)
                 {
-					plates[i].SetActive(true);
 					nameTags[i].SetActive(true);
                 }
 			}

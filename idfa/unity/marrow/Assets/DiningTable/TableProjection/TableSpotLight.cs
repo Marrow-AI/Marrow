@@ -126,6 +126,20 @@ namespace Marrow
                          });
             }
 		}
+        
+		public void ChangeLightColor(Color newLightColor)
+        {
+			LeanTween.value(gameObject, m_light.color, newLightColor, 1f)
+                         .setOnUpdate((Color col) =>
+                         {
+                             m_light.color = col;
+                         });
+        }
+
+		public void ResetColor()
+		{
+			ChangeLightColor(initialColor);
+		}
 
 		public void BecomeGeneralMainLight(Texture cookie)
 		{
