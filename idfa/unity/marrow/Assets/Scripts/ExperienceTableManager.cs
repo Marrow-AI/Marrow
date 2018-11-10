@@ -78,6 +78,10 @@ namespace Marrow
 			plateTransparentMaterial.SetTexture("_SecondTex", attnGanTextureB);
         }
 
+		/////////////////////////
+		///  Events callback  ///
+		/////////////////////////
+
 		void EnableText2Image()
 		{
 			startText2Image = true;
@@ -144,8 +148,14 @@ namespace Marrow
 			                        .id;
         }
 
+		/////////////////////////
+        ///  ---------------  ///
+        /////////////////////////
+
 		public void FadeTextureToColor()
 		{
+			// V1
+            /*
 			if (currentPlateMaterialTargetBlend==0)
 			{
 				// change texB to white + blend to 1
@@ -164,6 +174,25 @@ namespace Marrow
                                     {
                                         plateMaterial.SetFloat("_Blend", val);
                                         plateTransparentMaterial.SetFloat("_Blend", val);
+                                    });
+            */
+
+            // V2 - fade in shader
+			LeanTween.value(gameObject, plateMaterial.GetFloat("_Fade"), 1f, 1f)
+                                    .setOnUpdate((float val) =>
+                                    {
+                                		plateMaterial.SetFloat("_Fade", val);
+                                		plateTransparentMaterial.SetFloat("_Fade", val);
+                                    });
+		}
+
+		void FadeColorToTexture()
+		{
+			LeanTween.value(gameObject, plateMaterial.GetFloat("_Fade"), 0f, 1f)
+                                    .setOnUpdate((float val) =>
+                                    {
+                                        plateMaterial.SetFloat("_Fade", val);
+                                        plateTransparentMaterial.SetFloat("_Fade", val);
                                     });
 		}
 
@@ -245,6 +274,8 @@ namespace Marrow
 				// reset main light
 				tableOpenSequence.mainLight.ToggleOn(true, 1.7f, 1f, 0);
 				tableOpenSequence.platesOnlySpotlight.ToggleOn(true, 2f, 1f, 0);
+
+				FadeColorToTexture();
 			}
 		}
 
