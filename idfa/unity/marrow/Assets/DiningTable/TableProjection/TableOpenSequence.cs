@@ -381,8 +381,8 @@ namespace Marrow
 
 			nameTagAnimator.enabled = false;
 
-			// Texture fade out
-			ExperienceTableManager.Instance.FadeTextureToColor();
+			// Texture fade out --> no more
+			//ExperienceTableManager.Instance.FadeTextureToColor();
 
 			yield return new WaitForSeconds(2f);
 
