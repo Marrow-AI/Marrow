@@ -640,6 +640,7 @@
                 "Anyways, no-one ever listens"
             ],
 
+            "triggers-echo": [[0.7, 1.2],[24.8, 25.2]],
             "triggers-gan": [
                     { 
                         "text": "A family and a virus",
@@ -694,7 +695,11 @@
                         "pause": 2850
                     },
                     {
-                        "text": "In the end, how will you make sure something of you is left?"
+                        "text": "In the end, how will you make sure something of you is left?",
+                        "pause": 2000
+                    },
+                    {
+                        "text": "x x x 0 0 0"
                     }
                 ]
             }
