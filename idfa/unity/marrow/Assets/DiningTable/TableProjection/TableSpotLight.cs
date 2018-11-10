@@ -39,6 +39,12 @@ namespace Marrow
             m_light.intensity = 0;
 		}
 
+		public void RestartSoftly()
+		{
+			ToggleOn(false, 0f, 1f, 0);
+			Invoke("Restart", 1.1f);
+		}
+
     	public void ToggleOn(bool turnOn, float intensity, float time, float delay)
     	{
 			if (turnOn)

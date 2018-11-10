@@ -16,6 +16,12 @@ namespace Marrow
 			m_light = GetComponent<Light>();
 		}
 
+		public void Reset()
+		{
+			for (int i = 0; i < nameTags.Length; i++)
+				nameTags[i].Hide();
+		}
+
 		public void UpdateSpotlightPosition(string role)
 		{
 			float delay=0f;

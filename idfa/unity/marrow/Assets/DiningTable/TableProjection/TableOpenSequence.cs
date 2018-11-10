@@ -29,7 +29,6 @@ namespace Marrow
 
         [Space(10)]
 		public TableSpotLight mainLight;
-        //public TableSpotLight[] spotLights;
         public TableSpotLight platesOnlySpotlight;
 		public TableSpotLight spotLight;
 
@@ -44,10 +43,6 @@ namespace Marrow
         public GameObject[] plateTexts;
 		public GameObject scriptText;
 
-        public Texture tableCookie;
-        //public Shader textMeshProSurfaceShader;
-        //public Shader textMeshProOverlayShader;
-
 		private Vector3[] platesOriginalPosition;
 		private Animator nameTagAnimator;
 
@@ -55,35 +50,35 @@ namespace Marrow
 		private TextMeshPro textMeshProSpeechDetection;
 		private TextMeshPro textMeshProScript;
         
-        private IEnumerator titleSequencePart1Coroutine;
-        private IEnumerator titleSequencePart2Coroutine;
-		private IEnumerator creditsSequenceCoroutine;
-		private IEnumerator tableSequenceCoroutine;
-
+		//public Texture tableCookie;
+        //private IEnumerator titleSequencePart1Coroutine;
+        //private IEnumerator titleSequencePart2Coroutine;
+        //private IEnumerator creditsSequenceCoroutine;
+        //private IEnumerator tableSequenceCoroutine;
+		//private IEnumerator platesDissovleCoroutine;
+        
         private Material tableNormalMaterial;
 		private Material plateNormalMaterial;
 		private Material plateTransparentMaterial;
-        private IEnumerator platesDissovleCoroutine;
 
         private float startTimecode;
         private LightFlicker[] lightFlickers;
-
+		private bool tableSceneStart;
+		private bool tableSequenceIsEnded;
+        
         [Header("Dev")]
-        public AudioSource bgAudio;
         public bool devMode;
-        public bool skipGanTalk;
         public Texture[] plateDevTextures;
         private int textureSwapCount;
         private WaitForSeconds stayWait;
 
-		private bool tableSceneStart;
 
         private void OnEnable()
         {
 			EventBus.TableSequenceStarted.AddListener(FadeInTable);
 			EventBus.DinnerQuestionStart.AddListener(StartTableDinner);
             
-			EventBus.DiningRoomEnded.AddListener(StartCredits);
+			EventBus.ExperienceEnded.AddListener(OnControlStop);
         }
 
         private void OnDisable()
@@ -91,7 +86,7 @@ namespace Marrow
 			EventBus.TableSequenceStarted.RemoveListener(FadeInTable);
 			EventBus.DinnerQuestionStart.RemoveListener(StartTableDinner);
             
-			EventBus.DiningRoomEnded.RemoveListener(StartCredits);
+			EventBus.ExperienceEnded.RemoveListener(OnControlStop);
         }
 
         void Start()
@@ -105,28 +100,14 @@ namespace Marrow
             tableNormalMaterial = tableRenderer.sharedMaterial;
 			plateNormalMaterial = ExperienceTableManager.Instance.plateMaterial;
 			plateTransparentMaterial = ExperienceTableManager.Instance.plateTransparentMaterial;
-
-            //lightFlickers = new LightFlicker[spotLights.Length];
-            //for (int i = 0; i < lightFlickers.Length; i++)
-                //lightFlickers[i] = spotLights[i].GetComponent<LightFlicker>();
-
+            
             stayWait = new WaitForSeconds(1f);
 
 			platesOriginalPosition = new Vector3[plates.Length];
 			for (int i = 0; i < platesOriginalPosition.Length; i++)
 				platesOriginalPosition[i] = plates[i].transform.position;
                 
-            Setup();
-
-            //if (devMode)
-            //{
-            //    if (skipGanTalk)
-            //        bgAudio.time = 31.7f;
-
-            //    bgAudio.Play();
-            //    StartTitle();
-            //}
-
+            Setup();            
         }
 
         private void Update()
@@ -142,12 +123,10 @@ namespace Marrow
 				FadeInTable();
 			else if (Input.GetKeyDown("2"))
 				ExperienceTableManager.Instance.ReceivedOscShowChosenDinner(null);
-			//else if (Input.GetKeyDown("3"))
-			//EndTableDinner();
 			else if (Input.GetKeyDown("4"))
 				ShowPlates();
 			else if (Input.GetKeyDown("l"))
-				SpotlightOnMom();
+				SpotlightOnRole("mom");
 			else if (Input.GetKeyDown("f"))
 				FadeOutTableForEnding();
 			else if (Input.GetKeyDown("e"))
@@ -159,35 +138,37 @@ namespace Marrow
             // reset
             textMeshProTitle.color = Color.clear;
 			textMeshProSpeechDetection.color = Color.clear;
-            UpdateNameTagsColor(Color.clear);
+            //UpdateNameTagsColor(Color.clear);
 			nameTagAnimator.enabled = true;
 			ExperienceTableManager.Instance.ReactToGanSpeak = false;
+			tableSceneStart = false;
+			tableSequenceIsEnded = false;
 
-			// Change table material back
+			// Table - change material back
             tableRenderer.material = tableNormalMaterial;
 
-            // Lights
+			// Lights
+			mainLight.Restart();
 			spotLight.Restart();
             platesOnlySpotlight.Restart();
 
-            // toggle off stuff
-			title.SetActive(false);
-			speechDetection.SetActive(false);
-            scriptText.SetActive(false);
-
+            // Plates
             plateNormalMaterial.SetTexture("_MainTex", null);
             plateNormalMaterial.SetTexture("_SecondTex", null);
             plateNormalMaterial.SetFloat("_Blend", 0);
+			plateNormalMaterial.SetFloat("_Fade", 0);
 			plateTransparentMaterial.SetTexture("_MainTex", null);
 			plateTransparentMaterial.SetTexture("_SecondTex", null);
 			plateTransparentMaterial.SetFloat("_Blend", 0);
+			plateTransparentMaterial.SetFloat("_Fade", 0);
+
+			// toggle off stuff
+            title.SetActive(false);
+            speechDetection.SetActive(false);
+            scriptText.SetActive(false);
 
 			for (int i = 0; i < plates.Length; i++)
             {
-				//plates[i].transform.position = new Vector3(
-				//platesOriginalPosition[i].x,
-				//platesOriginalPosition[i].y,
-				//platesOriginalPosition[i].z + 7.15f);
 				plates[i].GetComponent<Renderer>().material = plateNormalMaterial;
                 plates[i].SetActive(false);
             }
@@ -196,35 +177,56 @@ namespace Marrow
 
             for (int i = 0; i < plateTexts.Length; i++)
                 plateTexts[i].SetActive(false);
-			
-            // re-position stuff
-
-            // clean stuff
         }
         
 		///////////////////////////////
         ///     Events Sequences     //
 		///////////////////////////////
 
-        /// ======== OLD =========
-        public void StartTitle()
-        {
-            startTimecode = Time.time;
-
-            // TODO: cancel if it's running
-            titleSequencePart1Coroutine = TitleSequence();
-            StartCoroutine(titleSequencePart1Coroutine);
-        }
-
-		public void StartCredits()
-		{
-			Setup();
-			creditsSequenceCoroutine = CreditsSequence();
-			StartCoroutine(creditsSequenceCoroutine);
-		}
-		/// ======================
-
 		/// ======== NEW =========
+		public void OnControlStop()
+		{
+			// End everything
+			LeanTween.cancelAll(false);
+			nameTagAnimator.enabled = false;
+
+			// Fade out everything
+			mainLight.RestartSoftly();
+			spotLight.RestartSoftly();
+			platesOnlySpotlight.RestartSoftly();
+			spotLight.GetComponent<MoveSpotLight>().Reset();
+
+			FadeOutTMPTexts();
+		}
+
+        void FadeOutTMPTexts()
+		{
+			if (title.activeSelf)
+            {
+                LeanTween.value(title, UpdateMainTitleColor, Color.white, Color.clear, 1f)
+                     .setOnComplete(() => { title.SetActive(false); });
+            }
+            if (speechDetection.activeSelf)
+            {
+                LeanTween.value(speechDetection, Color.white, Color.clear, 1f)
+                     .setOnUpdate((Color col) => { textMeshProSpeechDetection.color = col; })
+                     .setOnComplete(() => {
+                         speechDetection.SetActive(false);
+                         textMeshProSpeechDetection.text = "";
+                     });
+            }
+            if (scriptText.activeSelf)
+            {
+                LeanTween.value(scriptText, Color.white, Color.clear, 1f)
+                         .setOnUpdate((Color col) => { textMeshProScript.color = col; })
+                         .setOnComplete(() => {
+                             scriptText.SetActive(false);
+                             textMeshProScript.text = "";
+                             textMeshProScript.color = Color.white;
+                         });
+            }
+		}
+
 		public void FadeInTable()
         {
             startTimecode = Time.time;
@@ -302,19 +304,12 @@ namespace Marrow
 
 			StartCoroutine(ShowPlateSequence());
         }
-
-		public void SpotlightOnMom()
+        
+		public void SpotlightOnRole(string role)
         {
-			LogCurrentTimecode("Spotlight On Mom");
+            LogCurrentTimecode("Spotlight On " + role);
 
-			StartCoroutine(SpotlightOnMomSequence());
-        }
-
-		public void SpotlightOnMom(string role)
-        {
-            LogCurrentTimecode("Spotlight On Mom");
-
-            StartCoroutine(SpotlightOnMomSequence());
+            StartCoroutine(SpotlightOnRoleSequence(role));
         }
 
 		public void FadeOutTableForEnding()
@@ -390,20 +385,24 @@ namespace Marrow
             tableRenderer.material = tableNormalMaterial;
 		}
 
-		IEnumerator SpotlightOnMomSequence()
+		IEnumerator SpotlightOnRoleSequence(string role)
         {
-            LogCurrentTimecode("Spotlight on mom");
-			//spotLight.TargetOnPlate(0, 2.4f, 1f);
+			if (!tableSequenceIsEnded && role=="mom")
+			{
+				LogCurrentTimecode("Spotlight on mom");
+                //spotLight.GetComponent<MoveSpotLight>().UpdateSpotlightPosition("mom");
+                scriptText.SetActive(true);
 
-			//spotLight.GetComponent<MoveSpotLight>().UpdateSpotlightPosition("mom");
+                yield return null;
 
-			scriptText.SetActive(true);
-
-            yield return null;
-
-			StartReactToGanSpeak();
-
-            EventBus.TableSequenceEnded.Invoke();
+                StartReactToGanSpeak();
+                EventBus.TableSequenceEnded.Invoke();
+				tableSequenceIsEnded = true;
+			}
+			else
+			{
+				spotLight.GetComponent<MoveSpotLight>().UpdateSpotlightPosition("mom");
+			}
         }
 
 		IEnumerator FadeOutTableSequence()
@@ -412,9 +411,11 @@ namespace Marrow
             platesOnlySpotlight.ToggleOn(false, 0f, 3f, 0);
             spotLight.ToggleOn(false, 0f, 3f, 0);
 
-            yield return new WaitForSeconds(3.1f);
+			FadeOutTMPTexts();
 
-            HideSpotLightAndTexts(true);
+			spotLight.GetComponent<MoveSpotLight>().Reset();
+
+            yield return new WaitForSeconds(3.1f);
 
             for (int i = 0; i < plates.Length; i++)
                 plates[i].SetActive(false);
@@ -460,7 +461,7 @@ namespace Marrow
 		}
 
 		/// ======================
-
+        /*
         IEnumerator TitleSequence()
         {
             // Temp
@@ -603,7 +604,6 @@ namespace Marrow
 
 			// TODO: credits!
         }
-
         void OnVideoEvent(MediaPlayer mp, MediaPlayerEvent.EventType et, ErrorCode errorCode)
         {
             switch (et)
@@ -619,6 +619,7 @@ namespace Marrow
                     break;
             }
         }
+        */
 
         IEnumerator AutoDissolvePlates()
         {
