@@ -804,16 +804,9 @@ MonoBehaviour:
   - {fileID: 1586576787}
   - {fileID: 1793321388}
   - {fileID: 1185327923}
-  plateTexts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  plateTexts: []
   scriptText: {fileID: 1097309984}
-  tableCookie: {fileID: 2800000, guid: 51ac40507bd6040fe845adb50bce094e, type: 3}
-  bgAudio: {fileID: 1907999612}
   devMode: 1
-  skipGanTalk: 1
   plateDevTextures:
   - {fileID: 2800000, guid: 7915d644fbd43445b8d1a09fcb04c435, type: 3}
   - {fileID: 2800000, guid: 5fb48de230a00431db2eed4486a92dcc, type: 3}
@@ -956,7 +949,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 728543544}
-        m_MethodName: SpotlightOnMom
+        m_MethodName: SpotlightOnRole
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
