@@ -165,7 +165,7 @@ namespace Marrow
 			// toggle off stuff
             title.SetActive(false);
             speechDetection.SetActive(false);
-            scriptText.SetActive(false);
+			scriptText.GetComponent<Renderer>().enabled = false;
 
 			for (int i = 0; i < plates.Length; i++)
             {
@@ -215,12 +215,12 @@ namespace Marrow
                          textMeshProSpeechDetection.text = "";
                      });
             }
-            if (scriptText.activeSelf)
+			if (scriptText.GetComponent<Renderer>().enabled)
             {
                 LeanTween.value(scriptText, Color.white, Color.clear, 1f)
                          .setOnUpdate((Color col) => { textMeshProScript.color = col; })
                          .setOnComplete(() => {
-                             scriptText.SetActive(false);
+					         scriptText.GetComponent<Renderer>().enabled = true;
                              textMeshProScript.text = "";
                              textMeshProScript.color = Color.white;
                          });
@@ -391,7 +391,7 @@ namespace Marrow
 			{
 				LogCurrentTimecode("Spotlight on mom");
                 //spotLight.GetComponent<MoveSpotLight>().UpdateSpotlightPosition("mom");
-                scriptText.SetActive(true);
+				scriptText.GetComponent<Renderer>().enabled = true;
 
                 yield return null;
 
@@ -443,7 +443,7 @@ namespace Marrow
 			if (toHide)
 			{
 				spotLight.gameObject.SetActive(false);
-				scriptText.SetActive(false);
+				scriptText.GetComponent<Renderer>().enabled = false;
 				for (int i = 0; i < plates.Length; i++)
                 {
                     nameTags[i].SetActive(false);
@@ -452,7 +452,7 @@ namespace Marrow
 			else
 			{
 				spotLight.gameObject.SetActive(true);
-				scriptText.SetActive(true);
+				scriptText.GetComponent<Renderer>().enabled = true;
 				for (int i = 0; i < plates.Length; i++)
                 {
 					nameTags[i].SetActive(true);
