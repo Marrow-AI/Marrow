@@ -346,10 +346,19 @@ class Engine:
 
         if "triggers-end" in line:
             self.schedule_osc(delay, self.voice_client, "/control/strings", [0.8, 0.0])
-            #self.schedule_osc(delay, self.voice_client, "/control/musicbox", [0.5, 0.0, 0.01])
+            self.schedule_osc(delay, self.voice_client, "/control/musicbox", [0.85, 0.0, 0.85, 0.5])
             self.schedule_osc(delay, self.voice_client, "/control/synthbass", [0.85, 0.0, 0.0])
             self.schedule_function(delay,self.stop_noise)
-            self.schedule_osc(delay, self.t2i_client, "/table/fadeout", 1)
+
+        if "triggers-transition" in line:
+            # Transition sequence
+            self.schedule_osc(delay,self.voice_client, "/control/musicbox", [0.0, 0.2, 0.8, 0.0])
+            self.schedule_osc(delay + 1,self.voice_client, "/control/beacon", [0.9, 0.0])
+            self.schedule_osc(delay + 1 ,self.voice_client, "/control/bassheart", [0.9, 0.5])
+            self.schedule_osc(delay + 1,self.voice_client, "/control/membrane", [0.9, 0.4, 0.0])
+            self.schedule_osc(delay + 4,self.voice_client, "/control/membrane", [0.9, 0.4, 0.1])
+
+
 
 
         if "triggers-gan" in line:
@@ -364,10 +373,11 @@ class Engine:
             if self.script.awaiting_index == self.script.length -1:
                 print("Ending sequence!!")
                 self.state = "END"
-                self.schedule_osc(delay, self.voice_client, "/control/musicbox", [0.0, 0.0])
-                self.schedule_osc(delay, self.voice_client, "/control/start", 1)
-                self.say(delay + 12, callback = self.next_line, echos = echo)
-                self.schedule_osc(delay + 25, self.t2i_client, "/table/titles", 1)
+                self.schedule_osc(delay, self.t2i_client, "/table/fadeout", 1)
+                self.schedule_osc(delay, self.voice_client, "/control/musicbox", [0.9, 0.0, 0.0, 0.5])
+                self.schedule_osc(delay + 19, self.voice_client, "/control/start", 1)
+                self.say(delay + 6, callback = self.next_line, echos = echo)
+                self.schedule_osc(delay + 19, self.t2i_client, "/table/titles", 1)
             else:
                 self.say(delay, callback = self.next_line, echos = echo)
             if "triggers-effect" in line:
@@ -397,11 +407,10 @@ class Engine:
                 self.preload_speech("gan_responses/{}.wav".format(self.script.awaiting_index + 1))
                 if (self.script.awaiting_index + 1 == self.script.length -1):
                     # Prep for the ending sequence
-                    self.voice_client.send_message("/control/stop", 1)
                     self.voice_client.send_message("/control/strings", [0.0, 0.5])
                     self.voice_client.send_message("/control/bells", [0.0, 0.2])
                     self.voice_client.send_message("/control/bassheart", [0.0, 0.0])
-                    self.voice_client.send_message("/control/membrane", [0.0, 0.0])
+                    self.voice_client.send_message("/control/membrane", [0.0, 0.0, 0.0])
 
             self.schedule_function(delay, self.show_next_line)
         else:
@@ -410,7 +419,8 @@ class Engine:
     def end(self):
         self.state = "END"
         print("END")
-        self.t2i_client.send_message("/gan/end",1)
+        self.schedule_osc(10, self.voice_client, "/control/stop", 1)
+        self.schedule_osc(10, self.t2i_client, "/control/stop", 1)
         #self.pix2pix_client.send_message("/gan/end",1)
 
     def say(self, delay_sec = 0, delay_effect = False, callback = None, echos = None):
@@ -441,13 +451,12 @@ class Engine:
 
 
             if self.state == "GAN":
-                self.schedule_osc(delay_sec,self.voice_client, "/control/bassheart", [0.8, 0.5])
-                self.schedule_osc(delay_sec,self.voice_client, "/control/membrane", [0.8, 0.3])
-                self.schedule_osc(delay_sec,self.voice_client, "/control/musicbox", [0.5, 0.0])
 
+                # coming back
                 self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/bassheart", [0.65, 0.0])
-                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/musicbox", [0.8, 0.1])
-                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/membrane", [0.65, 0.0])
+                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/musicbox", [0.65, 0.2, 0.65, 0.5])
+                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/membrane", [0.65, 0.0, 0.0])
+                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/beacon", [0.8, 0.1])
             #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
             #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/bassheart", [1.0, 0.0])
 
@@ -512,6 +521,7 @@ class Engine:
     def stop(self):
         self.script.reset()
         self.voice_client.send_message("/control/stop",1)
+        self.voice_client.send_message("/control/membrane",[0.0, 0.0, 0.0])
         self.t2i_client.send_message("/control/stop",1)
         self.t2i_client.send_message("/table/fadeout",1)
         self.voice_client.send_message("/speech/stop",1)
@@ -527,10 +537,11 @@ class Engine:
         self.pause_listening()
 
         self.voice_client.send_message("/control/bells", [0.0, 0.2])
-        self.voice_client.send_message("/control/musicbox", [0.0, 0.0])
+        self.voice_client.send_message("/control/musicbox", [0.0, 0.0, 0.0, 0.5])
         self.voice_client.send_message("/control/strings", [0.0, 0.0])
         self.voice_client.send_message("/control/bassheart", [0.0, 0.0])
-        self.voice_client.send_message("/control/membrane", [0.0, 0.0])
+        self.voice_client.send_message("/control/membrane", [0.0, 0.0, 0.0])
+        self.voice_client.send_message("/control/beacon", [0.0, 0.0])
         self.voice_client.send_message("/control/synthbass", [0.0, 0.0, 0.0])
 
         self.t2i_client.send_message("/control/start",1)
@@ -539,9 +550,9 @@ class Engine:
         #self.schedule_function(0.5, self.play_effect)
         self.say(delay_sec = 0.5, callback=self.pre_question)
         self.schedule_osc(13.4, self.voice_client, "/control/start", 1)
-        self.schedule_osc(31.5, self.voice_client, "/control/strings", [0.0, 0.5])
-        self.schedule_osc(61.5, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
-        self.schedule_function(61.5, self.start_noise)
+        self.schedule_osc(31.51, self.voice_client, "/control/strings", [0.0, 0.5])
+        self.schedule_osc(61.51, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
+        self.schedule_function(61.51, self.start_noise)
 
         """
         self.voice_client.send_message("/control/init",1)
@@ -574,7 +585,7 @@ class Engine:
         self.preload_speech("gan_question/line.wav")
         self.schedule_function(6, self.start_question)
         self.schedule_osc(6, self.voice_client, "/control/strings", [0.5, 0.0])
-        self.schedule_osc(6, self.voice_client, "/control/bells", [0.8, 0.0])
+        self.schedule_osc(6, self.voice_client, "/control/bells", [0.7, 0.0])
         self.schedule_osc(6, self.voice_client, "/control/synthbass", [0.8, 0.0, 0.0])
 
 
@@ -643,7 +654,10 @@ class Engine:
     def show_plates(self):
         print("Show plates")
         self.t2i_client.send_message("/table/showplates", 1)
-        self.voice_client.send_message("/control/musicbox", [0.8, 0.1])
+
+        # Main theme
+        self.voice_client.send_message("/control/musicbox", [0.7, 0.2, 0.0, 0.5])
+        self.voice_client.send_message("/control/beacon", [0.8, 0.1])
 
     def spotlight_mom(self):
         print("Spotlight on mom")
