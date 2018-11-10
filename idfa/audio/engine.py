@@ -349,6 +349,7 @@ class Engine:
             #self.schedule_osc(delay, self.voice_client, "/control/musicbox", [0.5, 0.0, 0.01])
             self.schedule_osc(delay, self.voice_client, "/control/synthbass", [0.85, 0.0, 0.0])
             self.schedule_function(delay,self.stop_noise)
+            self.schedule_osc(delay, self.t2i_client, "/table/fadeout", 1)
 
 
         if "triggers-gan" in line:
@@ -363,8 +364,10 @@ class Engine:
             if self.script.awaiting_index == self.script.length -1:
                 print("Ending sequence!!")
                 self.state = "END"
+                self.schedule_osc(delay, self.voice_client, "/control/musicbox", [0.0, 0.0])
                 self.schedule_osc(delay, self.voice_client, "/control/start", 1)
                 self.say(delay + 12, callback = self.next_line, echos = echo)
+                self.schedule_osc(delay + 25, self.t2i_client, "/table/titles", 1)
             else:
                 self.say(delay, callback = self.next_line, echos = echo)
             if "triggers-effect" in line:
