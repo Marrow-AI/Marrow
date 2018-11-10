@@ -35,10 +35,10 @@ OSCdef.new( \effectload, { |data,time,source|
 	}
 }, '/effect/load');
 
-TXSystem1.start(showAudioOptions: false);
 
+TXSystem1.start(showAudioOptions: false)
 )
-
+;
 
 
 

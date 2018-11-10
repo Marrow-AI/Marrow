@@ -19,7 +19,7 @@ from script import Script
 
 sys.path.append(os.path.abspath('./emotion'))
 
-from offline_ser import LiveSer
+#from offline_ser import LiveSer
 from mental_state import MentalState
 
 from google_recognizer import Recognizer
@@ -346,8 +346,8 @@ class Engine:
 
         if "triggers-end" in line:
             self.schedule_osc(delay, self.voice_client, "/control/strings", [0.8, 0.0])
-            self.schedule_osc(delay, self.voice_client, "/control/bells", [0.5, 0.0, 0.01])
-            self.schedule_osc(delay, self.voice_client, "/control/synthbass", [0.75, 0.0, 0.0])
+            #self.schedule_osc(delay, self.voice_client, "/control/musicbox", [0.5, 0.0, 0.01])
+            self.schedule_osc(delay, self.voice_client, "/control/synthbass", [0.85, 0.0, 0.0])
             self.schedule_function(delay,self.stop_noise)
 
 
@@ -396,7 +396,7 @@ class Engine:
                     # Prep for the ending sequence
                     self.voice_client.send_message("/control/stop", 1)
                     self.voice_client.send_message("/control/strings", [0.0, 0.5])
-                    self.voice_client.send_message("/control/bells", [0.0, 0.2, 0.0])
+                    self.voice_client.send_message("/control/bells", [0.0, 0.2])
                     self.voice_client.send_message("/control/bassheart", [0.0, 0.0])
                     self.voice_client.send_message("/control/membrane", [0.0, 0.0])
 
@@ -440,11 +440,11 @@ class Engine:
             if self.state == "GAN":
                 self.schedule_osc(delay_sec,self.voice_client, "/control/bassheart", [0.8, 0.5])
                 self.schedule_osc(delay_sec,self.voice_client, "/control/membrane", [0.8, 0.3])
-                self.schedule_osc(delay_sec,self.voice_client, "/control/bells", [0.5, 0.0, 0.01])
+                self.schedule_osc(delay_sec,self.voice_client, "/control/musicbox", [0.5, 0.0])
 
-                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/bassheart", [0.3, 0.0])
-                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/bells", [0.8, 0.1, 0.01])
-                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/membrane", [0.3, 0.0])
+                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/bassheart", [0.65, 0.0])
+                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/musicbox", [0.8, 0.1])
+                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/membrane", [0.65, 0.0])
             #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
             #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/bassheart", [1.0, 0.0])
 
@@ -523,7 +523,8 @@ class Engine:
         self.voice_client.send_message("/control/stop", 1)
         self.pause_listening()
 
-        self.voice_client.send_message("/control/bells", [0.0, 0.2, 0.0])
+        self.voice_client.send_message("/control/bells", [0.0, 0.2])
+        self.voice_client.send_message("/control/musicbox", [0.0, 0.0])
         self.voice_client.send_message("/control/strings", [0.0, 0.0])
         self.voice_client.send_message("/control/bassheart", [0.0, 0.0])
         self.voice_client.send_message("/control/membrane", [0.0, 0.0])
@@ -569,9 +570,9 @@ class Engine:
     def pre_question(self):
         self.preload_speech("gan_question/line.wav")
         self.schedule_function(6, self.start_question)
-        self.schedule_osc(6, self.voice_client, "/control/strings", [0.8, 0.0])
-        self.schedule_osc(6, self.voice_client, "/control/bells", [0.75, 0.0, 0.0])
-        self.schedule_osc(6, self.voice_client, "/control/synthbass", [0.75, 0.0, 0.0])
+        self.schedule_osc(6, self.voice_client, "/control/strings", [0.5, 0.0])
+        self.schedule_osc(6, self.voice_client, "/control/bells", [0.8, 0.0])
+        self.schedule_osc(6, self.voice_client, "/control/synthbass", [0.8, 0.0, 0.0])
 
 
     def start_question(self):
@@ -639,7 +640,7 @@ class Engine:
     def show_plates(self):
         print("Show plates")
         self.t2i_client.send_message("/table/showplates", 1)
-        self.voice_client.send_message("/control/bells", [0.8, 0.1, 0.01])
+        self.voice_client.send_message("/control/musicbox", [0.8, 0.1])
 
     def spotlight_mom(self):
         print("Spotlight on mom")
