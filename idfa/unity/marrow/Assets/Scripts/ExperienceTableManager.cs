@@ -8,7 +8,6 @@ namespace Marrow
 	public class ExperienceTableManager : Manager<ExperienceTableManager>
     {
 		public SocketCommunication socketCommunication;
-		public OSCCommunication oSCCommunication;
 		public float speechTimerLength = 0.1f;
 		public bool startText2Image;
 		public TableOpenSequence tableOpenSequence;
@@ -222,10 +221,16 @@ namespace Marrow
 
 		public void ReceivedOscControlStart(OSCMessage message)
 		{
-			Debug.Log(message);
-			tableSceneStarted = true;
-			EventBus.TableSequenceStarted.Invoke();
+			Debug.Log("osc:control/start - 4 people triggered, starting the expereince");
+			tableOpenSequence.Setup();
 		}
+
+		public void ReceivedOscTableFadeIn(OSCMessage message)
+        {
+			Debug.Log("osc:table/fadein");
+            tableSceneStarted = true;
+            EventBus.TableSequenceStarted.Invoke();
+        }
 
 		public void ReceivedOscShowChosenDinner(string text)
         {
@@ -236,13 +241,12 @@ namespace Marrow
 			EventBus.DinnerQuestionStart.Invoke();
 
 			tableOpenSequence.UpdateSpeechDetectionText(text);
-			//OnAttnGanInputUpdate(text);
 			socketCommunication.EmitAttnGanRequest(text);
         }
 
 		public void ReceivedOscControlStop(OSCMessage message)
         {
-			Debug.Log(message);
+			Debug.Log("Received Osc - hard stop!");
 			EventBus.ExperienceEnded.Invoke();
         }
 

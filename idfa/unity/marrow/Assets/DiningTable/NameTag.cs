@@ -21,12 +21,14 @@ namespace Marrow
 
 		public void Show()
 		{
+			if (m_isOn) return;
 			LeanTween.move(gameObject, showPosition, 1f);
 			m_isOn = true;
 		}
 
 		public void Hide()
 		{
+			if (!m_isOn) return;
 			LeanTween.move(gameObject, originalPosition, 1f);
 			m_isOn = false;
 		}
