@@ -147,6 +147,7 @@ namespace Marrow
 				LTDescr descr = LeanTween.description(plateTweenId);
 				descr.setOnComplete(()=>{
 					FadeColorToTexture();
+					tableOpenSequence.LightUpWithChosenDinner();
 				});
 			}
         }
