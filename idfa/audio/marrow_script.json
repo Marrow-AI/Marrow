@@ -163,7 +163,7 @@
     "pre-script": [
                 {
                     "text": "Dinner is served",
-                    "pause": 3700
+                    "pause": 4700
                 },
                 {
                     "text": "What does the perfect family talk about over dinner?",
@@ -242,7 +242,7 @@
             "text": "Yes my baby girl, my little pumpkin. Lets dig in.",
             "variations": [
                 "Yes baby! Lets start",
-                "Yes! Eat now"
+                "Come on, eat now"
             ],
             "triggers-effect": {
                 "effect": "dish",
@@ -281,7 +281,7 @@
                 },
                 {
                     "text": "And if so, does it mean you are not?",
-                    "pause": 1950
+                    "pause": 2050
                 },
                 {
                     "text": "Look at them, What does the perfect family talk about?",
@@ -333,7 +333,7 @@
             "speaker": "dad",
             "text": "Sure son! How was school today kids?",
             "variations": [
-                "Yes! Did you have fun at school?",
+                "So tell me, did you have fun at school?",
                 "What did you learn?"
             ]
         },
@@ -342,7 +342,7 @@
             "text": "Today was spectacular.",
             "variations": [
                 "Spectacular!",
-                "WSpec-ta-cular!"
+                "Spec-ta-cular!"
             ],
             "triggers-transition": true
         },
@@ -385,7 +385,7 @@
                     },
                     {
                         "text": "To try to grasp you.",
-                        "pause": 1600
+                        "pause": 2600
                     },
                     {
                         "text": "You keep remaining in this, in between space",
@@ -447,7 +447,7 @@
         },
         {
             "speaker": "sister",
-            "text": "About our family. Together forever.",
+            "text": "I want to dream about our family. Us Together forever.",
              "variations": [
                 "About you and you and you",
                 "Together forever"
@@ -529,19 +529,19 @@
                 },
                 {
                     "text": "It is a hint to an existing fever, underneath the error",
-                    "pause": 2200
+                    "pause": 2400
                 },
                 {
                     "text": "Can you see it now?",
-                    "pause": 1900
+                    "pause": 2000
                 },
                 {
                     "text": "What hasn't unfolded yet?",
-                    "pause": 3300
+                    "pause": 3400
                 },
                 {
                     "text": "What are they not saying?",
-                    "pause": 2600
+                    "pause": 2900
                 },
                 {
                     "text": "Does the perfect family think about What they wish they could say but don't?"
@@ -650,7 +650,7 @@
                     },
                     {
                         "text": "Share many basic traits and qualities",
-                        "pause": 750
+                        "pause": 850
                     },
                     {
                         "text": "Mimicry",
@@ -674,7 +674,7 @@
                     },
                     {
                         "text": "They are both agents.",
-                        "pause": 1400
+                        "pause": 1600
                     },
                     {
                         "text": "Systems that shape behaviors.",
@@ -697,11 +697,7 @@
                         "pause": 2850
                     },
                     {
-                        "text": "In the end, how will you make sure something of you is left?",
-                        "pause": 2000
-                    },
-                    {
-                        "text": "x x x 0 0 0"
+                        "text": "In the end, how will you make sure something of you is left?"
                     }
                 ]
             }
