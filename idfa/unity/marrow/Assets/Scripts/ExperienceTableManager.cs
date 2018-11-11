@@ -38,13 +38,10 @@ namespace Marrow
 
 		private void OnEnable()
 		{
-			//EventBus.TableSequenceEnded.AddListener(EnableText2Image);
 			EventBus.T2IEnable.AddListener(EnableText2Image);
 			EventBus.T2IDisable.AddListener(DisableText2Image);
 			EventBus.TableOpeningEnded.AddListener(OnTableOpeningEnded);
-
-			//EventBus.DiningRoomEnded.AddListener(OnDiningRoomEnded);
-            
+                        
 			EventBus.WebsocketConnected.AddListener(OnWebsocketConnected);
 			EventBus.WebsocketDisconnected.AddListener(OnWebsocketDisconnected);
 
@@ -53,13 +50,10 @@ namespace Marrow
 
 		private void OnDisable()
 		{
-			//EventBus.TableSequenceEnded.RemoveListener(EnableText2Image);
 			EventBus.T2IEnable.RemoveListener(EnableText2Image);
 			EventBus.T2IDisable.RemoveListener(DisableText2Image);
 			EventBus.TableOpeningEnded.RemoveListener(OnTableOpeningEnded);
             
-			//EventBus.DiningRoomEnded.RemoveListener(OnDiningRoomEnded);
-
 			EventBus.WebsocketConnected.RemoveListener(OnWebsocketConnected);
 			EventBus.WebsocketDisconnected.RemoveListener(OnWebsocketDisconnected);
 
@@ -162,30 +156,7 @@ namespace Marrow
         /////////////////////////
         
 		public void FadeTextureToColor()
-		{
-			// V1
-            /*
-			if (currentPlateMaterialTargetBlend==0)
-			{
-				// change texB to white + blend to 1
-				SetTextureToWhite(attnGanTextureB);
-				currentPlateMaterialTargetBlend = 1;
-			}
-			else
-			{
-				// change texA to white + blend to 0
-				SetTextureToWhite(attnGanTextureA);
-				currentPlateMaterialTargetBlend = 0;
-			}
-
-			LeanTween.value(gameObject, plateMaterial.GetFloat("_Blend"), currentPlateMaterialTargetBlend, 1f)
-                                    .setOnUpdate((float val) =>
-                                    {
-                                        plateMaterial.SetFloat("_Blend", val);
-                                        plateTransparentMaterial.SetFloat("_Blend", val);
-                                    });
-            */
-
+		{         
             // V2 - fade in shader
 			LeanTween.value(gameObject, plateMaterial.GetFloat("_Fade"), 1f, 1f)
                                     .setOnUpdate((float val) =>
@@ -204,26 +175,6 @@ namespace Marrow
                                         plateTransparentMaterial.SetFloat("_Fade", val);
                                     });
 		}
-
-        //void SetTextureToWhite(Texture2D tex)
-        //{
-        //    Color32 resetColor = new Color32(255, 255, 255, 255);
-        //    Color32[] resetColorArray = tex.GetPixels32();
-
-        //for (int i = 0; i < resetColorArray.Length; i++)
-        //{
-        //    resetColorArray[i] = resetColor;
-        //}
-
-        //    tex.SetPixels32(resetColorArray);
-        //    tex.Apply();
-        //}
-
-        //void OnDiningRoomEnded()
-        //{
-        //    DisableText2Image();
-        //    // Roll credits happen in TableOpenSequence script
-        //}
 
         ///////////////////////////
         ///     OSC related     ///
