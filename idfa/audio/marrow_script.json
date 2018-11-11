@@ -192,7 +192,7 @@
                     "pause": 1500
                 },
                 {
-                    "text": "Mom",
+                    "text": "Mum",
                     "pause": 100
                 },
                 {
@@ -642,6 +642,7 @@
                 "Anyways, no-one ever listens"
             ],
 
+            "triggers-echo1": [4.9, 9],
             "triggers-echo": [[0.7, 1.2],[24.8, 25.2]],
             "triggers-gan": [
                     {
