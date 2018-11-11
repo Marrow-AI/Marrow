@@ -440,8 +440,7 @@ class Engine:
         self.schedule_osc(10, self.voice_client, "/control/bells", [0.8, 0.0])
         self.schedule_osc(10, self.voice_client, "/control/synthbass", [0.8, 0.0, 0.0])
 
-        self.schedule_osc(15, self.voice_client, "/control/stop", 1)
-        self.schedule_osc(15, self.t2i_client, "/control/stop", 1)
+        self.schedule_function(15, self.stop)
         #self.pix2pix_client.send_message("/gan/end",1)
 
     def say(self, delay_sec = 0, delay_effect = False, callback = None, echos = None):
@@ -540,13 +539,14 @@ class Engine:
         self.live_ser.listen(self.args)
 
     def stop(self):
+        print("Stopping experience")
         self.script.reset()
         self.voice_client.send_message("/control/stop",1)
-        self.voice_client.send_message("/control/membrane",[0.0, 0.0, 0.0])
-        self.t2i_client.send_message("/control/stop",1)
         self.t2i_client.send_message("/table/fadeout",1)
+        self.t2i_client.send_message("/control/stop",1)
         self.voice_client.send_message("/speech/stop",1)
         self.send_noise = False
+        self.server.control("stop")
         #self.pix2pix_client.send_message("/control/stop",1)
 
 

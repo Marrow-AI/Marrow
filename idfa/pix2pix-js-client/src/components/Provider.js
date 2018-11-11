@@ -141,18 +141,16 @@ class AppProvider extends Component {
     },
     connectToMarrow: (ip, port, route) => {
       if (!this.state.marrowSocket) {
-        const marrowSocket = new WebSocket(`wss://${ip}:${port}${route}`);
+        const marrowSocket = new ReconnectingWebSocket(`wss://${ip}:${port}${route}`);
         marrowSocket.onopen = () => {
           this.setState({ isConnectedToMarrow: true });
         };
         marrowSocket.onclose =  () => {
           this.setState({ isConnectedToMarrow: false });
+          this.setState({ marrowSocket: null });
         };
         this.setState({ marrowSocket: marrowSocket });
-      } else {
-        this.state.marrowSocket.close();
-        this.setState({ marrowSocket: null });
-      }
+      } 
     },
     sendFakePix2Pix: () => {
         setInterval(() => {
@@ -161,6 +159,11 @@ class AppProvider extends Component {
             }
         },2000)
     },
+    sendMarrowStart:() => {
+        if (this.state.marrowSocket) {
+            this.state.marrowSocket.send(JSON.stringify({action: "control", command: "start"}));
+        }
+    }
     updateSendingFrameStatus: (state) => {
       if (state) {
         this.setState({ isSendingFrames: true });
