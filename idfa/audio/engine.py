@@ -182,6 +182,7 @@ class Engine:
                 self.last_react = self.last_speech = now
                 if self.timeout_response():
                     # say it
+                    asyncio.set_event_loop(self.main_loop)
                     self.say(delay_sec = 1)
                 elif self.script.next_variation():
                     self.show_next_line()
@@ -393,6 +394,7 @@ class Engine:
 
                 self.schedule_osc(delay + 2, self.voice_client, "/control/stop", 1)
 
+                self.schedule_osc(delay + 5.5, self.voice_client, "/strings/effect", [3, 0.8])
                 self.schedule_osc(delay + 5.5, self.voice_client, "/control/strings", [0.0, 0.5])
                 #self.schedule_osc(delay + 5.5, self.voice_client, "/control/bells", [0.0, 0.2])
                 #self.schedule_osc(delay + 5.5, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
@@ -466,7 +468,7 @@ class Engine:
                     echos = [echos]
 
                 for echo in echos:
-                    self.schedule_osc(delay_sec + echo[0],self.voice_client, "/gan/echo", 0.75)
+                    self.schedule_osc(delay_sec + echo[0],self.voice_client, "/gan/echo", 1.0)
                     self.schedule_osc(delay_sec + echo[1],self.voice_client, "/gan/echo", 0.0)
 
 
@@ -546,7 +548,8 @@ class Engine:
         self.t2i_client.send_message("/control/stop",1)
         self.voice_client.send_message("/speech/stop",1)
         self.send_noise = False
-        self.server.control("stop")
+        asyncio.ensure_future(self.server.control("stop"))
+        self.pause_listening()
         #self.pix2pix_client.send_message("/control/stop",1)
 
 
@@ -562,6 +565,7 @@ class Engine:
         self.voice_client.send_message("/control/bells", [0.0, 0.2])
         self.voice_client.send_message("/control/musicbox", [0.0, 0.0, 0.0, 0.5])
         self.voice_client.send_message("/control/strings", [0.0, 0.0])
+        self.voice_client.send_message("/strings/effect", [2, 0.0])
         self.voice_client.send_message("/control/bassheart", [0.0, 0.0])
         self.voice_client.send_message("/control/membrane", [0.0, 0.0, 0.0])
         self.voice_client.send_message("/control/beacon", [0.0, 0.0])
