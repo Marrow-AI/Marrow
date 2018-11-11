@@ -57,7 +57,7 @@ class Server:
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
         ssl_context.load_cert_chain(certfile='localhost.pem', keyfile='localkey.pem')
         print("Websocket listening")
-        return websockets.serve(self.handler, 'localhost', 9540, ssl=ssl_context)
+        return websockets.serve(self.handler, 'localhost', 9540, ssl=None)
 
     async def emotion_update(self,data, state):
         print("Sending emotion update")

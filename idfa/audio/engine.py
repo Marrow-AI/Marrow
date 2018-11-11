@@ -220,7 +220,7 @@ class Engine:
         self.t2i_client.send_message("/speech", text)
         if self.state == "SCRIPT":
             if self.mid_text is not None:
-                print("Looking up {}".format(text))
+                #print("Looking up {}".format(text))
                 self.lookup(text)
 
             self.mid_match = False
@@ -234,7 +234,7 @@ class Engine:
         self.last_speech = time.time()
         if self.state == "SCRIPT":
             self.mid_text = text
-            print("({})".format(text))
+            #print("({})".format(text))
             self.t2i_client.send_message("/speech", text)
             self.lookup(text)
         elif self.state == "QUESTION":
@@ -394,8 +394,8 @@ class Engine:
                 self.schedule_osc(delay + 2, self.voice_client, "/control/stop", 1)
 
                 self.schedule_osc(delay + 5.5, self.voice_client, "/control/strings", [0.0, 0.5])
-                self.schedule_osc(delay + 5.5, self.voice_client, "/control/bells", [0.0, 0.2])
-                self.schedule_osc(delay + 5.5, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
+                #self.schedule_osc(delay + 5.5, self.voice_client, "/control/bells", [0.0, 0.2])
+                #self.schedule_osc(delay + 5.5, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
 
                 self.say(delay + 2, callback = self.next_line, echos = echo)
                 self.schedule_osc(delay + 19, self.voice_client, "/control/start", 1)

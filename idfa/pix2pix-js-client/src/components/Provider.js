@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
+import ReconnectingWebSocket from 'reconnectingwebsocket'
+
 const AppContext = React.createContext()
 
 // Server IP
@@ -142,33 +144,34 @@ class AppProvider extends Component {
     connectToMarrow: (ip, port, route) => {
       if (!this.state.marrowSocket) {
         try {
-            const marrowSocket = new ReconnectingWebSocket(`wss://${ip}:${port}${route}`);
+            const marrowSocket = new ReconnectingWebSocket(`ws://${ip}:${port}${route}`);
             this.setState({ marrowSocket: marrowSocket });
+
+            marrowSocket.onopen = () => {
+              this.setState({ isConnectedToMarrow: true });
+            };
+            marrowSocket.onmessage = (packet) => {
+                try {
+                    let message = JSON.parse(packet.data);
+                    if (message.action && message.action == "control") {
+                        if (message.comand && message.command == "stop") {
+                            // Stop posenet, fadepix2pix?
+                        }
+                    }
+                }
+                catch(e) {
+                    console.log("Error parsing Marrow message", e);
+                }
+                            
+            };
+            marrowSocket.onclose =  () => {
+              this.setState({ isConnectedToMarrow: false });
+              this.setState({ marrowSocket: null });
+            };
         }
         catch (e) {
             console.log("Error connecting to Marrow websocket",e);
         }
-        marrowSocket.onopen = () => {
-          this.setState({ isConnectedToMarrow: true });
-        };
-        marrowSocket.onmessage = () => {
-            try {
-                let message = JSON.parse(packet.data);
-                if (message.action && message.action == "control") {
-                    if (message.comand && message.command == "stop") {
-                        // Stop posenet, fadepix2pix?
-                    }
-                }
-            }
-            catch(e) {
-                console.log("Error parsing Marrow message", e);
-            }
-                        
-        };
-        marrowSocket.onclose =  () => {
-          this.setState({ isConnectedToMarrow: false });
-          this.setState({ marrowSocket: null });
-        };
       } 
     },
     sendFakePix2Pix: () => {
@@ -182,7 +185,7 @@ class AppProvider extends Component {
         if (this.state.marrowSocket) {
             this.state.marrowSocket.send(JSON.stringify({action: "control", command: "start"}));
         }
-    }
+    },
     updateSendingFrameStatus: (state) => {
       if (state) {
         this.setState({ isSendingFrames: true });

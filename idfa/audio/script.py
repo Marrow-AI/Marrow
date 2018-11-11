@@ -95,7 +95,7 @@ class Script:
         try:
             text_nlp = self.nlp(text)
             distance =  self.awaiting_nlp.similarity(text_nlp)
-            print("{} => {}".format(text_nlp,distance))
+            #print("{} => {}".format(text_nlp,distance))
             return distance
         except Exception as e:
             print("Exception {}".format(e))
