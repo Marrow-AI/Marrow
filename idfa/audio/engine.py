@@ -180,7 +180,10 @@ class Engine:
             ):
                 print("Script TIMEOUT! {}, {}, {}".format(now, self.last_react, self.last_speech))
                 self.last_react = self.last_speech = now
-                if self.script.next_variation():
+                if self.timeout_response():
+                    # say it
+                    self.say(delay_sec = 1)
+                elif self.script.next_variation():
                     self.show_next_line()
                 else:
                     self.next_line()
@@ -189,6 +192,13 @@ class Engine:
             threading.Timer(0.1, self.time_check).start()
 
 
+    def timeout_response(self):
+        if "timeout-response" in self.script.awaiting:
+            del self.script.awaiting["timeout-response"]
+            self.preload_speech("gan_responses/timeout{}.wav".format(self.script.awaiting_index))
+            return True
+        else:
+            return False
 
     def emotion_update(self, data):
         print("Emotion update! {}".format(data))
@@ -345,8 +355,8 @@ class Engine:
         delay = words_ahead / 2.8
 
         if "triggers-end" in line:
-            self.schedule_osc(delay, self.voice_client, "/control/musicbox", [0.85, 0.0, 0.85, 0.0])
-            self.schedule_osc(delay, self.voice_client, "/control/synthbass", [0.85, 0.0, 0.0])
+            self.schedule_osc(delay, self.voice_client, "/control/musicbox", [0.0, 0.0, 0.0, 0.0])
+            self.schedule_osc(delay, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.0])
             self.schedule_function(delay,self.stop_noise)
 
         if "triggers-transition" in line:
@@ -356,6 +366,7 @@ class Engine:
             self.schedule_osc(delay + 1 ,self.voice_client, "/control/bassheart", [0.9, 0.5])
             self.schedule_osc(delay + 1,self.voice_client, "/control/membrane", [0.9, 0.4, 0.0])
             self.schedule_osc(delay + 4,self.voice_client, "/control/membrane", [0.9, 0.4, 0.1])
+            self.schedule_osc(delay + 5,self.voice_client, "/control/musicbox", [0.7, 0.0, 0.8, 0.0])
 
 
 
@@ -373,20 +384,20 @@ class Engine:
                 print("Ending sequence!!")
                 self.state = "END"
                 self.schedule_osc(delay, self.t2i_client, "/table/fadeout", 1)
-                self.schedule_osc(delay, self.voice_client, "/control/musicbox", [0.8, 0.0, 0.0, 0.5])
-                self.schedule_osc(delay, self.voice_client, "/control/beacon", [0.8, 0.0])
+                self.schedule_osc(delay, self.voice_client, "/control/musicbox", [0.0, 0.0, 0.0, 0.5])
+                self.schedule_osc(delay, self.voice_client, "/control/beacon", [0.0, 0.0])
                 self.schedule_osc(delay, self.voice_client, "/control/strings", [0.0, 0.0])
                 self.schedule_osc(delay, self.voice_client, "/control/bells", [0.0, 0.0])
                 self.schedule_osc(delay, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.0])
 
 
-                self.schedule_osc(delay + 5, self.voice_client, "/control/stop", 1)
+                self.schedule_osc(delay + 2, self.voice_client, "/control/stop", 1)
 
                 self.schedule_osc(delay + 5.5, self.voice_client, "/control/strings", [0.0, 0.5])
-                self.schedule_osc(delay + 5.5, self.voice_client, "/control/bells", [0.0, 0.2])
+                #self.schedule_osc(delay + 5.5, self.voice_client, "/control/bells", [0.0, 0.2])
                 self.schedule_osc(delay + 5.5, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
 
-                self.say(delay + 6, callback = self.next_line, echos = echo)
+                self.say(delay + 2, callback = self.next_line, echos = echo)
                 self.schedule_osc(delay + 19, self.voice_client, "/control/start", 1)
                 self.schedule_osc(delay + 19, self.t2i_client, "/table/titles", 1)
             else:
@@ -456,7 +467,7 @@ class Engine:
                     echos = [echos]
 
                 for echo in echos:
-                    self.schedule_osc(delay_sec + echo[0],self.voice_client, "/gan/echo", 1.0)
+                    self.schedule_osc(delay_sec + echo[0],self.voice_client, "/gan/echo", 0.75)
                     self.schedule_osc(delay_sec + echo[1],self.voice_client, "/gan/echo", 0.0)
 
 
@@ -541,6 +552,8 @@ class Engine:
 
     def start_intro(self):
         print("Start intro!")
+        self.script.reset()
+
         self.state = "INTRO"
         self.send_noise = False
         self.voice_client.send_message("/control/stop", 1)
@@ -659,7 +672,6 @@ class Engine:
     def start_script(self):
         print("Start script")
         self.last_react =  self.last_speech = time.time()
-        self.script.reset()
         self.state = "SCRIPT"
         self.show_next_line()
 

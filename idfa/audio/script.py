@@ -15,6 +15,7 @@ class Script:
             self.data = json.load(file)
 
     def reset(self):
+        self.load_data()
         self.awaiting_index = 0
         self.awaiting = self.data["script-lines"][self.awaiting_index]
         self.awaiting_text = self.awaiting["text"]
