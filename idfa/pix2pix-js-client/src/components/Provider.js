@@ -141,15 +141,34 @@ class AppProvider extends Component {
     },
     connectToMarrow: (ip, port, route) => {
       if (!this.state.marrowSocket) {
-        const marrowSocket = new ReconnectingWebSocket(`wss://${ip}:${port}${route}`);
+        try {
+            const marrowSocket = new ReconnectingWebSocket(`wss://${ip}:${port}${route}`);
+            this.setState({ marrowSocket: marrowSocket });
+        }
+        catch (e) {
+            console.log("Error connecting to Marrow websocket",e);
+        }
         marrowSocket.onopen = () => {
           this.setState({ isConnectedToMarrow: true });
+        };
+        marrowSocket.onmessage = () => {
+            try {
+                let message = JSON.parse(packet.data);
+                if (message.action && message.action == "control") {
+                    if (message.comand && message.command == "stop") {
+                        // Stop posenet, fadepix2pix?
+                    }
+                }
+            }
+            catch(e) {
+                console.log("Error parsing Marrow message", e);
+            }
+                        
         };
         marrowSocket.onclose =  () => {
           this.setState({ isConnectedToMarrow: false });
           this.setState({ marrowSocket: null });
         };
-        this.setState({ marrowSocket: marrowSocket });
       } 
     },
     sendFakePix2Pix: () => {
