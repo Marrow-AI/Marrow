@@ -380,6 +380,9 @@ class Engine:
             echo = None
             if "triggers-echo" in line:
                echo = line["triggers-echo"]
+            distort = None
+            if "triggers-distort" in line:
+               distort = line["triggers-distort"]
 
             if self.script.awaiting_index == self.script.length -1:
                 print("Ending sequence!!")
@@ -399,11 +402,11 @@ class Engine:
                 #self.schedule_osc(delay + 5.5, self.voice_client, "/control/bells", [0.0, 0.2])
                 #self.schedule_osc(delay + 5.5, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
 
-                self.say(delay + 2, callback = self.next_line, echos = echo)
+                self.say(delay + 2, callback = self.next_line, echos = echo, distorts = distort)
                 self.schedule_osc(delay + 19, self.voice_client, "/control/start", 1)
                 self.schedule_osc(delay + 19, self.t2i_client, "/table/titles", 1)
             else:
-                self.say(delay, callback = self.next_line, echos = echo)
+                self.say(delay, callback = self.next_line, echos = echo, distorts = distort)
             if "triggers-effect" in line:
                 self.load_effect(line["triggers-effect"])
                 self.schedule_function(delay + line["triggers-effect"]["time"], self.play_effect)
@@ -445,7 +448,7 @@ class Engine:
         self.schedule_function(15, self.stop)
         #self.pix2pix_client.send_message("/gan/end",1)
 
-    def say(self, delay_sec = 0, delay_effect = False, callback = None, echos = None):
+    def say(self, delay_sec = 0, delay_effect = False, callback = None, echos = None, distorts = None):
 
         if self.speech_duration:
 
@@ -454,9 +457,6 @@ class Engine:
             self.pause_listening(math.ceil(self.speech_duration + delay_sec))
 
             effect_time = 0.05
-
-            if delay_effect:
-                self.schedule_osc(delay_sec,self.voice_client, "/gan/delay", 1)
 
             self.schedule_osc(delay_sec,self.voice_client, "/speech/play", 1)
             self.schedule_osc(delay_sec + self.speech_duration + 0.2,self.voice_client, "/speech/stop", 1)
@@ -468,9 +468,18 @@ class Engine:
                     echos = [echos]
 
                 for echo in echos:
-                    self.schedule_osc(delay_sec + echo[0],self.voice_client, "/gan/echo", 1.0)
-                    self.schedule_osc(delay_sec + echo[1],self.voice_client, "/gan/echo", 0.0)
+                    self.schedule_osc(delay_sec + echo[0],self.voice_client, "/gan/echo", 2) 
+                    self.schedule_osc(delay_sec + echo[1],self.voice_client, "/gan/echo", 3)
 
+
+            if distorts:
+                # one or many?
+                if isinstance(distorts[0], numbers.Number):
+                    distorts = [echos]
+
+                for distort in distorts:
+                    self.schedule_osc(delay_sec + distort[0],self.voice_client, "/gan/distort", 1.0)
+                    self.schedule_osc(delay_sec + distort[1],self.voice_client, "/gan/distort", 0.0)
 
             if self.state == "GAN":
 
@@ -570,7 +579,8 @@ class Engine:
         self.voice_client.send_message("/control/membrane", [0.0, 0.0, 0.0])
         self.voice_client.send_message("/control/beacon", [0.0, 0.0])
         self.voice_client.send_message("/control/synthbass", [0.0, 0.0, 0.0])
-        self.voice_client.send_message("/gan/echo", 0.0)
+        self.voice_client.send_message("/gan/distort", 0.0)
+        self.voice_client.send_message("/gan/echo", 2)
 
         self.t2i_client.send_message("/control/start",1)
         self.preload_speech("gan_intro/intro.wav")

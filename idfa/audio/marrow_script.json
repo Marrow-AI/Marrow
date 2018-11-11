@@ -361,7 +361,7 @@
                 "I can not wait to hear more.",
                 "I have the most interesting family."
             ],
-            "triggers-echo": [20.0, 22.0],
+            "triggers-distort": [20.0, 22.0],
             "triggers-gan": [
                     {
                         "text": "While you are playing them, I am playing you.",
@@ -501,7 +501,7 @@
                 "I like you",
                 "Look at me when I say it"
             ],
-           "triggers-echo": [[7.0, 8.0],[19.5, 20.5]],
+           "triggers-distort": [[7.0, 8.0],[19.5, 20.5]],
             "triggers-gan": [
                 {
                     "text": "The fascinating thing about observing thousands of families",
@@ -642,8 +642,8 @@
                 "Anyways, no-one ever listens"
             ],
 
-            "triggers-echo1": [4.9, 9],
-            "triggers-echo": [[0.7, 1.2],[24.8, 25.2]],
+            "triggers-echo": [4.9, 9],
+            "triggers-distort": [[0.7, 1.2],[24.8, 25.2]],
             "triggers-gan": [
                     {
                         "text": "A family and a virus",
