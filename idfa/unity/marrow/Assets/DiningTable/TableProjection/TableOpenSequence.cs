@@ -190,10 +190,16 @@ namespace Marrow
             LogCurrentTimecode("Fade In Table");
         }
 
+		public void LightUpWithChosenDinner()
+		{
+			mainLight.ToggleOn(true, 1.7f, 1f, 0f);
+            mainLight.ChangeLightColor(Color.white);
+		}
+        
 		public void StartTableDinner()
         {
-            mainLight.ToggleOn(true, 1.7f, 1f, 0f);
-            mainLight.ChangeLightColor(Color.white);
+            //mainLight.ToggleOn(true, 1.7f, 1f, 0f);
+            //mainLight.ChangeLightColor(Color.white);
 
             // Show speech detection texts
             speechDetection.SetActive(true);

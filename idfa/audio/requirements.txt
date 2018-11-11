@@ -9,7 +9,7 @@ sympy
 nose
 scikit-learn
 #tensorflow==1.4.0
-tensorflow
+#tensorflow
 keras==2.1.5
 librosa
 pyaudio
