@@ -12,18 +12,16 @@ namespace Marrow
 	public class IntergerEvent : UnityEvent<int> { }
     [Serializable]
     public class Vector3Event : UnityEvent<Vector3> { }
-
+    
     public class EventBus
     {
         // Scene related
-		public static UnityEvent TableSequenceStarted = new UnityEvent();
-		public static UnityEvent TableSequenceEnded = new UnityEvent();
-
-		public static UnityEvent DiningRoomStarted = new UnityEvent();
-		public static UnityEvent DiningRoomEnded = new UnityEvent();
-
+		public static UnityEvent TableStarted = new UnityEvent();
+		public static UnityEvent TableOpeningEnded = new UnityEvent();
+		public static UnityEvent TableEnded = new UnityEvent();
+        
+		public static UnityEvent ExperienceStarted = new UnityEvent();
 		public static UnityEvent ExperienceEnded = new UnityEvent();
-		public static UnityEvent ExperienceRestarted = new UnityEvent();    // ???
         
 		// Websocket related
 		public static UnityEvent WebsocketConnected = new UnityEvent();
@@ -38,6 +36,5 @@ namespace Marrow
 		public static UnityEvent T2IEnable = new UnityEvent();
 		public static UnityEvent T2IDisable = new UnityEvent();
 		public static UnityEvent DinnerQuestionStart = new UnityEvent();
-		public static UnityEvent DinnerQuestionEnd = new UnityEvent();
     }
 }

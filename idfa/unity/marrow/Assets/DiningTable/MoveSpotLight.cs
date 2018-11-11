@@ -16,10 +16,10 @@ namespace Marrow
 			m_light = GetComponent<Light>();
 		}
 
-		public void Reset()
+		public void ResetNameTags(float speed)
 		{
 			for (int i = 0; i < nameTags.Length; i++)
-				nameTags[i].Hide();
+				nameTags[i].Hide(speed);
 		}
 
 		public void UpdateSpotlightPosition(string role)
@@ -75,7 +75,7 @@ namespace Marrow
 				{
 					if(nameTags[i].IsOn)
 					{
-						nameTags[i].Hide();
+						nameTags[i].Hide(1f);
                         //Debug.Log("hide name: " + role);
 					}
 				}

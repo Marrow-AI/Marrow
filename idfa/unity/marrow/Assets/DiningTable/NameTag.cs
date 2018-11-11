@@ -22,14 +22,23 @@ namespace Marrow
 		public void Show()
 		{
 			if (m_isOn) return;
+			LeanTween.cancel(gameObject);
 			LeanTween.move(gameObject, showPosition, 1f);
 			m_isOn = true;
 		}
 
-		public void Hide()
+		public void Hide(float speed)
 		{
 			if (!m_isOn) return;
-			LeanTween.move(gameObject, originalPosition, 1f);
+			LeanTween.cancel(gameObject);
+			LeanTween.move(gameObject, originalPosition, speed);
+			m_isOn = false;
+		}
+
+		public void Reset()
+		{
+			LeanTween.cancel(gameObject);
+			transform.position = originalPosition;
 			m_isOn = false;
 		}
 	}

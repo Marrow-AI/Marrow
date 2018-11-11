@@ -9,7 +9,7 @@ namespace Marrow
     {
 		public SocketCommunication socketCommunication;
 		public float speechTimerLength = 0.1f;
-		public bool startText2Image;
+		private bool startText2Image;
 		public TableOpenSequence tableOpenSequence;
 
 		private bool socketIsConnected;
@@ -41,9 +41,9 @@ namespace Marrow
 			//EventBus.TableSequenceEnded.AddListener(EnableText2Image);
 			EventBus.T2IEnable.AddListener(EnableText2Image);
 			EventBus.T2IDisable.AddListener(DisableText2Image);
-			EventBus.TableSequenceEnded.AddListener(OnTableOpeningEnded);
+			EventBus.TableOpeningEnded.AddListener(OnTableOpeningEnded);
 
-			EventBus.DiningRoomEnded.AddListener(OnDiningRoomEnded);
+			//EventBus.DiningRoomEnded.AddListener(OnDiningRoomEnded);
             
 			EventBus.WebsocketConnected.AddListener(OnWebsocketConnected);
 			EventBus.WebsocketDisconnected.AddListener(OnWebsocketDisconnected);
@@ -56,9 +56,9 @@ namespace Marrow
 			//EventBus.TableSequenceEnded.RemoveListener(EnableText2Image);
 			EventBus.T2IEnable.RemoveListener(EnableText2Image);
 			EventBus.T2IDisable.RemoveListener(DisableText2Image);
-			EventBus.TableSequenceEnded.RemoveListener(OnTableOpeningEnded);
+			EventBus.TableOpeningEnded.RemoveListener(OnTableOpeningEnded);
             
-			EventBus.DiningRoomEnded.RemoveListener(OnDiningRoomEnded);
+			//EventBus.DiningRoomEnded.RemoveListener(OnDiningRoomEnded);
 
 			EventBus.WebsocketConnected.RemoveListener(OnWebsocketConnected);
 			EventBus.WebsocketDisconnected.RemoveListener(OnWebsocketDisconnected);
@@ -108,7 +108,9 @@ namespace Marrow
 
 		public void OnAttnGanInputUpdate(string inputText)
         {
-			//Debug.Log("OnAttnGanInputUpdate, startText2Image: " + startText2Image + ", socketIsConnected: " + socketIsConnected);
+			//Debug.Log("OnAttnGanInputUpdate, startText2Image: " + startText2Image 
+			          //+ ", socketIsConnected: " + socketIsConnected
+			          //+ ", tableOpeningEnded: " + tableOpeningEnded);
 			if (!startText2Image || !socketIsConnected || !tableOpeningEnded)
 				return;
 			if ((Time.time - lastSpeechTimecode) <= speechTimerLength)
@@ -122,7 +124,7 @@ namespace Marrow
 		public void OnAttnGanUpdateResponse(byte[] receivedBase64Img)
         {
 			if (!startText2Image)
-                return;
+                return;            
 			if (LeanTween.isTweening(plateTweenId))
 				return;
 			
@@ -145,12 +147,20 @@ namespace Marrow
 										 plateTransparentMaterial.SetFloat("_Blend", val);
                                      })
 			                        .id;
+            
+			if(!tableOpeningEnded)
+			{
+				LTDescr descr = LeanTween.description(plateTweenId);
+				descr.setOnComplete(()=>{
+					FadeColorToTexture();
+				});
+			}
         }
 
 		/////////////////////////
         ///  ---------------  ///
         /////////////////////////
-
+        
 		public void FadeTextureToColor()
 		{
 			// V1
@@ -195,25 +205,25 @@ namespace Marrow
                                     });
 		}
 
-		void SetTextureToWhite(Texture2D tex)
-		{
-			Color32 resetColor = new Color32(255, 255, 255, 255);
-			Color32[] resetColorArray = tex.GetPixels32();
+        //void SetTextureToWhite(Texture2D tex)
+        //{
+        //    Color32 resetColor = new Color32(255, 255, 255, 255);
+        //    Color32[] resetColorArray = tex.GetPixels32();
 
-            for (int i = 0; i < resetColorArray.Length; i++)
-            {
-                resetColorArray[i] = resetColor;
-            }
+        //for (int i = 0; i < resetColorArray.Length; i++)
+        //{
+        //    resetColorArray[i] = resetColor;
+        //}
 
-			tex.SetPixels32(resetColorArray);
-			tex.Apply();
-		}
+        //    tex.SetPixels32(resetColorArray);
+        //    tex.Apply();
+        //}
 
-        void OnDiningRoomEnded()
-		{
-			DisableText2Image();
-            // Roll credits happen in TableOpenSequence script
-		}
+        //void OnDiningRoomEnded()
+        //{
+        //    DisableText2Image();
+        //    // Roll credits happen in TableOpenSequence script
+        //}
 
         ///////////////////////////
         ///     OSC related     ///
@@ -222,14 +232,15 @@ namespace Marrow
 		public void ReceivedOscControlStart(OSCMessage message)
 		{
 			Debug.Log("osc:control/start - 4 people triggered, starting the expereince");
-			tableOpenSequence.Setup();
+			EventBus.ExperienceStarted.Invoke();
+			tableOpeningEnded = false;
 		}
 
 		public void ReceivedOscTableFadeIn(OSCMessage message)
         {
 			Debug.Log("osc:table/fadein");
             tableSceneStarted = true;
-            EventBus.TableSequenceStarted.Invoke();
+            EventBus.TableStarted.Invoke();
         }
 
 		public void ReceivedOscShowChosenDinner(string text)
@@ -248,12 +259,6 @@ namespace Marrow
         {
 			Debug.Log("Received Osc - hard stop!");
 			EventBus.ExperienceEnded.Invoke();
-        }
-
-		public void ReceivedOscGanEnd(OSCMessage message)
-        {
-            Debug.Log(message);
-			EventBus.DiningRoomEnded.Invoke();
         }
 
 		public void ReceivedOscGanSpeak(int doSpeak)
@@ -283,10 +288,11 @@ namespace Marrow
 			}
 		}
 
-		public void ReceivedOscTableTitle(OSCMessage message)
-		{
-			Debug.Log(message);
-			tableSceneStarted = false;
-		}
+		public void ReceivedOscTableFadeOut(OSCMessage message)
+        {
+            Debug.Log(message);
+            tableSceneStarted = false;
+			EventBus.TableEnded.Invoke();			        
+        }
     }
 }

@@ -40,9 +40,9 @@ namespace Marrow
 
 		private void OnEnable()
 		{
-			EventBus.TableSequenceEnded.AddListener(OnTableSequenceEnded);
-			EventBus.DiningRoomEnded.AddListener(OnDiningRoomEnded);
-			EventBus.ExperienceRestarted.AddListener(DisablePix2Pix);
+			EventBus.TableOpeningEnded.AddListener(OnTableSequenceEnded);
+			//EventBus.DiningRoomEnded.AddListener(OnDiningRoomEnded);
+			//EventBus.ExperienceRestarted.AddListener(DisablePix2Pix);
             
 			EventBus.WebsocketConnected.AddListener(OnWebsocketConnected);
 			EventBus.WebsocketDisconnected.AddListener(OnWebsocketDisconnected);
@@ -52,9 +52,9 @@ namespace Marrow
 
 		private void OnDisable()
 		{
-			EventBus.TableSequenceEnded.RemoveListener(OnTableSequenceEnded);
-			EventBus.DiningRoomEnded.RemoveListener(OnDiningRoomEnded);
-			EventBus.ExperienceRestarted.RemoveListener(DisablePix2Pix);
+			EventBus.TableOpeningEnded.RemoveListener(OnTableSequenceEnded);
+			//EventBus.DiningRoomEnded.RemoveListener(OnDiningRoomEnded);
+			//EventBus.ExperienceRestarted.RemoveListener(DisablePix2Pix);
 
 			EventBus.WebsocketConnected.RemoveListener(OnWebsocketConnected);
 			EventBus.WebsocketDisconnected.RemoveListener(OnWebsocketDisconnected);
@@ -252,7 +252,7 @@ namespace Marrow
 		public void ReceivedOscIntroEnd(OSCMessage message)
         {
             Debug.Log(message);
-			EventBus.TableSequenceEnded.Invoke();
+			EventBus.TableOpeningEnded.Invoke();
         }
     }
 }

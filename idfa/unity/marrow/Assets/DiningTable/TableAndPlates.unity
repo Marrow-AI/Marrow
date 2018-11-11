@@ -806,7 +806,6 @@ MonoBehaviour:
   - {fileID: 1185327923}
   plateTexts: []
   scriptText: {fileID: 1097309984}
-  devMode: 1
   plateDevTextures:
   - {fileID: 2800000, guid: 7915d644fbd43445b8d1a09fcb04c435, type: 3}
   - {fileID: 2800000, guid: 5fb48de230a00431db2eed4486a92dcc, type: 3}
@@ -949,7 +948,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 728543544}
-        m_MethodName: SpotlightOnRole
+        m_MethodName: ReceivedOscSpotlight
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1009,8 +1008,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 728543544}
-        m_MethodName: ShowEndTitles
-        m_Mode: 1
+        m_MethodName: ReceivedOscTableTitles
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1099,8 +1098,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 728543544}
-        m_MethodName: ShowPlates
-        m_Mode: 1
+        m_MethodName: ReceivedOscShowPlates
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1158,9 +1157,9 @@ MonoBehaviour:
   onReceive:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 728543544}
-        m_MethodName: FadeOutTableForEnding
-        m_Mode: 1
+      - m_Target: {fileID: 952249938}
+        m_MethodName: ReceivedOscTableFadeOut
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
