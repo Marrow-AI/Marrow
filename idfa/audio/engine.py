@@ -394,7 +394,7 @@ class Engine:
                 self.schedule_osc(delay + 2, self.voice_client, "/control/stop", 1)
 
                 self.schedule_osc(delay + 5.5, self.voice_client, "/control/strings", [0.0, 0.5])
-                #self.schedule_osc(delay + 5.5, self.voice_client, "/control/bells", [0.0, 0.2])
+                self.schedule_osc(delay + 5.5, self.voice_client, "/control/bells", [0.0, 0.2])
                 self.schedule_osc(delay + 5.5, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
 
                 self.say(delay + 2, callback = self.next_line, echos = echo)
