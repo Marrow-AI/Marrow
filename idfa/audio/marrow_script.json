@@ -241,8 +241,8 @@
             "speaker": "dad",
             "text": "Yes my baby girl, my little pumpkin. Lets dig in.",
             "variations": [
-                "Yes baby! Lets start",
-                "Come on, eat now"
+                "You are just adorable baby girl",
+                "Come on, start to eat now"
             ],
             "triggers-effect": {
                 "effect": "dish",
@@ -296,8 +296,8 @@
             "speaker": "dad",
             "text": "My beautiful lady, how was your day?",
             "variations": [
-                "My beautiful woman?",
-                "Tell me about your day"
+                "My beautiful woman, did you hear me?",
+                "Tell me about your day..."
             ],
             "timeout-response": [
                 {
@@ -309,7 +309,7 @@
             "speaker": "mom",
             "text": "It was fabulous I was thinking about the other day. And how about yours my love?",
             "variations": [
-                "Fabulous. And yours?",
+                "Truly fabulous day.",
                 "Yours my love?"
             ]
         },
@@ -317,7 +317,7 @@
             "speaker": "dad",
             "text": "My day was also fantastic. And it is getting better there is no moon tonight.",
             "variations": [
-                "Fantastic. And just getting better",
+                "Trult fantastic. And just getting better",
                 "A great day is a day with no moon"
             ]
         },
@@ -342,7 +342,7 @@
             "text": "Today was spectacular.",
             "variations": [
                 "Spectacular!",
-                "Spec-ta-cular!"
+                "I said spectacular!"
             ],
             "triggers-transition": true
         },
@@ -498,7 +498,7 @@
             "speaker": "mom",
             "text": "I love you dear.",
              "variations": [
-                "I like you",
+                "I like you dear",
                 "Look at me when I say it"
             ],
            "triggers-distort": [[7.0, 8.0],[19.5, 20.5]],
