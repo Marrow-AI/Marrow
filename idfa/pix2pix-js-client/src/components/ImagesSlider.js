@@ -27,6 +27,7 @@ class ImageSlider extends Component {
     setInterval(() => {
       const { context } = this.props;
       const pos = ReactDOM.findDOMNode(this.refs['ImageSlider']).getBoundingClientRect();
+      
       for (let i = 0; i < context.amountOfImages + 1; i++){
         const el = ReactDOM.findDOMNode(this.refs[`IMAGE_${i}`]);
         if (el) {
