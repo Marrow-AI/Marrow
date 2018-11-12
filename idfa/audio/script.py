@@ -15,6 +15,7 @@ class Script:
             self.data = json.load(file)
 
     def reset(self):
+        self.load_data()
         self.awaiting_index = 0
         self.awaiting = self.data["script-lines"][self.awaiting_index]
         self.awaiting_text = self.awaiting["text"]
@@ -94,7 +95,7 @@ class Script:
         try:
             text_nlp = self.nlp(text)
             distance =  self.awaiting_nlp.similarity(text_nlp)
-            print("{} => {}".format(text_nlp,distance))
+            #print("{} => {}".format(text_nlp,distance))
             return distance
         except Exception as e:
             print("Exception {}".format(e))
