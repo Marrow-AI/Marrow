@@ -478,8 +478,8 @@ class Engine:
                     distorts = [echos]
 
                 for distort in distorts:
-                    self.schedule_osc(delay_sec + distort[0],self.voice_client, "/gan/distort", 1.0)
-                    self.schedule_osc(delay_sec + distort[1],self.voice_client, "/gan/distort", 0.0)
+                    self.schedule_osc(delay_sec + distorts[0],self.voice_client, "/gan/distort", 1.0)
+                    self.schedule_osc(delay_sec + distorts[1],self.voice_client, "/gan/distort", 0.0)
 
             if self.state == "GAN":
 
