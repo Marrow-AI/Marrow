@@ -23,4 +23,5 @@
   transform: scaleX(-1);
   z-index: 999;
   border: 2px solid rgb(19, 19, 19);
+  transition: 20s all;
 }

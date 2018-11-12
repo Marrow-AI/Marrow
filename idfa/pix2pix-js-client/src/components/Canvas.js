@@ -32,8 +32,12 @@ class Canvas extends Component {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(video, 0, 0, context.cameraCanvasWidth, context.cameraCanvasHeight);
     if (net) {
-      net.estimateMultiplePoses(canvas, 0.5, false, 16, 4)
-      .then(r => console.log(r.length))
+      // net.estimateMultiplePoses(canvas, 0.5, false, 16, 4)
+      // .then(r => {
+      //   if(r.length > 2) {
+      //     context.sendFrames();
+      //   }
+      // })
     }
     window.requestAnimationFrame(this.renderVideoIntoCanvas);
   }
@@ -65,7 +69,9 @@ class Canvas extends Component {
           height={context.pix2pixCanvasHeight} 
           id="pix2pixCanvas"
           style={{             
-            display: pix2pixCanvasDisplay
+            display: pix2pixCanvasDisplay,
+            opacity: context.isSliding ? 0 : 1,
+            transition: `all 30s`
           }}
         />
       </div>

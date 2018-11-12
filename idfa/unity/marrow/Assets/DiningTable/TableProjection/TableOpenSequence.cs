@@ -362,31 +362,27 @@ namespace Marrow
 
 			for (int i = 0; i < plates.Length; i++)
 				plates[i].GetComponent<Renderer>().material = plateNormalMaterial;
-
-			yield return new WaitForSeconds(1.5f);
-
+                
 			for (int i = 0; i < nameTags.Length; i++)
 				nameTags[i].SetActive(true);
 			nameTagAnimator.SetTrigger("Show");
 
-			yield return new WaitForSeconds(4f);
+			yield return new WaitForSeconds(3f);
 
 			// Hide name tags
 			nameTagAnimator.SetTrigger("Hide");
             
 			mainLight.ResetColor();
-			platesOnlySpotlight.ToggleOn(true, 2f, 2f, 0f);
+			platesOnlySpotlight.ToggleOn(true, 2f, 1f, 0f);
             
-			yield return new WaitForSeconds(3f);
+			// Table fade to color
+            tableRenderer.material = plateTransparentMaterial;
+            LeanTween.value(tableRenderer.gameObject, 0f, 1f, 1f)
+                     .setOnUpdate((float val) => { plateTransparentMaterial.SetFloat("_Fade", val); });
+			
+			yield return new WaitForSeconds(2f);
 
 			nameTagAnimator.enabled = false;
-
-			// Table fade to color
-			tableRenderer.material = plateTransparentMaterial;
-			LeanTween.value(tableRenderer.gameObject, 0f, 1f, 1f)
-                     .setOnUpdate((float val) => { plateTransparentMaterial.SetFloat("_Fade", val); });
-
-			yield return new WaitForSeconds(2f);
 
 			Debug.Log("Change table material back");
             tableRenderer.material = tableNormalMaterial;

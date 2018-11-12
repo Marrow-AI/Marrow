@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import VideoPlayer from './VideoPlayer';
 import ImagesSlider from './ImagesSlider';
+import CenterImage from './CenterImage';
 import Fader from './Fader';
 import CinemaMode from './CinemaMode';
 import GUI from './GUI';
@@ -32,6 +33,7 @@ class App extends Component {
   render() {
     const { debugMode } = this.props.context;
     return <div className="App" tabIndex="0" onKeyDown={this.handleKeyPress}>
+        <CenterImage />
         <ImagesSlider />
         <Canvas />
         <VideoPlayer type='camera' />

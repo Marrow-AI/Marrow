@@ -9,11 +9,11 @@
 }
 
 .Images{
-  /* transform: translate(0px,0);
-  transition: all 1s ease-in-out; */
+  position: relative;
 }
 
 .ImageInSlider{
   display: inline;
   margin: 0px 4px;
+  filter: sepia(100%);
 }
