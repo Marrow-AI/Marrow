@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import * as posenet from '@tensorflow-models/posenet';
 import { withContext } from './Provider';
 import '../styles/Canvas.css';
 
@@ -7,39 +6,20 @@ class Canvas extends Component {
   constructor(){
     super();
     this.state = {
-      peopleDetected: 0,
-      net: null
+      peopleDetected: 0
     }
   }
   
   componentDidMount() {
-    this.loadPoseNet();
     window.requestAnimationFrame(this.renderVideoIntoCanvas);
-  }
-
-  loadPoseNet = () => {
-    posenet.load()
-      .then(net => {
-        this.setState({ net })
-    })
   }
 
   renderVideoIntoCanvas = () => {
     const { context } = this.props;
-    const { net } = this.state;
     const video = document.getElementById('cameraElement');
     const canvas = document.getElementById('cameraCanvas');
     const ctx = canvas.getContext('2d');
     ctx.drawImage(video, 0, 0, context.cameraCanvasWidth, context.cameraCanvasHeight);
-    if (net) {
-      // net.estimateMultiplePoses(canvas, 0.5, false, 16, 4)
-      // .then(r => {
-      //   if(r.length > ) {
-      //     context.setIsSliding(false)
-      //     context.sendFrames();
-      //   }
-      // })
-    }
     window.requestAnimationFrame(this.renderVideoIntoCanvas);
   }
   
@@ -56,7 +36,12 @@ class Canvas extends Component {
       pix2pixCanvasDisplay = 'inline';
     }
     return (
-      <div className="Canvas">
+      <div 
+        className="Canvas"
+        style={{
+          opacity: context.hide ? 0 : 1
+        }}  
+      >
         <canvas
           width={context.cameraCanvasWidth}
           height={context.cameraCanvasHeight}
@@ -65,16 +50,22 @@ class Canvas extends Component {
             display: cameraCanvasDisplay
           }}
         />
-        <canvas 
-          width={context.pix2pixCanvasWidth} 
-          height={context.pix2pixCanvasHeight} 
-          id="pix2pixCanvas"
-          style={{             
-            display: pix2pixCanvasDisplay,
-            opacity: context.isSliding ? 0 : 1,
-            transition: `all 30s`
+        <div
+          id="pix2pixContainer"
+          style={{
+            opacity: context.showPix2Pix ? 1 : 1
           }}
-        />
+        >
+          <canvas 
+            width={context.pix2pixCanvasWidth} 
+            height={context.pix2pixCanvasHeight} 
+            id="pix2pixCanvas"
+            style={{             
+              display: pix2pixCanvasDisplay,
+              opacity: context.isSliding ? 1 : 1
+            }}
+          />
+        </div>
       </div>
     );
   }

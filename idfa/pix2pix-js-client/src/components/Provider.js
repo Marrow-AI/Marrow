@@ -73,7 +73,7 @@ class AppProvider extends Component {
     setCameraCanvasHeight: (s) => this.setState({cameraCanvasHeight: s}),
     isShowingCamera: true,
     setShowingCamera: (s) => this.setState({isShowingCamera: s}),
-    isShowingCameraCanvas: true,
+    isShowingCameraCanvas: false,
     setShowingCameraCanvas: (s) => this.setState({isShowingCameraCanvas: s}),
     pix2pixCanvasWidth: 1080,
     pix2pixCanvasHeight: 720,
@@ -86,13 +86,17 @@ class AppProvider extends Component {
     autoplayCameraDuration: 3,
     serverIP: IP,
     marrowRoute: '/',
-    marrowIP: "localhost",
+    marrowIP: "10.10.201.187",
     marrowPort: "9540",
     isConnectedToServer: false,
     isConnectedToMarrow: false,
     isSendingFrames: false,
     socket: null,
     marrowSocket: null,
+    waitingForStart: false,
+    showPix2Pix: false,
+    setShowPix2Pix: (v) => this.setState({showPix2Pix: v}),
+    setWaitingStatus: (v) => this.setState({waitingForStart: v}),
     setServerIP: (ip) => this.setState({serverIP: ip}),
     setMarrowIP: (ip) => this.setState({marrowIP: ip}), 
     setMarrowPort: (port) => this.setState({marrowPort: port}),
@@ -105,6 +109,9 @@ class AppProvider extends Component {
     isSliding: true,
     isExperienceRunning: false,
     centerImage: 49,
+    isPosenetRunning: true,
+    hide: false,
+    setPosenetStatus: (v) => this.setState({isPosenetRunning: v}),
     setCenterImage: (v) => this.setState({centerImage: v}),
     setIsSliding: (v) => this.setState({isSliding: v}),
     setExperienceStatus: (v) => this.setState({isExperienceRunning: v}),
@@ -127,7 +134,7 @@ class AppProvider extends Component {
           const img = new Image();
           img.onload = () => {
             ctx.drawImage(img, 0, 0, this.state.pix2pixCanvasWidth, this.state.pix2pixCanvasHeight);
-            if (this.state.marrowSocket) {
+            if (this.state.isConnectedToMarrow) {
                 this.state.marrowSocket.send(JSON.stringify({action: "pix2pix", loss: data.loss_function}));
             }
             if (this.state.isSendingFrames) {
@@ -154,14 +161,25 @@ class AppProvider extends Component {
             this.setState({ marrowSocket: marrowSocket });
 
             marrowSocket.onopen = () => {
+              console.log('Connected to audio server')
               this.setState({ isConnectedToMarrow: true });
             };
-            marrowSocket.onmessage = (packet) => {
+            marrowSocket.onmessage = (packet) => {    
                 try {
                     let message = JSON.parse(packet.data);
-                    if (message.action && message.action == "control") {
-                        if (message.comand && message.command == "stop") {
-                            // Stop posenet, fadepix2pix?
+                    console.log(message);
+                      if (message.action && message.action == "control") {
+                        if (message.command && message.command == "start") {
+                          this.state.setPosenetStatus(false);
+                        } else if (message.command && message.command == "stop") {
+                          this.state.setPosenetStatus(true);
+                          //this.state.setShowPix2Pix(false);
+                          //this.state.updateSendingFrameStatus(false);
+                          this.state.setIsSliding(true);
+                          this.setState({ hide: false })
+                        } else if (message.command && message.command == "hide") {
+                          console.log("Got hide command");
+                          this.setState({ hide: true })
                         }
                     }
                 }
@@ -171,8 +189,8 @@ class AppProvider extends Component {
                             
             };
             marrowSocket.onclose =  () => {
+              console.log('Disconnected from audio server')
               this.setState({ isConnectedToMarrow: false });
-              this.setState({ marrowSocket: null });
             };
         }
         catch (e) {
@@ -188,9 +206,14 @@ class AppProvider extends Component {
         },2000)
     },
     sendMarrowStart:() => {
-        if (this.state.marrowSocket) {
+        try {
+          if (this.state.marrowSocket) {
             this.state.marrowSocket.send(JSON.stringify({action: "control", command: "start"}));
+          }
+        } catch(e) {
+          console.log("Error sending marrow start",)
         }
+        
     },
     updateSendingFrameStatus: (state) => {
       if (state) {

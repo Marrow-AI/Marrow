@@ -112,7 +112,7 @@ class GUI extends Component {
             onClick={() => context.setShowingPix2pixCanvas(!context.isShowingPix2pixCanvas)}
           />
         </dg.Folder>
-        <dg.Folder label='Server' expanded={false}>
+        <dg.Folder label='Server' expanded={true}>
           <dg.Text label='Server Connection' value={context.isConnectedToServer ? 'Connected' : 'Not Connected'}/>
           <dg.Text label='IP' 
             value={context.serverIP}
