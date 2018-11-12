@@ -7,7 +7,7 @@ class Camera extends Component {
     return (
       <div className="VideoPlayer">
         <video
-          autoPlay="true" 
+          autoPlay={true}
           id={this.props.type + 'Element'}/>
       </div>
     );

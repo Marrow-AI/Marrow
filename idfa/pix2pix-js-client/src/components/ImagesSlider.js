@@ -1,66 +1,103 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import { withContext } from './Provider';
-
 import '../styles/ImageSlider.css';
 
 const BASE_URL = 'http://localhost:3000'
+const WIDTH = 228;
+const TIME = 300;
 
 class ImageSlider extends Component {
-  constructor(){
-    super();
+  constructor(props){
+    super(props);
     this.state = {
-      leftImage: 0,
-      xTranslate: 0,
+      imgInCenter: this.props.context.amountOfImages - 1,
+      xTranslate: -this.props.context.amountOfImages*WIDTH,
+      transitionTime: 0
     }
   }
 
   componentDidMount(){
     const { context } = this.props;
+    this.setState({
+      xTranslate: 0,
+      transitionTime: TIME
+    });
+
     setInterval(() => {
-      const { leftImage } = this.state;
       const { context } = this.props;
-      let update;
-      let xTranslate = 240*leftImage;
-      if (leftImage < context.amountOfImages) {
-        update = leftImage + 1;
-        xTranslate = xTranslate*-1;
-      } else {
-        update = 0;
-        xTranslate = 0;
+      const pos = ReactDOM.findDOMNode(this.refs['ImageSlider']).getBoundingClientRect();
+      for (let i = 0; i < context.amountOfImages + 1; i++){
+        const el = ReactDOM.findDOMNode(this.refs[`IMAGE_${i}`]);
+        if (el) {
+          const { right } = el.getBoundingClientRect();
+          if (right > window.innerWidth/2 - 110 && right < window.innerWidth/2 + 110) {
+            if(context.isSliding) {
+              context.setCenterImage(i);
+            }
+          }
+        }
       }
 
-      this.setState({ 
-        leftImage: update,
-        xTranslate
-      })
-    }, context.sliderSpeed*1000);
+      if(!context.isSliding) {
+        const center = ReactDOM.findDOMNode(this.refs[`IMAGE_${context.centerImage}`]).getBoundingClientRect();
+        let deltaAlignToCenter = window.innerWidth/2 - center.left - 110;
+
+        if (center.left > window.innerWidth/2 + 110) {
+          deltaAlignToCenter = deltaAlignToCenter * -1;
+        }
+        console.log('deltaAlignToCenter', deltaAlignToCenter);
+        this.setState({ 
+          xTranslate: pos.left + deltaAlignToCenter,
+          transitionTime: 10
+        });
+      } else {
+        if (context.centerImage === 0) {
+          this.setState({ 
+            xTranslate: -context.amountOfImages*WIDTH,
+            transitionTime: 0
+          });
+        } else {
+          this.setState({ 
+            xTranslate: 0,
+            transitionTime: TIME
+          });
+        }
+      }
+    }, 1000);
   }
 
   render() {
     const { context } = this.props;
-    const { leftImage, xTranslate } = this.state;
+    const { leftImage, xTranslate, transitionTime } = this.state;
     const images = Array.apply(null, Array(context.amountOfImages)).map((x, i) => i);
-    // console.log(leftImage);
+    
     return (
       <div 
+        ref='ImageSlider'
         className="ImageSlider" 
         style={{
-        opacity: context.imageSliderOpacity
+          left: `${xTranslate}px`,
+          transition: `all ${transitionTime}s cubic-bezier(0.21, 0.2, 0.49, 0.49) 0s`
       }}>
-      <div className="Images">
+      <div 
+        className="Images"
+        style={{
+          opacity: context.isSliding ? 1 : 1,
+          transition: `all 7s`
+        }}
+      >
         {
           images.map(i => (
             <img
+              id={`IMAGE_${i}`}
+              ref={`IMAGE_${i}`}
               className="ImageInSlider"
               key={i}
               src={`${BASE_URL}/images/${i}.png`}
               alt="current" 
               width={context.imagesWidth}
               height={context.imagesHeight}
-              style={{
-                transform: `translate(${xTranslate}px, 0px)`,
-                transition: `all ${context.sliderSpeed+0.2}s linear`
-              }}
           />
           ))
         }

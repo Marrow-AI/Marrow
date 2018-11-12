@@ -1,0 +1,15 @@
+.CenterImage{
+  width: 220px;
+  height: 133px;
+  position: absolute;
+  z-index: 9999;
+  top: 50%;
+  left: 0; 
+  right: 0; 
+  margin-left: auto; 
+  margin-right: auto;
+  padding: 0px;
+  transform: translateY(-51%);
+  transition: opacity 5s ease-in-out;
+  opacity: 0;
+}

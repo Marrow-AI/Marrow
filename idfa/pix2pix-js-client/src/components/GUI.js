@@ -68,7 +68,7 @@ class GUI extends Component {
           step={1}
           onChange={(s) => context.setCinemaModeSize(s)}
         />
-        <dg.Folder label='Camera' expanded={true}>
+        <dg.Folder label='Camera' expanded={false}>
           <dg.Number 
             label='Width' 
             value={256} 
@@ -88,9 +88,9 @@ class GUI extends Component {
           <dg.Button 
             label={context.isShowingCameraCanvas ? 'Hide Camera' : 'Show Camera'}
             onClick={() => context.setShowingCameraCanvas(!context.isShowingCameraCanvas)}
-        />
+          />
         </dg.Folder>
-        <dg.Folder label='Pix2Pix' expanded={true}>
+        <dg.Folder label='Pix2Pix' expanded={false}>
           <dg.Number 
             label='Width' 
             value={1280} 
@@ -112,7 +112,7 @@ class GUI extends Component {
             onClick={() => context.setShowingPix2pixCanvas(!context.isShowingPix2pixCanvas)}
           />
         </dg.Folder>
-        <dg.Folder label='Server' expanded={true}>
+        <dg.Folder label='Server' expanded={false}>
           <dg.Text label='Server Connection' value={context.isConnectedToServer ? 'Connected' : 'Not Connected'}/>
           <dg.Text label='IP' 
             value={context.serverIP}
@@ -174,14 +174,6 @@ class GUI extends Component {
             onChange={(s) => context.setAmountOfImages(s)}
           />
           <dg.Number 
-            label='Opacity' 
-            value={1} 
-            min={0} 
-            max={1} 
-            step={0.1}
-            onChange={(s) => context.setImageSliderOpacity(s)}
-          />
-          <dg.Number 
             label='Transition Speed' 
             value={2} 
             min={0} 
@@ -189,7 +181,15 @@ class GUI extends Component {
             step={1}
             onChange={(s) => context.setSliderSpeed(s)}
           />
-        </dg.Folder>        
+          <dg.Button 
+            label={context.isSliding ? 'Stop and Center' : 'Start Sliding'}
+            onClick={() => context.setIsSliding(!context.isSliding)}
+          />
+        </dg.Folder>    
+        <dg.Button 
+          label={context.isExperienceRunning ? 'Stop Experience' : 'Start Experience'}
+          onClick={() => context.setExperienceStatus(!context.isExperienceRunning)}
+        />
       </dg.GUI>
       </div>
     );
