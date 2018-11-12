@@ -41,7 +41,7 @@ TXSystem1.start(showAudioOptions: false)
 ;
 
 a = NetAddr.new("127.0.0.1", 57120);
-a.sendMsg("/strings/effect", 2,0.0);
+a.sendMsg("/gan/echo", 2);
 
 Server.default.record;
 Server.default.stopRecording

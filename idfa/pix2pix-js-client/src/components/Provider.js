@@ -122,7 +122,7 @@ class AppProvider extends Component {
           img.onload = () => {
             ctx.drawImage(img, 0, 0, this.state.pix2pixCanvasWidth, this.state.pix2pixCanvasHeight);
             if (this.state.marrowSocket) {
-                this.state.marrowSocket.send(JSON.stringify({action: "pix2pix"}));
+                this.state.marrowSocket.send(JSON.stringify({action: "pix2pix", loss: data.loss_function}));
             }
             if (this.state.isSendingFrames) {
               this.state.sendFrames();
