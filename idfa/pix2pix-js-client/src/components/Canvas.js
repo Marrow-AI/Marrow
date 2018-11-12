@@ -34,7 +34,8 @@ class Canvas extends Component {
     if (net) {
       // net.estimateMultiplePoses(canvas, 0.5, false, 16, 4)
       // .then(r => {
-      //   if(r.length > 2) {
+      //   if(r.length > ) {
+      //     context.setIsSliding(false)
       //     context.sendFrames();
       //   }
       // })
