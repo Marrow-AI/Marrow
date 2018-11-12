@@ -40,6 +40,7 @@ class ImageSlider extends Component {
       const { context } = this.props;
       const { net } = this.state;
       const pos = ReactDOM.findDOMNode(this.refs['ImageSlider']).getBoundingClientRect();
+      
       for (let i = 0; i < context.amountOfImages + 1; i++){
         const el = ReactDOM.findDOMNode(this.refs[`IMAGE_${i}`]);
         if (el) {

@@ -7,6 +7,7 @@ import CinemaMode from './CinemaMode';
 import GUI from './GUI';
 import Canvas from "./Canvas";
 import { AppContext } from './Provider';
+import ReactDOM from 'react-dom';
 import '../styles/App.css';
 
 class App extends Component {
@@ -21,6 +22,19 @@ class App extends Component {
         context.initCamera(constrains);
         context.setCameraDevices(devices);
       })
+
+      const maptastic = document.createElement("script");
+      maptastic.src = "http://localhost:3000/maptastic.min.js";
+      // script.async = true;
+      document.body.appendChild(maptastic);
+      
+      setTimeout(() => {
+        const projection = document.createElement("script");
+        projection.src = "http://localhost:3000/projection.js";
+        // script.async = true;
+        document.body.appendChild(projection);
+      }, 500)
+      window.app = ReactDOM.findDOMNode(this.refs['App']).getBoundingClientRect();
   }
 
   handleKeyPress = (e) => {
@@ -32,15 +46,19 @@ class App extends Component {
 
   render() {
     const { debugMode } = this.props.context;
-    return <div className="App" tabIndex="0" onKeyDown={this.handleKeyPress}>
-        <CenterImage />
-        <ImagesSlider />
-        <Canvas />
-        <VideoPlayer type='camera' />
-        <CinemaMode />
-        <Fader />
-        {debugMode ? <GUI /> : null}
-      </div>;
+    return (
+      
+        <div className="App" id="App" ref='App' tabIndex="0" onKeyDown={this.handleKeyPress}>
+          <CenterImage />
+          <ImagesSlider />
+          <Canvas />
+          <VideoPlayer type='camera' />
+          <CinemaMode />
+          <Fader />
+          {debugMode ? <GUI /> : null}
+        </div>
+      
+    );
   }
 }
 
