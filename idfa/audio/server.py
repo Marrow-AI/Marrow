@@ -31,7 +31,11 @@ class Server:
                 data = json.loads(message)
                 action = data["action"]
                 if action == 'pix2pix':
-                    self.pix2pix_callback()
+                    if "loss" in data:
+                        self.pix2pix_callback(data["loss"])
+                    else:
+                        self.pix2pix_callback()
+                        
                 elif action == 'get-token':
                     await websocket.send(json.dumps({'token': self.ms_speech.obtain_auth_token()}))
                 elif action == 'get-watson-token':
