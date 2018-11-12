@@ -31,7 +31,11 @@ class Server:
                 data = json.loads(message)
                 action = data["action"]
                 if action == 'pix2pix':
-                    self.pix2pix_callback()
+                    if "loss" in data:
+                        self.pix2pix_callback(data["loss"])
+                    else:
+                        self.pix2pix_callback()
+                        
                 elif action == 'get-token':
                     await websocket.send(json.dumps({'token': self.ms_speech.obtain_auth_token()}))
                 elif action == 'get-watson-token':
@@ -57,7 +61,7 @@ class Server:
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
         ssl_context.load_cert_chain(certfile='localhost.pem', keyfile='localkey.pem')
         print("Websocket listening")
-        return websockets.serve(self.handler, 'localhost', 9540, ssl=None)
+        return websockets.serve(self.handler, '0.0.0.0', 9540, ssl=None)
 
     async def emotion_update(self,data, state):
         print("Sending emotion update")
