@@ -41,7 +41,7 @@ TXSystem1.start(showAudioOptions: false)
 ;
 
 a = NetAddr.new("127.0.0.1", 57120);
-a.sendMsg("/gan/echo", 2);
+a.sendMsg("/control/synthbass", 0.0, 0.0, 0.2);
 
 Server.default.record;
 Server.default.stopRecording
