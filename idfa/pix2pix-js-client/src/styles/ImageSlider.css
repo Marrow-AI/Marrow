@@ -15,5 +15,6 @@
 .ImageInSlider{
   display: inline;
   margin: 0px 4px;
-  filter: sepia(100%);
+  filter: contrast(60%) sepia(100%);
+  opacity: 0.9;
 }

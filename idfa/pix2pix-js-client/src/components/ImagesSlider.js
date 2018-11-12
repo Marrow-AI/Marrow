@@ -45,11 +45,10 @@ class ImageSlider extends Component {
 
         if (center.left > window.innerWidth/2 + 110) {
           deltaAlignToCenter = deltaAlignToCenter * -1;
-        }
-        console.log('deltaAlignToCenter', deltaAlignToCenter);
+        } 
         this.setState({ 
           xTranslate: pos.left + deltaAlignToCenter,
-          transitionTime: 10
+          transitionTime: 2
         });
       } else {
         if (context.centerImage === 0) {
@@ -83,7 +82,7 @@ class ImageSlider extends Component {
       <div 
         className="Images"
         style={{
-          opacity: context.isSliding ? 1 : 1,
+          opacity: context.isSliding ? 1 : 0,
           transition: `all 7s`
         }}
       >
