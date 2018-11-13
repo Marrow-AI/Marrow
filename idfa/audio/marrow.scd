@@ -1,5 +1,6 @@
 //TXSystem1.start(0,"/home/avnerus/Projects/gandinner/tx_modular_sample",showAudioOptions: false);
 
+
 (
 OSCdef.new( \speechreload, { |data,time,source|
 	"reloading speech".postln;
