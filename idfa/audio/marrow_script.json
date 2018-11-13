@@ -116,7 +116,7 @@
         ],
         "timeouts":[
             {
-                "after": 12,
+                "after": 7,
                 "line": [
                     {
                         "text": "It can be anything you like",
@@ -144,7 +144,7 @@
                 ]
             },
             {
-                "after": 8,
+                "after": 7,
                 "line": [
                     {
                         "text": "It is possible I didn't hear what you said.",
@@ -171,13 +171,13 @@
                     "pause": 3700
                 },
                 {
-                    "text": "Are they talking about the food they are eating?",
-                    "pause": 2500
+                    "text": "Look at them, what do you think the perfect family talk about?",
+                     "pause": 2500
                 },
                 {
-                    "text": "Look at them, what do you think the perfect family talk about?"
+                    "text": "Are they talking about the food they are eating?"
+                   
                 }
-
     ],
     "script-lines": [
         {
