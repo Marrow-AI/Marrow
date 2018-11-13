@@ -3,6 +3,12 @@ import numpy as np
 from annoy import AnnoyIndex
 import json
 
+SCRIPT_TIMEOUT_GLOBAL = 11
+SCRIPT_TIMEOUT_NOSPEECH = 5
+
+SCRIPT_TIMEOUT_GLOBAL_SHORT = 6
+SCRIPT_TIMEOUT_NOSPEECH_SHORT = 5
+
 class Script:
     def __init__(self):
         print("Initializing script engine")
@@ -29,6 +35,13 @@ class Script:
         self.awaiting_nlp = self.nlp(self.awaiting_text)
         if self.awaiting_index > 0:
             self.awaiting["previous"] = self.data["script-lines"][self.awaiting_index -1]["text"]
+        if "timeout" in self.awaiting:
+            self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH_SHORT
+            self.awaiting_global_timeout = SCRIPT_TIMEOUT_GLOBAL_SHORT
+        else:
+            self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH
+            self.awaiting_global_timeout = SCRIPT_TIMEOUT_GLOBAL
+        
 
     def next_variation(self):
         if ("variations" in self.awaiting and len(self.awaiting["variations"]) - 1 >= self.awaiting_variation):

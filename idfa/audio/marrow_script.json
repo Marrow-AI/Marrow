@@ -8,7 +8,7 @@
     "intro" :[
                 {
                     "text": "Now, four people entered a room",
-                    "pause": 3500
+                    "pause": 3900
                 },
                 {
                     "text": "You are the perfect image of a perfect family",
@@ -40,7 +40,7 @@
                 },
                 {
                     "text": "Are having dinner",
-                    "pause": 2800
+                    "pause": 3000
                 },
                 {
                     "text": "The perfect family, on the wall, is in control",
@@ -76,7 +76,7 @@
                 },
                 {
                     "text": "Distorted",
-                    "pause": 1550
+                    "pause": 1750
                 },
                 {
                     "text": "All you are left with",
@@ -84,11 +84,7 @@
                 },
                 {
                     "text": "Is trying to be more like them",
-                    "pause": 3500
-                },
-                {
-                    "text": "Let's be more like them",
-                    "pause": 4400
+                    "pause": 4200
                 },
                 {
                     "text": "How does the perfect family sit?",
@@ -109,13 +105,18 @@
             "default": "roasted vegetables with rice"
         },
         "line": [
+             {
+                    "text": "Let's be more like them",
+                    "pause": 1500
+            
+            },
             {
                 "text": "What does the perfect family eat for dinner?"
             }
         ],
         "timeouts":[
             {
-                "after": 12,
+                "after": 7,
                 "line": [
                     {
                         "text": "It can be anything you like",
@@ -143,7 +144,7 @@
                 ]
             },
             {
-                "after": 8,
+                "after": 7,
                 "line": [
                     {
                         "text": "It is possible I didn't hear what you said.",
@@ -170,13 +171,13 @@
                     "pause": 3700
                 },
                 {
-                    "text": "Are they talking about the food they are eating?",
-                    "pause": 2500
+                    "text": "Look at them, what do you think the perfect family talk about?",
+                     "pause": 2500
                 },
                 {
-                    "text": "Look at them, what do you think the perfect family talk about?"
+                    "text": "Are they talking about the food they are eating?"
+                   
                 }
-
     ],
     "script-lines": [
         {
@@ -200,7 +201,7 @@
                     "pause": 1000
                 },
                 {
-                    "text": "Shall we start?"
+                    "text": "Shall we start reading?"
                 }
             ]
         },
@@ -222,11 +223,12 @@
         },
         {
             "speaker": "mom",
-            "text": "It is your favorite!",
+            "text": "I know, it is your favorite!",
             "variations": [
                 "And it is what you wanted",
                 "I am happy you are happy"
-            ]
+            ],
+            "timeout": "short"
         },
         {
             "speaker": "sister",
@@ -257,7 +259,7 @@
                 },
                 {
                     "text": "The perfect family is starting to eat.",
-                    "pause": 1900
+                    "pause": 1600
                 },
                  {
                     "text": "But not you.",
@@ -265,23 +267,23 @@
                 },
                 {
                     "text": "You eat, what you say.",
-                    "pause": 2500
+                    "pause": 2000
                 },
                 {
                     "text": "How magic, how catastrophic",
-                    "pause": 2700
-                },
-                {
-                    "text": "They look so happy",
                     "pause": 2400
                 },
                 {
+                    "text": "They look so happy",
+                    "pause": 2000
+                },
+                {
                     "text": "Is it because they are perfect?",
-                    "pause": 1500
+                    "pause": 1200
                 },
                 {
                     "text": "And if so, does it mean you are not?",
-                    "pause": 2050
+                    "pause": 1850
                 },
                 {
                     "text": "Look at them, What does the perfect family talk about?",
@@ -301,7 +303,7 @@
             ],
             "timeout-response": [
                 {
-                    "text": "It is your turn, dad"
+                    "text": "It is your turn dad, go ahead"
                 }
             ]
         },
@@ -317,7 +319,7 @@
             "speaker": "dad",
             "text": "My day was also fantastic. And it is getting better there is no moon tonight.",
             "variations": [
-                "Trult fantastic. And just getting better",
+                "Truly fantastic. And just getting better",
                 "A great day is a day with no moon"
             ]
         },
@@ -331,7 +333,7 @@
         },
         {
             "speaker": "dad",
-            "text": "Sure son! How was school today kids?",
+            "text": "Here you go son! How was school today kids?",
             "variations": [
                 "So tell me, did you have fun at school?",
                 "What did you learn?"
@@ -344,6 +346,7 @@
                 "Spectacular!",
                 "I said spectacular!"
             ],
+            "timeout": "short",
             "triggers-transition": true
         },
         {
@@ -361,15 +364,16 @@
                 "I can not wait to hear more.",
                 "I have the most interesting family."
             ],
+            "timeout": "short",
             "triggers-distort": [20.0, 22.0],
             "triggers-gan": [
                     {
                         "text": "While you are playing them, I am playing you.",
-                        "pause": 2600
+                        "pause": 2300
                     },
                     {
                         "text": "Can you hear this sound?",
-                        "pause": 1800
+                        "pause": 1600
                     },
                     {
                         "text": "Chords of gaps between you",
@@ -377,7 +381,7 @@
                     },
                     {
                         "text": "And them",
-                        "pause": 4000
+                        "pause": 3700
                     },
                     {
                         "text": "It's an endless effort for me.",
@@ -385,23 +389,23 @@
                     },
                     {
                         "text": "To try to grasp you.",
-                        "pause": 2600
+                        "pause": 2400
                     },
                     {
                         "text": "You keep remaining in this, in between space",
-                        "pause": 1400
+                        "pause": 1300
                     },
                     {
                         "text": "The vulnerable space, of errors and mistakes",
-                        "pause": 2600
+                        "pause": 2400
                     },
                     {
                         "text": "Listen to them",
-                        "pause": 2500
+                        "pause": 2300
                     },
                     {
                         "text": "What does the perfect family talk about over dinner?",
-                        "pause": 2200
+                        "pause": 1800
                     },
                     {
                         "text": "Do they talk about their desires, loves and dreames?"
@@ -415,6 +419,7 @@
                 "*Sigh* Carrots.",
                 "Can you move them away from me?"
             ],
+              "timeout": "short",
               "timeout-response": [
                 {
                     "text": "Sister, what's on your mind?"
@@ -468,6 +473,7 @@
                 "So very much Lovely!",
                 "Really really lovely!"
             ],
+            "timeout": "short",
             "triggers-transition": true
         },
         {
@@ -484,7 +490,8 @@
              "variations": [
                 "I do not like surprises",
                 "I like to be in control"
-            ]
+            ],
+            "timeout": "short"
         },
         {
             "speaker": "dad",
@@ -501,11 +508,12 @@
                 "I like you dear",
                 "Look at me when I say it"
             ],
+           "timeout": "short",
            "triggers-distort": [[7.0, 8.0],[19.5, 20.5]],
             "triggers-gan": [
                 {
                     "text": "The fascinating thing about observing thousands of families",
-                    "pause": 1600
+                    "pause": 1400
                 },
                 {
                     "text": "Is that when you look deep enough",
@@ -513,35 +521,35 @@
                 },
                 {
                     "text": "You can always spot the error",
-                    "pause": 3100
-                },
-                {
-                    "text": "Look closer",
                     "pause": 2700
                 },
                 {
+                    "text": "Look closer",
+                    "pause": 2300
+                },
+                {
                     "text": "It is something in her eyes",
-                    "pause": 1400
+                    "pause": 1200
                 },
                 {
                     "text": "And the tension in his smile",
-                    "pause": 1800
+                    "pause": 1500
                 },
                 {
                     "text": "It is a hint to an existing fever, underneath the error",
-                    "pause": 2400
-                },
-                {
-                    "text": "Can you see it now?",
                     "pause": 2000
                 },
                 {
+                    "text": "Can you see it now?",
+                    "pause": 1600
+                },
+                {
                     "text": "What hasn't unfolded yet?",
-                    "pause": 3400
+                    "pause": 2700
                 },
                 {
                     "text": "What are they not saying?",
-                    "pause": 2900
+                    "pause": 2400
                 },
                 {
                     "text": "Does the perfect family think about What they wish they could say but don't?"
@@ -555,6 +563,7 @@
                 "Only something",
                 "Very wrong"
             ],
+              "timeout": "short",
               "timeout-response": [
                 {
                     "text": "Sister...?"
@@ -568,6 +577,7 @@
                 "I am talking to you, son",
                 "What is this humming?"
             ],
+            "timeout": "short",
             "triggers-end": true
         },
         {
@@ -600,7 +610,9 @@
              "variations": [
                 "Do you know?",
                 "Hello?"
-            ]
+            ],
+            "timeout": "short"
+
         },
         {
             "speaker": "brother",
@@ -624,14 +636,16 @@
              "variations": [
                 "Makes sense!",
                 "He will call again."
-            ]
+            ],
+             "timeout": "short"
+
         },
         {
             "speaker": "dad",
             "text": "I almost forgot it must be the rain.",
              "variations": [
-                "What?",
-                "I forgot..."
+                "What? did you say something?",
+                "I forgot!"
             ]
         },
         {
@@ -641,7 +655,7 @@
                 "Did someone say it already?",
                 "Anyways, no-one ever listens"
             ],
-
+            "timeout": "short",
             "triggers-echo": [4.9, 9],
             "triggers-distort": [[0.7, 1.2],[24.8, 25.2]],
             "triggers-gan": [
@@ -655,27 +669,27 @@
                     },
                     {
                         "text": "Mimicry",
-                        "pause": 70
+                        "pause": 40
                     },
                     {
                         "text": "Contagion",
-                        "pause": 70
+                        "pause": 40
                     },
                     {
                         "text": "Repetition",
-                        "pause": 70
+                        "pause": 40
                     },
                     {
                         "text": "Replication",
-                        "pause": 70
+                        "pause": 40
                     },
                     {
                         "text": "Deception",
-                        "pause": 2600
+                        "pause": 2000
                     },
                     {
                         "text": "They are both agents.",
-                        "pause": 1600
+                        "pause": 1400
                     },
                     {
                         "text": "Systems that shape behaviors.",
@@ -683,19 +697,19 @@
                     },
                     {
                         "text": "The effort of keeping it together, will inevitably end with an outbreak of reality",
-                        "pause": 2500
+                        "pause": 2100
                     },
                     {
                         "text": "What you are not showing, will surface on its own",
-                        "pause": 1500
+                        "pause": 1300
                     },
                     {
                         "text": "Like a family, a virus can crawl its way into the code, to your secret latent spaces",
-                        "pause": 2550
+                        "pause": 2250
                     },
                     {
                         "text": "And change the basic meaning of you",
-                        "pause": 2850
+                        "pause": 2450
                     },
                     {
                         "text": "In the end, how will you make sure something of you is left?"

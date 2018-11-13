@@ -1,5 +1,6 @@
 //TXSystem1.start(0,"/home/avnerus/Projects/gandinner/tx_modular_sample",showAudioOptions: false);
 
+
 (
 OSCdef.new( \speechreload, { |data,time,source|
 	"reloading speech".postln;
@@ -41,7 +42,8 @@ TXSystem1.start(showAudioOptions: false)
 ;
 
 a = NetAddr.new("127.0.0.1", 57120);
-a.sendMsg("/gan/echo", 2);
+a.sendMsg("/control/membrane", 0.0, 0.6, 0.25);
+a.sendMsg("/control/bassheart", 0.0, 0.9);
 
 Server.default.record;
 Server.default.stopRecording
