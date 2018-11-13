@@ -521,11 +521,11 @@
                 },
                 {
                     "text": "You can always spot the error",
-                    "pause": 2800
+                    "pause": 2700
                 },
                 {
                     "text": "Look closer",
-                    "pause": 2500
+                    "pause": 2300
                 },
                 {
                     "text": "It is something in her eyes",
@@ -533,19 +533,19 @@
                 },
                 {
                     "text": "And the tension in his smile",
-                    "pause": 1600
+                    "pause": 1500
                 },
                 {
                     "text": "It is a hint to an existing fever, underneath the error",
-                    "pause": 2200
+                    "pause": 2000
                 },
                 {
                     "text": "Can you see it now?",
-                    "pause": 1700
+                    "pause": 1600
                 },
                 {
                     "text": "What hasn't unfolded yet?",
-                    "pause": 3000
+                    "pause": 2700
                 },
                 {
                     "text": "What are they not saying?",
@@ -644,8 +644,8 @@
             "speaker": "dad",
             "text": "I almost forgot it must be the rain.",
              "variations": [
-                "What?",
-                "I forgot..."
+                "What? did you say something?",
+                "I forgot!"
             ]
         },
         {
