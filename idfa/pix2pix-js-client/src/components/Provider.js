@@ -67,8 +67,8 @@ class AppProvider extends Component {
           console.log("Something went wrong with the camera!", error);
         });
     },
-    cameraCanvasWidth: 256,
-    cameraCanvasHeight: 128,
+    cameraCanvasWidth: 330,
+    cameraCanvasHeight: 220,
     setCameraCanvasWidth: (s) => this.setState({cameraCanvasWidth: s}),
     setCameraCanvasHeight: (s) => this.setState({cameraCanvasHeight: s}),
     isShowingCamera: true,
@@ -111,9 +111,16 @@ class AppProvider extends Component {
     centerImage: 49,
     isPosenetRunning: true,
     hide: false,
+    isCentering: false,
+    setIsCentering: (v) => this.setState({isCentering: v}),
     setPosenetStatus: (v) => this.setState({isPosenetRunning: v}),
     setCenterImage: (v) => this.setState({centerImage: v}),
-    setIsSliding: (v) => this.setState({isSliding: v}),
+    setIsSliding: (v) => {
+      if (this.state.isCentering) {
+        this.setState({isCentering: false})
+      }
+      this.setState({isSliding: v})
+    },
     setExperienceStatus: (v) => this.setState({isExperienceRunning: v}),
     setSliderSpeed: (v) => this.setState({sliderSpeed: v}),
     setAmountOfImages: (v) => this.setState({amountOfImages: v}),
@@ -168,16 +175,16 @@ class AppProvider extends Component {
                 try {
                     let message = JSON.parse(packet.data);
                     console.log(message);
-                      if (message.action && message.action == "control") {
-                        if (message.command && message.command == "start") {
+                      if (message.action && message.action === "control") {
+                        if (message.command && message.command === "start") {
                           this.state.setPosenetStatus(false);
-                        } else if (message.command && message.command == "stop") {
+                        } else if (message.command && message.command === "stop") {
                           this.state.setPosenetStatus(true);
-                          //this.state.setShowPix2Pix(false);
-                          //this.state.updateSendingFrameStatus(false);
+                          this.state.setShowPix2Pix(false);
+                          this.state.updateSendingFrameStatus(false);
                           this.state.setIsSliding(true);
                           this.setState({ hide: false })
-                        } else if (message.command && message.command == "hide") {
+                        } else if (message.command && message.command === "hide") {
                           console.log("Got hide command");
                           this.setState({ hide: true })
                         }

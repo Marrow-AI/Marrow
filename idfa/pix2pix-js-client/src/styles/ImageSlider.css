@@ -2,9 +2,9 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  z-index: 99;
+  z-index: 999;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-190%);
   white-space: nowrap;
 }
 

@@ -39,7 +39,7 @@ class Canvas extends Component {
       <div 
         className="Canvas"
         style={{
-          opacity: context.hide ? 0 : 1
+          opacity: context.hide ? 0 : 1 // 0 : 1
         }}  
       >
         <canvas
@@ -52,8 +52,10 @@ class Canvas extends Component {
         />
         <div
           id="pix2pixContainer"
+          width={context.pix2pixCanvasWidth} 
+          height={context.pix2pixCanvasHeight} 
           style={{
-            opacity: context.showPix2Pix ? 1 : 1
+            opacity: context.showPix2Pix ? 1 : 0 // 1 : 0
           }}
         >
           <canvas 
@@ -62,7 +64,7 @@ class Canvas extends Component {
             id="pix2pixCanvas"
             style={{             
               display: pix2pixCanvasDisplay,
-              opacity: context.isSliding ? 1 : 1
+              opacity: context.isSliding ? 0 : 1  // 0 : 1
             }}
           />
         </div>

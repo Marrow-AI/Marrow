@@ -3,18 +3,11 @@ import ReactDOM from 'react-dom';
 import * as posenet from '@tensorflow-models/posenet';
 import { withContext } from './Provider';
 import '../styles/ImageSlider.css';
-import { checkArrayLengths } from '@tensorflow/tfjs-layers/dist/engine/training';
+
 
 const BASE_URL = 'http://localhost:3000'
 const WIDTH = 228;
 const TIME = 300;
-
-const imageScaleFactor = 0.5;
-const flipHorizontal = false;
-const outputStride = 32;
-const maxPoseDetections = 5;
-const scoreThreshold = 0.5;
-const nmsRadius = 30;
 
 class ImageSlider extends Component {
   constructor(props){
@@ -28,10 +21,9 @@ class ImageSlider extends Component {
   }
  
   componentDidMount(){
-    const { context } = this.props;
     this.loadPoseNet();
     this.setState({
-      xTranslate: 0,
+      xTranslate: window.innerWidth,
       transitionTime: TIME
     });
     
@@ -62,11 +54,10 @@ class ImageSlider extends Component {
         } 
         this.setState({ 
           xTranslate: pos.left + deltaAlignToCenter,
-          transitionTime: 3
+          transitionTime: 8
         });
 
       } else {
-        console.log(context.centerImage)
         if (context.centerImage === 1) {
           this.setState({ 
             xTranslate: -this.props.context.amountOfImages*WIDTH,
@@ -75,7 +66,7 @@ class ImageSlider extends Component {
           context.setCenterImage(49);
         } else {
           this.setState({ 
-            xTranslate: 0,
+            xTranslate: window.innerWidth,
             transitionTime: TIME
           });
         }
@@ -92,6 +83,7 @@ class ImageSlider extends Component {
             context.setWaitingStatus(true);
             setTimeout(() => {
               console.log('Start now!');
+              console.log('center images is', context.centerImage)
               context.setWaitingStatus(false);
               context.setIsSliding(false)
               context.sendMarrowStart();
@@ -118,7 +110,7 @@ class ImageSlider extends Component {
 
   render() {
     const { context } = this.props;
-    const { leftImage, xTranslate, transitionTime } = this.state;
+    const {  xTranslate, transitionTime } = this.state;
     const images = Array.apply(null, Array(context.amountOfImages)).map((x, i) => i);
 
     return (
@@ -127,14 +119,14 @@ class ImageSlider extends Component {
         className="ImageSlider" 
         style={{
           left: `${xTranslate}px`,
-          transition: `left ${transitionTime}s cubic-bezier(0.21, 0.2, 0.49, 0.49) 0s, opacity 3s ease-in-out`,
+          transition: `left ${transitionTime}s cubic-bezier(0.21, 0.2, 0.49, 0.49) 0s, opacity 8s ease-in-out`,
           display: context.hide ? 'none' : 'inline'
       }}>
       <div 
         className="Images"
         style={{
           opacity: context.isSliding ? 1 : 0,
-          transition: `all 7s`
+          transition: `all 7s ease-in-out`
         }}
       >
         {
