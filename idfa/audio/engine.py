@@ -112,6 +112,8 @@ class Engine:
         self.osc_commands = {}
         self.func_sched = {}
 
+        #self.lock = asyncio.Lock()
+
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         #self.pix2pix_client = udp_client.SimpleUDPClient("127.0.0.1", 8383)
         self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
@@ -199,7 +201,7 @@ class Engine:
                 asyncio.set_event_loop(self.main_loop)
                 self.last_react = self.last_speech = now
                 if self.timeout_response():
-                    self.last_react = self.last_speech = time.time()  + delay + self.speech_duration
+                    self.last_react = self.last_speech = time.time() + self.speech_duration
                     # say it
                     self.say(delay_sec = 1)
                 elif self.script.next_variation():
@@ -257,7 +259,7 @@ class Engine:
             self.t2i_client.send_message("/speech", text)
             self.lookup(text)
         elif self.state == "QUESTION":
-            question_answer = text
+            self.question_answer = text
 
     def lookup(self, text):
         # print("REACT: {}".format(text))
@@ -384,8 +386,8 @@ class Engine:
             self.schedule_osc(delay,self.voice_client, "/control/musicbox", [0.0, 0.5, 0.8, 0.0])
             self.schedule_osc(delay + 1,self.voice_client, "/control/beacon", [0.9, 0.0])
             self.schedule_osc(delay + 1 ,self.voice_client, "/control/bassheart", [0.9, 0.9])
-            self.schedule_osc(delay + 1,self.voice_client, "/control/membrane", [0.9, 0.5, 0.0])
-            self.schedule_osc(delay + 4,self.voice_client, "/control/membrane", [0.9, 0.5, 0.1])
+            self.schedule_osc(delay + 1,self.voice_client, "/control/membrane", [0.9, 0.6, 0.0])
+            self.schedule_osc(delay + 4,self.voice_client, "/control/membrane", [0.9, 0.6, 0.25])
             self.schedule_osc(delay + 5,self.voice_client, "/control/musicbox", [0.7, 0.0, 0.8, 0.0])
 
 
@@ -417,7 +419,7 @@ class Engine:
                 self.schedule_osc(delay + 2, self.voice_client, "/control/stop", 1)
 
                 self.schedule_osc(delay + 5.5, self.voice_client, "/strings/effect", [3, 0.8])
-                self.schedule_osc(delay + 5.5, self.voice_client, "/control/strings", [0.0, 0.5])
+                self.schedule_osc(delay + 5.5, self.voice_client, "/control/strings", [0.0, 0.95])
                 #self.schedule_osc(delay + 5.5, self.voice_client, "/control/bells", [0.0, 0.2])
                 #self.schedule_osc(delay + 5.5, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
 
@@ -573,6 +575,7 @@ class Engine:
     def stop(self):
         print("Stopping experience")
         self.script.reset()
+        self.voice_client.send_message("/control/membrane", [0.0, 0.0, 0.0])
         self.voice_client.send_message("/control/stop",1)
         self.t2i_client.send_message("/table/fadeout",1)
         self.t2i_client.send_message("/control/stop",1)
@@ -617,8 +620,8 @@ class Engine:
         #self.schedule_function(0.5, self.play_effect)
         self.say(delay_sec = 0.5, callback=self.pre_question)
         self.schedule_osc(13.4, self.voice_client, "/control/start", 1)
-        self.schedule_osc(31.51, self.voice_client, "/control/strings", [0.0, 0.8])
-        self.schedule_osc(61.51, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.35])
+        self.schedule_osc(31.51, self.voice_client, "/control/strings", [0.0, 0.95])
+        self.schedule_osc(61.51, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.4])
         self.schedule_function(61.51, self.start_noise)
 
     def start_noise(self):
