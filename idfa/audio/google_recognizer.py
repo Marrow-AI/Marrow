@@ -79,6 +79,7 @@ class MicrophoneStream(object):
                 diff = current_time - self.start_time
                 #print(diff)
                 if (diff > 55):
+                    print("GOOGLE TIMEOUT, Closing")
                     self.closed = True
                     break
                 try:
@@ -178,7 +179,7 @@ class Recognizer(Thread):
                 #sys.stdout.flush()
 
                 if (transcript != self.last_result):
-                    #print("({})".format(transcript))
+                    print("({})".format(transcript))
                     self.queue.put({
                         "action": "mid-speech",
                         "text": transcript
@@ -186,7 +187,7 @@ class Recognizer(Thread):
                     self.last_result = transcript
 
             else:
-                #print(" = {}".format(transcript))
+                print(" = {}".format(transcript))
                 self.queue.put({
                     "action": "speech",
                     "text": transcript
