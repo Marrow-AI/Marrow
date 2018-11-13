@@ -115,7 +115,7 @@
         ],
         "timeouts":[
             {
-                "after": 12,
+                "after": 7,
                 "line": [
                     {
                         "text": "It can be anything you like",
@@ -143,7 +143,7 @@
                 ]
             },
             {
-                "after": 8,
+                "after": 7,
                 "line": [
                     {
                         "text": "It is possible I didn't hear what you said.",

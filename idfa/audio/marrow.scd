@@ -41,7 +41,8 @@ TXSystem1.start(showAudioOptions: false)
 ;
 
 a = NetAddr.new("127.0.0.1", 57120);
-a.sendMsg("/control/synthbass", 0.0, 0.0, 0.2);
+a.sendMsg("/control/membrane", 0.0, 0.5, 0.1);
+a.sendMsg("/control/bassheart", 0.0, 0.9);
 
 Server.default.record;
 Server.default.stopRecording

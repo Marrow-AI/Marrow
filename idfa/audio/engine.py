@@ -199,6 +199,7 @@ class Engine:
                 asyncio.set_event_loop(self.main_loop)
                 self.last_react = self.last_speech = now
                 if self.timeout_response():
+                    self.last_react = self.last_speech = time.time()  + delay + self.speech_duration
                     # say it
                     self.say(delay_sec = 1)
                 elif self.script.next_variation():
@@ -539,7 +540,7 @@ class Engine:
             self.recognizer.stop()
             if self.state != "INTRO" and duration >= 1:
                 # Minus 1 for the time it takes to start listening
-                self.schedule_function(duration - 1, self.start_google)
+                self.schedule_function(duration - 0.5, self.start_google)
 
     def control(self, data):
         print("Control command! {}".format(data))
