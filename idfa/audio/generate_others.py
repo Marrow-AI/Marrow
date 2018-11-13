@@ -10,7 +10,6 @@ try:
 except Exception as e:
     print("Error generating intro {}".format(e))
 
-"""
 #question
 try:
     moz_tts.say(script.data["question"]["line"], "gan_question/line.wav")
@@ -30,4 +29,3 @@ try:
 except Exception as e:
     print("Error generating question line {}".format(e))
     
-"""
