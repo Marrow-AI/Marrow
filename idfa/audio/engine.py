@@ -36,8 +36,6 @@ import math
 #print("Loaded English NLP")
 
 DISTANCE_THRESHOLD = 0.75
-SCRIPT_TIMEOUT_GLOBAL = 11
-SCRIPT_TIMEOUT_NOSPEECH = 5
 
 class ScheduleOSC:
     def __init__(self, timeout, client, command, args,  callback):
@@ -193,8 +191,8 @@ class Engine:
             if (
                 self.script.awaiting_index > -1
                 and (
-                        (now - self.last_react) > SCRIPT_TIMEOUT_GLOBAL
-                        or (now - self.last_speech) > SCRIPT_TIMEOUT_NOSPEECH
+                        (now - self.last_react) > self.script.awaiting_global_timeout
+                        or (now - self.last_speech) > self.script.awaiting_nospeech_timeout
                     )
             ):
                 print("Script TIMEOUT! {}, {}, {}".format(now, self.last_react, self.last_speech))
