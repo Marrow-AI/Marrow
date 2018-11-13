@@ -8,7 +8,7 @@
     "intro" :[
                 {
                     "text": "Now, four people entered a room",
-                    "pause": 3500
+                    "pause": 3900
                 },
                 {
                     "text": "You are the perfect image of a perfect family",
@@ -40,7 +40,7 @@
                 },
                 {
                     "text": "Are having dinner",
-                    "pause": 2800
+                    "pause": 3000
                 },
                 {
                     "text": "The perfect family, on the wall, is in control",
@@ -76,7 +76,7 @@
                 },
                 {
                     "text": "Distorted",
-                    "pause": 1550
+                    "pause": 1750
                 },
                 {
                     "text": "All you are left with",
@@ -84,11 +84,7 @@
                 },
                 {
                     "text": "Is trying to be more like them",
-                    "pause": 3500
-                },
-                {
-                    "text": "Let's be more like them",
-                    "pause": 4400
+                    "pause": 4200
                 },
                 {
                     "text": "How does the perfect family sit?",
@@ -99,7 +95,7 @@
                     "pause": 1800
                 },
                 {
-                    "text": "Can you mimic them?"
+                    "text": "Can you mimic them?",
                 }
     ],
 
@@ -109,6 +105,11 @@
             "default": "roasted vegetables with rice"
         },
         "line": [
+             {
+                    "text": "Let's be more like them",
+                    "pause": 1500
+            
+            },
             {
                 "text": "What does the perfect family eat for dinner?"
             }
@@ -301,7 +302,7 @@
             ],
             "timeout-response": [
                 {
-                    "text": "It is your turn, dad"
+                    "text": "It is your turn dad, go ahead"
                 }
             ]
         },
