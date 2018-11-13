@@ -227,7 +227,8 @@
             "variations": [
                 "And it is what you wanted",
                 "I am happy you are happy"
-            ]
+            ],
+            "timeout": "short"
         },
         {
             "speaker": "sister",
@@ -345,6 +346,7 @@
                 "Spectacular!",
                 "I said spectacular!"
             ],
+            "timeout": "short",
             "triggers-transition": true
         },
         {
@@ -362,6 +364,7 @@
                 "I can not wait to hear more.",
                 "I have the most interesting family."
             ],
+            "timeout": "short",
             "triggers-distort": [20.0, 22.0],
             "triggers-gan": [
                     {
@@ -416,6 +419,7 @@
                 "*Sigh* Carrots.",
                 "Can you move them away from me?"
             ],
+              "timeout": "short",
               "timeout-response": [
                 {
                     "text": "Sister, what's on your mind?"
@@ -469,6 +473,7 @@
                 "So very much Lovely!",
                 "Really really lovely!"
             ],
+            "timeout": "short",
             "triggers-transition": true
         },
         {
@@ -485,7 +490,8 @@
              "variations": [
                 "I do not like surprises",
                 "I like to be in control"
-            ]
+            ],
+            "timeout": "short"
         },
         {
             "speaker": "dad",
@@ -502,6 +508,7 @@
                 "I like you dear",
                 "Look at me when I say it"
             ],
+           "timeout": "short",
            "triggers-distort": [[7.0, 8.0],[19.5, 20.5]],
             "triggers-gan": [
                 {
@@ -556,6 +563,7 @@
                 "Only something",
                 "Very wrong"
             ],
+              "timeout": "short",
               "timeout-response": [
                 {
                     "text": "Sister...?"
@@ -569,6 +577,7 @@
                 "I am talking to you, son",
                 "What is this humming?"
             ],
+            "timeout": "short",
             "triggers-end": true
         },
         {
@@ -601,7 +610,9 @@
              "variations": [
                 "Do you know?",
                 "Hello?"
-            ]
+            ],
+            "timeout": "short"
+
         },
         {
             "speaker": "brother",
@@ -625,7 +636,9 @@
              "variations": [
                 "Makes sense!",
                 "He will call again."
-            ]
+            ],
+             "timeout": "short"
+
         },
         {
             "speaker": "dad",
@@ -642,7 +655,7 @@
                 "Did someone say it already?",
                 "Anyways, no-one ever listens"
             ],
-
+            "timeout": "short",
             "triggers-echo": [4.9, 9],
             "triggers-distort": [[0.7, 1.2],[24.8, 25.2]],
             "triggers-gan": [
