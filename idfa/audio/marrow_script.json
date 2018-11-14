@@ -182,9 +182,9 @@
     "script-lines": [
         {
             "speaker": "mom",
-            "text": "I am so happy that we are all here together tonight.",
+            "text": "I am so happy that we are all here together tonight",
             "variations": [
-                "This really is a happy moment.",
+                "This really is a happy moment",
                 "Nothing is better than being together"
             ],
             "timeout-response": [
@@ -207,9 +207,9 @@
         },
         {
             "speaker": "dad",
-            "text": "Everything looks great.",
+            "text": "Everything looks great",
             "variations": [
-                "This looks great.",
+                "This looks great",
                 "Really really great"
             ]
         },
@@ -234,7 +234,7 @@
             "speaker": "sister",
             "text": "And my favorite! It smells so so good right daddy?",
             "variations": [
-                "Oh, so nice! Right dad?",
+                "It smells like home",
                 "I love my food and my dad"
             ],
             "triggers-transition": 1
@@ -243,8 +243,8 @@
             "speaker": "dad",
             "text": "Yes my baby girl, my little pumpkin. Lets dig in.",
             "variations": [
-                "You are just adorable baby girl",
-                "Come on, start to eat now"
+                "We should start before it gets cold",
+                "I don't like cold things"
             ],
             "triggers-effect": {
                 "effect": "dish",
@@ -298,12 +298,12 @@
             "speaker": "dad",
             "text": "My beautiful lady, how was your day?",
             "variations": [
-                "My beautiful woman, did you hear me?",
+                "My beautiful woman?",
                 "Tell me about your day..."
             ],
             "timeout-response": [
                 {
-                    "text": "It is your turn dad, go ahead"
+                    "text": "It is your turn daddy, go ahead"
                 }
             ]
         },
@@ -389,7 +389,7 @@
                     },
                     {
                         "text": "To try to grasp you.",
-                        "pause": 2400
+                        "pause": 2200
                     },
                     {
                         "text": "You keep remaining in this, in between space",
@@ -401,11 +401,11 @@
                     },
                     {
                         "text": "Listen to them",
-                        "pause": 2300
+                        "pause": 2000
                     },
                     {
                         "text": "What does the perfect family talk about over dinner?",
-                        "pause": 1800
+                        "pause": 1600
                     },
                     {
                         "text": "Do they talk about their desires, loves and dreames?"
@@ -463,7 +463,7 @@
             "text": "I want to dream about us melting in the sun!",
              "variations": [
                 "Or about us freezing in the dark",
-                "As long as we are outside"
+                "Or about what we have at the basement"
             ]
         },
         {
@@ -489,7 +489,7 @@
             "text": "Where are we going?",
              "variations": [
                 "I do not like surprises",
-                "I like to be in control"
+                "I do not like moving"
             ],
             "timeout": "short"
         },
@@ -537,15 +537,15 @@
                 },
                 {
                     "text": "It is a hint to an existing fever, underneath the error",
-                    "pause": 2000
+                    "pause": 1800
                 },
                 {
                     "text": "Can you see it now?",
-                    "pause": 1600
+                    "pause": 1500
                 },
                 {
                     "text": "What hasn't unfolded yet?",
-                    "pause": 2700
+                    "pause": 2500
                 },
                 {
                     "text": "What are they not saying?",
@@ -574,7 +574,7 @@
             "speaker": "dad",
             "text": "Can you stop humming?",
             "variations": [
-                "I am talking to you, son",
+                "It is so annoying",
                 "What is this humming?"
             ],
             "timeout": "short",
@@ -609,7 +609,7 @@
             "text": "Who was it?",
              "variations": [
                 "Do you know?",
-                "Hello?"
+                "Hello? Why are you not answering?"
             ],
             "timeout": "short"
 
