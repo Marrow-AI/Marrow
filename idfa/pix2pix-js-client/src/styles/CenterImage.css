@@ -9,7 +9,7 @@
   margin-left: auto; 
   margin-right: auto;
   padding: 0px;
-  transform: translateY(-51%);
-  transition: opacity 5s ease-in-out;
+  transform: translateY(-195%);
+  transition: all 0s ease-in-out;
   opacity: 0;
 }

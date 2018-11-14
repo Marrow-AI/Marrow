@@ -1,6 +1,6 @@
 .Canvas{
   position: absolute;
-  top: 0px;
+  top: 200px;
   width: 100%;
   height: 100%;
   margin: 0 auto;
@@ -21,7 +21,20 @@
   /* width: 100%;
   height: 100%; */
   transform: scaleX(-1);
-  z-index: 999;
-  border: 2px solid rgb(19, 19, 19);
-  transition: 20s all;
+  z-index: 99;
+  /* border: 2px solid rgb(0, 255, 106); */
+  /* transition: 10s all; */
+}
+
+#pix2pixContainer{
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* transition: opacity 10s; */
+  /* border: 4px solid red; */
 }

@@ -1,7 +1,7 @@
 var configObject = {
-	autoSave: false,
-	autoLoad: false,
+	autoSave: true,
+	autoLoad: true,
 	onchange: () => {},
-	layers: ["all"]
+	layers: ["alldfg"]
 };
 var maptastic = Maptastic(configObject);

@@ -219,7 +219,7 @@ namespace Marrow
         }
 
 		public void OnControlStop()
-		{
+		{            
 			// End everything
 			LeanTween.cancelAll(false);
 			nameTagAnimator.enabled = false;
@@ -230,7 +230,10 @@ namespace Marrow
 			platesOnlySpotlight.RestartSoftly();
 			spotLight.GetComponent<MoveSpotLight>().ResetNameTags(.1f);
 
-			FadeOutTMPTexts();
+			if (title.activeSelf)
+    			FadeOutTMPTexts(3f);
+			else
+				FadeOutTMPTexts();
 		}
 
 		//////////////////////////////
@@ -272,16 +275,21 @@ namespace Marrow
 		///////////////////////////////
         ///////////////////////////////
 
-        void FadeOutTMPTexts()
+		void FadeOutTMPTexts()
+		{
+			FadeOutTMPTexts(0.1f);
+		}
+
+		void FadeOutTMPTexts(float speed)
 		{
 			if (title.activeSelf)
             {
-                LeanTween.value(title, UpdateMainTitleColor, Color.white, Color.clear, .1f)
+				LeanTween.value(title, UpdateMainTitleColor, Color.white, Color.clear, speed)
                      .setOnComplete(() => { title.SetActive(false); });
             }
             if (speechDetection.activeSelf)
             {
-                LeanTween.value(speechDetection, Color.white, Color.clear, .1f)
+				LeanTween.value(speechDetection, Color.white, Color.clear, speed)
                      .setOnUpdate((Color col) => { textMeshProSpeechDetection.color = col; })
                      .setOnComplete(() => {
                          speechDetection.SetActive(false);
@@ -290,7 +298,7 @@ namespace Marrow
             }
 			if (scriptText.GetComponent<Renderer>().enabled)
             {
-                LeanTween.value(scriptText, Color.white, Color.clear, .1f)
+				LeanTween.value(scriptText, Color.white, Color.clear, speed)
                          .setOnUpdate((Color col) => { textMeshProScript.color = col; })
                          .setOnComplete(() => {
 					         scriptText.GetComponent<Renderer>().enabled = true;
@@ -437,6 +445,8 @@ namespace Marrow
             title.SetActive(true);
             LeanTween.value(title, UpdateMainTitleColor, Color.clear, Color.white, 2f);
 
+			// V1- fade out titles
+			/*
 			yield return new WaitForSeconds(10f);
             
 			// fade out main titles
@@ -446,6 +456,9 @@ namespace Marrow
 			yield return new WaitForSeconds(3f);
 
 			LogCurrentTimecode("Table end end! Should be pitch black");
+			*/
+
+			yield return null;
 		}
 
 		public void HideSpotLightAndTexts(bool toHide)

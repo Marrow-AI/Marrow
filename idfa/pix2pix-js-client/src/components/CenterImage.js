@@ -10,14 +10,21 @@ class CenterImage extends Component {
     const { context } = this.props;
 
     return (
-      <img 
-        className="CenterImage"
-        id="CenterImage"
-        src={`${BASE_URL}/images/${context.centerImage}.png`}
+      <div
         style={{
-          opacity: context.isSliding ? 0 : 1
+          opacity: context.hide ? 0 : 1 // 0 : 1 
         }}
-      />
+        >
+        <img 
+          className="CenterImage"
+          id="CenterImage"
+          alt='center'
+          src={`${BASE_URL}/images/${context.centerImage}.png`}
+          style={{
+            opacity: context.isSliding ? 0 : 1 // 0 : 1
+          }}
+        />
+      </div>
     );
   }
 }

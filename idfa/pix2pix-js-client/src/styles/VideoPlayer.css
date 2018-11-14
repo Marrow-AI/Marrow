@@ -20,6 +20,7 @@
   height: 200px;
   z-index: 2;
   display: none;
+  z-index: 9999;
 }
 
 #sceneElement{
