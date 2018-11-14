@@ -381,7 +381,7 @@ class Engine:
 
         if "triggers-transition" in line:
             # Transition sequence
-            self.schedule_osc(delay,self.voice_client, "/control/musicbox", [0.0, 0.5, 0.8, 0.0])
+            self.schedule_osc(delay,self.voice_client, "/control/musicbox", [0.0, 0.6, 0.8, 0.0])
             self.schedule_osc(delay + 1,self.voice_client, "/control/beacon", [0.9, 0.0])
             self.schedule_osc(delay + 1 ,self.voice_client, "/control/bassheart", [0.9, 0.9])
             self.schedule_osc(delay + 1,self.voice_client, "/control/membrane", [0.9, 0.6, 0.0])
@@ -504,7 +504,7 @@ class Engine:
 
                 # coming back
                 self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/bassheart", [0.65, 0.0])
-                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/musicbox", [0.65, 0.5, 0.65, 0.5])
+                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/musicbox", [0.65, 0.6, 0.65, 0.5])
                 self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/membrane", [0.65, 0.0, 0.0])
                 self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/beacon", [0.8, 0.26])
             #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
@@ -636,9 +636,9 @@ class Engine:
     def pre_question(self):
         self.preload_speech("gan_question/line.wav")
         self.schedule_function(6, self.start_question)
-        self.schedule_osc(6, self.voice_client, "/control/strings", [0.5, 0.0])
-        self.schedule_osc(6, self.voice_client, "/control/bells", [0.7, 0.0])
-        self.schedule_osc(6, self.voice_client, "/control/synthbass", [0.8, 0.0, 0.0])
+        self.schedule_osc(8.5, self.voice_client, "/control/strings", [0.5, 0.0])
+        self.schedule_osc(8.5, self.voice_client, "/control/bells", [0.7, 0.0])
+        self.schedule_osc(8.5, self.voice_client, "/control/synthbass", [0.8, 0.0, 0.0])
 
 
     def start_question(self):
@@ -708,7 +708,7 @@ class Engine:
         self.t2i_client.send_message("/table/showplates", 1)
 
         # Main theme
-        self.voice_client.send_message("/control/musicbox", [0.7, 0.5, 0.0, 0.5])
+        self.voice_client.send_message("/control/musicbox", [0.7, 0.6, 0.0, 0.5])
         self.voice_client.send_message("/control/beacon", [0.8, 0.26])
 
     def spotlight_mom(self):

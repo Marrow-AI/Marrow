@@ -41,6 +41,12 @@ class Script:
         else:
             self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH
             self.awaiting_global_timeout = SCRIPT_TIMEOUT_GLOBAL
+
+        # Add some more to the first lines after returning from gan
+        if "timeout-response" in self.awaiting:
+            self.awaiting_nospeech_timeout += 3
+            self.awaiting_global_timeout += 3
+            
         
 
     def next_variation(self):
