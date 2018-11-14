@@ -42,7 +42,8 @@ OSCdef.new( \effectload, { |data,time,source|
 }, '/effect/load');
 
 
-TXSystem1.start(showAudioOptions: false)
+//TXSystem1.start(showAudioOptions: false)
+TXSystem1.start(0,"C:/Marrow/idfa/audio/TX_Modular/tx_marrow_122",showAudioOptions: false);
 )
 ;
 
@@ -54,9 +55,11 @@ a.sendMsg("/control/membrane", 0.7, 0.45,0.2);
 a.sendMsg("/control/synthbass", 0.0, 0.4,0.0);
 a.sendMsg("/synthbass/effect", 0.0);
 a.sendMsg("/strings/effect", 3, 0.8);
-a.sendMsg("/control/strings", 0.0, 0.95);
+a.sendMsg("/control/strings", 0.0, 1.0);
 a.sendMsg("/gan/echo", 2);
 
 Server.default.record;
 Server.default.stopRecording
+
+Platform.userConfigDir.postln;
 
