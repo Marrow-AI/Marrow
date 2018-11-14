@@ -384,8 +384,8 @@ class Engine:
             self.schedule_osc(delay,self.voice_client, "/control/musicbox", [0.0, 0.6, 0.8, 0.0])
             self.schedule_osc(delay + 1,self.voice_client, "/control/beacon", [0.9, 0.0])
             self.schedule_osc(delay + 1 ,self.voice_client, "/control/bassheart", [0.9, 0.9])
-            self.schedule_osc(delay + 1,self.voice_client, "/control/membrane", [0.9, 0.6, 0.0])
-            self.schedule_osc(delay + 4,self.voice_client, "/control/membrane", [0.9, 0.6, 0.2])
+            self.schedule_osc(delay + 1,self.voice_client, "/control/membrane", [0.9, 0.5, 0.0])
+            self.schedule_osc(delay + 4,self.voice_client, "/control/membrane", [0.9, 0.5, 0.2])
             self.schedule_osc(delay + 5,self.voice_client, "/control/musicbox", [0.7, 0.0, 0.8, 0.0])
 
 
@@ -422,7 +422,7 @@ class Engine:
                 #self.schedule_osc(delay + 5.5, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
 
                 self.say(delay + 2, callback = self.next_line, echos = echo, distorts = distort)
-                self.schedule_osc(delay + 19, self.voice_client, "/control/start", 1)
+                self.schedule_osc(delay + 12, self.voice_client, "/control/start", 1)
                 self.schedule_osc(delay + 19, self.t2i_client, "/table/titles", 1)
             else:
                 self.say(delay, callback = self.next_line, echos = echo, distorts = distort)
@@ -460,11 +460,11 @@ class Engine:
         self.state = "END"
         print("END")
 
-        self.schedule_osc(10, self.voice_client, "/control/strings", [0.8, 0.0])
-        self.schedule_osc(10, self.voice_client, "/control/bells", [0.8, 0.0])
-        self.schedule_osc(10, self.voice_client, "/control/synthbass", [0.8, 0.0, 0.0])
+        self.voice_client, "/control/strings", [0.0, 0.0])
+        self.voice_client, "/control/bells", [0.0, 0.0])
+        self.voice_client, "/control/synthbass", [0.0, 0.0, 0.0])
 
-        self.schedule_function(15, self.stop)
+        self.schedule_function(10, self.stop)
         #self.pix2pix_client.send_message("/gan/end",1)
 
     def say(self, delay_sec = 0, delay_effect = False, callback = None, echos = None, distorts = None):
@@ -695,7 +695,7 @@ class Engine:
             self.question_answer = affects["default"]
         print("PRE SCRIPT!! Chosen food: {}".format(self.question_answer))
         self.t2i_client.send_message("/table/dinner", self.question_answer)
-        self.voice_client.send_message("/control/synthbass", [0.0, 0.3, 0.0])
+        self.voice_client.send_message("/control/synthbass", [0.0, 0.4, 0.0])
         target["text"] = target["text"].replace("%ANSWER%",self.question_answer)
         self.schedule_function(7, self.say_pre_script)
         self.schedule_function(13, self.show_plates)
@@ -745,7 +745,7 @@ class Engine:
         if self.send_noise:
             self.voice_client.send_message("/noise/trigger", 1)
         if loss:
-            mapped = interp(loss, [0.015, 0.02],[0,1])
+            mapped = interp(loss, [0.018, 0.021],[0,1])
             print("Sending loss function update. {} mapped to {} ".format(loss, mapped))
             self.voice_client.send_message("/synthbass/effect", mapped)
 

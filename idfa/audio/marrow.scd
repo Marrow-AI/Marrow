@@ -13,7 +13,12 @@ OSCdef.new( \speechreload, { |data,time,source|
 }, '/speech/reload');
 
 )
+ASIO : US-2x2 & US-4x4 Mixing Driver
 
+o = ServerOptions.new;
+o.device = "ASIO : US-2x2 & US-4x4 Mixing Driver";
+t = Server(\Local,NetAddr("127.0.0.1", 57111),o);
+t.boot;
 
 (
 OSCdef.new( \speechload, { |data,time,source|
@@ -42,7 +47,8 @@ TXSystem1.start(showAudioOptions: false)
 ;
 
 a = NetAddr.new("127.0.0.1", 57120);
-a.sendMsg("/control/membrane", 0.0, 0.6, 0.25);
+a.sendMsg("/control/musicbox", 0.0, 0.6, 0.0, 0.5);
+a.sendMsg("/control/bells", 0.0, 0.22);
 a.sendMsg("/control/bassheart", 0.0, 0.9);
 
 Server.default.record;
