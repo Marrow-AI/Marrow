@@ -35,9 +35,22 @@
             display:block;
             font-family: 'Open Sans';
         }
+	#connection {
+		margin: 10px;
+	}
+	#connected {
+		color: lime;
+	}
+	#disconnected {
+		color: red;
+	}
    </style>
 </head>
 <body>
+    <div id="connection">
+	    <div id="disconnected">DISCONNECTED FROM SERVER</div>
+	    <div id="connected">CONNECTED TO SERVER</div>
+    </div>
     <div id="control">
         <div id="logo">
             <img src="marrow_logo.png"></img>
