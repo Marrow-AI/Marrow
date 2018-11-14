@@ -50,6 +50,12 @@ a = NetAddr.new("127.0.0.1", 57120);
 a.sendMsg("/control/musicbox", 0.0, 0.6, 0.0, 0.5);
 a.sendMsg("/control/bells", 0.0, 0.22);
 a.sendMsg("/control/bassheart", 0.0, 0.9);
+a.sendMsg("/control/membrane", 0.7, 0.45,0.2);
+a.sendMsg("/control/synthbass", 0.0, 0.4,0.0);
+a.sendMsg("/synthbass/effect", 0.0);
+a.sendMsg("/strings/effect", 3, 0.8);
+a.sendMsg("/control/strings", 0.0, 0.95);
+a.sendMsg("/gan/echo", 2);
 
 Server.default.record;
 Server.default.stopRecording
