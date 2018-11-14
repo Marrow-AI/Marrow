@@ -79,17 +79,14 @@ class ImageSlider extends Component {
         .then(r => {
           console.log('People:', r.length, context.isConnectedToMarrow)
           if(r.length > 3 && context.isConnectedToMarrow && !context.waitingForStart) {
-            console.log('Should wait 7!');
             context.setWaitingStatus(true);
             setTimeout(() => {
               console.log('Start now!');
-              console.log('center images is', context.centerImage)
               context.setWaitingStatus(false);
               context.setIsSliding(false)
               context.sendMarrowStart();
             }, 7000);
             setTimeout(() => {
-              console.log('Send pix2pix') 
               context.sendFrames();
               context.setShowPix2Pix(true);
             }, 37000);

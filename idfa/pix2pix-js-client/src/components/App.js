@@ -7,12 +7,12 @@ import CinemaMode from './CinemaMode';
 import GUI from './GUI';
 import Canvas from "./Canvas";
 import { AppContext } from './Provider';
-import ReactDOM from 'react-dom';
 import '../styles/App.css';
 
 class App extends Component {
   componentDidMount(){
     const { context } = this.props;
+    context.connectToServer(context.serverIP);
     navigator.mediaDevices.enumerateDevices()
       .then(d => {
         const devices = d.filter((device) => (device.kind === 'videoinput'));
@@ -22,19 +22,6 @@ class App extends Component {
         context.initCamera(constrains);
         context.setCameraDevices(devices);
       })
-
-      const maptastic = document.createElement("script");
-      maptastic.src = "http://localhost:3000/maptastic.min.js";
-      // script.async = true;
-      document.body.appendChild(maptastic);
-      
-      setTimeout(() => {
-        const projection = document.createElement("script");
-        projection.src = "http://localhost:3000/projection.js";
-        // script.async = true;
-        document.body.appendChild(projection);
-      }, 500)
-      window.app = ReactDOM.findDOMNode(this.refs['App']).getBoundingClientRect();
   }
 
   handleKeyPress = (e) => {

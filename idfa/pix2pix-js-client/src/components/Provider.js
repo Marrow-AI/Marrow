@@ -121,7 +121,31 @@ class AppProvider extends Component {
       }
       this.setState({isSliding: v})
     },
-    setExperienceStatus: (v) => this.setState({isExperienceRunning: v}),
+    setExperienceStatus: (v) => {
+      if (v) {
+        this.state.setPosenetStatus(false);
+        this.state.setShowPix2Pix(true);
+        this.state.updateSendingFrameStatus(true);
+        this.state.setWaitingStatus(false);
+        this.state.setIsSliding(false)
+        // this.state.sendMarrowStart();
+        this.setState({ 
+          hide: false,
+          isExperienceRunning: true 
+        });
+      } else {
+        this.state.setPosenetStatus(true);
+        this.state.setShowPix2Pix(false);
+        this.state.updateSendingFrameStatus(false);
+        this.state.setWaitingStatus(false);
+        this.state.setIsSliding(true)
+        this.setState({ 
+          hide: false,
+          isExperienceRunning: false 
+        });
+      }
+      
+    },
     setSliderSpeed: (v) => this.setState({sliderSpeed: v}),
     setAmountOfImages: (v) => this.setState({amountOfImages: v}),
     setImagesWidth: (v) => this.setState({imagesWidth: v}),
@@ -168,13 +192,12 @@ class AppProvider extends Component {
             this.setState({ marrowSocket: marrowSocket });
 
             marrowSocket.onopen = () => {
-              console.log('Connected to audio server')
+              console.log('Connected to audio server');
               this.setState({ isConnectedToMarrow: true });
             };
             marrowSocket.onmessage = (packet) => {    
                 try {
                     let message = JSON.parse(packet.data);
-                    console.log(message);
                       if (message.action && message.action === "control") {
                         if (message.command && message.command === "start") {
                           this.state.setPosenetStatus(false);

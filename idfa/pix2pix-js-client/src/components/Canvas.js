@@ -55,7 +55,8 @@ class Canvas extends Component {
           width={context.pix2pixCanvasWidth} 
           height={context.pix2pixCanvasHeight} 
           style={{
-            opacity: context.showPix2Pix ? 1 : 0 // 1 : 0
+            opacity: context.showPix2Pix ? 1 : 0, // 1 : 0
+            transition: context.showPix2Pix ? 'opacity 20s' : 'opacity 0s'  // 0 : 1
           }}
         >
           <canvas 
