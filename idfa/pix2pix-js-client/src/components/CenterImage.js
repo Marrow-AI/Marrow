@@ -3,7 +3,7 @@ import { withContext } from './Provider';
 
 import '../styles/CenterImage.css';
 
-const BASE_URL = 'http://localhost:3000'
+const BASE_URL = 'http://localhost:3000';
 
 class CenterImage extends Component {
   render() {
@@ -19,10 +19,14 @@ class CenterImage extends Component {
           className="CenterImage"
           id="CenterImage"
           alt='center'
+          //src={`images/${context.centerImage}.png`}
           src={`${BASE_URL}/images/${context.centerImage}.png`}
           style={{
-            opacity: context.isSliding ? 0 : 1 // 0 : 1
+            opacity: context.isSliding ? 0 : 1, // 0 : 1
+            transition: context.isSliding ? 'opacity 0s' : 'opacity 25s'  // 0 : 1
           }}
+          width={context.imagesWidth}
+          height={context.imagesHeight}
         />
       </div>
     );

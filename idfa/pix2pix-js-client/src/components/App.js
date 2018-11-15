@@ -13,6 +13,7 @@ class App extends Component {
   componentDidMount(){
     const { context } = this.props;
     context.connectToServer(context.serverIP);
+    context.connectToMarrow(context.marrowIP, context.marrowPort, context.marrowRoute);
     navigator.mediaDevices.enumerateDevices()
       .then(d => {
         const devices = d.filter((device) => (device.kind === 'videoinput'));
@@ -22,6 +23,7 @@ class App extends Component {
         context.initCamera(constrains);
         context.setCameraDevices(devices);
       })
+
   }
 
   handleKeyPress = (e) => {

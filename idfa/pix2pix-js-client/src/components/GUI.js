@@ -55,23 +55,10 @@ class GUI extends Component {
           options={context.cameras.map(c => c.label)}
           onChange={(v) => this.changeCameraSource(v)}
         />
-        <dg.Checkbox 
-          label='HD' 
-          checked={true}
-          onChange={(v) => this.changeVideoResolution(v)}
-        />
-        <dg.Number 
-          label='Cinema Mode' 
-          value={150} 
-          min={0} 
-          max={500} 
-          step={1}
-          onChange={(s) => context.setCinemaModeSize(s)}
-        />
         <dg.Folder label='Camera' expanded={false}>
           <dg.Number 
             label='Width' 
-            value={256} 
+            value={400} 
             min={0} 
             max={2000} 
             step={1}
@@ -79,7 +66,7 @@ class GUI extends Component {
           />
           <dg.Number
             label='Height' 
-            value={128} 
+            value={300} 
             min={0} 
             max={2000} 
             step={1}
@@ -112,7 +99,7 @@ class GUI extends Component {
             onClick={() => context.setShowingPix2pixCanvas(!context.isShowingPix2pixCanvas)}
           />
         </dg.Folder>
-        <dg.Folder label='Server' expanded={true}>
+        <dg.Folder label='Server' expanded={false}>
           <dg.Text label='Server Connection' value={context.isConnectedToServer ? 'Connected' : 'Not Connected'}/>
           <dg.Text label='IP' 
             value={context.serverIP}
@@ -148,7 +135,7 @@ class GUI extends Component {
               />
           }
         </dg.Folder>
-        <dg.Folder label='Images' expanded={true}>
+        <dg.Folder label='Images' expanded={false}>
           <dg.Number 
             label='Width' 
             value={220} 

@@ -67,8 +67,8 @@ class AppProvider extends Component {
           console.log("Something went wrong with the camera!", error);
         });
     },
-    cameraCanvasWidth: 330,
-    cameraCanvasHeight: 220,
+    cameraCanvasWidth: 400,
+    cameraCanvasHeight: 300,
     setCameraCanvasWidth: (s) => this.setState({cameraCanvasWidth: s}),
     setCameraCanvasHeight: (s) => this.setState({cameraCanvasHeight: s}),
     isShowingCamera: true,
@@ -102,13 +102,13 @@ class AppProvider extends Component {
     setMarrowPort: (port) => this.setState({marrowPort: port}),
     imageSliderOpacity: 1,
     setImageSliderOpacity: (v) => this.setState({imageSliderOpacity: v}),
-    imagesWidth: 220,
+    imagesWidth: 210,
     imagesHeight: 133,
-    amountOfImages: 50,
+    amountOfImages: 200,
     sliderSpeed: 2,
     isSliding: true,
     isExperienceRunning: false,
-    centerImage: 49,
+    centerImage: 199  ,
     isPosenetRunning: true,
     hide: false,
     isCentering: false,
@@ -123,28 +123,29 @@ class AppProvider extends Component {
     },
     setExperienceStatus: (v) => {
       if (v) {
-        this.state.setPosenetStatus(false);
-        this.state.setShowPix2Pix(true);
-        this.state.updateSendingFrameStatus(true);
-        this.state.setWaitingStatus(false);
-        this.state.setIsSliding(false)
-        // this.state.sendMarrowStart();
+        setTimeout(() => {
+          console.log('Start now!');
+          this.state.setIsSliding(false)
+          //this.state.sendMarrowStart();
+          this.state.updateSendingFrameStatus(true)
+        }, 7000);
+        setTimeout(() => {
+          //this.state.sendFrames();
+          this.state.setShowPix2Pix(true);
+        }, 37000);         
         this.setState({ 
           hide: false,
           isExperienceRunning: true 
         });
       } else {
-        this.state.setPosenetStatus(true);
+        this.state.setIsSliding(true)
         this.state.setShowPix2Pix(false);
         this.state.updateSendingFrameStatus(false);
-        this.state.setWaitingStatus(false);
-        this.state.setIsSliding(true)
         this.setState({ 
           hide: false,
           isExperienceRunning: false 
         });
       }
-      
     },
     setSliderSpeed: (v) => this.setState({sliderSpeed: v}),
     setAmountOfImages: (v) => this.setState({amountOfImages: v}),
@@ -200,16 +201,15 @@ class AppProvider extends Component {
                     let message = JSON.parse(packet.data);
                       if (message.action && message.action === "control") {
                         if (message.command && message.command === "start") {
-                          this.state.setPosenetStatus(false);
+                          this.state.setExperienceStatus(true);
                         } else if (message.command && message.command === "stop") {
-                          this.state.setPosenetStatus(true);
-                          this.state.setShowPix2Pix(false);
-                          this.state.updateSendingFrameStatus(false);
-                          this.state.setIsSliding(true);
-                          this.setState({ hide: false })
+                          this.state.setExperienceStatus(false);
                         } else if (message.command && message.command === "hide") {
                           console.log("Got hide command");
-                          this.setState({ hide: true })
+                           this.setState({ 
+                            hide: true,
+                            isExperienceRunning: false 
+                          });
                         }
                     }
                 }
