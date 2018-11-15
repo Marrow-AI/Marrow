@@ -182,9 +182,9 @@
     "script-lines": [
         {
             "speaker": "mom",
-            "text": "I am so happy that we are all here together tonight.",
+            "text": "I am so happy that we are all here together tonight",
             "variations": [
-                "This really is a happy moment.",
+                "This really is a happy moment",
                 "Nothing is better than being together"
             ],
             "timeout-response": [
@@ -207,9 +207,9 @@
         },
         {
             "speaker": "dad",
-            "text": "Everything looks great.",
+            "text": "Everything looks great",
             "variations": [
-                "This looks great.",
+                "This looks great",
                 "Really really great"
             ]
         },
@@ -218,15 +218,15 @@
             "text": "I can't wait to start eating the %ANSWER%! It looks delicious!",
             "variations": [
                 "I mean yummy",
-                "I mean goooood"
+                "I mean good"
             ]
         },
         {
             "speaker": "mom",
             "text": "I know, it is your favorite!",
             "variations": [
-                "And it is what you wanted",
-                "I am happy you are happy"
+                "And it is just what you wanted",
+                "I am happy if you are happy."
             ],
             "timeout": "short"
         },
@@ -234,7 +234,7 @@
             "speaker": "sister",
             "text": "And my favorite! It smells so so good right daddy?",
             "variations": [
-                "Oh, so nice! Right dad?",
+                "It smells like home",
                 "I love my food and my dad"
             ],
             "triggers-transition": 1
@@ -243,8 +243,8 @@
             "speaker": "dad",
             "text": "Yes my baby girl, my little pumpkin. Lets dig in.",
             "variations": [
-                "You are just adorable baby girl",
-                "Come on, start to eat now"
+                "We should start before it gets cold",
+                "I don't like cold things"
             ],
             "triggers-effect": {
                 "effect": "dish",
@@ -298,12 +298,12 @@
             "speaker": "dad",
             "text": "My beautiful lady, how was your day?",
             "variations": [
-                "My beautiful woman, did you hear me?",
-                "Tell me about your day..."
+                "My beautiful woman?",
+                "Please tell me about your day."
             ],
             "timeout-response": [
                 {
-                    "text": "It is your turn dad, go ahead"
+                    "text": "It is your turn daddy, go ahead"
                 }
             ]
         },
@@ -311,15 +311,15 @@
             "speaker": "mom",
             "text": "It was fabulous I was thinking about the other day. And how about yours my love?",
             "variations": [
-                "Truly fabulous day.",
-                "Yours my love?"
+                "A truly fabulous day.",
+                "Amd yours, my love?"
             ]
         },
         {
             "speaker": "dad",
             "text": "My day was also fantastic. And it is getting better there is no moon tonight.",
             "variations": [
-                "Truly fantastic. And just getting better",
+                "It was truly fantastic, and only getting better",
                 "A great day is a day with no moon"
             ]
         },
@@ -343,15 +343,15 @@
             "speaker": "sister",
             "text": "Today was spectacular.",
             "variations": [
-                "Spectacular!",
-                "I said spectacular!"
+                "Specs of joy filled my heart today",
+                "I said it was spectacular!"
             ],
             "timeout": "short",
             "triggers-transition": true
         },
         {
             "speaker": "brother",
-            "text": "Lets just say that today I had the best time!",
+            "text": "Let's just say that today I had the best time!",
             "variations": [
                 "It was the best!",
                 "The best time ever!"
@@ -361,7 +361,7 @@
             "speaker": "mom",
             "text": "That is fascinating.",
             "variations": [
-                "I can not wait to hear more.",
+                "I cannot wait to hear more about it.",
                 "I have the most interesting family."
             ],
             "timeout": "short",
@@ -389,7 +389,7 @@
                     },
                     {
                         "text": "To try to grasp you.",
-                        "pause": 2400
+                        "pause": 2200
                     },
                     {
                         "text": "You keep remaining in this, in between space",
@@ -401,11 +401,11 @@
                     },
                     {
                         "text": "Listen to them",
-                        "pause": 2300
+                        "pause": 2000
                     },
                     {
                         "text": "What does the perfect family talk about over dinner?",
-                        "pause": 1800
+                        "pause": 1600
                     },
                     {
                         "text": "Do they talk about their desires, loves and dreames?"
@@ -416,7 +416,7 @@
             "speaker": "sister",
             "text": "I do not like carrots.",
              "variations": [
-                "*Sigh* Carrots.",
+                "We're having carrots again?",
                 "Can you move them away from me?"
             ],
               "timeout": "short",
@@ -430,8 +430,8 @@
             "speaker": "mom",
             "text": "It is late and getting dark outside.",
              "variations": [
-                "It is dark and getting late",
-                "Time for bed"
+                "It is dark and getting late.",
+                "It's time for bed."
             ]
         },
         {
@@ -446,13 +446,13 @@
             "speaker": "dad",
             "text": "What do you want to dream about?",
              "variations": [
-                "I really want to know",
+                "I really want to know.",
                 "Oh, listening to other people's dreams"
             ]
         },
         {
             "speaker": "sister",
-            "text": "I want to dream about our family. Us Together forever.",
+            "text": "I want to dream about our family. Us together forever.",
              "variations": [
                 "About you and you and you",
                 "Together forever"
@@ -463,14 +463,14 @@
             "text": "I want to dream about us melting in the sun!",
              "variations": [
                 "Or about us freezing in the dark",
-                "As long as we are outside"
+                "Or about what we have at the basement"
             ]
         },
         {
             "speaker": "mom",
             "text": "That sounds lovely!",
              "variations": [
-                "So very much Lovely!",
+                "Such a lovely thing to say!",
                 "Really really lovely!"
             ],
             "timeout": "short",
@@ -489,7 +489,7 @@
             "text": "Where are we going?",
              "variations": [
                 "I do not like surprises",
-                "I like to be in control"
+                "I do not like moving"
             ],
             "timeout": "short"
         },
@@ -537,15 +537,15 @@
                 },
                 {
                     "text": "It is a hint to an existing fever, underneath the error",
-                    "pause": 2000
+                    "pause": 1800
                 },
                 {
                     "text": "Can you see it now?",
-                    "pause": 1600
+                    "pause": 1500
                 },
                 {
                     "text": "What hasn't unfolded yet?",
-                    "pause": 2700
+                    "pause": 2500
                 },
                 {
                     "text": "What are they not saying?",
@@ -560,8 +560,8 @@
             "speaker": "sister",
             "text": "Something is wrong.",
             "variations": [
-                "Only something",
-                "Very wrong"
+                "I don't remember it like this.",
+                "This is not right."
             ],
               "timeout": "short",
               "timeout-response": [
@@ -574,7 +574,7 @@
             "speaker": "dad",
             "text": "Can you stop humming?",
             "variations": [
-                "I am talking to you, son",
+                "It is so annoying",
                 "What is this humming?"
             ],
             "timeout": "short",
@@ -593,7 +593,7 @@
             "text": "Did you see what your room looks like?",
             "variations": [
                 "I feel like a broken record",
-                "You should clean it"
+                "You should just clean it"
             ]
         },
         {
@@ -609,7 +609,7 @@
             "text": "Who was it?",
              "variations": [
                 "Do you know?",
-                "Hello?"
+                "Hello? Why are you not answering?"
             ],
             "timeout": "short"
 
@@ -634,7 +634,7 @@
             "speaker": "mom",
             "text": "Oh, okay.",
              "variations": [
-                "Makes sense!",
+                "This actually makes sense!",
                 "He will call again."
             ],
              "timeout": "short"
@@ -645,19 +645,17 @@
             "text": "I almost forgot it must be the rain.",
              "variations": [
                 "What? did you say something?",
-                "I forgot!"
+                "I forgot what I wanted to say!"
             ]
         },
         {
             "speaker": "brother",
             "text": "And now it is dark.",
              "variations": [
-                "Did someone say it already?",
-                "Anyways, no-one ever listens"
+                "Didn't someone say this already?",
+                "Anyway no one ever listens to me"
             ],
             "timeout": "short",
-            "triggers-echo": [4.9, 9],
-            "triggers-distort": [[0.7, 1.2],[24.8, 25.2]],
             "triggers-gan": [
                     {
                         "text": "A family and a virus",

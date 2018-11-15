@@ -4,4 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/DiningTable/TableAndPlates.unity
+    guid: 66e26df3961a04493bfa6cc8f30f0f67
+  m_configObjects: {}

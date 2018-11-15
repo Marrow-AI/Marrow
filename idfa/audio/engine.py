@@ -201,7 +201,7 @@ class Engine:
                 if self.timeout_response():
                     self.last_react = self.last_speech = time.time() + self.speech_duration
                     # say it
-                    self.say(delay_sec = 1)
+                    self.say(delay_sec = 1, callback = self.next_variation)
                 elif self.script.next_variation():
                     self.show_next_line()
                 else:
@@ -210,6 +210,9 @@ class Engine:
         if not self.args.stop:
             threading.Timer(0.1, self.time_check).start()
 
+    def next_variation(self):
+        if self.script.next_variation():
+            self.show_next_line()
 
     def timeout_response(self):
         if "timeout-response" in self.script.awaiting:
@@ -384,8 +387,8 @@ class Engine:
             self.schedule_osc(delay,self.voice_client, "/control/musicbox", [0.0, 0.5, 0.8, 0.0])
             self.schedule_osc(delay + 1,self.voice_client, "/control/beacon", [0.9, 0.0])
             self.schedule_osc(delay + 1 ,self.voice_client, "/control/bassheart", [0.9, 0.9])
-            self.schedule_osc(delay + 1,self.voice_client, "/control/membrane", [0.9, 0.6, 0.0])
-            self.schedule_osc(delay + 4,self.voice_client, "/control/membrane", [0.9, 0.6, 0.2])
+            self.schedule_osc(delay + 1,self.voice_client, "/control/membrane", [0.9, 0.45, 0.0])
+            self.schedule_osc(delay + 4,self.voice_client, "/control/membrane", [0.9, 0.45, 0.2])
             self.schedule_osc(delay + 5,self.voice_client, "/control/musicbox", [0.7, 0.0, 0.8, 0.0])
 
 
@@ -416,13 +419,13 @@ class Engine:
 
                 self.schedule_osc(delay + 2, self.voice_client, "/control/stop", 1)
 
-                self.schedule_osc(delay + 5.5, self.voice_client, "/strings/effect", [3, 0.8])
-                self.schedule_osc(delay + 5.5, self.voice_client, "/control/strings", [0.0, 0.95])
+                self.schedule_osc(delay + 5.5, self.voice_client, "/strings/effect", [3, 0.0])
+                self.schedule_osc(delay + 5.5, self.voice_client, "/control/strings", [0.0, 1.0])
                 #self.schedule_osc(delay + 5.5, self.voice_client, "/control/bells", [0.0, 0.2])
                 #self.schedule_osc(delay + 5.5, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
 
                 self.say(delay + 2, callback = self.next_line, echos = echo, distorts = distort)
-                self.schedule_osc(delay + 19, self.voice_client, "/control/start", 1)
+                self.schedule_osc(delay + 12, self.voice_client, "/control/start", 1)
                 self.schedule_osc(delay + 19, self.t2i_client, "/table/titles", 1)
             else:
                 self.say(delay, callback = self.next_line, echos = echo, distorts = distort)
@@ -460,11 +463,11 @@ class Engine:
         self.state = "END"
         print("END")
 
-        self.schedule_osc(10, self.voice_client, "/control/strings", [0.8, 0.0])
-        self.schedule_osc(10, self.voice_client, "/control/bells", [0.8, 0.0])
-        self.schedule_osc(10, self.voice_client, "/control/synthbass", [0.8, 0.0, 0.0])
+        self.schedule_osc(4, self.voice_client,"/control/strings", [0.0, 0.0])
+        self.schedule_osc(4, self.voice_client,"/control/bells", [0.0, 0.0])
+        self.schedule_osc(4, self.voice_client,"/control/synthbass", [0.0, 0.0, 0.0])
 
-        self.schedule_function(15, self.stop)
+        self.schedule_function(10, self.stop)
         #self.pix2pix_client.send_message("/gan/end",1)
 
     def say(self, delay_sec = 0, delay_effect = False, callback = None, echos = None, distorts = None):
@@ -487,8 +490,8 @@ class Engine:
                     echos = [echos]
 
                 for echo in echos:
-                    self.schedule_osc(delay_sec + echo[0],self.voice_client, "/gan/echo", 2) 
-                    self.schedule_osc(delay_sec + echo[1],self.voice_client, "/gan/echo", 3)
+                    self.schedule_osc(delay_sec + echo[0],self.voice_client, "/gan/echo", 3) 
+                    self.schedule_osc(delay_sec + echo[1],self.voice_client, "/gan/echo", 2)
 
 
             if distorts:
@@ -505,7 +508,7 @@ class Engine:
                 # coming back
                 self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/bassheart", [0.65, 0.0])
                 self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/musicbox", [0.65, 0.5, 0.65, 0.5])
-                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/membrane", [0.65, 0.0, 0.0])
+                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/membrane", [0.6, 0.0, 0.0])
                 self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/beacon", [0.8, 0.26])
             #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
             #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/bassheart", [1.0, 0.0])
@@ -636,9 +639,9 @@ class Engine:
     def pre_question(self):
         self.preload_speech("gan_question/line.wav")
         self.schedule_function(6, self.start_question)
-        self.schedule_osc(6, self.voice_client, "/control/strings", [0.5, 0.0])
-        self.schedule_osc(6, self.voice_client, "/control/bells", [0.7, 0.0])
-        self.schedule_osc(6, self.voice_client, "/control/synthbass", [0.8, 0.0, 0.0])
+        self.schedule_osc(8.5, self.voice_client, "/control/strings", [0.5, 0.0])
+        self.schedule_osc(8.5, self.voice_client, "/control/bells", [0.7, 0.0])
+        self.schedule_osc(8.5, self.voice_client, "/control/synthbass", [0.8, 0.0, 0.0])
 
 
     def start_question(self):
@@ -695,7 +698,7 @@ class Engine:
             self.question_answer = affects["default"]
         print("PRE SCRIPT!! Chosen food: {}".format(self.question_answer))
         self.t2i_client.send_message("/table/dinner", self.question_answer)
-        self.voice_client.send_message("/control/synthbass", [0.0, 0.3, 0.0])
+        self.voice_client.send_message("/control/synthbass", [0.0, 0.4, 0.0])
         target["text"] = target["text"].replace("%ANSWER%",self.question_answer)
         self.schedule_function(7, self.say_pre_script)
         self.schedule_function(13, self.show_plates)
@@ -745,7 +748,7 @@ class Engine:
         if self.send_noise:
             self.voice_client.send_message("/noise/trigger", 1)
         if loss:
-            mapped = interp(loss, [0.015, 0.02],[0,1])
+            mapped = interp(loss, [0.016, 0.03],[0,1])
             print("Sending loss function update. {} mapped to {} ".format(loss, mapped))
             self.voice_client.send_message("/synthbass/effect", mapped)
 

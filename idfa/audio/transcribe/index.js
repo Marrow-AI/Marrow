@@ -6,6 +6,8 @@ $(document).ready(() => {
         console.log("Command! " + command);
         socket.send(JSON.stringify({action: 'control',command: command}));
     });
+    $("#connected").hide();    	
+    $("#disconnected").show();    	
     //
     // Connecting to server
     //const listener = new WatsonListener();
@@ -13,9 +15,13 @@ $(document).ready(() => {
 
     socket.onopen = (event) => {
         console.log("Socket opened");
+	$("#connected").show();    	
+        $("#disconnected").hide();    	
     }
     socket.onclose = (event) => {
         console.log("Socket closed.");
+	$("#connected").hide();    	
+	$("#disconnected").show();    	
     }
 });
 

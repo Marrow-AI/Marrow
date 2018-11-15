@@ -18,40 +18,68 @@
         }
         #control {
             display: flex;
-            align-items: center;
-            justify-content: center;
             height: 100%;
-            flex-direction: column;
+            flex-direction: row;
         }
+	#buttons {
+		margin-top: 10px;
+	}
+	#operation {
+		margin-top: 70px;
+	}
         #control button {
-            width: 150px;
-            height: 150px;
-            margin: 20px;
-            border-radius: 10px;
-            font-size: 40px;
+	    width: 150px;
+	    height: 50px;
+	    margin: 20px;
+	    border-radius: 10px;
+	    font-size: 16px;
+	    background-color: #0e0e0e;
         }
         #instructions {
             color: white;
             display:block;
             font-family: 'Open Sans';
+	    margin-left: 25px;
+	    margin-top: 110px;
         }
+	#connection {
+		margin: 10px;
+	}
+	#connected {
+		color: lime;
+	}
+	#disconnected {
+		color: red;
+	}
+	ol {
+		margin-top: 10px;
+	}
    </style>
 </head>
 <body>
+    <div id="connection">
+	    <div id="disconnected">DISCONNECTED FROM SERVER</div>
+	    <div id="connected">CONNECTED TO SERVER</div>
+    </div>
+    <div id="logo">
+	<img width="200px" src="marrow_logo.png"></img>
+    </div>
     <div id="control">
-        <div id="logo">
-            <img src="marrow_logo.png"></img>
-        </div>
         <div id="instructions">
-        <h2>BEFORE starting:<h2>
-        <ul>
-            <li> Run "Marrow-Table" on desktop</li>
-        
-        </ul>
-        </div>
-        <div>
-        <button id="start-gan" type="button" data-command="start" class="btn btn-primary">START</button>
-        <button id="stop-gan" type="button" data-command="stop" class="btn btn-danger">STOP</button>
+		<div>Initial startup Instructions</div>
+		<ol>
+		    <li>Turn on the rightmost computer.</li>
+		    <li>Open 1 - Marrow server, wait for message "Consuming speech"</li>
+		    <li>Open 2 - Marrow sound,  wait for message "Marrow Sound is now Active"</li>
+		    <li>Open 3 - Marrow table,  wait for 5 seconds, table projection goes dark.</li>
+		    <li>Open 4 - Marrow console, wait for message "Connected to Server" </li>
+		    <li>Turn on leftmost computer, wait for wall projection to start.</li>
+		</ol>
+		<div id="operation">To start the experience, click on the "START" button.</div>
+		<div id="buttons">
+			<button id="start-gan" type="button" data-command="start" class="btn btn-primary">START</button>
+			<button id="stop-gan" type="button" data-command="stop" class="btn btn-danger">STOP</button>
+		</div>
         </div>
     </div>
 </body>

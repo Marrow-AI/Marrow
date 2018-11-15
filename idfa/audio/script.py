@@ -4,10 +4,10 @@ from annoy import AnnoyIndex
 import json
 
 SCRIPT_TIMEOUT_GLOBAL = 11
-SCRIPT_TIMEOUT_NOSPEECH = 5
+SCRIPT_TIMEOUT_NOSPEECH = 6 
 
-SCRIPT_TIMEOUT_GLOBAL_SHORT = 6
-SCRIPT_TIMEOUT_NOSPEECH_SHORT = 5
+SCRIPT_TIMEOUT_GLOBAL_SHORT = 9
+SCRIPT_TIMEOUT_NOSPEECH_SHORT = 6
 
 class Script:
     def __init__(self):
@@ -41,6 +41,12 @@ class Script:
         else:
             self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH
             self.awaiting_global_timeout = SCRIPT_TIMEOUT_GLOBAL
+
+        # Add some more to the first lines after returning from gan
+        if "timeout-response" in self.awaiting:
+            self.awaiting_nospeech_timeout += 2
+            self.awaiting_global_timeout += 2
+            
         
 
     def next_variation(self):
