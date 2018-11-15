@@ -44,6 +44,16 @@ class ImageSlider extends Component {
         }
       }
 
+      
+      if (context.resetSlider) {
+        this.setState({ 
+          xTranslate: -this.props.context.amountOfImages*WIDTH+(window.innerWidth*0.6),
+          transitionTime: 0
+        });
+        context.setCenterImage(199);
+        context.setResetSlider(false);
+      }
+
       if(!context.isSliding) {
         const center = ReactDOM.findDOMNode(this.refs[`IMAGE_${context.centerImage}`]).getBoundingClientRect();
         let deltaAlignToCenter = window.innerWidth/2 - center.left - 100;
@@ -63,12 +73,12 @@ class ImageSlider extends Component {
         });
 
       } else {
-        if (context.centerImage === 1) {
+        if (context.centerImage === 20) {
           this.setState({ 
-            xTranslate: -this.props.context.amountOfImages*WIDTH,
+            xTranslate: -this.props.context.amountOfImages*WIDTH+(window.innerWidth*0.6),
             transitionTime: 0
           });
-          context.setCenterImage(49);
+          context.setCenterImage(199);
         } else {
           this.setState({ 
             xTranslate: window.innerWidth,
@@ -76,6 +86,7 @@ class ImageSlider extends Component {
           });
         }
       }
+
     }, 1000);
   }
 

@@ -67,8 +67,8 @@ class AppProvider extends Component {
           console.log("Something went wrong with the camera!", error);
         });
     },
-    cameraCanvasWidth: 400,
-    cameraCanvasHeight: 300,
+    cameraCanvasWidth: 200,
+    cameraCanvasHeight: 100,
     setCameraCanvasWidth: (s) => this.setState({cameraCanvasWidth: s}),
     setCameraCanvasHeight: (s) => this.setState({cameraCanvasHeight: s}),
     isShowingCamera: true,
@@ -112,6 +112,8 @@ class AppProvider extends Component {
     isPosenetRunning: true,
     hide: false,
     isCentering: false,
+    resetSlider: false,
+    setResetSlider: (v) => this.setState({resetSlider: v}),
     setIsCentering: (v) => this.setState({isCentering: v}),
     setPosenetStatus: (v) => this.setState({isPosenetRunning: v}),
     setCenterImage: (v) => this.setState({centerImage: v}),
@@ -123,6 +125,10 @@ class AppProvider extends Component {
     },
     setExperienceStatus: (v) => {
       if (v) {
+        if(!this.state.isConnectedToServer) {
+          this.state.connectToServer(this.state.serverIP);
+        }
+       
         setTimeout(() => {
           console.log('Start now!');
           this.state.setIsSliding(false)
@@ -138,6 +144,8 @@ class AppProvider extends Component {
           isExperienceRunning: true 
         });
       } else {
+        window.location.reload();
+        this.state.setResetSlider(true);
         this.state.setIsSliding(true)
         this.state.setShowPix2Pix(false);
         this.state.updateSendingFrameStatus(false);
@@ -153,11 +161,36 @@ class AppProvider extends Component {
     setImagesHeight: (v) => this.setState({imagesHeight: v}),
     connectToServer: (ip, port, route) => {
       if (!this.state.socket) {
-        const socket = io(ip);
+        const socket = io(ip, {
+          transports: ['websocket']
+        });
         socket.on('connect', () => {
+          console.log('Connected to server')
           this.setState({ isConnectedToServer: true });
+          if (this.state.isSendingFrames) {
+            this.state.sendFrames();
+          }
+        });
+        socket.on('connect_error', () => {
+          console.log('error connecting, trying again');
+          setTimeout(() => {
+            this.state.connectToServer(this.state.serverIP);
+          }, 1000)
+        });
+        socket.on('error', () => {
+          console.log('error connecting, trying again');
+          setTimeout(() => {
+            this.state.connectToServer(this.state.serverIP);
+          }, 1000)
+        });
+        socket.on('connect_timeout', () => {
+          console.log('error connecting, trying again');
+          setTimeout(() => {
+            this.state.connectToServer(this.state.serverIP);
+          }, 1000)
         });
         socket.on('disconnect', () => {
+          console.log('disconnected from server')
           this.setState({ isConnectedToServer: false });
         });
         socket.on('update_response', (data) => {
