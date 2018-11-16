@@ -6,44 +6,45 @@
    <script src="app.bundle.js"></script>
    <link rel="stylesheet" type="text/css" href="bootstrap.css">
    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
    <title>Listening...</title>
-
    <style>
-        html {
-            height: 100%;
-        }
-        body {
-            height: 100%;
-            background-image: url("family.jpg");
-            background-size: cover;
-        }
-        #control {
-            display: flex;
-            height: 100%;
-            align-items: center;
-            justify-content: center;
-        }
+    html {
+        height: 100%;
+    }
+    body {
+        height: 100%;
+        background-image: url("family.jpg");
+        background-size: cover;
+    }
+    #control {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+    }
 	#buttons {
-		margin-top: 400px;
+		margin-top: 25px;
+        margin-left: 25px;
 	}
 	#operation {
-		margin-top: 70px;
+		margin-top: 20px;
+        font-size: 28px;
 	}
-        #control button {
+    #control button {
 	    width: 150px;
 	    height: 50px;
 	    margin: 20px;
 	    border-radius: 10px;
 	    font-size: 16px;
 	    background-color: #0e0e0e;
-        }
-        #instructions {
-            color: white;
-            display:none;
-            font-family: 'Open Sans';
-	    margin-left: 25px;
+    }
+    #instructions {
+        color: white;
+        font-family: 'Oswald';
+	    margin-left: 35px;
 	    margin-top: 110px;
-        }
+        font-size: 40px;
+    }
 	#connection {
 		margin: 10px;
 	}
@@ -53,35 +54,37 @@
 	#disconnected {
 		color: red;
 	}
+    #overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0.0, 0.0, 0.0, 0.5);
+        height: 100%;
+        width: 100%;
+    }
 	ol {
 		margin-top: 10px;
 	}
    </style>
 </head>
 <body>
-    <div id="connection">
-	    <div id="disconnected">DISCONNECTED FROM SERVER</div>
-	    <div id="connected">CONNECTED TO SERVER</div>
-    </div>
-    <div id="logo">
-	<!--img width="200px" src="marrow_logo.png"></img-->
-    </div>
-    <div id="control">
-        <div id="buttons">
-            <button id="start-gan" type="button" data-command="start" class="btn btn-primary">START</button>
-            <button id="stop-gan" type="button" data-command="stop" class="btn btn-danger">STOP</button>
+    <div id="overlay">
+        <div id="connection">
+            <div id="disconnected">DISCONNECTED FROM SERVER</div>
+            <div id="connected">CONNECTED TO SERVER</div>
         </div>
-        <div id="instructions">
-            <div>Initial startup Instructions</div>
-            <ol>
-                <li>Turn on the rightmost computer.</li>
-                <li>Open 1 - Marrow server, wait for message "Consuming speech"</li>
-                <li>Open 2 - Marrow sound,  wait for message "Marrow Sound is now Active"</li>
-                <li>Open 3 - Marrow table,  wait for 5 seconds, table projection goes dark.</li>
-                <li>Open 4 - Marrow console, wait for message "Connected to Server" </li>
-                <li>Turn on leftmost computer, wait for wall projection to start.</li>
-            </ol>
-            <div id="operation">To start the experience, click on the "START" button.</div>
+        <div id="logo">
+        <!--img width="200px" src="marrow_logo.png"></img-->
+        </div>
+        <div id="control">
+            <div id="instructions">
+                <div>This is an experience for four people.</div>
+                <div id="operation">Please wait for a volunteer to start.</div>
+            </div>
+            <div id="buttons">
+                <button id="start-gan" type="button" data-command="start" class="btn btn-success">START</button>
+                <button id="stop-gan" type="button" data-command="stop" class="btn btn-danger">STOP</button>
+            </div>
         </div>
     </div>
 </body>
