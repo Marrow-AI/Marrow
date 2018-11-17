@@ -50,7 +50,7 @@ class ImageSlider extends Component {
           xTranslate: -this.props.context.amountOfImages*WIDTH+(window.innerWidth*0.6),
           transitionTime: 0
         });
-        context.setCenterImage(199);
+        context.setCenterImage(context.amountOfImages - 1);
         context.setResetSlider(false);
       }
 
@@ -78,7 +78,7 @@ class ImageSlider extends Component {
             xTranslate: -this.props.context.amountOfImages*WIDTH+(window.innerWidth*0.6),
             transitionTime: 0
           });
-          context.setCenterImage(199);
+          context.setCenterImage(context.amountOfImages - 1);
         } else {
           this.setState({ 
             xTranslate: window.innerWidth,
