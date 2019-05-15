@@ -24,7 +24,9 @@
   z-index: 99;
   /* border: 2px solid rgb(0, 255, 106); */
   /* transition: 10s all; */
-  width: 75.328vw;
+/*  width: 75.328vw */;
+  width: 80vw;
+  top: 200px;
 }
 
 #pix2pixContainer{

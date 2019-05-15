@@ -5,10 +5,10 @@ import ReconnectingWebSocket from 'reconnectingwebsocket'
 const AppContext = React.createContext()
 
 // Server IP
-const IP = 'https://pix2pix.api.marrow.raycaster.studio/generate';
+const IP = 'http://ec2-52-90-130-102.compute-1.amazonaws.com:22100/query';
 
 class AppProvider extends Component {
-  state = { 
+  state = {
     debugMode: true,
     changeDebugMode: (s) => this.setState({debugMode: s}),
     cameras: [],
@@ -56,7 +56,7 @@ class AppProvider extends Component {
       if (this.state.srcObject && this.state.srcObject.getTracks) {
         this.state.srcObject.getTracks().forEach(track => track.stop());
       }
-      navigator.mediaDevices        
+      navigator.mediaDevices
         .getUserMedia(constrains)
         .then((stream) => {
           videoElement.srcObject = stream;
@@ -86,7 +86,7 @@ class AppProvider extends Component {
     autoplayCameraDuration: 3,
     serverIP: IP,
     marrowRoute: '/',
-    marrowIP: "10.10.201.187",
+    marrowIP: "172.16.130.116",
     marrowPort: "9540",
     isConnectedToServer: false,
     isConnectedToMarrow: false,
@@ -98,13 +98,13 @@ class AppProvider extends Component {
     setShowPix2Pix: (v) => this.setState({showPix2Pix: v}),
     setWaitingStatus: (v) => this.setState({waitingForStart: v}),
     setServerIP: (ip) => this.setState({serverIP: ip}),
-    setMarrowIP: (ip) => this.setState({marrowIP: ip}), 
+    setMarrowIP: (ip) => this.setState({marrowIP: ip}),
     setMarrowPort: (port) => this.setState({marrowPort: port}),
     imageSliderOpacity: 1,
     setImageSliderOpacity: (v) => this.setState({imageSliderOpacity: v}),
-    imagesWidth: 210,
-    imagesHeight: 133,
-    amountOfImages: 100,
+    imagesWidth: 500,
+    imagesHeight: 300,
+    amountOfImages: 41,
     sliderSpeed: 2,
     isSliding: true,
     isExperienceRunning: false,
@@ -128,7 +128,7 @@ class AppProvider extends Component {
         if(!this.state.isConnectedToServer) {
           this.state.connectToServer(this.state.serverIP);
         }
-       
+
         setTimeout(() => {
           console.log('Start now!');
           this.state.setIsSliding(false)
@@ -138,10 +138,10 @@ class AppProvider extends Component {
         setTimeout(() => {
           //this.state.sendFrames();
           this.state.setShowPix2Pix(true);
-        }, 37000);         
-        this.setState({ 
+        }, 37000);
+        this.setState({
           hide: false,
-          isExperienceRunning: true 
+          isExperienceRunning: true
         });
       } else {
         window.location.reload();
@@ -149,9 +149,9 @@ class AppProvider extends Component {
         this.state.setIsSliding(true)
         this.state.setShowPix2Pix(false);
         this.state.updateSendingFrameStatus(false);
-        this.setState({ 
+        this.setState({
           hide: false,
-          isExperienceRunning: false 
+          isExperienceRunning: false
         });
       }
     },
@@ -162,7 +162,7 @@ class AppProvider extends Component {
     connectToServer: (ip, port, route) => {
       if (!this.state.socket) {
         const socket = io(ip, {
-          transports: ['websocket']
+    //      transports: ['websocket']
         });
         socket.on('connect', () => {
           console.log('Connected to server')
@@ -229,7 +229,7 @@ class AppProvider extends Component {
               console.log('Connected to audio server');
               this.setState({ isConnectedToMarrow: true });
             };
-            marrowSocket.onmessage = (packet) => {    
+            marrowSocket.onmessage = (packet) => {
                 try {
                     let message = JSON.parse(packet.data);
                       if (message.action && message.action === "control") {
@@ -239,9 +239,9 @@ class AppProvider extends Component {
                           this.state.setExperienceStatus(false);
                         } else if (message.command && message.command === "hide") {
                           console.log("Got hide command");
-                           this.setState({ 
+                           this.setState({
                             hide: true,
-                            isExperienceRunning: false 
+                            isExperienceRunning: false
                           });
                         }
                     }
@@ -249,7 +249,7 @@ class AppProvider extends Component {
                 catch(e) {
                     console.log("Error parsing Marrow message", e);
                 }
-                            
+
             };
             marrowSocket.onclose =  () => {
               console.log('Disconnected from audio server')
@@ -259,7 +259,7 @@ class AppProvider extends Component {
         catch (e) {
             console.log("Error connecting to Marrow websocket",e);
         }
-      } 
+      }
     },
     sendFakePix2Pix: () => {
         setInterval(() => {
@@ -276,7 +276,7 @@ class AppProvider extends Component {
         } catch(e) {
           console.log("Error sending marrow start",)
         }
-        
+
     },
     updateSendingFrameStatus: (state) => {
       if (state) {
@@ -296,7 +296,7 @@ class AppProvider extends Component {
       }
     }
   }
-  
+
   render() {
     return (
     <AppContext.Provider value={this.state}>
