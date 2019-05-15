@@ -13,7 +13,6 @@ OSCdef.new( \speechreload, { |data,time,source|
 }, '/speech/reload');
 
 )
-ASIO : US-2x2 & US-4x4 Mixing Driver
 
 o = ServerOptions.new;
 o.device = "ASIO : US-2x2 & US-4x4 Mixing Driver";
@@ -42,8 +41,8 @@ OSCdef.new( \effectload, { |data,time,source|
 }, '/effect/load');
 
 
-//TXSystem1.start(showAudioOptions: false)
-TXSystem1.start(0,"C:/Marrow/idfa/audio/TX_Modular/tx_marrow_122",showAudioOptions: false);
+TXSystem1.start(showAudioOptions: false)
+//TXSystem1.start(0,"C:/Marrow/idfa/audio/TX_Modular/tx_marrow_122",showAudioOptions: false);
 )
 ;
 

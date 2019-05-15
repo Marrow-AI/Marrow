@@ -35,7 +35,7 @@ import math
 #nlp = spacy.load('en')
 #print("Loaded English NLP")
 
-DISTANCE_THRESHOLD = 0.75
+DISTANCE_THRESHOLD = 0.92
 
 class ScheduleOSC:
     def __init__(self, timeout, client, command, args,  callback):
@@ -318,7 +318,7 @@ class Engine:
     def match_cache_any(self):
         for matches in self.matches_cache:
             for match in matches["data"]:
-                if match["distance"] < DISTANCE_THRESHOLD:
+                if match["distance"] >= DISTANCE_THRESHOLD:
                     print("EMERGECNY BOOM")
                     return (matches["try_index"], match["index"])
 
@@ -327,7 +327,7 @@ class Engine:
     def match_cache(self, index):
         for matches in self.matches_cache:
             for match in matches["data"]:
-                if match["distance"] < DISTANCE_THRESHOLD and match["index"] == index:
+                if match["distance"] >= DISTANCE_THRESHOLD and match["index"] == index:
                     print("CACHE BOOM")
                     return matches["try_index"]
         return -1
@@ -343,7 +343,7 @@ class Engine:
             })
             #print(matches)
             for match in matches:
-                if match["distance"] < DISTANCE_THRESHOLD and match["index"] == index:
+                if match["distance"] >= DISTANCE_THRESHOLD and match["index"] == index:
                     print("BOOM")
                     return try_index
         return -1
@@ -352,6 +352,7 @@ class Engine:
     def match(self, text, try_index):
         match = self.script.match(text)
         if match >= DISTANCE_THRESHOLD:
+            print("MATCH {}".format(match));
             return try_index
         else:
             return -1

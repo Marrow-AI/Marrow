@@ -444,7 +444,7 @@
         },
         {
             "speaker": "dad",
-            "text": "What do you want to dream about?",
+            "text": "What would you like to dream about?",
              "variations": [
                 "I really want to know.",
                 "Oh, listening to other people's dreams"
@@ -632,7 +632,7 @@
         },
         {
             "speaker": "mom",
-            "text": "Oh, okay.",
+            "text": "Oh, I see.",
              "variations": [
                 "This actually makes sense!",
                 "He will call again."
