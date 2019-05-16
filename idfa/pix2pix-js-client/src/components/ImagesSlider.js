@@ -118,8 +118,8 @@ class ImageSlider extends Component {
               ref={`IMAGE_${i}`}
               className="ImageInSlider"
               key={i}
-              src={`${BASE_URL}/images/${i}.png`}
-              //src={`images/${i}.png`}
+//src={`${BASE_URL}/images/${i}.png`}
+              src={`images/${i}.png`}
               alt="current"
               width={context.imagesWidth}
               height={context.imagesHeight}

@@ -5,7 +5,7 @@ import ReconnectingWebSocket from 'reconnectingwebsocket'
 const AppContext = React.createContext()
 
 // Server IP
-const IP = 'http://ec2-52-90-130-102.compute-1.amazonaws.com:22100/query';
+const IP = 'http://ec2-3-211-0-139.compute-1.amazonaws.com:22100/query';
 
 class AppProvider extends Component {
   state = {
