@@ -1,16 +1,15 @@
-# Marrow
+# Marrow - GAN
 
+# Starting the project
 
-# Generative Models
+## Running the EC2 instance and dockers
 
-## AttnGAN
-
-The `/AttnGAN` folder contains the Pytorch code for the AttnGAN implementation that reproduces the paper [AttnGAN: Fine-Grained Text to Image Generation with Attentional Generative Adversarial Networks](https://arxiv.org/pdf/1711.10485.pdf)
-
-### Building
-
-From custom Dockerfile:
-
+Make sure you have the private key file in the right location and permissions. Add the key to your ssh-agent
 ```
-docker build -t attgan:latest -f Dockerfile .
+cd ~/.ssh
+cp ~/Downloads/marrow.pem .
+chmod 400 marrow.pem
+ssh-add marrow.pem
 ```
+Go to the login link: https://953902915045.signin.aws.amazon.com/console and to Services->EC2, launch the instance.
+
