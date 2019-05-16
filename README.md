@@ -1,7 +1,7 @@
 # Marrow - GAN
 
 ## Marraw's#1 architecture
-(first)[https://i.imgur.com/8VvJ57J.jpg]
+!(first)[https://i.imgur.com/8VvJ57J.jpg]
 
 ## Starting the project
 
