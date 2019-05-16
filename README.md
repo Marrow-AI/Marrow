@@ -18,7 +18,7 @@ Go to the login link: https://953902915045.signin.aws.amazon.com/console and to 
 
 #### important links / information
 - Python version 2.6
-- {url}/ images datasets url: https://drive.google.com/drive/folders/1Gr6_H00FaXq9HlIutClsO5I_FHLJn-sB?usp=sharing
+- {url}/ images datasets url: https://drive.google.com/drive/folders/1Gr6_H00FaXq9HlIutClsO5I_FHLJn-sB?usp=sharing (for the image slider that starts the experience) 
 - pix2pix and densepose servers need to run together 
 
 
