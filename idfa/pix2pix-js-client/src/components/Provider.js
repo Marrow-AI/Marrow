@@ -5,7 +5,7 @@ import ReconnectingWebSocket from 'reconnectingwebsocket'
 const AppContext = React.createContext()
 
 // Server IP
-const IP = 'http://ec2-3-211-0-139.compute-1.amazonaws.com:22100/query';
+const IP = 'http://ec2-3-211-0-139.compute-1.amazonaws.com:22100/infer';
 
 class AppProvider extends Component {
   state = {
@@ -160,64 +160,9 @@ class AppProvider extends Component {
     setImagesWidth: (v) => this.setState({imagesWidth: v}),
     setImagesHeight: (v) => this.setState({imagesHeight: v}),
     connectToServer: (ip, port, route) => {
-      if (!this.state.socket) {
-        const socket = io(ip, {
-    //      transports: ['websocket']
-        });
-        socket.on('connect', () => {
-          console.log('Connected to server')
-          this.setState({ isConnectedToServer: true });
-          if (this.state.isSendingFrames) {
-            this.state.sendFrames();
-          }
-        });
-        socket.on('connect_error', () => {
-          console.log('error connecting, trying again');
-          setTimeout(() => {
-            this.state.connectToServer(this.state.serverIP);
-          }, 1000)
-        });
-        socket.on('error', () => {
-          console.log('error connecting, trying again');
-          setTimeout(() => {
-            this.state.connectToServer(this.state.serverIP);
-          }, 1000)
-        });
-        socket.on('connect_timeout', () => {
-          console.log('error connecting, trying again');
-          setTimeout(() => {
-            this.state.connectToServer(this.state.serverIP);
-          }, 1000)
-        });
-        socket.on('disconnect', () => {
-          console.log('disconnected from server')
-          this.setState({ isConnectedToServer: false });
-        });
-        socket.on('update_response', (data) => {
-          const canvas = document.getElementById('pix2pixCanvas');
-          const ctx = canvas.getContext('2d');
-          const img = new Image();
-          img.onload = () => {
-            ctx.drawImage(img, 0, 0, this.state.pix2pixCanvasWidth, this.state.pix2pixCanvasHeight);
-            if (this.state.isConnectedToMarrow) {
-                this.state.marrowSocket.send(JSON.stringify({action: "pix2pix", loss: data.loss_function}));
-            }
-            if (this.state.isSendingFrames) {
-              this.state.sendFrames();
-            }
-          };
-          img.onerror = () => {
-            if (this.state.isSendingFrames) {
-              this.state.sendFrames();
-            }
-          }
-          img.src = "data:image/jpg;base64," + data.results;
-        });
-        this.setState({ socket: socket });
-      } else {
-        this.state.socket.disconnect();
-        this.setState({ socket: null });
-      }
+      this.setState({ ip: ip });
+      this.setState({ isConnectedToServer: true });
+      this.state.sendFrames();
     },
     connectToMarrow: (ip, port, route) => {
       if (!this.state.marrowSocket) {
@@ -288,12 +233,45 @@ class AppProvider extends Component {
     },
     sendFrames: () => {
       if (this.state.isConnectedToServer) {
-        this.setState({ isSendingFrames: true });
+        console.log("Sending frames");
         const canvas = document.getElementById('cameraCanvas');
-        this.state.socket.emit('update_request', {
-          data: canvas.toDataURL('image/jpg')
+        this.setState({ isSendingFrames: true });
+        console.log(canvas);
+        fetch(this.state.serverIP, {
+         method: 'POST',
+         mode: 'cors',
+         cache: 'no-cache',
+         headers: {
+             'Content-Type': 'application/json',
+         },
+         body : JSON.stringify({
+             data: canvas.toDataURL('image/jpeg')
+         })
+     })
+     .then((response) => {
+         return response.json();
+     })
+     .then((data) => {
+         const canvas = document.getElementById('pix2pixCanvas');
+         const ctx = canvas.getContext('2d');
+         const img = new Image();
+         img.onload = () => {
+           ctx.drawImage(img, 0, 0, this.state.pix2pixCanvasWidth, this.state.pix2pixCanvasHeight);
+           if (this.state.isConnectedToMarrow) {
+               this.state.marrowSocket.send(JSON.stringify({action: "pix2pix", loss: data.loss_function}));
+           }
+           if (this.state.isSendingFrames) {
+             this.state.sendFrames();
+           }
+          };
+          img.onerror = () => {
+            if (this.state.isSendingFrames) {
+              this.state.sendFrames();
+            }
+          }
+          img.src = "data:image/jpg;base64," + data.results;
         });
-      }
+     }
     }
   }
 
