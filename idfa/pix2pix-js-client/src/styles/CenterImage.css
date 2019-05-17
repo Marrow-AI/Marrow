@@ -2,12 +2,12 @@
   position: absolute;
   z-index: 9999;
   top: 50%;
-  left: 10px; 
-  right: 0; 
-  margin-left: auto; 
+  left: 10px;
+  right: 0;
+  margin-left: auto;
   margin-right: auto;
   padding: 0px;
-  transform: translateY(-195.5%);
+  transform: translateY(-150%);
   transition: all 0s ease-in-out;
   opacity: 0;
   image-rendering: optimizeSpeed;

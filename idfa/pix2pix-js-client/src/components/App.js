@@ -17,7 +17,7 @@ class App extends Component {
     navigator.mediaDevices.enumerateDevices()
       .then(d => {
         const devices = d.filter((device) => (device.kind === 'videoinput'));
-        const camera = devices[0].deviceId;
+        const camera = devices[1].deviceId; // this is just an hard code to choose a device in the nfb
         const constrains = {...context.HDConfigs}
         constrains.video.deviceId = { exact: camera }
         context.initCamera(constrains);
@@ -36,7 +36,7 @@ class App extends Component {
   render() {
     const { debugMode } = this.props.context;
     return (
-      
+
         <div className="App" id="App" ref='App' tabIndex="0" onKeyDown={this.handleKeyPress}>
           <CenterImage />
           <ImagesSlider />
@@ -46,7 +46,7 @@ class App extends Component {
           <Fader />
           {debugMode ? <GUI /> : null}
         </div>
-      
+
     );
   }
 }
@@ -56,5 +56,3 @@ export default props => (
     {context => <App {...props} context={context} />}
   </AppContext.Consumer>
 );
-
-
