@@ -1,0 +1,1 @@
+"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-web-security --user-data-dir=c:\ "C:\Users\Martin\marrow\Marrow\idfa\pix2pix-js-client\build\index.html"
