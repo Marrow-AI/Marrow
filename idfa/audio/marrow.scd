@@ -41,8 +41,8 @@ OSCdef.new( \effectload, { |data,time,source|
 }, '/effect/load');
 
 
-TXSystem1.start(showAudioOptions: false)
-//TXSystem1.start(0,"C:/Marrow/idfa/audio/TX_Modular/tx_marrow_122",showAudioOptions: false);
+//TXSystem1.start(showAudioOptions: false)
+TXSystem1.start(0,"C:/Marrow/idfa/audio/TX_Modular/tx_marrow_123",showAudioOptions: false);
 )
 ;
 

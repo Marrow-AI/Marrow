@@ -2210,7 +2210,7 @@ Camera:
   far clip plane: 300
   field of view: 60
   orthographic: 1
-  orthographic size: 3.3
+  orthographic size: 4.1
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2815,7 +2815,7 @@ Prefab:
     - target: {fileID: 114277856245125272, guid: a29a0d3e457da4f8db82723b3b860f14,
         type: 2}
       propertyPath: serverUrl
-      value: http://t2i.api.marrow.raycaster.studio/socket.io/
+      value: http://ec2-3-211-0-139.compute-1.amazonaws.com:3333/socket.io/
       objectReference: {fileID: 0}
     - target: {fileID: 114277856245125272, guid: a29a0d3e457da4f8db82723b3b860f14,
         type: 2}
@@ -3518,7 +3518,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400042, guid: 5fcaeaa7e110f44e08aa4fa63e2fec52, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.99
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400042, guid: 5fcaeaa7e110f44e08aa4fa63e2fec52, type: 3}
       propertyPath: m_LocalScale.y
@@ -3526,7 +3526,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400042, guid: 5fcaeaa7e110f44e08aa4fa63e2fec52, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.01
+      value: 1.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fcaeaa7e110f44e08aa4fa63e2fec52, type: 3}
