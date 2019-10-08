@@ -6,11 +6,40 @@
     },
 
     "intro" :[
+        {
+            "speaker": "house",
+            "timeout-response": [
                 {
-                    "text": "Now, four people entered a room",
-                    "pause": 3900
+                    "text": "Hello Mother",
+                    "pause": 10
+                },
+                {
+                    "text": "Hello Father",
+                    "pause": 10
+                },
+                {
+                    "text": "Hello Brother",
+                    "pause": 10
+                },
+                {
+                    "text": "Hello sister",
+                    "pause": 10
+                },
+                {
+                    "text": " Welcome home!",
+                    "pause": 100
+                },
+                {
+                    "text": "You had a nice day?",
+                    "pause": 40
                 }
-            ],
+            ]
+        },
+        {
+            "type": "clear"
+        }
+
+    ],
 
 
     "script-lines": [
