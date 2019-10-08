@@ -203,7 +203,22 @@
                 {
                     "text": "Shall we start reading?"
                 }
-            ]
+            ],
+            "in-ear" : [ 
+                {
+                    "target" : "mom",
+                    "text": "I cook this every time"
+                },
+                { 
+                    "target": "dad",
+                    "text" : "there she goes again"
+                }
+             ]
+        },
+        {
+            "speaker": "all",
+            "text": "Just smile at the sister",
+            "type": "direction"
         },
         {
             "speaker": "dad",
@@ -212,6 +227,13 @@
                 "This looks great",
                 "Really really great"
             ]
+        },
+        {
+            "type": "open-line"
+        },
+        {
+            "speaker": "house",
+            "text": "Welcome"
         },
         {
             "speaker": "brother",
