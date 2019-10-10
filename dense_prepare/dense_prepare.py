@@ -85,37 +85,154 @@ def main():
     cls_boxes, cls_segms, cls_keyps, cls_bodys = infer_engine.im_detect_all(
       model, img, None, timers=timers
     )
-  for key, timer in timers.items():
-    print(key, timer.total_time)
+
   t2 = time.time()
-  print('SEGMS {}'.format(cls_segms))
-  r = vis_one_image(
-  #r = vis_one_image_opencv(
-		img, 
-	'testImage',
-		output_dir,
-		cls_boxes,
-		segms=cls_segms,
-		keypoints=cls_keyps,
-		body_uv=cls_bodys,
-		dataset=dummy_coco_dataset, 
-		#box_alpha=0.3, 
-		show_class=True, 
-	  #show_box=False,
-		thresh=0.7, 
-		kp_thresh=2
-	)
-  t3 = time.time()
 
   logger.info('Inference time: {:.3f}s'.format(t2 - t))
-  logger.info('Visualization time: {:.3f}s'.format(t3 - t2))
+  process_bodies(img, cls_boxes, cls_bodys)
 
   #cv2.imwrite(os.path.join(output_dir, '{}'.format('opencv.png')), r )
 
-  file_content=base64.b64decode(r)
-  with open("stylegan/pose.jpg","wb") as f:
-		f.write(file_content)
+  #file_content=base64.b64decode(r)
+  #with open("stylegan/pose.jpg","wb") as f:
+	#f.write(file_content)
 
+
+def process_bodies(im, boxes, body_uv):
+		if isinstance(boxes, list):
+				box_list = [b for b in boxes if len(b) > 0]
+				if len(box_list) > 0:
+						boxes = np.concatenate(box_list)
+				else:
+						boxes = None
+
+		IUV_fields = body_uv[1]
+		All_Coords = np.zeros(im.shape)
+		print("Shape of image {}".format(im.shape))
+		All_inds = np.zeros([im.shape[0],im.shape[1]])
+		K = 26
+
+		inds = np.argsort(boxes[:,4])
+		good_inds = inds[boxes[inds[:],4] >= 0.85]
+		print("Indexes {}".format(inds))
+		print('Found {} people'.format(len(good_inds)))
+
+		Final = np.zeros([512,512, 3])
+		current_offset = 0
+
+		np.random.shuffle(good_inds)
+		print("Good index {}".format(good_inds))
+
+		if len(good_inds) >= 4:
+				for i, ind in enumerate(good_inds):
+						entry = boxes[ind,:]
+						print(entry[4])
+						entry=entry[0:4].astype(int)
+						####
+						output = IUV_fields[ind]
+						####
+						###
+						CurrentMask = (output[0,:,:]>0).astype(np.float32)
+						BlackMask = (output[0,:,:]==0)
+						print("Shape of mask {}".format(CurrentMask.shape))
+						print("Shape of output {}".format(output.shape))
+						#All_Coords = np.zeros([output.shape[1],output.shape[2], 3])
+						#All_Coords_Old = All_Coords[:output.shape[1],:output.shape[2],:]
+						#All_Coords_Old[All_Coords_Old==0]= im[entry[1]:output.shape[1]+entry[1],entry[0]:output.shape[2]+entry[0],:][All_Coords_Old==0]
+						#All_Coords[ 0 : output.shape[1], 0 : output.shape[2],:]= All_Coords_Old
+
+						All_Coords = np.array(im[entry[1]:output.shape[1]+entry[1],entry[0]:output.shape[2]+entry[0],:])
+						cv2.imwrite(os.path.join(output_dir, 'coords{}.png'.format(ind)), All_Coords)
+						cv2.imwrite(os.path.join(output_dir, 'img{}.png'.format(ind)), im)
+						All_Coords[BlackMask] = 0
+						All_Coords = All_Coords.astype(np.uint8)
+						resize_ratio = 128 / output.shape[2]
+						print("Resize ratio {} ({})".format(resize_ratio, output.shape[2]))
+						img = cv2.resize(All_Coords, (128,int(output.shape[1] * resize_ratio)))
+						cv2.imwrite(os.path.join(output_dir, 'person{}.png'.format(ind)), img)
+
+						Final[128:img.shape[0]+128,current_offset:img.shape[1] + current_offset,:] = img
+
+						current_offset = current_offset + 128
+
+
+						#All_inds = np.zeros([CurrentMask.shape[0],CurrentMask.shape[1]])
+						#All_inds_old = All_inds[ entry[1] : entry[1]+output.shape[1],entry[0]:entry[0]+output.shape[2]]
+						#All_inds_old = All_inds[0 : output.shape[1],0: output.shape[2]]
+						#All_inds_old[All_inds_old==0] = CurrentMask[All_inds_old==0]*i
+						#All_inds_old[All_inds_old==0] = CurrentMask[All_inds_old==0]*255
+						#All_inds_old[All_inds_old==0] = CurrentMask[All_inds_old==0]*255
+						#All_inds[ entry[1] : entry[1]+output.shape[1],entry[0]:entry[0]+output.shape[2]] = All_inds_old
+						#All_inds[ 0: output.shape[1],0 : output.shape[2]] = All_inds_old
+
+				#All_Coords[:,:,1:3] = 255. * All_Coords[:,:,1:3]
+				#All_Coords[All_Coords>255] = 255.
+				#All_inds = All_inds.astype(np.uint8)
+				#cv2.imwrite(os.path.join(output_dir, '{}'.format('inds3.png')), All_inds )
+				#cv2.imwrite(os.path.join(output_dir, '{}'.format('coords4.png')), All_Coords)
+				#cv2.imwrite(os.path.join(output_dir, '{}'.format('img.png')), img)
+				cv2.imwrite(os.path.join(output_dir, '{}'.format('final.png')), Final)
+
+def vis_one_image(
+        im, im_name, output_dir, boxes, segms=None, keypoints=None, body_uv=None, thresh=0.9,
+        kp_thresh=2, dpi=200, box_alpha=0.0, dataset=None, show_class=False,
+        ext='pdf'):
+    """Visual debugging of detections."""
+    #if not os.path.exists(output_dir):
+    #    os.makedirs(output_dir)
+
+    t0 = time.time() 
+
+    if isinstance(boxes, list):
+        boxes, segms, keypoints, classes = convert_from_cls_format(
+            boxes, segms, keypoints)
+
+    print(time.time() - t0)
+
+    if boxes is None or boxes.shape[0] == 0 or max(boxes[:, 4]) < thresh:
+        return
+    IUV_fields = body_uv[1]
+    #
+    All_Coords = np.zeros(im.shape)
+    All_inds = np.zeros([im.shape[0],im.shape[1]])
+    K = 26
+    ##
+    inds = np.argsort(boxes[:,4])
+    ##
+    t1 = time.time()
+    for i, ind in enumerate(inds):
+        entry = boxes[ind,:]
+        if entry[4] > 0.85:
+	    print('ENTRY {}'.format(entry[4]))
+            entry=entry[0:4].astype(int)
+            ####
+            output = IUV_fields[ind]
+            ####
+            All_Coords_Old = All_Coords[ entry[1] : entry[1]+output.shape[1],entry[0]:entry[0]+output.shape[2],:]
+            All_Coords_Old[All_Coords_Old==0]=output.transpose([1,2,0])[All_Coords_Old==0]
+            All_Coords[ entry[1] : entry[1]+output.shape[1],entry[0]:entry[0]+output.shape[2],:]= All_Coords_Old
+            ###
+            CurrentMask = (output[0,:,:]>0).astype(np.float32)
+            All_inds_old = All_inds[ entry[1] : entry[1]+output.shape[1],entry[0]:entry[0]+output.shape[2]]
+            #All_inds_old[All_inds_old==0] = CurrentMask[All_inds_old==0]*i
+            All_inds_old[All_inds_old==0] = CurrentMask[All_inds_old==0]*255
+            All_inds[ entry[1] : entry[1]+output.shape[1],entry[0]:entry[0]+output.shape[2]] = All_inds_old
+
+    print(time.time() - t1)
+    All_Coords[:,:,1:3] = 255. * All_Coords[:,:,1:3]
+    All_Coords[All_Coords>255] = 255.
+    All_Coords = All_Coords.astype(np.uint8)
+    All_inds = All_inds.astype(np.uint8)
+    cv2.imwrite(os.path.join(output_dir, '{}'.format('inds.png')), All_inds )
+    print('IUV written to: ' , os.path.join(output_dir, '{}'.format('inds.png')) )
+    img = All_Coords
+    img = imresize(img,  (512, 1080), interp='bilinear')
+    retval, buffer = cv2.imencode('.jpg', img)
+    cv2.imwrite(os.path.join(output_dir, '{}'.format('coords.jpg')), img )
+    t = time.time()
+    jpg_as_text = base64.b64encode(buffer)
+    print('Encoding time: %f' % (time.time() - t))
+    return jpg_as_text
 
   
 
