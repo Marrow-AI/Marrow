@@ -17,6 +17,7 @@ import base64
 import common
 import io
 import numpy as np
+import random
 
 from PIL import Image
 from scipy.misc import imresize
@@ -72,12 +73,40 @@ def stringToImage(base64_string):
 def toRGB(image):
   return cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
 
-# Main
-def main():
+
+def run():
+    parser = argparse.ArgumentParser(description='Family dataset preparation')
+    parser.add_argument('input', metavar='input folder', help='Input folder with images')
+    parser.add_argument('output', metavar='output folder', help='Output folder to write images to')
+
+    args = parser.parse_args()
+
+    counter = 1
+    file_counter = 1
+    print('Processing {}'.format(args.input))
+    image_files = os.listdir(args.input)
+    for image_file in image_files:
+        try:
+            print("{} ({})".format(file_counter, counter))
+            result = process_image(args.input + image_file, '{}{}'.format(args.output,counter))
+            if result:
+                counter = counter + 1
+        except Exception as e:
+            print(e)
+            print("Error, next")
+            continue
+        finally:
+            file_counter = file_counter + 1
+
+
+
+def process_image(input_file, output_file):
   #image = stringToImage(input_img[input_img.find(",")+1:])
-  img = cv2.imread('stylegan/narrow/13.test.jpg')
+  #img = cv2.imread('stylegan/narrow/13.test.jpg')
+  #img = cv2.imread('stylegan/curated/231.jpg')
+  img = cv2.imread(input_file)
   #img = toRGB(image)
-  logger.info('Processing {} -> {}'.format('New Image', 'Output...'))
+  #logger.info(input_file)
   timers = defaultdict(Timer)
   t = time.time()
   size = img.shape[:2]
@@ -88,8 +117,23 @@ def main():
 
   t2 = time.time()
 
-  logger.info('Inference time: {:.3f}s'.format(t2 - t))
-  process_bodies(img, cls_boxes, cls_bodys)
+  #logger.info('Inference time: {:.3f}s'.format(t2 - t))
+  if cls_bodys is not None:
+      (final,num_people) = process_bodies(img, cls_boxes, cls_bodys)
+      if final is not None:
+        if num_people > 4:
+            output_file = output_file + 'X.jpg'
+        else:
+            output_file = output_file + '.jpg'
+        cv2.imwrite(output_file, final)
+        return True
+      else:
+        #print('Skipping')
+        return False
+  else:
+    #print('Skipping')
+    return False
+
 
   #cv2.imwrite(os.path.join(output_dir, '{}'.format('opencv.png')), r )
 
@@ -99,79 +143,70 @@ def main():
 
 
 def process_bodies(im, boxes, body_uv):
-		if isinstance(boxes, list):
-				box_list = [b for b in boxes if len(b) > 0]
-				if len(box_list) > 0:
-						boxes = np.concatenate(box_list)
-				else:
-						boxes = None
+    if isinstance(boxes, list):
+        box_list = [b for b in boxes if len(b) > 0]
+        if len(box_list) > 0:
+            boxes = np.concatenate(box_list)
+        else:
+            boxes = None
 
-		IUV_fields = body_uv[1]
-		All_Coords = np.zeros(im.shape)
-		print("Shape of image {}".format(im.shape))
-		All_inds = np.zeros([im.shape[0],im.shape[1]])
-		K = 26
+    IUV_fields = body_uv[1]
+    All_Coords = np.zeros(im.shape)
+    #print("Shape of image {}".format(im.shape))
+    All_inds = np.zeros([im.shape[0],im.shape[1]])
+    K = 26
 
-		inds = np.argsort(boxes[:,4])
-		good_inds = inds[boxes[inds[:],4] >= 0.85]
-		print("Indexes {}".format(inds))
-		print('Found {} people'.format(len(good_inds)))
+    inds = np.argsort(boxes[:,0])
+    good_inds = inds[boxes[inds[:],4] >= 0.85]
+    #print("Indexes {}".format(inds))
+    #print('Found {} people'.format(len(good_inds)))
+    num_people = len(good_inds)
+    if len(good_inds) > 4:
+        good_inds = random.sample(good_inds, 4)
 
-		Final = np.zeros([512,512, 3])
-		current_offset = 0
+    #print("Chose random 4 {}".format(good_inds))
 
-		np.random.shuffle(good_inds)
-		print("Good index {}".format(good_inds))
+    Final = np.zeros([512,512, 3])
+    current_offset = 0
 
-		if len(good_inds) >= 4:
-				for i, ind in enumerate(good_inds):
-						entry = boxes[ind,:]
-						print(entry[4])
-						entry=entry[0:4].astype(int)
-						####
-						output = IUV_fields[ind]
-						####
-						###
-						CurrentMask = (output[0,:,:]>0).astype(np.float32)
-						BlackMask = (output[0,:,:]==0)
-						print("Shape of mask {}".format(CurrentMask.shape))
-						print("Shape of output {}".format(output.shape))
-						#All_Coords = np.zeros([output.shape[1],output.shape[2], 3])
-						#All_Coords_Old = All_Coords[:output.shape[1],:output.shape[2],:]
-						#All_Coords_Old[All_Coords_Old==0]= im[entry[1]:output.shape[1]+entry[1],entry[0]:output.shape[2]+entry[0],:][All_Coords_Old==0]
-						#All_Coords[ 0 : output.shape[1], 0 : output.shape[2],:]= All_Coords_Old
+    #np.random.shuffle(good_inds)
+    #print("Good index {}".format(good_inds))
 
-						All_Coords = np.array(im[entry[1]:output.shape[1]+entry[1],entry[0]:output.shape[2]+entry[0],:])
-						cv2.imwrite(os.path.join(output_dir, 'coords{}.png'.format(ind)), All_Coords)
-						cv2.imwrite(os.path.join(output_dir, 'img{}.png'.format(ind)), im)
-						All_Coords[BlackMask] = 0
-						All_Coords = All_Coords.astype(np.uint8)
-						resize_ratio = 128 / output.shape[2]
-						print("Resize ratio {} ({})".format(resize_ratio, output.shape[2]))
-						img = cv2.resize(All_Coords, (128,int(output.shape[1] * resize_ratio)))
-						cv2.imwrite(os.path.join(output_dir, 'person{}.png'.format(ind)), img)
+    if len(good_inds) >= 4:
+        for i, ind in enumerate(good_inds):
+            entry = boxes[ind,:]
+            #print("Box position: {}, score: {}".format(entry[0],entry[4]))
+            entry=entry[0:4].astype(int)
+            ####
+            output = IUV_fields[ind]
+            ####
+            ###
+            CurrentMask = (output[0,:,:]>0).astype(np.float32)
+            BlackMask = (output[0,:,:]==0)
+            #print("Shape of mask {}".format(CurrentMask.shape))
+            #print("Shape of output {}".format(output.shape))
+            #All_Coords = np.zeros([output.shape[1],output.shape[2], 3])
+            #All_Coords_Old = All_Coords[:output.shape[1],:output.shape[2],:]
+            #All_Coords_Old[All_Coords_Old==0]= im[entry[1]:output.shape[1]+entry[1],entry[0]:output.shape[2]+entry[0],:][All_Coords_Old==0]
+            #All_Coords[ 0 : output.shape[1], 0 : output.shape[2],:]= All_Coords_Old
 
-						Final[128:img.shape[0]+128,current_offset:img.shape[1] + current_offset,:] = img
+            All_Coords = np.array(im[entry[1]:output.shape[1]+entry[1],entry[0]:output.shape[2]+entry[0],:])
+            #cv2.imwrite(os.path.join(output_dir, 'coords{}.png'.format(ind)), All_Coords)
+            #cv2.imwrite(os.path.join(output_dir, 'img{}.png'.format(ind)), im)
+            All_Coords[BlackMask] = 0
+            All_Coords = All_Coords.astype(np.uint8)
+            resize_ratio = 128 / output.shape[2]
+            #print("Resize ratio {} ({})".format(resize_ratio, output.shape[2]))
+            img = cv2.resize(All_Coords, (128,int(output.shape[1] * resize_ratio)))
 
-						current_offset = current_offset + 128
+            #cv2.imwrite(os.path.join(output_dir, 'person{}.png'.format(ind)), img)
 
+            Final[128:img.shape[0]+128,current_offset:img.shape[1] + current_offset,:] = img[:384,:,:]
 
-						#All_inds = np.zeros([CurrentMask.shape[0],CurrentMask.shape[1]])
-						#All_inds_old = All_inds[ entry[1] : entry[1]+output.shape[1],entry[0]:entry[0]+output.shape[2]]
-						#All_inds_old = All_inds[0 : output.shape[1],0: output.shape[2]]
-						#All_inds_old[All_inds_old==0] = CurrentMask[All_inds_old==0]*i
-						#All_inds_old[All_inds_old==0] = CurrentMask[All_inds_old==0]*255
-						#All_inds_old[All_inds_old==0] = CurrentMask[All_inds_old==0]*255
-						#All_inds[ entry[1] : entry[1]+output.shape[1],entry[0]:entry[0]+output.shape[2]] = All_inds_old
-						#All_inds[ 0: output.shape[1],0 : output.shape[2]] = All_inds_old
-
-				#All_Coords[:,:,1:3] = 255. * All_Coords[:,:,1:3]
-				#All_Coords[All_Coords>255] = 255.
-				#All_inds = All_inds.astype(np.uint8)
-				#cv2.imwrite(os.path.join(output_dir, '{}'.format('inds3.png')), All_inds )
-				#cv2.imwrite(os.path.join(output_dir, '{}'.format('coords4.png')), All_Coords)
-				#cv2.imwrite(os.path.join(output_dir, '{}'.format('img.png')), img)
-				cv2.imwrite(os.path.join(output_dir, '{}'.format('final.png')), Final)
+            current_offset = current_offset + 128
+        return (Final,num_people)
+    else:
+        return (None, None)
 
 def vis_one_image(
         im, im_name, output_dir, boxes, segms=None, keypoints=None, body_uv=None, thresh=0.9,
@@ -187,7 +222,7 @@ def vis_one_image(
         boxes, segms, keypoints, classes = convert_from_cls_format(
             boxes, segms, keypoints)
 
-    print(time.time() - t0)
+    #print(time.time() - t0)
 
     if boxes is None or boxes.shape[0] == 0 or max(boxes[:, 4]) < thresh:
         return
@@ -203,7 +238,7 @@ def vis_one_image(
     for i, ind in enumerate(inds):
         entry = boxes[ind,:]
         if entry[4] > 0.85:
-	    print('ENTRY {}'.format(entry[4]))
+	    #print('ENTRY {}'.format(entry[4]))
             entry=entry[0:4].astype(int)
             ####
             output = IUV_fields[ind]
@@ -218,23 +253,23 @@ def vis_one_image(
             All_inds_old[All_inds_old==0] = CurrentMask[All_inds_old==0]*255
             All_inds[ entry[1] : entry[1]+output.shape[1],entry[0]:entry[0]+output.shape[2]] = All_inds_old
 
-    print(time.time() - t1)
+    #print(time.time() - t1)
     All_Coords[:,:,1:3] = 255. * All_Coords[:,:,1:3]
     All_Coords[All_Coords>255] = 255.
     All_Coords = All_Coords.astype(np.uint8)
     All_inds = All_inds.astype(np.uint8)
     cv2.imwrite(os.path.join(output_dir, '{}'.format('inds.png')), All_inds )
-    print('IUV written to: ' , os.path.join(output_dir, '{}'.format('inds.png')) )
+    #print('IUV written to: ' , os.path.join(output_dir, '{}'.format('inds.png')) )
     img = All_Coords
     img = imresize(img,  (512, 1080), interp='bilinear')
     retval, buffer = cv2.imencode('.jpg', img)
     cv2.imwrite(os.path.join(output_dir, '{}'.format('coords.jpg')), img )
     t = time.time()
     jpg_as_text = base64.b64encode(buffer)
-    print('Encoding time: %f' % (time.time() - t))
+    #print('Encoding time: %f' % (time.time() - t))
     return jpg_as_text
 
   
 
 
-main()
+run()
