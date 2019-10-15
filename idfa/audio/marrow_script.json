@@ -237,15 +237,11 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "just say",
+                            "text": "what can I say",
                             "pause": 20
                         },
                         {
-                            "text": "what she wants",
-                            "pause": 10
-                        },
-                        {
-                            "text": "to hear"
+                            "text": "that will please her"
                         }
                     ]
                 }
