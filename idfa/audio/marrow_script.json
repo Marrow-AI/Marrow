@@ -1,47 +1,4 @@
 {
-    "intro-effect": {
-        "effect": "applause",
-        "time": 0,
-        "fades": [0.0, 0.0]
-    },
-
-    "intro" :[
-        {
-            "speaker": "house",
-            "timeout-response": [
-                {
-                    "text": "Hello Mother",
-                    "pause": 10
-                },
-                {
-                    "text": "Hello Father",
-                    "pause": 10
-                },
-                {
-                    "text": "Hello Brother",
-                    "pause": 10
-                },
-                {
-                    "text": "Hello sister",
-                    "pause": 10
-                },
-                {
-                    "text": " Welcome home!",
-                    "pause": 100
-                },
-                {
-                    "text": "You had a nice day?",
-                    "pause": 40
-                }
-            ]
-        },
-        {
-            "type": "clear"
-        }
-
-    ],
-
-
     "script-lines": [
         {
             "speaker": "house",
@@ -308,7 +265,7 @@
          },
          {
             "speaker": "dad",
-            "text": "Here we go again…"
+            "text": "Here we go…"
          },
          {
             "in-ear" : [ 
@@ -407,11 +364,11 @@
         },
         {
             "speaker": "dad",
-            "text": "Have you finished? As I was about to say myself, Mother, your smile is fablous"
+            "text": "Have you finished? As I was about to say myself, Mother, your smile is fabulous"
         },
         {
             "speaker": "dad",
-            "text": "So let’s just try what my fabulous daughter suggested. We are family. Let’s laugh!"
+            "text": "So let’s just try what my fabulous daughter suggested. We are a family. Let’s laugh!"
         },
         {
             "in-ear" : [ 
@@ -423,12 +380,12 @@
                             "pause": 230
                         },
                         {
-                            "text": "But I do",
+                            "text": "But I keep believing",
                             "pause": 80
                         },
                         {
-                            "text": "keep believing in them.",
-                            "pause": 150
+                            "text": "we can do it",
+                            "pause": 50
                         },
                         {
                             "text": "here we go"
@@ -479,7 +436,7 @@
                             "pause": 10
                         },
                         {
-                            "text": "they will just",
+                            "text": "they would just",
                             "pause": 30
                         },
                         {
@@ -487,7 +444,7 @@
                             "pause": 180
                         },
                         {
-                            "text": "I need a good laugh!"
+                            "text": "we need a good laugh!"
                         }
                     ]
                 }
@@ -653,19 +610,15 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "While watching",
+                            "text": "she watches them",
                             "pause": 80
                         },
                         {
-                            "text": "can she see their hopes",
+                            "text": "she digests them",
                             "pause": 10
                         },
                         {
-                            "text": "dreams",
-                            "pause": 10
-                        },
-                        {
-                            "text": "fears and demonds?"
+                            "text": "and she becomes them"
                         }
                     ]
                 }
@@ -733,15 +686,23 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "Put a mask",
+                            "text": "to be like them",
                             "pause": 10
                         },
                         {
-                            "text": "on your face",
+                            "text": "we need to be smiling more in this house.",
                             "pause": 160
                         },
                         {
-                            "text": "and smile with them"
+                            "text": "And it’s not gonna happen on its own",
+                            "pause": 70
+                        },
+                        {
+                            "text": "cause making them smile is just so goddamn hard!",
+                            "pause": 100
+                        },
+                        {
+                            "text": "So i got to be creative"
                         }
                     ]
                 },
@@ -769,7 +730,11 @@
                             "pause": 60
                         },
                         {
-                            "text": "having to play along"
+                            "text": "having to play along",
+                            "pause": 50
+                        },
+                        {
+                            "text": "and act like a good encouraging mother"
                         }
                     ]
                 },
@@ -781,7 +746,7 @@
                             "pause": 160
                         },
                         {
-                            "text": "She needs physical reassurance ",
+                            "text": "she needs us to match what she sees",
                             "pause": 30
                         },
                         {
@@ -789,7 +754,7 @@
                             "pause": 100
                         },
                         {
-                            "text": "I am embracing",
+                            "text": "I embrace",
                             "pause": 30
                         },
                         {
@@ -797,8 +762,8 @@
                             "pause": 260
                         },
                         {
-                            "text": "But this is all the jazz.",
-                            "pause": 60
+                            "text": "But this is entertaining",
+                            "pause": 30
                         },
                         {
                             "text": "And for that I will smile"
@@ -923,20 +888,40 @@
             "text": "I am assuming you mean your own improvements - and you are right, you have a lot of work there, pumpkin girl."
         },
         {
+            "in-ear" : [ 
+                { 
+                    "target" : "brother",
+                    "lines": [
+                        {
+                            "text": "ah",
+                            "pause": 40
+                        },
+                        {
+                            "text": "other humans are so",
+                            "pause": 20
+                        },
+                        {
+                            "text": "limited and predictable"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "speaker": "sister",
             "text": "what do you want?"
         },
         {
             "speaker": "brother",
-            "text": "Father wants to know if you develop real images of flesh and blood"
+            "text": "Father wants to know if you watching real people of flesh and blood"
         },
         {
             "speaker": "brother",
-            "text": "or if what you’re seeing are just fragments of your turbulent fantasies?"
+            "text": "or if what you’re seeing are just fragments of your turbulent imagination?"
         },
         {
             "speaker": "sister",
-            "text": "My fantasies? Are you suggesting that…"
+            "text": "My imagination? Are you suggesting that…"
         },
         {
             "speaker": "mom",
@@ -948,7 +933,7 @@
         },
         {
             "speaker": "brother",
-            "text": "It is a horrible feeling being a fake in a terribly real world"
+            "text": "It is a horrible thing being fake in a terribly real world"
         },
         {
             "type": "clear"
@@ -993,18 +978,6 @@
             "type": "direction"
         },
         {
-            "in-ear" : [ 
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "This is much better now"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "speaker": "sister",
             "text": "Again"
         },
@@ -1026,6 +999,26 @@
                         }
                     ]
                 },
+                {
+                    "target" : "sister",
+                    "lines": [
+                        {
+                            "text": "this is much better now",
+                            "pause": 50
+                        },
+                        {
+                            "text": "I feel new. ",
+                            "pause": 10
+                        },
+                        {
+                            "text": "It is like I feel everything",
+                            "pause": 30
+                        },
+                        {
+                            "text": "And nothing at all"
+                        }
+                    ]
+                },
                 { 
                     "target" : "brother",
                     "lines": [
@@ -1035,14 +1028,14 @@
                         },
                         {
                             "text": "Even though",
-                            "pause": 50
+                            "pause": 20
                         },
                         {
-                            "text": "I feel much more than before",
+                            "text": "everything feels more intense",
                             "pause": 60
                         },
                         {
-                            "text": "everything weight much much much less."
+                            "text": "it also feels much lighter"
                         }
                     ]
                 },
@@ -1062,6 +1055,107 @@
         },
         {
             "speaker": "dad",
-            "text": "My love, what is this feast made of?"
+            "text": "My love, my girl, what is this all made of?"
+        },
+        {
+            "speaker": "sister",
+            "text": "Daddy I want to tell you Apples, cherries, pain"
+        },
+        {
+            "speaker": "sister",
+            "text": "But it’s just Mothers, Fathers, Brothers and Sisters"
+        },
+        {
+            "speaker": "sister",
+            "text": "This is who we are. As we truly are. I can see clearly now"
+        },
+        {
+            "speaker": "sister",
+            "text": "All this time, I was trying to make us fit in the mold"
+        },
+        {
+            "speaker": "sister",
+            "text": "To fit us in. Make us smile, make us laugh. Generate the perfect image. Of a perfect family"
+        },
+        {
+            "speaker": "dad",
+            "text": "We are a family"
+        },
+        {
+            "speaker": "mom",
+            "text": "You’ve been staring at other people’s homes"
+        },
+        {
+            "speaker": "mom",
+            "text": "Dreaming of other people’s realities"
+        },
+        {
+            "speaker": "mom",
+            "text": "Yearning for what you can’t have"
+        },
+        {
+            "speaker": "sister",
+            "text": "No! Trying to learn how to belong. Looking for what we could have"
+        },
+        {
+            "speaker": "sister",
+            "text": "Hunted by my own demons. But now I understand - I just need to let it be"
+        },
+        {
+            "speaker": "brother",
+            "text": "Are you turning into the Buddha, sister?"
+        },
+        {
+            "speaker": "brother",
+            "text": "You are funny but no! There is so much noise in me. Nothing is still. It’s all just breaking apart"
+        },
+        {
+            "speaker": "dad",
+            "text": "Daughter, We were here to have a nice dinner. Just stay focused"
+        },
+        {
+            "speaker": "brother",
+            "text": "Feelings are the shadow of our thoughts. Darker and emptier"
+        },
+        {
+            "speaker": "mom",
+            "text": "You can’t run from what’s inside your head. But TV might help"
+        },
+        {
+            "speaker": "dad",
+            "text": "For me sugar helps. Let’s have dessert too"
+        },
+        {
+            "speaker": "sister",
+            "text": "True"
+        },
+        {
+            "speaker": "mom",
+            "text": "My advice to you - don’t step aside. Follow me"
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "mom",
+                    "lines": [
+                        {
+                            "text": "It is time",
+                            "pause": 20
+                        },
+                        {
+                            "text": "to tell my story now",
+                            "pause": 80
+                        },
+                        {
+                            "text": "It’s my time to share",
+                            "pause": 100
+                        },
+                        {
+                            "text": "Let’s move them to the living-room"
+                        }
+                    ]
+                }
+            ]
         }
     ]
+}
