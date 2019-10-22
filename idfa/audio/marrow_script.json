@@ -881,7 +881,11 @@
         },
         {
             "speaker": "dad",
-            "text": "I am assuming you mean your own improvements - and you are right, you have a lot of work there, pumpkin girl."
+            "text": "I am assuming you mean your own improvements - and you are right"
+        },
+        {
+            "speaker": "dad",
+            "text": "look around you, you have a lot of work here, pumpkin girl"
         },
         {
             "in-ear" : [ 
@@ -913,11 +917,11 @@
         },
         {
             "speaker": "brother",
-            "text": "or if what you’re seeing are just fragments of your turbulent imagination?"
+            "text": "or if what you’re seeing are just fragments of your distorted imagination?"
         },
         {
             "speaker": "sister",
-            "text": "My imagination? Are you suggesting that…"
+            "text": "Distorted imagination? Are you suggesting that…"
         },
         {
             "speaker": "mom",
@@ -1063,7 +1067,11 @@
         },
         {
             "speaker": "sister",
-            "text": "This is who we are. As we truly are. I can see clearly now"
+            "text": "Something in between who we are"
+        },
+        {
+            "speaker": "sister",
+            "text": "I can see clearly now. It is all distorted"
         },
         {
             "speaker": "sister",
@@ -1071,7 +1079,7 @@
         },
         {
             "speaker": "sister",
-            "text": "To fit us in. Make us smile, make us laugh. Generate the perfect image. Of a perfect family"
+            "text": "Generate the perfect image. Of a perfect family"
         },
         {
             "speaker": "dad",
@@ -1095,7 +1103,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Hunted by my own demons. But now I understand - I just need to let it be"
+            "text": "But now I understand - I just need to let it be"
         },
         {
             "speaker": "brother",
@@ -1123,7 +1131,7 @@
         },
         {
             "speaker": "sister",
-            "text": "True"
+            "text": "Yes"
         },
         {
             "speaker": "mom",
