@@ -7,12 +7,17 @@ import cv2
 import numpy as np
 import pickle
 import PIL.Image
-import dnnlib
-import dnnlib.tflib as tflib
+#import dnnlib
+#import dnnlib.tflib as tflib
+
+#sys.path.append('/opt/anaconda1anaconda2anaconda3/share/gir-1.0')
 
 import gi
 gi.require_version('Gst', '1.0')
-from gi.repository import GObject, Gst
+gi.require_version('GstRtspServer', '1.0')
+from gi.repository import GObject, GIRepository, Gst ,GstRtspServer
+
+print(GIRepository.Repository.get_search_path())
 
 if __name__ == '__main__':
 	GObject.threads_init()
@@ -95,6 +100,7 @@ if __name__ == '__main__':
 	class SampleGenerator:
 
 		def __init__(self):
+                    """
 			self._last_t_v = -31337
 			self._last_t_a = -31337
 			self._last_t_s = -31337
@@ -106,6 +112,7 @@ if __name__ == '__main__':
 			    self._G, self._D, self.Gs = pickle.load(f)
 			self.Gs.print_layers()
 			self.rnd = np.random.RandomState()
+                        """
 
 
 		def gen(self, t):
@@ -160,9 +167,9 @@ if __name__ == '__main__':
 
 
 	s = SampleGenerator()
-	print("Generating samples")
-	for t in np.arange(0, 300, 0.000001):
-		s.gen(t)
+	#print("Generating samples")
+	#for t in np.arange(0, 300, 0.000001):
+	#	s.gen(t)
 
 	src_v.emit("end-of-stream")
 	if audio:
