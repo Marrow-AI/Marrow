@@ -2,7 +2,7 @@
     "script-lines": [
         {
             "speaker": "house",
-            "timeout-response": [
+             "lines": [
                 {
                     "text": "Text will soon appear on the table.",
                     "pause": 450
@@ -222,6 +222,20 @@
                 }
              ]
          },
+         {
+             "triggers-effect": [
+                 {
+                 "effect": "ticking",
+                 "time": 10,
+                 "fades": [0.15, 0.15]
+                },
+                {
+                "effect": "whiteNoise",
+                 "time": 7,
+                 "fades": [0.15, 0.15]
+                }
+             ]
+        },
         {
             "speaker": ["mom", "dad", "brother"],
             "text": "Just look at her as long as the clock is ticking",
@@ -237,11 +251,11 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "what can I say",
+                            "text": "It exactly what she made last night",
                             "pause": 20
                         },
                         {
-                            "text": "that will please her"
+                            "text": "What was it?"
                         }
                     ]
                 }
@@ -257,11 +271,20 @@
          },
          {
             "speaker": "mom",
-            "text": "But of course you can’t, you’re your father’s daughter"
+            "text": "Why am I even bothering, you’re your father’s daughter"
          },
          {
             "speaker": "dad",
             "text": "Here we go…"
+         },
+         {
+            "triggers-effect": [
+               {
+               "effect": "whiteNoise",
+                "time": 3,
+                "fades": [0.15, 0.15]
+               }
+            ]
          },
          {
             "in-ear" : [ 
@@ -270,18 +293,18 @@
                     "lines": [
                         {
                             "text": "that frame",
-                            "pause": 30
-                        },
-                        {
-                            "text": "on the wall, again",
-                            "pause": 100
-                        },
-                        {
-                            "text": "I guess",
                             "pause": 20
                         },
                         {
-                            "text": "I’ll get up and fix it"
+                            "text": "on the wall, again",
+                            "pause": 50
+                        },
+                        {
+                            "text": "who keeps playing with it?",
+                            "pause": 100
+                        },
+                        {
+                            "text": "I have to fix it"
                         }
                     ]
                 }
@@ -447,7 +470,13 @@
             ]
         },
         {
-            "type": "clear"
+            "triggers-effect": [
+                {
+                "effect": "ticking",
+                "time": 10,
+                "fades": [0.15, 0.15]
+               }
+            ]
         },
         {
             "speaker": "sister",
@@ -623,6 +652,15 @@
         {
             "speaker": "dad",
             "text": "Just like I watch over my family. I bet you no one has such a nice family as us"
+        },
+        {
+            "triggers-effect": [
+                {
+                "effect": "whiteNoise",
+                "time": 4,
+                "fades": [0.15, 0.15]
+               }
+            ]
         },
         {
             "in-ear" : [ 
@@ -813,7 +851,13 @@
             ]
         },
         {
-            "type": "clear"
+            "triggers-effect": [
+                {
+                "effect": "ticking",
+                "time": 10,
+                "fades": [0.15, 0.15]
+               }
+            ]
         },
         {
             "in-ear" : [ 
@@ -936,7 +980,13 @@
             "text": "It is a horrible thing being fake in a terribly real world"
         },
         {
-            "type": "clear"
+            "triggers-effect": [
+                {
+                "effect": "fake",
+                "time": 7,
+                "fades": [0.15, 0.15]
+               }
+            ]
         },
         {
             "speaker": "sister",
@@ -958,10 +1008,6 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "Here we go again.",
-                            "pause": 240
-                        },
-                        {
                             "text": "Have I not fixed this frame before?",
                             "pause": 140
                         },
@@ -974,7 +1020,7 @@
         },
         {
             "speaker": "sister",
-            "text": "One more time",
+            "text": "Don’t give up, fix it",
             "type": "direction"
         },
         {
@@ -1003,12 +1049,8 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "this is much better now",
+                            "text": "I feel now",
                             "pause": 50
-                        },
-                        {
-                            "text": "I feel new. ",
-                            "pause": 10
                         },
                         {
                             "text": "It is like I feel everything",
@@ -1062,6 +1104,9 @@
             "text": "Daddy I want to tell you Apples, cherries, pain"
         },
         {
+            "type": "clear"
+        },
+        {
             "speaker": "sister",
             "text": "But it’s just Mothers, Fathers, Brothers and Sisters"
         },
@@ -1082,12 +1127,18 @@
             "text": "Generate the perfect image. Of a perfect family"
         },
         {
+            "type": "clear"
+        },
+        {
             "speaker": "dad",
             "text": "We are a family"
         },
         {
             "speaker": "mom",
             "text": "You’ve been staring at other people’s homes"
+        },
+        {
+            "type": "clear"
         },
         {
             "speaker": "mom",
@@ -1098,8 +1149,14 @@
             "text": "Yearning for what you can’t have"
         },
         {
+            "type": "clear"
+        },
+        {
             "speaker": "sister",
             "text": "No! Trying to learn how to belong"
+        },
+        {
+            "type": "clear"
         },
         {
             "speaker": "sister",
@@ -1114,8 +1171,14 @@
             "text": "You are funny but no! There is so much noise in me. Nothing is still. It’s all just breaking apart"
         },
         {
+            "type": "clear"
+        },
+        {
             "speaker": "dad",
             "text": "Daughter, We were here to have a nice dinner. Just stay focused"
+        },
+        {
+            "type": "clear"
         },
         {
             "speaker": "brother",
@@ -1126,8 +1189,11 @@
             "text": "You can’t run from what’s inside your head. But TV might help"
         },
         {
+            "type": "clear"
+        },
+        {
             "speaker": "dad",
-            "text": "For me sugar helps. Let’s have dessert too"
+            "text": "For me sugar is what helps. Let’s have dessert and watch TV"
         },
         {
             "speaker": "sister",
