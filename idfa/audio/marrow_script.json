@@ -2,7 +2,7 @@
     "script-lines": [
         {
             "speaker": "house",
-            "timeout-response": [
+             "lines": [
                 {
                     "text": "Text will soon appear on the table.",
                     "pause": 450
