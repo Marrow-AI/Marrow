@@ -67,6 +67,9 @@
 	ol {
 		margin-top: 10px;
 	}
+    #buttons .btn {
+        color: white;
+    }
    </style>
 </head>
 <body>
@@ -80,12 +83,18 @@
         </div>
         <div id="control">
             <div id="instructions">
-                <div>This is an experience for four people.</div>
+                <div>This is an experience for four++ people.</div>
                 <div id="operation">Please wait for a volunteer to start.</div>
             </div>
             <div id="buttons">
-                <button id="start-gan" type="button" data-command="start" class="btn btn-success">START</button>
-                <button id="stop-gan" type="button" data-command="stop" class="btn btn-danger">STOP</button>
+                <div>
+                    <button id="start-gan" type="button" data-command="start" class="btn btn-success">START</button>
+                    <button id="stop-gan" type="button" data-command="stop" class="btn btn-danger">STOP</button>
+                </div>
+                <div>
+                    <button id="prev-gan" type="button" data-command="prev" class="btn btn-warning">PREV</button>
+                    <button id="next-gan" type="button" data-command="next" class="btn btn-warning">NEXT</button>
+                </div>
             </div>
         </div>
     </div>

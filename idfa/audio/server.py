@@ -59,7 +59,7 @@ class Server:
 
     def start(self):
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
-        ssl_context.load_cert_chain(certfile='localhost.pem', keyfile='localkey.pem')
+        ssl_context.load_cert_chain(certfile='../../server.crt', keyfile='../../server.key')
         print("Websocket listening")
         return websockets.serve(self.handler, '0.0.0.0', 9540, ssl=None)
 

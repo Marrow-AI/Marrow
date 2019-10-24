@@ -3,16 +3,16 @@ import numpy as np
 from annoy import AnnoyIndex
 import json
 
-SCRIPT_TIMEOUT_GLOBAL = 11
-SCRIPT_TIMEOUT_NOSPEECH = 6 
+SCRIPT_TIMEOUT_GLOBAL = 99999 #11
+SCRIPT_TIMEOUT_NOSPEECH = 99999 #6 
 
-SCRIPT_TIMEOUT_GLOBAL_SHORT = 9
-SCRIPT_TIMEOUT_NOSPEECH_SHORT = 6
+SCRIPT_TIMEOUT_GLOBAL_SHORT = 99999 #9
+SCRIPT_TIMEOUT_NOSPEECH_SHORT = 99999 #6
 
 class Script:
     def __init__(self):
         print("Initializing script engine")
-        self.nlp = spacy.load('en_core_web_lg')
+        self.nlp = spacy.load('en_core_web_sm')
         self.awaiting_index = -1
         self.load_data()
 
@@ -24,29 +24,36 @@ class Script:
         self.load_data()
         self.awaiting_index = 0
         self.awaiting = self.data["script-lines"][self.awaiting_index]
-        self.awaiting_text = self.awaiting["text"]
-        self.awaiting_variation = 0
-        self.length = len(self.data["script-lines"])
         self.update()
+        self.length = len(self.data["script-lines"])
 
     def update(self):
-        self.awaiting["words"] = len(self.awaiting_text.split())
-        print("AWAITING: {}".format(self.awaiting_text))
-        self.awaiting_nlp = self.nlp(self.awaiting_text)
-        if self.awaiting_index > 0:
-            self.awaiting["previous"] = self.data["script-lines"][self.awaiting_index -1]["text"]
-        if "timeout" in self.awaiting:
-            self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH_SHORT
-            self.awaiting_global_timeout = SCRIPT_TIMEOUT_GLOBAL_SHORT
-        else:
-            self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH
-            self.awaiting_global_timeout = SCRIPT_TIMEOUT_GLOBAL
+        if "text" in self.awaiting:
+            self.awaiting_text = self.awaiting["text"]
+            self.awaiting_variation = 0
+            self.awaiting["words"] = len(self.awaiting_text.split())
+            print("AWAITING: {}".format(self.awaiting_text))
+            self.awaiting_nlp = self.nlp(self.awaiting_text)
+            if self.awaiting_index > 0 and "text" in self.data["script-lines"][self.awaiting_index -1] :
+                self.awaiting["previous"] = self.data["script-lines"][self.awaiting_index -1]["text"]
+            if "timeout" in self.awaiting:
+                self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH_SHORT
+                self.awaiting_global_timeout = SCRIPT_TIMEOUT_GLOBAL_SHORT
+            else:
+                self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH
+                self.awaiting_global_timeout = SCRIPT_TIMEOUT_GLOBAL
 
-        # Add some more to the first lines after returning from gan
-        if "timeout-response" in self.awaiting:
-            self.awaiting_nospeech_timeout += 2
-            self.awaiting_global_timeout += 2
-            
+            # Add some more to the first lines after returning from gan
+            if "timeout-response" in self.awaiting:
+                self.awaiting_nospeech_timeout += 2
+                self.awaiting_global_timeout += 2
+        else:
+            self.awaiting_text = None
+            self.awaiting_global_timeout = None
+        if "type" in self.awaiting:
+            self.awaiting_type = self.awaiting["type"]
+        else:
+            self.awaiting_type = "line"
         
 
     def next_variation(self):
@@ -63,12 +70,22 @@ class Script:
             self.awaiting_index = self.awaiting_index + 1
             self.awaiting_variation = 0
             self.awaiting = self.data["script-lines"][self.awaiting_index]
-            self.awaiting_text = self.awaiting["text"]
             self.update()
+
             return True
         else:
             return False
 
+    def prev_line(self):
+        if self.awaiting_index > 0:
+            self.awaiting_index = self.awaiting_index - 1
+            self.awaiting_variation = 0
+            self.awaiting = self.data["script-lines"][self.awaiting_index]
+            self.update()
+
+            return True
+        else:
+            return False
 
     def load_space(self):
         self.script_lines = {}

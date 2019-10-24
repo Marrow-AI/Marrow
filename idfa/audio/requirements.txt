@@ -22,5 +22,6 @@ websockets
 aiohttp
 google-cloud
 google-cloud-texttospeech
+google-cloud-speech
 watson_developer_cloud
 janus
