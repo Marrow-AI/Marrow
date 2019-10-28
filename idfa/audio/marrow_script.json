@@ -4,19 +4,19 @@
             "speaker": "house",
              "lines": [
                 {
-                    "text": "Text will soon appear on the table.",
+                    "text": "Text will soon appear on the table",
                     "pause": 450
                 },
                 {
-                    "text": "It is for you to read.",
+                    "text": "It is for you to read",
                     "pause": 100
                 },
                 {
-                    "text": "Don’t worry pictures will follow,",
+                    "text": "Don't worry pictures will follow",
                     "pause": 100
                 },
                 {
-                    "text": "as there are no good stories without pictures."
+                    "text": "as there are no good stories without pictures"
                 },
                 {
                     "text": "The best way to explain the story",
@@ -27,19 +27,19 @@
                     "pause": 40
                 },
                 {
-                    "text": "is to act it out.",
+                    "text": "is to act it out",
                     "pause": 140
                 },
                 {
-                    "text": "Treat this text as your own words,",
+                    "text": "Treat this text as your own words",
                     "pause": 100
                 },
                 {
-                    "text": "no more no less.",
+                    "text": "no more no less",
                     "pause": 90
                 },
                 {
-                    "text": " Bon appetit!"
+                    "text": "Bon appetit!"
                 }
             ]
         },
@@ -68,6 +68,10 @@
             "type": "open-line"
         },
         {
+            "speaker": "mom",
+            "text": "...(open line)"
+        },
+        {
             "in-ear" : [ 
                 { 
                     "target" : "mom",
@@ -89,7 +93,7 @@
          },
          {
             "speaker": "dad",
-            "text": "Hmm… What’s that saying again? Eating great everyday…"
+            "text": "Hmm... What's that saying again? Eating great everyday..."
          },
          {
             "speaker": "brother",
@@ -117,7 +121,7 @@
          },
          {
             "speaker": "dad",
-            "text": "Please don’t tell me you don’t like what you’ve cooked, mother"
+            "text": "Please don't tell me you don't like what you've cooked, mother"
          },
          {
             "in-ear" : [ 
@@ -137,11 +141,8 @@
          },
          {
             "speaker": "mom",
-            "text": "It’s alright"
+            "text": "It's alright"
          },
-         {
-            "type": "clear"
-        },
         {
             "in-ear" : [ 
                 { 
@@ -160,7 +161,7 @@
                             "pause": 80
                         },
                         {
-                            "text": "not said a word yet? ",
+                            "text": "not said a word yet?",
                             "pause": 140
                         },
                         {
@@ -238,7 +239,7 @@
         },
         {
             "speaker": ["mom", "dad", "brother"],
-            "text": "Just look at her as long as the clock is ticking",
+            "text": "direction text: Just look at her as long as the clock is ticking",
             "type": "direction"
         },
         {
@@ -266,16 +267,20 @@
             "type": "open-line"
          },
          {
-            "speaker": "mom",
-            "text": "Why can’t you just say right away what you think?"
+            "speaker": "sister",
+            "text": "...(open line)"
          },
          {
             "speaker": "mom",
-            "text": "Why am I even bothering, you’re your father’s daughter"
+            "text": "Why can't you just say right away what you think?"
+         },
+         {
+            "speaker": "mom",
+            "text": "Why am I even bothering, you're your father's daughter"
          },
          {
             "speaker": "dad",
-            "text": "Here we go…"
+            "text": "Here we go..."
          },
          {
             "triggers-effect": [
@@ -347,7 +352,7 @@
         },
         {
             "speaker": "sister",
-            "text": "This isn’t how it should go. Let’s start over"
+            "text": "This isn’t how it should go. Let's start over"
         },
         {
             "speaker": "sister",
@@ -355,19 +360,19 @@
         },
         {
             "speaker": "sister",
-            "text": "Let’s make it stick, let’s make it last"
+            "text": "Let's make it stick, let's make it last"
         },
         {
             "speaker": "mom",
-            "text": "I don’t want to laugh. I don’t like my teeth"
+            "text": "I don't want to laugh. I don't like my teeth"
         },
         {
             "speaker": "mom",
-            "text": "But there is a reason I don’t smile enough, I am just so damn tired"
+            "text": "But there is a reason I don't smile enough, I am just so damn tired"
         },
         {
             "speaker": "brother",
-            "text": "Mother, your teeth are just fine. When I look at you - "
+            "text": "Mother, your teeth are just fine. When I look at you -"
         },
         {
             "speaker": "brother",
@@ -387,7 +392,7 @@
         },
         {
             "speaker": "dad",
-            "text": "So let’s just try what my fabulous daughter suggested. We are a family. Let’s laugh!"
+            "text": "So let's just try what my fabulous daughter suggested. We are a family. Let's laugh!"
         },
         {
             "in-ear" : [ 
@@ -395,7 +400,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "I’m not that fablous.",
+                            "text": "I'm not that fablous.",
                             "pause": 230
                         },
                         {
@@ -423,7 +428,7 @@
                             "pause": 80
                         },
                         {
-                            "text": "Alright."
+                            "text": "Alright"
                         }
                     ]
                 },
@@ -535,7 +540,7 @@
         },
         {
             "target": "mom",
-            "type": "open-line"
+            "type": "...(open line)"
         },
         {
             "speaker": "brother",
@@ -555,7 +560,7 @@
         },
         {
             "speaker": "dad",
-            "text": "You really are your daddy’s girl. But what kind of pictures exactly?"
+            "text": "You really are your daddy's girl. But what kind of pictures exactly?"
         },
         {
             "speaker": "dad",
@@ -571,7 +576,7 @@
                             "pause": 80
                         },
                         {
-                            "text": "it’s going so well",
+                            "text": "it's going so well",
                             "pause": 180
                         },
                         {
@@ -599,7 +604,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "Why can’t she",
+                            "text": "Why can't she",
                             "pause": 40
                         },
                         {
@@ -619,15 +624,15 @@
         },
         {
             "speaker": "dad",
-            "text": "Observation counts. What can’t be verified is pure invention"
+            "text": "Observation counts. What can't be verified is pure invention"
         },
         {
             "speaker": "sister",
-            "text": "That’s why I love to observe people. I observe how people look like a family"
+            "text": "That's why I love to observe people. I observe how people look like a family"
         },
         {
             "speaker": "sister",
-            "text": "In their home.I watch them"
+            "text": "In their home. I watch them"
         },
         {
             "in-ear" : [ 
@@ -668,7 +673,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "I’ve seen so many families.",
+                            "text": "I've seen so many families.",
                             "pause": 180
                         },
                         {
@@ -684,7 +689,7 @@
         },
         {
             "speaker": "sister",
-            "text": "There are lots of different families. Well.. not that different actually"
+            "text": "There are lots of different families. Well... not that different actually"
         },
         {
             "speaker": "sister",
@@ -700,7 +705,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "He wouldn’t understand"
+                            "text": "He wouldn't understand"
                         }
                     ]
                 }
@@ -712,7 +717,7 @@
         },
         {
             "speaker": "sister",
-            "text": "They smile most of the time. A lot. Very big smile. Let’s try to smile, ok? A lot!!"
+            "text": "They smile most of the time. A lot. Very big smile. Let's try to smile, ok? A lot!!"
         },
         {
             "in-ear" : [ 
@@ -728,7 +733,7 @@
                             "pause": 160
                         },
                         {
-                            "text": "And it’s not gonna happen on its own",
+                            "text": "And it's not gonna happen on its own",
                             "pause": 70
                         },
                         {
@@ -752,11 +757,11 @@
                             "pause": 160
                         },
                         {
-                            "text": "She’s really the obsessive kind.",
+                            "text": "She's really the obsessive kind.",
                             "pause": 100
                         },
                         {
-                            "text": "I don’t know where she got that from.",
+                            "text": "I don't know where she got that from.",
                             "pause": 140
                         },
                         {
@@ -828,7 +833,7 @@
                             "pause": 100
                         },
                         {
-                            "text": "You’re seen as attractive",
+                            "text": "You're seen as attractive",
                             "pause": 10
                         },
                         {
@@ -909,7 +914,7 @@
         },
         {
             "speaker": "sister",
-            "text": "YA! Kind of… I mean… There’s room for improvement…"
+            "text": "YA! Kind of... I mean... There's room for improvement..."
         },
         {
             "speaker": "dad",
@@ -965,7 +970,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Distorted imagination? Are you suggesting that…"
+            "text": "Distorted imagination? Are you suggesting that..."
         },
         {
             "speaker": "mom",
@@ -1020,7 +1025,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Don’t give up, fix it",
+            "text": "Don't give up, fix it",
             "type": "direction"
         },
         {
@@ -1037,7 +1042,7 @@
                             "pause": 50
                         },
                         {
-                            "text": "there is always room for improvement.",
+                            "text": "there is always room for improvement",
                             "pause": 150
                         },
                         {
@@ -1089,7 +1094,7 @@
                             "pause": 150
                         },
                         {
-                            "text": "I’ve been here before."
+                            "text": "I've been here before."
                         }
                     ]
                 }
@@ -1108,7 +1113,7 @@
         },
         {
             "speaker": "sister",
-            "text": "But it’s just Mothers, Fathers, Brothers and Sisters"
+            "text": "But it's just Mothers, Fathers, Brothers and Sisters"
         },
         {
             "speaker": "sister",
@@ -1135,18 +1140,18 @@
         },
         {
             "speaker": "mom",
-            "text": "You’ve been staring at other people’s homes"
+            "text": "You've been staring at other people's homes"
         },
         {
             "type": "clear"
         },
         {
             "speaker": "mom",
-            "text": "Dreaming of other people’s realities"
+            "text": "Dreaming of other people's realities"
         },
         {
             "speaker": "mom",
-            "text": "Yearning for what you can’t have"
+            "text": "Yearning for what you can't have"
         },
         {
             "type": "clear"
@@ -1168,7 +1173,7 @@
         },
         {
             "speaker": "brother",
-            "text": "You are funny but no! There is so much noise in me. Nothing is still. It’s all just breaking apart"
+            "text": "You are funny but no! There is so much noise in me. Nothing is still. It's all just breaking apart"
         },
         {
             "type": "clear"
@@ -1186,14 +1191,14 @@
         },
         {
             "speaker": "mom",
-            "text": "You can’t run from what’s inside your head. But TV might help"
+            "text": "You can't run from what's inside your head. But TV might help"
         },
         {
             "type": "clear"
         },
         {
             "speaker": "dad",
-            "text": "For me sugar is what helps. Let’s have dessert and watch TV"
+            "text": "For me sugar is what helps. Let's have dessert and watch TV"
         },
         {
             "speaker": "sister",
@@ -1201,7 +1206,7 @@
         },
         {
             "speaker": "mom",
-            "text": "My advice to you - don’t step aside. Follow me"
+            "text": "My advice to you - don't step aside. Follow me"
         },
         {
             "in-ear" : [ 
@@ -1217,11 +1222,11 @@
                             "pause": 80
                         },
                         {
-                            "text": "It’s my time to share",
+                            "text": "It's my time to share",
                             "pause": 100
                         },
                         {
-                            "text": "Let’s move them to the living-room"
+                            "text": "Let's move them to the living-room"
                         }
                     ]
                 }

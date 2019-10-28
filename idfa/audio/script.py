@@ -12,7 +12,7 @@ SCRIPT_TIMEOUT_NOSPEECH_SHORT = 99999 #6
 class Script:
     def __init__(self):
         print("Initializing script engine")
-        self.nlp = spacy.load('en_core_web_sm')
+        #self.nlp = spacy.load('en_core_web_sm')
         self.awaiting_index = -1
         self.load_data()
 

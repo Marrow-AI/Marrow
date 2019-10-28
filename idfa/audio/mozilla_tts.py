@@ -18,8 +18,7 @@ from TTS.utils.data import *
 from TTS.utils.audio import AudioProcessor
 from TTS.utils.generic_utils import load_config
 from TTS.utils.text import text_to_sequence
-
-from synthesis import *
+from TTS.utils.synthesis import *
 
 class MozillaTTS:
 
@@ -27,7 +26,7 @@ class MozillaTTS:
         # Set constants
 
         #ROOT_PATH = '/home/avnerus/Code/TTS-Data'
-        ROOT_PATH = '/Users/avnerus/Code/TTS-Data'
+        ROOT_PATH = '/Users/shirin/avner/TTS-Data'
         CONFIG_PATH = ROOT_PATH + '/config.json'
         OUT_FOLDER = ROOT_PATH + '/test'
         self.CONFIG = load_config(CONFIG_PATH)
@@ -37,35 +36,41 @@ class MozillaTTS:
 
 
     def say(self, text, output):
-        # load the model
-        model = Tacotron(self.CONFIG.embedding_size, self.CONFIG.num_freq, self.CONFIG.num_mels, self.CONFIG.r)
+        try:
+            # load the model
+            model = Tacotron(self.CONFIG.embedding_size, self.CONFIG.num_freq, self.CONFIG.num_mels, self.CONFIG.r)
 
-        # load the audio processor
+            # load the audio processor
 
-        ap = AudioProcessor(self.CONFIG.sample_rate, self.CONFIG.num_mels, self.CONFIG.min_level_db,
-                    self.CONFIG.frame_shift_ms, self.CONFIG.frame_length_ms,
-                    self.CONFIG.ref_level_db, self.CONFIG.num_freq, self.CONFIG.power, self.CONFIG.preemphasis,
-                    60)     
+            ap = AudioProcessor(self.CONFIG.sample_rate, self.CONFIG.num_mels, self.CONFIG.min_level_db,
+                        self.CONFIG.frame_shift_ms, self.CONFIG.frame_length_ms,
+                        self.CONFIG.ref_level_db, self.CONFIG.num_freq, self.CONFIG.power, self.CONFIG.preemphasis,
+                        60)     
 
-        # load model state
-        if self.use_cuda:
-            cp = torch.load(self.MODEL_PATH)
-        else:
-            cp = torch.load(self.MODEL_PATH, map_location=lambda storage, loc: storage)
+            # load model state
 
-        # load the model
-        model.load_state_dict(cp['model'])
-        if self.use_cuda:
-            model.cuda()
-        model.eval()
+            if self.use_cuda:
+                cp = torch.load(self.MODEL_PATH)
+            else:
+                cp = torch.load(self.MODEL_PATH, map_location=lambda storage, loc: storage)
 
-        model.decoder.max_decoder_steps = 400
-        wavs = self.text2audio(text, model, self.CONFIG, self.use_cuda, ap)
+            # load the model
+            print(cp['model'])
+            model.load_state_dict(cp['model'])
 
-        audio = np.concatenate(wavs)
-        ap.save_wav(audio, output)
+            if self.use_cuda:
+                model.cuda()
+            model.eval()
 
-        return
+            model.decoder.max_decoder_steps = 400
+            wavs = self.text2audio(text, model, self.CONFIG, self.use_cuda, ap)
+
+            audio = np.concatenate(wavs)
+            ap.save_wav(audio, output)
+
+            return
+        except Exception as ex:
+            print(ex)
 
     def tts(self, model, text, CONFIG, use_cuda, ap, figures=True):
         waveform, alignment, spectrogram, stop_tokens = create_speech(model, text, CONFIG, use_cuda, ap) 
@@ -74,13 +79,11 @@ class MozillaTTS:
     def text2audio(self, data, model, CONFIG, use_cuda, ap):
         wavs = []
         for segment in data:
-            print(segment)
             for sen in segment["text"].split('.'):
                 if len(sen) < 2:
                     continue
                 sen+='.'
                 sen = sen.strip()
-                print(sen)
                 wav = self.tts(model, sen, CONFIG, use_cuda, ap)
                 wavs.append(wav)
                 if not "pause" in segment:
