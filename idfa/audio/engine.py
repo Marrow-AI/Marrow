@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import os
 import sys
 import argparse
@@ -129,7 +130,6 @@ class Engine:
 
         self.queue = janus.Queue(loop=self.main_loop)
 
-        self.recognizer = Recognizer(self.queue.sync_q, self.args)
         #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
 
         self.server = Server(
@@ -143,8 +143,10 @@ class Engine:
         print("Starting server")
         self.main_loop.run_until_complete(self.server.start())
 
-        print("Consuming speech")
-        self.main_loop.run_until_complete(self.consume_speech())
+        if not args.no_speech: 
+            print("Consuming speech")
+            self.recognizer = Recognizer(self.queue.sync_q, self.args)
+            self.main_loop.run_until_complete(self.consume_speech())
 
     def schedule_osc(self, timeout, client, command, args):
         osc_command = ScheduleOSC(timeout,client, command, args, self.del_osc )
@@ -187,7 +189,7 @@ class Engine:
     def time_check(self):
         # recognition timeout
         now =  time.time()
-        if self.state == "SCRIPT":
+        if self.state == "SCRIPT" and self.script.awaiting_global_timeout:
             if (
                 self.script.awaiting_index > -1
                 and (
@@ -449,16 +451,32 @@ class Engine:
         self.last_react = self.last_speech = time.time() + delay
         if self.script.next_line():
             self.state = "SCRIPT"
-            print ("Preload {}/{}?".format(self.script.awaiting_index +1, self.script.length))
-            if (
-                self.script.awaiting_index + 1 <= self.script.length -1 and
-                "triggers-gan" in self.script.data["script-lines"][self.script.awaiting_index + 1]
-            ):
-                self.preload_speech("gan_responses/{}.wav".format(self.script.awaiting_index + 1))
-
-            self.schedule_function(delay, self.show_next_line)
+            self.run_line(delay)
         else:
             self.end()
+
+    def prev_line(self, delay = 0):
+        self.last_react = self.last_speech = time.time() + delay
+        if self.script.prev_line():
+            self.state = "SCRIPT"
+            self.run_line(delay)
+
+    def run_line(self, delay):
+        print ("Preload {}/{}?".format(self.script.awaiting_index +1, self.script.length))
+        if (
+            self.script.awaiting_index + 1 <= self.script.length -1 and
+            "speaker" in self.script.data["script-lines"][self.script.awaiting_index + 1] and
+            self.script.data["script-lines"][self.script.awaiting_index + 1]["speaker"] == "house"
+        ):
+            self.preload_speech("gan_responses/{}.wav".format(self.script.awaiting_index + 1))
+
+        if self.script.awaiting_text:
+            self.schedule_function(delay, self.show_next_line)
+        elif self.script.awaiting_type == "open-line":
+            self.show_open_line(self.script.awaiting)
+
+        if "in-ear" in self.script.awaiting:
+            self.play_in_ear(self.script.awaiting["in-ear"])
 
     def end(self):
         self.state = "END"
@@ -470,6 +488,12 @@ class Engine:
 
         self.schedule_function(10, self.stop)
         #self.pix2pix_client.send_message("/gan/end",1)
+
+    def play_in_ear(self,data):
+        print("Play in ear! {}".format(data))
+
+    def show_open_line(self,data):
+        print("Show open line! {}".format(data))
 
     def say(self, delay_sec = 0, delay_effect = False, callback = None, echos = None, distorts = None):
 
@@ -550,7 +574,8 @@ class Engine:
         print("Control command! {}".format(data))
         command = data["command"]
         if command == 'start':
-            self.start_intro()
+            #self.start_intro()
+            self.start_test()
         elif command == 'stop':
             self.stop()
         elif command == 'skip-intro':
@@ -566,6 +591,11 @@ class Engine:
             self.start_script()
         elif command == 'hide':
             self.hide()
+        elif command == 'next':
+            self.next_line()
+        elif command == 'prev':
+            self.prev_line()
+
 
     def ser_stop(self):
         self.args.stop = True
@@ -625,6 +655,16 @@ class Engine:
         self.schedule_osc(31.51, self.voice_client, "/control/strings", [0.0, 0.95])
         self.schedule_osc(61.51, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.4])
         self.schedule_function(61.51, self.start_noise)
+
+    def start_test(self):
+        print("Start intro!")
+        self.script.reset()
+        self.t2i_client.send_message("/control/start",1)
+        asyncio.ensure_future(self.server.control("start"))
+        self.t2i_client.send_message("/table/dinner", "Hello world")
+        self.t2i_client.send_message("/table/showplates", 1)
+        self.start_script()
+
 
     def start_noise(self):
         self.send_noise = True
@@ -727,12 +767,13 @@ class Engine:
         self.show_next_line()
 
     def show_next_line(self):
-        self.t2i_client.send_message(
-                "/script",
-                [self.script.awaiting["speaker"], self.script.awaiting_text]
-        )
+        if self.script.awaiting_text:
+            self.t2i_client.send_message(
+                    "/script",
+                    [self.script.awaiting["speaker"], self.script.awaiting_text]
+            )
 
-        print("{}, PLEASE SAY: {}".format(self.script.awaiting["speaker"], self.script.awaiting_text))
+            print("{}, PLEASE SAY: {}".format(self.script.awaiting["speaker"], self.script.awaiting_text))
 
     def load_effect(self, data):
         print("Load effect {}".format(data["effect"]))
@@ -757,11 +798,8 @@ class Engine:
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d_id", "--device_id", dest= 'device_id', type=int, help="a device id for microphone", default=None)
 
-    #automatic gain normalisation
-    parser.add_argument("-g_min", "--gain_min", dest= 'g_min', type=float, help="the min value of automatic gain normalisation")
-    parser.add_argument("-g_max", "--gain_max", dest= 'g_max', type=float, help="the max value of automatic gain normalisation")
+    parser.add_argument('--no-speech', action='store_true' , help='Disable speech recognition')
 
     args = parser.parse_args()
 
