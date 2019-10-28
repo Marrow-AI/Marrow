@@ -25,8 +25,13 @@ class MozillaTTS:
     def __init__(self):
         # Set constants
 
+<<<<<<< HEAD
         #ROOT_PATH = '/home/avnerus/Code/TTS-Data'
         ROOT_PATH = '/Users/shirin/avner/TTS-Data'
+=======
+        ROOT_PATH = '/home/avnerus/Code/TTS-Data'
+        #ROOT_PATH = '/Users/avnerus/Code/TTS-Data'
+>>>>>>> 0abcd90ff048976cd394a92be8a655dcbbb12031
         CONFIG_PATH = ROOT_PATH + '/config.json'
         OUT_FOLDER = ROOT_PATH + '/test'
         self.CONFIG = load_config(CONFIG_PATH)
