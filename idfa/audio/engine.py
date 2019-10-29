@@ -80,6 +80,14 @@ class ScheduleFunction:
         self._task.cancel()
 
 
+SPEAKER_CHANNELS = {
+    "dad" : 13,
+    "mom": 14,
+    "brother": 15,
+    "sister": 16
+}
+
+
 class Engine:
     def __init__(self,args):
 
@@ -113,15 +121,24 @@ class Engine:
 
         #self.lock = asyncio.Lock()
 
-        self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
+        self.t2i_client = udp_client.SimpleUDPClient("172.16.194.205", 3838)
         #self.pix2pix_client = udp_client.SimpleUDPClient("127.0.0.1", 8383)
-        self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
+        #self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
+        self.voice_client = udp_client.SimpleUDPClient("172.16.195.167", 8000)
 
         self.mental_state = MentalState()
 
         #google_speech = GoogleSpeech()
         #google_speech.say("Hi")
         #asyncio.get_event_loop().run_until_complete(ms_speech.say("Pewdiepie"))
+
+        self.speaker_counter = {
+            "dad": 0,
+            "mom": 0,
+            "sister": 0,
+            "brother": 0
+        }
+
 
 
         self.time_check()
@@ -491,6 +508,16 @@ class Engine:
 
     def play_in_ear(self,data):
         print("Play in ear! {}".format(data))
+        for inear in data:
+            target = inear["target"]
+            index = self.speaker_counter[target] + 36
+            channel = SPEAKER_CHANNELS[target]
+            print("Send OSC on channel {} note index {}".format(channel, index))
+            #self.voice_client.send_message("/midi/note/{}".format(16),[index])
+            self.voice_client.send_message("/midi/note/{}".format(channel),[index,127, 1])
+            self.schedule_osc(0.5, self.voice_client,"/midi/note/{}".format(channel), [index,127,0])
+            #self.voice_client.send_message("/test/{}".format(16),[index, 127.0, 1])
+            self.speaker_counter[target] = self.speaker_counter[target] + 1
 
     def show_open_line(self,data):
         print("Show open line! {}".format(data))
@@ -563,12 +590,15 @@ class Engine:
         self.voice_client.send_message("/speech/load",absPath)
 
     def pause_listening(self,duration = 0):
+        try:
             #asyncio.ensure_future(self.server.pause_listening(duration))
             print("Pause listening for {}".format(duration))
             self.recognizer.stop()
             if self.state != "INTRO" and duration >= 1:
                 # Minus 1 for the time it takes to start listening
                 self.schedule_function(duration - 0.5, self.start_google)
+        except Exception as e:
+            pass
 
     def control(self, data):
         print("Control command! {}".format(data))
@@ -663,6 +693,8 @@ class Engine:
         asyncio.ensure_future(self.server.control("start"))
         self.t2i_client.send_message("/table/dinner", "Hello world")
         self.t2i_client.send_message("/table/showplates", 1)
+        self.t2i_client.send_message("/table/fadein", 1)
+        self.t2i_client.send_message("/spotlight", "mom")
         self.start_script()
 
 
@@ -757,7 +789,6 @@ class Engine:
 
     def spotlight_mom(self):
         print("Spotlight on mom")
-        self.t2i_client.send_message("/spotlight", "mom")
         self.schedule_function(2, self.start_script)
 
     def start_script(self):

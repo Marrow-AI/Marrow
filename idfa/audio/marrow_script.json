@@ -421,7 +421,7 @@
                     ]
                 },
                 { 
-                    "target" : "mother",
+                    "target" : "mom",
                     "lines": [
                         {
                             "text": "She is so superficial",
@@ -1051,7 +1051,7 @@
         {
             "in-ear" : [ 
                 { 
-                    "target" : "mother",
+                    "target" : "mom",
                     "lines": [
                         {
                             "text": "I guess",
@@ -1070,7 +1070,7 @@
                             "pause": 20
                         },
                         {
-                            "text": "Who can I punish for that?",
+                            "text": "Who can I punish for that?"
                         }
                     ]
                 },
