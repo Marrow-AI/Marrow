@@ -95,7 +95,20 @@ class Gan(Thread):
         self.fps = 30
         self.duration = 1 / self.fps * Gst.SECOND
         self.load_snapshot()
+        self.load_latent_source('9086.npy')
+        self.load_latent_dest()
+        self.linespaces = np.linspace(0, 1, 50)
+        print("Loaded linespaces {}".format(self.linespaces.shape))
+        self.linespace_i = 0;
         self.push_frames()
+
+    def load_latent_source(self,f):
+        self.latent_source = np.reshape(np.load(f)[0],(1,-1))
+        print("Loaded latent source {}".format(self.latent_source.shape))
+
+    def load_latent_dest(self):
+        self.latent_dest = self.rnd.randn(1, self.Gs.input_shape[1])
+        print("Loaded latent dest {}".format(self.latent_dest.shape))
 
     def load_snapshot(self):
         # Load pre-trained network.
@@ -111,9 +124,8 @@ class Gan(Thread):
         with open(url, 'rb') as f:
             self._G, self._D, self.Gs = pickle.load(f)
         print(self.Gs)
-        self.latents = self.rnd.randn(1, self.Gs.input_shape[1])
-        print(self.latents.shape)
-        self.get_buf()
+
+
 
     def push_frames(self):
         while True:
@@ -130,13 +142,10 @@ class Gan(Thread):
     def get_buf(self):
             # Generate image.
             fmt = dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=True)
-            randcell = random.randint(0,511)
-            #print(randcell)
-            randchange = random.uniform(0, 1) 
-            if randchange > 0.5:
-                self.latents[0][randcell] = max(min(self.latents[0][randcell] + randchange,1),-1) 
-            else:
-                self.latents[0][randcell] = max(min(self.latents[0][randcell] - randchange,1),-1) 
+            if self.linespace_i == 50:
+                self.load_latent_dest()
+                self.linespace_i = 0
+            self.latents = (self.linespaces[self.linespace_i] * self.latent_source + (1-self.linespaces[self.linespace_i])*self.latent_dest)
             images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=True, output_transform=fmt)
             print("Got image!")
             data = cv2.cvtColor(images[0], cv2.COLOR_RGB2YUV)
@@ -153,6 +162,7 @@ class Gan(Thread):
             timestamp = self.number_frames * self.duration
             buf.pts = buf.dts = int(timestamp)
             print(buf.pts)
+            self.linespace_i += 1
             return buf
 
 
