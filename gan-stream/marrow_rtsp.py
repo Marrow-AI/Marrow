@@ -10,6 +10,8 @@ import dnnlib
 import dnnlib.tflib as tflib
 from threading import Thread
 import queue
+import time
+import random
 
 #sys.path.append('/opt/anaconda1anaconda2anaconda3/share/gir-1.0')
 
@@ -32,9 +34,6 @@ class SampleGenerator(GstRtspServer.RTSPMediaFactory):
                  '! videoconvert ! video/x-raw,format=I420 ' \
                  '! vp8enc' \
                  '! rtpvp8pay name=pay0'.format(self.fps)
-            self._last_t_v = -31337
-            self._last_t_a = -31337
-            self._last_t_s = -31337
 
 	def on_need_data(self, src, length):
             print("need data!")
@@ -88,6 +87,7 @@ class SampleGenerator(GstRtspServer.RTSPMediaFactory):
 class Gan(Thread):
     def __init__(self, queue):
         self.queue = queue
+        self.last_push = -31337
         Thread.__init__(self)
 
     def run(self):
@@ -96,31 +96,48 @@ class Gan(Thread):
         self.duration = 1 / self.fps * Gst.SECOND
         self.load_snapshot()
         self.push_frames()
+
     def load_snapshot(self):
         # Load pre-trained network.
         tflib.init_tf()
 
         self.rnd = np.random.RandomState()
-        url = os.path.abspath("results/00021-sgan-dense512-8gpu/network-snapshot-009247.pkl")
+        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-final.pkl")
+        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-009247.pkl")
+        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-008044.pkl")
+        url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-010450.pkl")
+        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-015263.pkl")
+        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-011653.pkl")
         with open(url, 'rb') as f:
             self._G, self._D, self.Gs = pickle.load(f)
         print(self.Gs)
-        self.Gs.print_layers()
+        self.latents = self.rnd.randn(1, self.Gs.input_shape[1])
+        print(self.latents.shape)
         self.get_buf()
 
     def push_frames(self):
         while True:
             src = self.queue.get()
+           # now = time.time()
+           # print(now - self.last_push)
+           # if now - self.last_push >= 1.0/15:
             print("Sending to {}", src)
             buf = self.get_buf()
             src.emit("push-buffer", buf)
+            #self.last_push = now
             self.number_frames += 1
 
     def get_buf(self):
-            latents = self.rnd.randn(1, self.Gs.input_shape[1])
             # Generate image.
             fmt = dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=True)
-            images = self.Gs.run(latents, None, truncation_psi=0.7, randomize_noise=True, output_transform=fmt)
+            randcell = random.randint(0,511)
+            #print(randcell)
+            randchange = random.uniform(0, 1) 
+            if randchange > 0.5:
+                self.latents[0][randcell] = max(min(self.latents[0][randcell] + randchange,1),-1) 
+            else:
+                self.latents[0][randcell] = max(min(self.latents[0][randcell] - randchange,1),-1) 
+            images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=True, output_transform=fmt)
             print("Got image!")
             data = cv2.cvtColor(images[0], cv2.COLOR_RGB2YUV)
             #print(data.shape)
@@ -135,6 +152,7 @@ class Gan(Thread):
             buf.fill(0, data)
             timestamp = self.number_frames * self.duration
             buf.pts = buf.dts = int(timestamp)
+            print(buf.pts)
             return buf
 
 
@@ -143,7 +161,7 @@ class GstServer(GstRtspServer.RTSPServer):
 	    super(GstServer, self).__init__(**properties)
 	    self.factory = SampleGenerator(queue)
 	    self.factory.set_shared(True)
-	    self.get_mount_points().add_factory("/marrow", self.factory)
+	    self.get_mount_points().add_factory("/marrow2", self.factory)
 	    self.attach(None)
 
 if __name__ == '__main__':
