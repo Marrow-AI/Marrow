@@ -135,7 +135,7 @@ namespace Marrow
             textMeshProTitle.color = Color.clear;
 			textMeshProSpeechDetection.color = Color.clear;
             //UpdateNameTagsColor(Color.clear);
-			nameTagAnimator.enabled = true;
+			//nameTagAnimator.enabled = true;
 			ExperienceTableManager.Instance.ReactToGanSpeak = false;
 			tableSceneStart = false;
 			tableSequenceIsEnded = false;
@@ -222,7 +222,7 @@ namespace Marrow
 		{            
 			// End everything
 			LeanTween.cancelAll(false);
-			nameTagAnimator.enabled = false;
+			//nameTagAnimator.enabled = false;
 
 			// Fade out everything
 			mainLight.RestartSoftly();
@@ -373,12 +373,12 @@ namespace Marrow
                 
 			for (int i = 0; i < nameTags.Length; i++)
 				nameTags[i].SetActive(true);
-			nameTagAnimator.SetTrigger("Show");
+			//nameTagAnimator.SetTrigger("Show");
 
 			yield return new WaitForSeconds(3f);
 
 			// Hide name tags
-			nameTagAnimator.SetTrigger("Hide");
+			//nameTagAnimator.SetTrigger("Hide");
             
 			mainLight.ResetColor();
 			platesOnlySpotlight.ToggleOn(true, 2f, 1f, 0f);
@@ -390,7 +390,7 @@ namespace Marrow
 			
 			yield return new WaitForSeconds(2f);
 
-			nameTagAnimator.enabled = false;
+			//nameTagAnimator.enabled = false;
 
 			Debug.Log("Change table material back");
             tableRenderer.material = tableNormalMaterial;
