@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8
 
-import sys, os, time, re
+import sys
+sys.path.insert(0,'../stylegan-encoder')
+
+import os, time, re
 import cv2
 import numpy as np
 import pickle
@@ -13,7 +16,7 @@ import queue
 import time
 import random
 
-#sys.path.append('/opt/anaconda1anaconda2anaconda3/share/gir-1.0')
+from encoder.generator_model import Generator
 
 import gi
 gi.require_version('Gst', '1.0')
@@ -97,18 +100,18 @@ class Gan(Thread):
         self.load_snapshot()
         self.load_latent_source('9086.npy')
         self.load_latent_dest()
-        self.linespaces = np.linspace(0, 1, 50)
+        self.linespaces = np.linspace(0, 1, 100)
         print("Loaded linespaces {}".format(self.linespaces.shape))
         self.linespace_i = 0;
         self.push_frames()
 
     def load_latent_source(self,f):
-        self.latent_source = np.reshape(np.load(f)[0],(1,-1))
+        self.latent_source = np.load(f).reshape((1, 16, 512))
         print("Loaded latent source {}".format(self.latent_source.shape))
 
     def load_latent_dest(self):
-        self.latent_dest = self.rnd.randn(1, self.Gs.input_shape[1])
-        print("Loaded latent dest {}".format(self.latent_dest.shape))
+        qlatent1 = self.rnd.randn(512)[None, :]
+        self.latent_dest = self.Gs.components.mapping.run(qlatent1, None)
 
     def load_snapshot(self):
         # Load pre-trained network.
@@ -123,6 +126,7 @@ class Gan(Thread):
         #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-011653.pkl")
         with open(url, 'rb') as f:
             self._G, self._D, self.Gs = pickle.load(f)
+            self.generator = Generator(self.Gs, batch_size=1, randomize_noise=False)
         print(self.Gs)
 
 
@@ -142,11 +146,16 @@ class Gan(Thread):
     def get_buf(self):
             # Generate image.
             fmt = dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=True)
-            if self.linespace_i == 50:
+            if self.linespace_i == 100:
                 self.load_latent_dest()
                 self.linespace_i = 0
+
             self.latents = (self.linespaces[self.linespace_i] * self.latent_source + (1-self.linespaces[self.linespace_i])*self.latent_dest)
-            images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=True, output_transform=fmt)
+
+            self.generator.set_dlatents(self.latents)
+            images = self.generator.generate_images()
+
+            #images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=True, output_transform=fmt)
             print("Got image!")
             data = cv2.cvtColor(images[0], cv2.COLOR_RGB2YUV)
             #print(data.shape)
