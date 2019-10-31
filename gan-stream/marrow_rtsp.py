@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8
 
-import sys, os, time, re
+import sys
+sys.path.insert(0,'../stylegan-encoder')
+
+import os, time, re
 import cv2
 import numpy as np
 import pickle
@@ -10,8 +13,10 @@ import dnnlib
 import dnnlib.tflib as tflib
 from threading import Thread
 import queue
+import time
+import random
 
-#sys.path.append('/opt/anaconda1anaconda2anaconda3/share/gir-1.0')
+from encoder.generator_model import Generator
 
 import gi
 gi.require_version('Gst', '1.0')
@@ -32,9 +37,6 @@ class SampleGenerator(GstRtspServer.RTSPMediaFactory):
                  '! videoconvert ! video/x-raw,format=I420 ' \
                  '! vp8enc' \
                  '! rtpvp8pay name=pay0'.format(self.fps)
-            self._last_t_v = -31337
-            self._last_t_a = -31337
-            self._last_t_s = -31337
 
 	def on_need_data(self, src, length):
             print("need data!")
@@ -88,6 +90,7 @@ class SampleGenerator(GstRtspServer.RTSPMediaFactory):
 class Gan(Thread):
     def __init__(self, queue):
         self.queue = queue
+        self.last_push = -31337
         Thread.__init__(self)
 
     def run(self):
@@ -95,32 +98,64 @@ class Gan(Thread):
         self.fps = 30
         self.duration = 1 / self.fps * Gst.SECOND
         self.load_snapshot()
+        self.load_latent_source('9086.npy')
+        self.load_latent_dest()
+        self.linespaces = np.linspace(0, 1, 100)
+        print("Loaded linespaces {}".format(self.linespaces.shape))
+        self.linespace_i = 0;
         self.push_frames()
+
+    def load_latent_source(self,f):
+        self.latent_source = np.load(f).reshape((1, 16, 512))
+        print("Loaded latent source {}".format(self.latent_source.shape))
+
+    def load_latent_dest(self):
+        qlatent1 = self.rnd.randn(512)[None, :]
+        self.latent_dest = self.Gs.components.mapping.run(qlatent1, None)
+
     def load_snapshot(self):
         # Load pre-trained network.
         tflib.init_tf()
 
         self.rnd = np.random.RandomState()
-        url = os.path.abspath("results/00021-sgan-dense512-8gpu/network-snapshot-009247.pkl")
+        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-final.pkl")
+        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-009247.pkl")
+        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-008044.pkl")
+        url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-010450.pkl")
+        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-015263.pkl")
+        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-011653.pkl")
         with open(url, 'rb') as f:
             self._G, self._D, self.Gs = pickle.load(f)
+            self.generator = Generator(self.Gs, batch_size=1, randomize_noise=False)
         print(self.Gs)
-        self.Gs.print_layers()
-        self.get_buf()
+
+
 
     def push_frames(self):
         while True:
             src = self.queue.get()
+           # now = time.time()
+           # print(now - self.last_push)
+           # if now - self.last_push >= 1.0/15:
             print("Sending to {}", src)
             buf = self.get_buf()
             src.emit("push-buffer", buf)
+            #self.last_push = now
             self.number_frames += 1
 
     def get_buf(self):
-            latents = self.rnd.randn(1, self.Gs.input_shape[1])
             # Generate image.
             fmt = dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=True)
-            images = self.Gs.run(latents, None, truncation_psi=0.7, randomize_noise=True, output_transform=fmt)
+            if self.linespace_i == 100:
+                self.load_latent_dest()
+                self.linespace_i = 0
+
+            self.latents = (self.linespaces[self.linespace_i] * self.latent_source + (1-self.linespaces[self.linespace_i])*self.latent_dest)
+
+            self.generator.set_dlatents(self.latents)
+            images = self.generator.generate_images()
+
+            #images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=True, output_transform=fmt)
             print("Got image!")
             data = cv2.cvtColor(images[0], cv2.COLOR_RGB2YUV)
             #print(data.shape)
@@ -135,6 +170,8 @@ class Gan(Thread):
             buf.fill(0, data)
             timestamp = self.number_frames * self.duration
             buf.pts = buf.dts = int(timestamp)
+            print(buf.pts)
+            self.linespace_i += 1
             return buf
 
 
@@ -143,7 +180,7 @@ class GstServer(GstRtspServer.RTSPServer):
 	    super(GstServer, self).__init__(**properties)
 	    self.factory = SampleGenerator(queue)
 	    self.factory.set_shared(True)
-	    self.get_mount_points().add_factory("/marrow", self.factory)
+	    self.get_mount_points().add_factory("/marrow2", self.factory)
 	    self.attach(None)
 
 if __name__ == '__main__':

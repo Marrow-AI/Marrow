@@ -21,7 +21,7 @@ def main():
     tflib.init_tf()
 
     # Load pre-trained network.
-    url = os.path.abspath("results/00021-sgan-dense512-8gpu/network-snapshot-008344.pkl")
+    url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-final.pkl")
     with open(url, 'rb') as f:
         _G, _D, Gs = pickle.load(f)
         # _G = Instantaneous snapshot of the generator. Mainly useful for resuming a previous training run.

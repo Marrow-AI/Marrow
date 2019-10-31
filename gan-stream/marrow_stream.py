@@ -7,8 +7,8 @@ import cv2
 import numpy as np
 import pickle
 import PIL.Image
-#import dnnlib
-#import dnnlib.tflib as tflib
+import dnnlib
+import dnnlib.tflib as tflib
 
 #sys.path.append('/opt/anaconda1anaconda2anaconda3/share/gir-1.0')
 
@@ -29,36 +29,41 @@ if __name__ == '__main__':
 	vcvt = Gst.ElementFactory.make("videoconvert", "vidcvt")
 	venc = Gst.ElementFactory.make("vp8enc", "videnc")
 	src_s = Gst.ElementFactory.make("appsrc", "subsrc")
-	vpay = Gst.ElementFactory.make("rtpvp8pay", "vpay")
-	vpay = Gst.ElementFactory.make("rtpvp8pay", "vpay")
+	#vpay = Gst.ElementFactory.make("rtpvp8pay", "vpay")
 
 	if audio:
-		src_a = Gst.ElementFactory.make("appsrc", "audsrc")
-		acvt = Gst.ElementFactory.make("audioconvert", "audcvt")
-		aenc = Gst.ElementFactory.make("wavenc", "audenc")
+            src_a = Gst.ElementFactory.make("appsrc", "audsrc")
+            acvt = Gst.ElementFactory.make("audioconvert", "audcvt")
+            aenc = Gst.ElementFactory.make("wavenc", "audenc")
 
 
-	webmmux = Gst.ElementFactory.make("webmmux", "mux")
+	#webmmux = Gst.ElementFactory.make("webmmux", "mux")
 	#filesink = Gst.ElementFactory.make("filesink", "sink")
 	#filesink.set_property("location", "test.webm")
 
-	udpsink = Gst.ElementFactory.make("udpsink", "sink")
-	udpsink.set_property("host", "incarnation.hitodama.online")
-	udpsink.set_property("port", 8004)
-	udpsink.set_property("sync", False)
+	#udpsink = Gst.ElementFactory.make("udpsink", "sink")
+	#udpsink.set_property("host", "incarnation.hitodama.online")
+	#udpsink.set_property("port", 8004)
+	#udpsink.set_property("sync", False)
+
+	ndisink = Gst.ElementFactory.make("ndisink", "video_sink")
+	ndisink.set_property("name", "marrow")
+	#udpsink.set_property("sync", False)
 
 
 	pipeline = Gst.Pipeline()
 	pipeline.add(src_v)
 	pipeline.add(vcvt)
-	pipeline.add(venc)
+	#pipeline.add(venc)
 	if audio:
 		pipeline.add(src_a)
 		pipeline.add(acvt)
 		pipeline.add(aenc)
 	#pipeline.add(src_s)
-	pipeline.add(vpay)
-	pipeline.add(udpsink)
+	#pipeline.add(vpay)
+	#pipeline.add(udpsink)
+
+	pipeline.add(ndisink)
 
 	caps = Gst.Caps.from_string("video/x-raw,format=(string)I420,width=512,height=512,framerate=30/1")
 	src_v.set_property("caps", caps)
@@ -78,21 +83,12 @@ if __name__ == '__main__':
 	src_s.set_property("format", Gst.Format.TIME)
 
 	src_v.link(vcvt)
-	vcvt.link(venc)
-	venc.link(vpay)
-
-	if audio:
-		res = src_a.link(acvt)
-		assert res
-		res = acvt.link(aenc)
-		assert res
-		res = aenc.link(vpay)
-		print(res)
-		assert res
+	vcvt.link(ndisink)
+	#venc.link(vpay)
 
 	#src_s.link(webmmux)
 
-	vpay.link(udpsink)
+	#vpay.link(udpsink)
 
 
 	pipeline.set_state(Gst.State.PLAYING)
@@ -100,19 +96,17 @@ if __name__ == '__main__':
 	class SampleGenerator:
 
 		def __init__(self):
-                    """
 			self._last_t_v = -31337
 			self._last_t_a = -31337
 			self._last_t_s = -31337
 			tflib.init_tf()
 
 			# Load pre-trained network.
-			url = os.path.abspath("results/00021-sgan-dense512-8gpu/network-snapshot-009247.pkl")
+			url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-009247.pkl")
 			with open(url, 'rb') as f:
 			    self._G, self._D, self.Gs = pickle.load(f)
 			self.Gs.print_layers()
 			self.rnd = np.random.RandomState()
-                        """
 
 
 		def gen(self, t):
@@ -133,6 +127,7 @@ if __name__ == '__main__':
 			    assert buf is not None
 			    buf.fill(0, data)
 			    buf.pts = buf.dts = int(t * 1e9)
+			    print("Push")
 			    src_v.emit("push-buffer", buf)
 			    self._last_t_v = t
 		"""
@@ -167,13 +162,11 @@ if __name__ == '__main__':
 
 
 	s = SampleGenerator()
-	#print("Generating samples")
-	#for t in np.arange(0, 300, 0.000001):
-	#	s.gen(t)
+	print("Generating samples")
+	for t in np.arange(0, 300, 0.000001):
+            s.gen(t)
 
 	src_v.emit("end-of-stream")
-	if audio:
-		src_a.emit("end-of-stream")
 	#src_s.emit("end-of-stream")
 
 	bus = pipeline.get_bus()
