@@ -476,7 +476,7 @@ class Engine:
         self.last_react = self.last_speech = time.time() + delay
         if self.script.prev_line():
             self.state = "SCRIPT"
-            self.run_line(delay)
+            self.run_line(0)
 
     def run_line(self, delay):
         print ("Preload {}/{}?".format(self.script.awaiting_index +1, self.script.length))
@@ -485,7 +485,8 @@ class Engine:
             "speaker" in self.script.data["script-lines"][self.script.awaiting_index + 1] and
             self.script.data["script-lines"][self.script.awaiting_index + 1]["speaker"] == "house"
         ):
-            self.preload_speech("gan_responses/{}.wav".format(self.script.awaiting_index + 1))
+            pass
+            #self.preload_speech("gan_responses/{}.wav".format(self.script.awaiting_index + 1))
 
         if self.script.awaiting_text:
             self.schedule_function(delay, self.show_next_line)
@@ -795,7 +796,7 @@ class Engine:
         print("Start script")
         self.last_react =  self.last_speech = time.time()
         self.state = "SCRIPT"
-        self.show_next_line()
+        self.run_line(0)
 
     def show_next_line(self):
         if self.script.awaiting_text:
