@@ -103,10 +103,13 @@ class Gan(Thread):
         self.linespaces = np.linspace(0, 1, 100)
         print("Loaded linespaces {}".format(self.linespaces.shape))
         self.linespace_i = 0;
+        self.fmt = dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=True)
+        self.forward = True
         self.push_frames()
 
     def load_latent_source(self,f):
         self.latent_source = np.load(f).reshape((1, 16, 512))
+        self.original_source = np.copy(self.latent_source)
         print("Loaded latent source {}".format(self.latent_source.shape))
 
     def load_latent_dest(self):
@@ -145,17 +148,26 @@ class Gan(Thread):
 
     def get_buf(self):
             # Generate image.
-            fmt = dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=True)
             if self.linespace_i == 100:
-                self.load_latent_dest()
+                if self.forward:
+                   print('---------------------------BACKWARD-----------------------')
+                   self.forward = False
+                   self.latent_source = self.latent_dest
+                   self.latent_dest = self.original_source
+                else:
+                    print('---------------------------FORWARD-----------------------')
+                    self.forward = True
+                    self.latent_source = self.original_source
+                    self.load_latent_dest()
+
                 self.linespace_i = 0
 
-            self.latents = (self.linespaces[self.linespace_i] * self.latent_source + (1-self.linespaces[self.linespace_i])*self.latent_dest)
+            self.latents = (self.linespaces[self.linespace_i] * self.latent_dest + (1-self.linespaces[self.linespace_i])*self.latent_source)
 
-            self.generator.set_dlatents(self.latents)
-            images = self.generator.generate_images()
-
+            #self.generator.set_dlatents(self.latents)
+            images = self.Gs.components.synthesis.run(self.latents, randomize_noise=False, output_transform=self.fmt)
             #images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=True, output_transform=fmt)
+
             print("Got image!")
             data = cv2.cvtColor(images[0], cv2.COLOR_RGB2YUV)
             #print(data.shape)
