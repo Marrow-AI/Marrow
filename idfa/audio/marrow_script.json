@@ -1,50 +1,6 @@
 {
     "script-lines": [
         {
-            "speaker": "house",
-             "lines": [
-                {
-                    "text": "Text will soon appear on the table",
-                    "pause": 50
-                },
-                {
-                    "text": "It is for you to read",
-                    "pause": 100
-                },
-                {
-                    "text": "Don't worry pictures will follow",
-                    "pause": 80
-                },
-                {
-                    "text": "as there are no good stories without pictures",
-                    "pause": 10
-                },
-                {
-                    "text": "The best way to explain the story",
-                    "pause": 50
-                },
-                {
-                    "text": "of this family",
-                    "pause": 10
-                },
-                {
-                    "text": "is to act it out",
-                    "pause": 70
-                },
-                {
-                    "text": "Treat this text as your own words",
-                    "pause": 70
-                },
-                {
-                    "text": "no more no less",
-                    "pause": 90
-                },
-                {
-                    "text": "Bon appetit!"
-                }
-            ]
-        },
-        {
             "in-ear" : [ 
                 { 
                     "target" : "sister",
@@ -201,6 +157,50 @@
              ]
          },
         {
+            "speaker": "house",
+             "lines": [
+                {
+                    "text": "Text will soon appear on the table",
+                    "pause": 50
+                },
+                {
+                    "text": "It is for you to read",
+                    "pause": 100
+                },
+                {
+                    "text": "Don't worry pictures will follow",
+                    "pause": 80
+                },
+                {
+                    "text": "as there are no good stories without pictures",
+                    "pause": 10
+                },
+                {
+                    "text": "The best way to explain the story",
+                    "pause": 50
+                },
+                {
+                    "text": "of this family",
+                    "pause": 10
+                },
+                {
+                    "text": "is to act it out",
+                    "pause": 70
+                },
+                {
+                    "text": "Treat this text as your own words",
+                    "pause": 70
+                },
+                {
+                    "text": "no more no less",
+                    "pause": 90
+                },
+                {
+                    "text": "Bon appetit!"
+                }
+            ]
+        },
+        {
             "speaker": "dad",
             "text": "Mother, this looks delicious! What are we eating tonight?"
         },
@@ -270,7 +270,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "He uses this passive aggressive tone in 67.3 precent of his interactions with me."
+                            "text": "He uses this passive aggressive tone in 67 point 3 precent of his interactions with me."
                         }
                     ]
                 }
@@ -298,7 +298,7 @@
                             "pause": 20
                         },
                         {
-                            "text": "Just look at her."
+                            "text": "Just watch at her."
                         }
                     ]
                 },
@@ -322,7 +322,7 @@
                             "pause": 60
                         },
                         {
-                            "text": "Just look at her."
+                            "text": "Just watch at her."
                         }
                     ]
                 },
@@ -350,7 +350,7 @@
                             "pause": 20
                         },
                         {
-                            "text": "Just look at her."
+                            "text": "Just watch at her."
                         }
                     ]
                 },
@@ -447,20 +447,7 @@
                             "text": "What is going on in that head? Let me look at it."
                         }
                     ]
-                }
-             ]
-         },
-         {
-            "triggers-effect": [
-               {
-               "effect": "whiteNoise",
-                "time": 3,
-                "fades": [0.15, 0.15]
-               }
-            ]
-         },
-         {
-            "in-ear" : [ 
+                },
                 { 
                     "target" : "sister",
                     "lines": [
@@ -497,7 +484,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "It is straight",
+                            "text": "It is straight now",
                             "pause": 40
                         },
                         {
@@ -505,7 +492,7 @@
                             "pause": 30
                         },
                         {
-                            "text": "we can start again"
+                            "text": "we can start again."
                         }
                     ]
                 }
@@ -517,7 +504,7 @@
         },
         {
             "speaker": "sister",
-            "text": "This isn't how it should go for us. Let's start over."
+            "text": "This isn't how it should go for us. Let's start over from the beginning."
         },
         {
             "speaker": "sister",
@@ -529,7 +516,7 @@
         },
         {
             "speaker": "mom",
-            "text": "They are never white enough. Maybe it's because I don’t smile enough."
+            "text": "Maybe it's because I don’t smile enough."
         },
         {
             "speaker": "mom",
@@ -622,14 +609,6 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "Since no one here can match my conversation",
-                            "pause": 10
-                        },
-                        {
-                            "text": "let's take a break from this dreadful dinner.",
-                            "pause": 10
-                        },
-                        {
                             "text": "Smiling can trick your brain into hapiness.",
                             "pause": 10
                         },
@@ -710,7 +689,7 @@
                     "target" : "mom",
                     "lines": [
                             {
-                                "text": "I'm reading 78.9 precent sincerity..."
+                                "text": "I'm reading 78 precent sincerity..."
                             }
                         ]
                     }
@@ -1401,7 +1380,7 @@
                             "pause": 80
                         },
                         {
-                            "text": "It is my time to shar.",
+                            "text": "It is my time to share.",
                             "pause": 100
                         },
                         {
