@@ -11,7 +11,11 @@ from encoder.generator_model import Generator
 from encoder.perceptual_model import PerceptualModel
 
 URL_FFHQ = 'https://drive.google.com/uc?id=1MEGjdvVpUsu1jB4zrXZN7Y4kBBOzizDQ'  # karras2019stylegan-ffhq-1024x1024.pkl
-URL_MARROW = '/home/avnerus/Code/stylegan/marrow/00021-sgan-dense512-8gpu/network-snapshot-010450.pkl'
+#URL_MARROW = '/home/ubuntu/StyleGAN-test/stylegan/results/00021-sgan-dense512-8gpu/network-snapshot-010450.pkl'
+#URL_MARROW = '/home/ubuntu/StyleGAN-test/stylegan/results/00021-sgan-dense512-8gpu/network-snapshot-010149.pkl'
+#URL_MARROW = '/home/ubuntu/StyleGAN-test/stylegan/results/00021-sgan-dense512-8gpu/network-snapshot-008645.pkl'
+#URL_MARROW = '/home/ubuntu/StyleGAN-test/stylegan/results/00021-sgan-dense512-8gpu/network-snapshot-015864.pkl'
+URL_MARROW = '/home/ubuntu/StyleGAN-test/stylegan/results/00021-sgan-dense512-8gpu/network-snapshot-008044.pkl'
 
 
 def split_to_batches(l, n):
