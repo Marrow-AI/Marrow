@@ -1,0 +1,14 @@
+﻿#pragma kernel BakeDepth
+
+uint2 MapDimensions;
+
+StructuredBuffer<float3> PositionBuffer;
+
+RWTexture2D<float4> PositionTexture;
+
+[numthreads(8, 8, 1)]
+void BakeDepth(uint3 id : SV_DispatchThreadID)
+{
+	uint i = id.x + id.y * MapDimensions.x;
+	PositionTexture[id.xy] = float4(PositionBuffer[id.x + id.y * MapDimensions.x].xyz, 1.0);
+}
