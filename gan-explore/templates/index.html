@@ -1,12 +1,35 @@
 <!doctype html>
 <html>
     <head>
+		<title> Marrow | GAN | Latent space explorer </title>
+		<style>
+			#controls-container {
+				margin-top: 15px;
+			}
+		</style>
     </head>
     <body>
         <h1> Marrow | GAN | Latent space explorer </h1>
-        <button id="generate">Generate</button>
+        <div id="output-container">
+            <img id="output" width="512" height="512"></img>
+        </div>
+        <div id="controls-container">
+            <button id="generate">Generate</button>
+			<input id="shadows" type="checkbox">Shadows</input>
+        </div>
         <script>
+            window.onload = () => {
+                const button = document.querySelector("button#generate")
+				const output = document.querySelector("img#output");
+				const shadows = document.querySelector("input#shadows");
+                button.addEventListener("click", () => {
+					fetch('/generate?shadows=' + (shadows.checked ? '1' : '0'))
+					.then( response => response.json() )
+					.then(data => {
+						output.src = "data:image/jpeg;base64," + data.result;
+					});
+                })
+            }
         </script>
     </body>
-
 </html>

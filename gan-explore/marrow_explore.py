@@ -15,8 +15,11 @@ from threading import Thread
 import queue
 import time
 import random
+import asyncio
+import base64
 
 from flask import Flask, jsonify, request, render_template
+from flask_compress import Compress
 
 from encoder.generator_model import Generator
 
@@ -26,9 +29,12 @@ parser.add_argument('--shadows', action='store_true' , help='Stream shadows inst
     
 args = parser.parse_args()
 
-class Gan():
-    def __init__(self, args):
+class Gan(Thread):
+    def __init__(self, queue, loop, args):
+        self.queue = queue
+        self.loop = loop
         self.args = args
+        Thread.__init__(self)
 
     def run(self):
         self.load_snapshot()
@@ -40,8 +46,10 @@ class Gan():
         self.linespaces = np.linspace(0, 1, 100)
         print("Loaded linespaces {}".format(self.linespaces.shape))
         self.linespace_i = 0;
+        self.number_frames = 0
         self.fmt = dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=True)
         self.forward = True
+        self.push_frames()
 
     def load_latent_source_file(self,f):
         self.latent_source = np.load(f).reshape((1, 16, 512))
@@ -75,9 +83,21 @@ class Gan():
             self.generator = Generator(self.Gs, batch_size=1, randomize_noise=False)
         print(self.Gs)
 
+    def push_frames(self):
+        while True:
+            (src,args) = self.queue.get()
+            print("Sending to {} shadows {}".format(src,args.get('shadows')))
+            image = self.get_buf(args.get('shadows'))
+            ret, buf = cv2.imencode('.jpg', image)
+            b64 = base64.b64encode(buf)
+            b64text = b64.decode('utf-8')
+            self.loop.call_soon_threadsafe(
+                src.set_result, b64text
+            )
+            #self.last_push = now
+            self.number_frames += 1
 
-
-    def get_buf(self):
+    def get_buf(self, shadows):
             # Generate image.
             if self.linespace_i == 100:
                 if self.forward:
@@ -103,22 +123,24 @@ class Gan():
             #mages = self.Gs.components.synthesis.run(self.latents, randomize_noise=False, output_transform=self.fmt)
             images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=True, output_transform=self.fmt)
 
-            print("Got image!")
             image = images[0]
-            if self.args.shadows:
+            if int(shadows):
                 gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-                ret,black_white = cv2.threshold(gray,3,255,cv2.THRESH_BINARY_INV)
-                bgr = cv2.cvtColor(black_white, cv2.COLOR_GRAY2BGR)
-                data = cv2.cvtColor(bgr, cv2.COLOR_BGR2YUV)
+                ret,black_white = cv2.threshold(gray,50,255,cv2.THRESH_BINARY_INV)
+                data = cv2.cvtColor(black_white, cv2.COLOR_GRAY2BGR)
             else:
-                data = cv2.cvtColor(image, cv2.COLOR_RGB2YUV)
+                #data = cv2.cvtColor(image, cv2.COLOR_RGB2YUV)
+                data = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            print("Got image! {}".format(data.shape))
             assert data is not None
             self.linespace_i += 1
             return data
 
-
-gan = Gan(args)
+loop = asyncio.get_event_loop()
+q = queue.Queue()
+gan = Gan(q, loop, args)
 app = Flask(__name__)
+Compress(app)
 app.jinja_env.auto_reload = True
 
 @app.route('/')
@@ -127,15 +149,17 @@ def index():
 
 @app.route('/generate')
 def generate():
-    buf = gan.get_buf()
-    return jsonify(result=buf)
+    future = loop.create_future()
+    q.put((future,request.args))
+    data = loop.run_until_complete(future)
+    return jsonify(result=data)
 
 if __name__ == '__main__':
 
 	#print("Generating samples")
 	#for t in np.arange(0, 300, 0.000001):
 	#	s.gen(t)
-        gan.run()
+        gan.start()
         app.run (host = "0.0.0.0", port = 9540)
 
 
