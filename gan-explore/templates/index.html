@@ -175,6 +175,24 @@
                        return getImage("forward",shadows, output, loading);
                     })
                 });
+
+                document.querySelector("form#save")
+                .addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    const form = e.target;
+                    const data = {
+                        name: form.name.value
+                    }
+                    fetch('/save', {
+                        method: 'POST', 
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(data)
+                    })
+                    .then(res => res.json())
+                    .then((result) => {
+                        console.log("Result", result);
+                    })
+                });
             }
         </script>
     </body>

@@ -130,6 +130,11 @@ class Gan(Thread):
                     self.loop.call_soon_threadsafe(
                         future.set_result, "OK"
                     )
+            elif request == "save":
+                print("Saving current animation, name: {}".format(args['name']))
+                self.loop.call_soon_threadsafe(
+                    future.set_result, "OK"
+                )
 
     def get_buf(self, shadows):
             # Generate image.
@@ -187,6 +192,14 @@ def shuffle():
         gan = Gan(q, loop, args)
         gan.start()
         return jsonify(result="OK")
+
+@app.route('/save',  methods = ['POST'])
+def save():
+    future = loop.create_future()
+    params = request.get_json()
+    q.put((future, "save", params))
+    data = loop.run_until_complete(future)
+    return jsonify(result=data)
 
 if __name__ == '__main__':
 
