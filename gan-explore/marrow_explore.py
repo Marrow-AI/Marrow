@@ -17,6 +17,7 @@ import time
 import random
 import asyncio
 import base64
+import tensorflow as tf
 
 from flask import Flask, jsonify, request, render_template
 from flask_compress import Compress
@@ -34,18 +35,18 @@ class Gan(Thread):
         self.queue = queue
         self.loop = loop
         self.args = args
+        self.steps = 100
+        self.current_snapshot = args.snapshot
         Thread.__init__(self)
 
     def run(self):
-        self.load_snapshot()
+        self.load_snapshot(self.current_snapshot)
         #self.load_latent_source_file('9086.npy')
         self.load_latent_source()
-        print("Loaded latent source {}".format(self.latent_source.shape))
         self.load_latent_dest()
-        print("Loaded latent dest {}".format(self.latent_dest.shape))
-        self.linespaces = np.linspace(0, 1, 100)
+        self.linespaces = np.linspace(0, 1, self.steps)
         print("Loaded linespaces {}".format(self.linespaces.shape))
-        self.linespace_i = 0;
+        self.linespace_i = -1;
         self.number_frames = 0
         self.fmt = dict(func=tflib.convert_images_to_uint8, nchw_to_nhwc=True)
         self.forward = True
@@ -57,24 +58,30 @@ class Gan(Thread):
 
     def load_latent_source(self):
         self.latent_source = self.rnd.randn(512)[None, :]
+        print("Loaded latent source {}".format(self.latent_source.shape))
 
     def load_latent_dest(self):
         self.latent_dest = self.rnd.randn(512)[None, :]
+        print("Loaded latent dest {}".format(self.latent_dest.shape))
 
     def load_latent_dest_dlatents(self):
         qlatent1 = self.rnd.randn(512)[None, :]
         self.latent_dest = self.Gs.components.mapping.run(qlatent1, None)
 
-    def load_snapshot(self):
-        # Load pre-trained network.
-        tflib.init_tf()
+    def load_latent_dest_from_source(self,source):
+        pass
+        
 
+    def load_snapshot(self, snapshot):
+        tflib.init_tf()
         self.rnd = np.random.RandomState()
+
+        print("Loading snapshot {}".format(snapshot))
         #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-final.pkl")
         #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-009247.pkl")
         #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-008044.pkl")
         #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-024287.pkl")
-        url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-013458.pkl")
+        url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-{}.pkl".format(snapshot))
         #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-010450.pkl")
         #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-015263.pkl")
         #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-011653.pkl")
@@ -85,38 +92,47 @@ class Gan(Thread):
 
     def push_frames(self):
         while True:
-            (src,args) = self.queue.get()
-            print("Sending to {} shadows {}".format(src,args.get('shadows')))
-            image = self.get_buf(args.get('shadows'))
-            ret, buf = cv2.imencode('.jpg', image)
-            b64 = base64.b64encode(buf)
-            b64text = b64.decode('utf-8')
-            self.loop.call_soon_threadsafe(
-                src.set_result, b64text
-            )
-            #self.last_push = now
-            self.number_frames += 1
+            (future,request,args) = self.queue.get()
+            if request == "generate":
+                print(
+                    "Generating to {} direction {}, shadows {}".
+                    format(future,args.get('direction'),args.get('shadows'))
+                )
+                if args.get('direction') == "forward":
+                    self.linespace_i = min(self.steps-1, self.linespace_i + 1)
+                else:
+                    self.linespace_i = max(0,self.linespace_i - 1)
+
+                image = self.get_buf(args.get('shadows'))
+                ret, buf = cv2.imencode('.jpg', image)
+                b64 = base64.b64encode(buf)
+                b64text = b64.decode('utf-8')
+                self.loop.call_soon_threadsafe(
+                    future.set_result, b64text
+                )
+                #self.last_push = now
+                self.number_frames += 1
+
+            elif request == "shuffle":
+                print("Shuffling to {} steps {} snapshot {}".format(future, args['steps'],args['snapshot']))
+                self.steps = int(args['steps'])
+                self.linespaces = np.linspace(0, 1, self.steps)
+                if args['snapshot'] != self.current_snapshot:
+                    self.current_snapshot = args['snapshot']
+                    tf.get_default_session().close()
+                    tf.reset_default_graph()
+                    print('New snapshot, quiting GAN thread')
+                    break
+                else:
+                    self.load_latent_source()
+                    self.load_latent_dest()
+                    self.linespace_i = -1
+                    self.loop.call_soon_threadsafe(
+                        future.set_result, "OK"
+                    )
 
     def get_buf(self, shadows):
             # Generate image.
-            if self.linespace_i == 100:
-                if self.forward:
-                   print('---------------------------BACKWARD-----------------------')
-                   #self.forward = False
-                   self.latent_source = self.latent_dest
-                   #self.latent_dest = self.original_source
-                   self.load_latent_dest()
-
-                   print("Latent source {}".format(self.latent_source))
-                   print("Latent dest {}".format(self.latent_dest))
-                else:
-                    print('---------------------------FORWARD-----------------------')
-                    self.forward = True
-                    self.latent_source = self.original_source
-                    self.load_latent_dest()
-
-                self.linespace_i = 0
-
             self.latents = (self.linespaces[self.linespace_i] * self.latent_dest + (1-self.linespaces[self.linespace_i])*self.latent_source)
 
             #self.generator.set_dlatents(self.latents)
@@ -133,15 +149,16 @@ class Gan(Thread):
                 data = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             print("Got image! {}".format(data.shape))
             assert data is not None
-            self.linespace_i += 1
             return data
 
 loop = asyncio.get_event_loop()
 q = queue.Queue()
+args.snapshot = "013458"
 gan = Gan(q, loop, args)
 app = Flask(__name__)
 Compress(app)
 app.jinja_env.auto_reload = True
+gan.start()
 
 @app.route('/')
 def index():
@@ -150,16 +167,32 @@ def index():
 @app.route('/generate')
 def generate():
     future = loop.create_future()
-    q.put((future,request.args))
+    q.put((future, "generate", request.args))
     data = loop.run_until_complete(future)
     return jsonify(result=data)
+
+@app.route('/shuffle',  methods = ['POST'])
+def shuffle():
+    future = loop.create_future()
+    params = request.get_json()
+    q.put((future, "shuffle", params))
+    if params['snapshot'] == args.snapshot:
+        data = loop.run_until_complete(future)
+        return jsonify(result=data)
+    else:
+        print('Reloading GAN for new snapshot')
+        global gan
+        gan.join()
+        args.snapshot = params['snapshot']
+        gan = Gan(q, loop, args)
+        gan.start()
+        return jsonify(result="OK")
 
 if __name__ == '__main__':
 
 	#print("Generating samples")
 	#for t in np.arange(0, 300, 0.000001):
 	#	s.gen(t)
-        gan.start()
         app.run (host = "0.0.0.0", port = 9540)
 
 
