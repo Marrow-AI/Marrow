@@ -25,6 +25,8 @@ from flask_compress import Compress
 from encoder.generator_model import Generator
 
 import argparse
+import json
+
 parser = argparse.ArgumentParser(description='Marrow StyleGAN Latent space explorer')
 parser.add_argument('--shadows', action='store_true' , help='Stream shadows instead of colors')
     
@@ -114,7 +116,7 @@ class Gan(Thread):
                 self.number_frames += 1
 
             elif request == "shuffle":
-                print("Shuffling to {} steps {} snapshot {}".format(future, args['steps'],args['snapshot']))
+                print("Shuffling to {} steps {} snapshot {} type {}".format(future, args['steps'],args['snapshot'], args['type']))
                 self.steps = int(args['steps'])
                 self.linespaces = np.linspace(0, 1, self.steps)
                 if args['snapshot'] != self.current_snapshot:
@@ -124,17 +126,62 @@ class Gan(Thread):
                     print('New snapshot, quiting GAN thread')
                     break
                 else:
-                    self.load_latent_source()
-                    self.load_latent_dest()
-                    self.linespace_i = -1
+                    try:
+                        if args['type'] == 'both':
+                            self.load_latent_source()
+                            self.load_latent_dest()
+                        elif args['type'] == 'keep_source':
+                            self.load_latent_dest()
+
+                        elif args['type'] == 'use_dest':
+                            self.latent_source = self.latent_dest
+                            self.load_latent_dest()
+                        else:
+                            raise Exception('Invalid generation type')
+
+                        self.linespace_i = -1
+                        self.loop.call_soon_threadsafe(
+                            future.set_result, "OK"
+                        )
+
+                    except Exception as e:
+                        self.loop.call_soon_threadsafe(
+                            future.set_result, str(e)
+                        )
+
+            elif request == "save":
+                print("Saving current animation, name: {}".format(args['name']))
+                try:
+                    if ('name' not in args or len(args['name']) == 0):
+                        raise Exception('Name cannot be empty')
+                    try:
+                        os.mkdir('animations/{}'.format(args['name']))
+                    except FileExistsError:
+                        pass
+
+                    info = {
+                        'name': args['name'],
+                        'snapshot': self.current_snapshot,
+                        'steps': self.steps
+                    }
+                    with open('animations/{}/info.json'.format(args['name']), 'w+') as info_file:
+                        json.dump(info, info_file)                        
+
+                    with open('animations/{}/source.npy'.format(args['name']), 'wb+') as source_file:
+                        np.save(source_file, self.latent_source)
+
+                    with open('animations/{}/dest.npy'.format(args['name']), 'wb+') as dest_file:
+                        np.save(dest_file, self.latent_dest)
+
                     self.loop.call_soon_threadsafe(
                         future.set_result, "OK"
                     )
-            elif request == "save":
-                print("Saving current animation, name: {}".format(args['name']))
-                self.loop.call_soon_threadsafe(
-                    future.set_result, "OK"
-                )
+
+                except Exception as e:
+                    self.loop.call_soon_threadsafe(
+                        future.set_result, str(e)
+                    )
+
 
     def get_buf(self, shadows):
             # Generate image.

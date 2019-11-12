@@ -19,6 +19,10 @@
                 position: relative;
                 bottom: 5px;
 			}
+            input,select {
+                margin-right: 5px;
+                margin-left: 5px;
+            }
 		</style>
     </head>
     <body>
@@ -35,6 +39,11 @@
                 <input name="steps" value="100" min="1" type="number">
                 <label>Snapshot:</label>
                 <select name="snapshot">
+                </select>
+                <select name="type">
+                    <option value="both" selected>Shuffle both source and destination</option>
+                    <option value="keep_source" selected>Keep source and shuffle destination</option>
+                    <option value="use_dest" selected>Use destination as the next source</option>
                 </select>
                 <button type="submit">Generate animation</button>
 				<svg id="loading" class="lds-gears" style="display:none" width="48px" height="48px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;"><g transform="translate(50 50)"> <g transform="translate(-19 -19) scale(0.6)"> <g>
@@ -136,6 +145,9 @@
             window.onload = () => {
 
                 const snapshotSelect = document.querySelector("select[name=snapshot]");
+
+                const typeSelect = document.querySelector("select[name=type]");
+
                 SNAPSHOTS.forEach((text) => {
                     const option = new Option(text, text, true, true);
                     snapshotSelect.append(option);
@@ -164,15 +176,21 @@
                     const form = e.target;
                     const data = {
                         steps: form.steps.value,
-                        snapshot: form.snapshot.value
+                        snapshot: form.snapshot.value,
+                        type: form.type.value
                     }
                     fetch('/shuffle', {
                         method: 'POST', 
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify(data)
                     })
-                    .then((res) => {
-                       return getImage("forward",shadows, output, loading);
+                    .then(res => res.json())
+                    .then((data) => {
+                        if (data.result == "OK") {
+                            return getImage("forward",shadows, output, loading);
+                        } else {
+                            alert(data.result);
+                        }
                     })
                 });
 
@@ -189,8 +207,13 @@
                         body: JSON.stringify(data)
                     })
                     .then(res => res.json())
-                    .then((result) => {
-                        console.log("Result", result);
+                    .then((data) => {
+                        console.log("Result", data);
+                        if (data.result != "OK") {
+                            alert(data.result);
+                        } else {
+                            alert("Saved!");
+                        }
                     })
                 });
             }
