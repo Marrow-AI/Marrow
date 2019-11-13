@@ -106,3 +106,5 @@ sysinfo.txt
 *.unitypackage
 # ============================
 temp.csv
+*.blend
+gan/generate-cloned/*.wav

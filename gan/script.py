@@ -8,16 +8,17 @@ SCRIPT_TIMEOUT_NOSPEECH = 99999 #6
 
 SCRIPT_TIMEOUT_GLOBAL_SHORT = 99999 #9
 SCRIPT_TIMEOUT_NOSPEECH_SHORT = 99999 #6
-
+ 
 class Script:
-    def __init__(self):
+    def __init__(self, script_file = 'marrow_script.json', load_nlp = True):
         print("Initializing script engine")
-        self.nlp = spacy.load('en_core_web_sm')
+        if load_nlp:
+            self.nlp = spacy.load('en_core_web_sm')
         self.awaiting_index = -1
-        self.load_data()
+        self.load_data(script_file)
 
-    def load_data(self):
-        with open("marrow_script.json", 'r') as file:
+    def load_data(self, script_file):
+        with open(script_file, 'r') as file:
             self.data = json.load(file)
 
     def reset(self):

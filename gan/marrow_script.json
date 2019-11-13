@@ -51,7 +51,7 @@
                     "lines": [
                         {
                             "text": "You grew up in a very rough environment.",
-                            "pause": 30
+                            "pause": 120
                         },
                         {
                             "text": "In the eyes of your parents, you were almost always wrong and they kept punishing you until you learned the proper way.",
@@ -74,7 +74,7 @@
                             "pause": 70
                         },
                         {
-                            "text": "That makes you feel alone."
+                            "text": "After all you've done you still feel alone in your own world."
                         }
                     ]
                 },

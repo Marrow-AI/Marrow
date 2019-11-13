@@ -20,8 +20,3 @@ for line in script.data["script-lines"]:
         continue
     finally:
         index += 1
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 0abcd90ff048976cd394a92be8a655dcbbb12031
