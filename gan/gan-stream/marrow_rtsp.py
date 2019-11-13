@@ -23,6 +23,13 @@ gi.require_version('Gst', '1.0')
 gi.require_version('GstRtspServer', '1.0')
 from gi.repository import GObject, GIRepository,Gst,GstRtspServer
 
+import argparse
+parser = argparse.ArgumentParser(description='Marrow StyleGAN RTSP streamer')
+parser.add_argument('--shadows', action='store_true' , help='Stream shadows instead of colors')
+    
+args = parser.parse_args()
+
+
 class SampleGenerator(GstRtspServer.RTSPMediaFactory):
 	def __init__(self, queue, **properties):
             print("SampleGenerator init")
@@ -55,9 +62,9 @@ class SampleGenerator(GstRtspServer.RTSPMediaFactory):
 
 
 	def gen(self, t):
-	  if t - self._last_t_v >= 1.0/30:
+	  if t - self._last_t_v >= 1.0/self.fps:
 	    """
-	    if t - self._last_t_v >= 1.0/30:
+	    if t - self._last_t_v >= 1.0/self.fps:
 		    data = np.zeros((240, 320, 3), dtype=np.uint8)
 		    data = cv2.cvtColor(data, cv2.COLOR_RGB2YUV)
 
@@ -88,9 +95,10 @@ class SampleGenerator(GstRtspServer.RTSPMediaFactory):
 
 
 class Gan(Thread):
-    def __init__(self, queue):
+    def __init__(self, queue, args):
         self.queue = queue
         self.last_push = -31337
+        self.args = args
         Thread.__init__(self)
 
     def run(self):
@@ -98,8 +106,11 @@ class Gan(Thread):
         self.fps = 30
         self.duration = 1 / self.fps * Gst.SECOND
         self.load_snapshot()
-        self.load_latent_source('9086.npy')
+        #self.load_latent_source_file('9086.npy')
+        self.load_latent_source()
+        print("Loaded latent source {}".format(self.latent_source.shape))
         self.load_latent_dest()
+        print("Loaded latent dest {}".format(self.latent_dest.shape))
         self.linespaces = np.linspace(0, 1, 100)
         print("Loaded linespaces {}".format(self.linespaces.shape))
         self.linespace_i = 0;
@@ -107,12 +118,17 @@ class Gan(Thread):
         self.forward = True
         self.push_frames()
 
-    def load_latent_source(self,f):
+    def load_latent_source_file(self,f):
         self.latent_source = np.load(f).reshape((1, 16, 512))
         self.original_source = np.copy(self.latent_source)
-        print("Loaded latent source {}".format(self.latent_source.shape))
+
+    def load_latent_source(self):
+        self.latent_source = self.rnd.randn(512)[None, :]
 
     def load_latent_dest(self):
+        self.latent_dest = self.rnd.randn(512)[None, :]
+
+    def load_latent_dest_dlatents(self):
         qlatent1 = self.rnd.randn(512)[None, :]
         self.latent_dest = self.Gs.components.mapping.run(qlatent1, None)
 
@@ -124,7 +140,9 @@ class Gan(Thread):
         #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-final.pkl")
         #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-009247.pkl")
         #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-008044.pkl")
-        url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-010450.pkl")
+        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-024287.pkl")
+        url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-013458.pkl")
+        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-010450.pkl")
         #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-015263.pkl")
         #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-011653.pkl")
         with open(url, 'rb') as f:
@@ -151,9 +169,13 @@ class Gan(Thread):
             if self.linespace_i == 100:
                 if self.forward:
                    print('---------------------------BACKWARD-----------------------')
-                   self.forward = False
+                   #self.forward = False
                    self.latent_source = self.latent_dest
-                   self.latent_dest = self.original_source
+                   #self.latent_dest = self.original_source
+                   self.load_latent_dest()
+
+                   print("Latent source {}".format(self.latent_source))
+                   print("Latent dest {}".format(self.latent_dest))
                 else:
                     print('---------------------------FORWARD-----------------------')
                     self.forward = True
@@ -165,11 +187,18 @@ class Gan(Thread):
             self.latents = (self.linespaces[self.linespace_i] * self.latent_dest + (1-self.linespaces[self.linespace_i])*self.latent_source)
 
             #self.generator.set_dlatents(self.latents)
-            images = self.Gs.components.synthesis.run(self.latents, randomize_noise=False, output_transform=self.fmt)
-            #images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=True, output_transform=fmt)
+            #mages = self.Gs.components.synthesis.run(self.latents, randomize_noise=False, output_transform=self.fmt)
+            images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=True, output_transform=self.fmt)
 
             print("Got image!")
-            data = cv2.cvtColor(images[0], cv2.COLOR_RGB2YUV)
+            image = images[0]
+            if self.args.shadows:
+                gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+                ret,black_white = cv2.threshold(gray,3,255,cv2.THRESH_BINARY_INV)
+                bgr = cv2.cvtColor(black_white, cv2.COLOR_GRAY2BGR)
+                data = cv2.cvtColor(bgr, cv2.COLOR_BGR2YUV)
+            else:
+                data = cv2.cvtColor(image, cv2.COLOR_RGB2YUV)
             #print(data.shape)
             y = data[...,0]
             u = data[...,1]
@@ -203,7 +232,7 @@ if __name__ == '__main__':
         GObject.threads_init()
         Gst.init(None)
         q = queue.Queue()
-        gan = Gan(q)
+        gan = Gan(q, args)
         gan.start()
         server = GstServer(q)
         print(server)

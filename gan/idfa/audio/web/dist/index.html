@@ -1,0 +1,102 @@
+<html>
+<head>
+   <script src="jquery-2.2.4.min.js"></script>
+   <script src="bootstrap.bundle.min.js"></script>
+   <script src="reconnecting-websocket.min.js"></script>
+   <script src="app.bundle.js"></script>
+   <link rel="stylesheet" type="text/css" href="bootstrap.css">
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+   <title>Listening...</title>
+   <style>
+    html {
+        height: 100%;
+    }
+    body {
+        height: 100%;
+        background-image: url("family.jpg");
+        background-size: cover;
+    }
+    #control {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+	margin-top: 200px;
+	margin-left: 150px;
+    }
+	#buttons {
+		margin-top: 25px;
+        margin-left: 25px;
+	}
+	#operation {
+		margin-top: 20px;
+        font-size: 28px;
+	}
+    #control button {
+	    width: 150px;
+	    height: 50px;
+	    margin: 20px;
+	    border-radius: 10px;
+	    font-size: 16px;
+	    background-color: #0e0e0e;
+    }
+    #instructions {
+        color: white;
+        font-family: 'Oswald';
+	    margin-left: 35px;
+	    margin-top: 110px;
+        font-size: 40px;
+    }
+	#connection {
+		margin: 10px;
+	}
+	#connected {
+		color: lime;
+	}
+	#disconnected {
+		color: red;
+	}
+    #overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0.0, 0.0, 0.0, 0.5);
+        height: 100%;
+        width: 100%;
+    }
+	ol {
+		margin-top: 10px;
+	}
+    #buttons .btn {
+        color: white;
+    }
+   </style>
+</head>
+<body>
+    <div id="overlay">
+        <div id="connection">
+            <div id="disconnected">DISCONNECTED FROM SERVER</div>
+            <div id="connected">CONNECTED TO SERVER</div>
+        </div>
+        <div id="logo">
+        <!--img width="200px" src="marrow_logo.png"></img-->
+        </div>
+        <div id="control">
+            <div id="instructions">
+                <div>This is an experience for four++ people.</div>
+                <div id="operation">Please wait for a volunteer to start.</div>
+            </div>
+            <div id="buttons">
+                <div>
+                    <button id="start-gan" type="button" data-command="start" class="btn btn-success">START</button>
+                    <button id="stop-gan" type="button" data-command="stop" class="btn btn-danger">STOP</button>
+                </div>
+                <div>
+                    <button id="prev-gan" type="button" data-command="prev" class="btn btn-warning">PREV</button>
+                    <button id="next-gan" type="button" data-command="next" class="btn btn-warning">NEXT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
