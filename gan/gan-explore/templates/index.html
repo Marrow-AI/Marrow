@@ -14,7 +14,7 @@
                 align-items: center;
                 height: 64px;
             }
-			#loading {
+			.lds-gears {
                 margin-left: 15px;
                 position: relative;
                 bottom: 5px;
@@ -34,16 +34,17 @@
             <button class="generate" data-direction="back">&lt;</button>
             <button class="generate" data-direction="forward">&gt;</button>
             <input id="shadows" type="checkbox">Shadows</input>
+            <button id="download-video">Download video</button>
             <form id="shuffle">
                 <label>Number of steps:</label>
                 <input name="steps" value="100" min="1" type="number">
                 <label>Snapshot:</label>
                 <select name="snapshot">
                 </select>
-                <select name="type">
-                    <option value="both" selected>Shuffle both source and destination</option>
-                    <option value="keep_source" selected>Keep source and shuffle destination</option>
-                    <option value="use_dest" selected>Use destination as the next source</option>
+                <select name="type" autocomplete="off">
+                    <option value="both" selected="selected">Shuffle both source and destination</option>
+                    <option value="keep_source" >Keep source and shuffle destination</option>
+                    <option value="use_dest">Use destination as the next source</option>
                 </select>
                 <button type="submit">Generate animation</button>
 				<svg id="loading" class="lds-gears" style="display:none" width="48px" height="48px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" style="background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;"><g transform="translate(50 50)"> <g transform="translate(-19 -19) scale(0.6)"> <g>
@@ -215,6 +216,11 @@
                             alert("Saved!");
                         }
                     })
+                });
+
+                document.querySelector("button#download-video")
+                .addEventListener("click", (e) => {
+                    window.open("/video?shadows=" + (shadows.checked ? '1' : '0') + "&dt="+(new Date()).getTime(), "_blank");
                 });
             }
         </script>

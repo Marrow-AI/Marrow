@@ -19,7 +19,7 @@ import asyncio
 import base64
 import tensorflow as tf
 
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, send_file
 from flask_compress import Compress
 
 from encoder.generator_model import Generator
@@ -181,6 +181,29 @@ class Gan(Thread):
                     self.loop.call_soon_threadsafe(
                         future.set_result, str(e)
                     )
+            elif request == "video":
+                print("Download animation video. Shadows:  {}".format(args.get('shadows')))
+                try:
+                    writer = cv2.VideoWriter("output.avi",cv2.VideoWriter_fourcc(*"MJPG"), 30,(512,512))
+                    shadows = int(args.get('shadows'))
+                    for i in range(self.steps):
+                        self.linespace_i = i
+                        print(self.linespace_i)
+                        img = self.get_buf(shadows)
+                        writer.write(img)
+                    writer.release()
+                    self.linespace_i = 0
+
+
+                    self.loop.call_soon_threadsafe(
+                        future.set_result, "OK"
+                    )
+
+                except Exception as e:
+                    self.loop.call_soon_threadsafe(
+                        future.set_result, str(e)
+                    )
+
 
 
     def get_buf(self, shadows):
@@ -248,11 +271,21 @@ def save():
     data = loop.run_until_complete(future)
     return jsonify(result=data)
 
+@app.route('/video',  methods = ['GET'])
+def video():
+    future = loop.create_future()
+    q.put((future, "video", request.args))
+    data = loop.run_until_complete(future)
+    if data == 'OK':
+        return send_file('output.avi', as_attachment=True, attachment_filename='output.avi')
+    else:
+        return jsonify(result=data)
+
 if __name__ == '__main__':
 
 	#print("Generating samples")
 	#for t in np.arange(0, 300, 0.000001):
 	#	s.gen(t)
-        app.run (host = "0.0.0.0", port = 9540)
+        app.run (host = "0.0.0.0", port = 8080)
 
 
