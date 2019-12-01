@@ -23,6 +23,9 @@
                 margin-right: 5px;
                 margin-left: 5px;
             }
+            form#save {
+                margin-bottom: 10px;
+            }
 		</style>
     </head>
     <body>
@@ -31,13 +34,17 @@
             <img id="output" width="512" height="512"></img>
         </div>
         <div id="controls-container">
-            <button class="generate" data-direction="back">&lt;</button>
-            <button class="generate" data-direction="forward">&gt;</button>
+            <button class="generate" data-direction="back" data-steps="1">&lt;</button>
+            <button class="generate" data-direction="forward" data-steps="1">&gt;</button>
+            <button class="generate" data-direction="back" data-steps="10">&lt;10</button>
+            <button class="generate" data-direction="forward" data-steps="10">10&gt;</button>
+            <button class="generate" data-direction="back" data-steps="100">&lt;100</button>
+            <button class="generate" data-direction="forward" data-steps="100">100&gt;</button>
             <input id="shadows" type="checkbox">Shadows</input>
             <button id="download-video">Download video</button>
             <form id="shuffle">
                 <label>Number of steps:</label>
-                <input name="steps" value="100" min="1" type="number">
+                <input autocomplete="off" name="steps" value="100" min="1" type="number">
                 <label>Snapshot:</label>
                 <select name="snapshot">
                 </select>
@@ -53,8 +60,14 @@
             </form>
             <form id="save">
                 <label>Save animation as:</label>
-                <input name="name" type="text">
+                <input autocomplete="off" name="name" type="text">
                 <button type="submit">Save</button>
+            </form>
+            <form id="load">
+                <label>Load animation:</label>
+                <select autocomplete="off" name="animation">
+                </select>
+                <button type="submit">Load</button>
             </form>
         </div>
         <script>
@@ -134,8 +147,8 @@
                 "025000"
             ];
 
-            function getImage(direction, shadows, output, loading) {
-                return fetch('/generate?direction=' + direction + '&shadows=' + (shadows.checked ? '1' : '0'))
+            function getImage(direction, steps, shadows, output, loading) {
+                return fetch('/generate?direction=' + direction +  '&steps=' + steps + '&shadows=' + (shadows.checked ? '1' : '0'))
                 .then( response => response.json() )
                 .then(data => {
                     loading.style.display = "none";
@@ -143,17 +156,33 @@
                 });
             }
 
+            function listAnimations(animationSelect) {
+                return fetch('/list')
+                .then( response => response.json() )
+                .then(data => {
+                    data.animations.forEach((text) => {
+                        const option = new Option(text, text, true, true);
+                        animationSelect.append(option);
+                    })
+                });
+            }
+
             window.onload = () => {
 
                 const snapshotSelect = document.querySelector("select[name=snapshot]");
-
                 const typeSelect = document.querySelector("select[name=type]");
+                const animationSelect = document.querySelector("select[name=animation]");
+
+                const stepsInput = document.querySelector("input[name=steps]");
 
                 SNAPSHOTS.forEach((text) => {
                     const option = new Option(text, text, true, true);
                     snapshotSelect.append(option);
                 })
-                snapshotSelect.value = "013458";
+                //snapshotSelect.value = "013458";
+                snapshotSelect.value = "007743";
+
+                listAnimations(animationSelect);
 
 
                 const output = document.querySelector("img#output");
@@ -164,6 +193,7 @@
                 button.addEventListener("click", (e) => {
 					getImage(
                         e.currentTarget.dataset.direction,
+                        e.currentTarget.dataset.steps,
                         shadows,
                         output,
                         loading
@@ -188,7 +218,7 @@
                     .then(res => res.json())
                     .then((data) => {
                         if (data.result == "OK") {
-                            return getImage("forward",shadows, output, loading);
+                            return getImage("forward", "1", shadows, output, loading);
                         } else {
                             alert(data.result);
                         }
@@ -217,7 +247,43 @@
                         }
                     })
                 });
-
+                document.querySelector("form#load")
+                .addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    const form = e.target;
+                    loading.style.display = "inline-block";
+                    const params = {
+                        animation: form.animation.value
+                    }
+                    fetch('/load', {
+                        method: 'POST', 
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify(params)
+                    })
+                    .then(res => res.json())
+                    .then((data) => {
+                        if (data.result.status == "new_snapshot"){
+                            snapshotSelect.value = data.result.snapshot;
+                            return fetch('/load', {
+                                method: 'POST', 
+                                headers: {"Content-Type": "application/json"},
+                                body: JSON.stringify(params)
+                            })
+                            .then(res => res.json())
+                        } else {
+                            return data
+                        }
+                    })
+                    .then((data) => {
+                        if (data.result.status == "OK") {
+                            console.log("Loading done", data);
+                            stepsInput.value = parseInt(data.result.steps);
+                            return getImage("forward", "1", shadows, output, loading)
+                        } else {
+                            alert(data.result.status);
+                        }
+                    });
+                })
                 document.querySelector("button#download-video")
                 .addEventListener("click", (e) => {
                     window.open("/video?shadows=" + (shadows.checked ? '1' : '0') + "&dt="+(new Date()).getTime(), "_blank");
