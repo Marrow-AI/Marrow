@@ -210,11 +210,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "Is that the best he can do?",
-                            "pause": 80
-                        },
-                        {
-                            "text": "I know I cook that every night"
+                            "text": "He always asks, but I always cook the samee thing"
                         }
                     ]
                 }
@@ -230,11 +226,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "oh",
-                            "pause": 50
-                        },
-                        {
-                            "text": "he is waiting for me to answer"
+                            "text": "oh, he is waiting for me to answer"
                         }
                     ]
                 }
@@ -242,7 +234,7 @@
          },
          {
             "speaker": "dad",
-            "text": "Hmm... What's that saying again? Eating great everyday..."
+            "text": "Hmm... What's that saying again? Eating well everyday..."
          },
          {
             "speaker": "brother",
@@ -254,7 +246,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I need to regulate his knowledge or he will outplay me."
+                            "text": "He doesn't always know his place in the family"
                         }
                     ]
                 }
@@ -270,7 +262,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "He uses this passive aggressive tone in 67 point 3 precent of his interactions with me."
+                            "text": "His reeactions are 33 percent passive, 67 peerceent aggressive"
                         }
                     ]
                 }
@@ -278,7 +270,7 @@
          },
          {
             "speaker": "mom",
-            "text": "It's alright."
+            "text": "I have no complaints."
          },
         {
             "in-ear" : [ 
@@ -286,19 +278,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "My impolite daughter has not even said a word yet?",
-                            "pause": 30
-                        },
-                        {
-                            "text": "We're not worth talking to?",
-                            "pause": 40
-                        },
-                        {
-                            "text": "This is not how I raised her.",
-                            "pause": 20
-                        },
-                        {
-                            "text": "Just watch at her."
+                            "text": "My only complaints are that I never hear my daughter, what is wrong with her? just look at her, I wish she was more engaged with this family."
                         }
                     ]
                 },
@@ -306,23 +286,7 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "like usual,",
-                            "pause": 40
-                        },
-                        {
-                            "text": "my sister remains quiet in her own world.",
-                            "pause": 40
-                        },
-                        {
-                            "text": "Whatever there is in there,",
-                            "pause": 10
-                        },
-                        {
-                            "text": "it’s certainly not as interesting as what goes on in my world.",
-                            "pause": 60
-                        },
-                        {
-                            "text": "Just watch at her."
+                            "text": "If my sister will just use her words a bit more, and learn from yesterday's mistakes, she will know that silent moments drive our parents insane, Come on sister."
                         }
                     ]
                 },
@@ -330,27 +294,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "At least my daughter knows her place.",
-                            "pause": 20
-                        },
-                        {
-                            "text": "She’s quiet.",
-                            "pause": 30
-                        },
-                        {
-                            "text": "thoughtful.",
-                            "pause": 20
-                        },
-                        {
-                            "text": "She's learned to apply what I taught her.",
-                            "pause": 20
-                        },
-                        {
-                            "text": "To give me all the space.",
-                            "pause": 20
-                        },
-                        {
-                            "text": "Just watch at her."
+                            "text": "I can't sense in her voice anything but complaints, she is probably thinking why our daughter hasn't compliment her yet. But I don't want to get angry again, I just want one nice dinner with my family."
                         }
                     ]
                 },
@@ -358,38 +302,12 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "What is wrong?",
-                            "pause": 200
-                        },
-                        {
-                            "text": "Why are they looking at me like this?"
+                            "text": "I cannot tell if everything here is what it is or what it isn't, are they looking at me because I did something wrong or maybe they are not looking at me at all? my mind often leads me to false alarms!"
                         }
                     ]
                 }
-            ]
-                                
-                    
-                
+            ]          
          },
-         {
-             "triggers-effect": [
-                 {
-                 "effect": "ticking",
-                 "time": 10,
-                 "fades": [0.15, 0.15]
-                },
-                {
-                "effect": "whiteNoise",
-                 "time": 7,
-                 "fades": [0.15, 0.15]
-                }
-             ]
-        },
-        {
-            "speaker": ["mom", "dad", "brother"],
-            "text": "[direction- Just look at her as long as the clock is ticking]",
-            "type": "direction"
-        },
         {
             "speaker": "mom",
             "text": "And you daughter, do you like the food?"
@@ -404,11 +322,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "I remember that it's exactly what she made last night.",
-                            "pause": 20
-                        },
-                        {
-                            "text": "I have a picture of it as proof."
+                            "text": "she is making me so stressed, I do remember that it's exactly what we ate last night."
                         }
                     ]
                 }
@@ -416,19 +330,11 @@
          },
          {
             "speaker": "mom",
-            "text": "Why can't you just say right away what you think?"
-         },
-         {
-            "speaker": "mom",
-            "text": "Why am I even bothering, you are your father's daughter."
-         },
-         {
-            "speaker": "mom",
-            "text": "you were born in a sheltered world, of your own creation."
+            "text": "Why are your answers always so flat?"
          },
          {
             "speaker": "dad",
-            "text": "Here we go..."
+            "text": "How can she give other answers if she never tasted anything else?"
          },
          {
             "in-ear" : [ 
@@ -436,15 +342,59 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I give her love the way I should: I give her credit, I tell her nice things.",
-                            "pause": 20
-                        },
+                            "text": "I wish I could eat something different."
+                        }
+                    ]
+                }
+             ]
+         },
+         {
+            "speaker": "brother",
+            "text": "If you try you can see beyond the"
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "brother",
+                    "lines": [
                         {
-                            "text": "but she keeps putting me down.",
-                            "pause": 20
-                        },
+                            "text": "it's all a matter of perspective, which is unfortunately very limited for my sister."
+                        }
+                    ]
+                }
+             ]
+         },
+        {
+            "speaker": "sister",
+            "text": "When I'm opening my eyes, I can even see beyond all of you."
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "mom",
+                    "lines": [
                         {
-                            "text": "What is going on in that head? Let me look at it."
+                            "text": "she must know that none of us choose to be here!"
+                        }
+                    ]
+                }
+             ]
+         },
+        {
+            "speaker": "mom",
+            "text": "But then you are missing the point."
+        },
+        {
+            "speaker": "sister",
+            "text": "well, I wasn't thinking."
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "mom",
+                    "lines": [
+                        {
+                            "text": "If you don't think you should not talk"
                         }
                     ]
                 },
@@ -452,75 +402,35 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "that frame",
-                            "pause": 20
-                        },
-                        {
-                            "text": "on the wall, tilted again",
-                            "pause": 50
-                        },
-                        {
-                            "text": "In other people’s houses, the frames on the walls are always straight.",
-                            "pause": 60
-                        },
-                        {
-                            "text": "I have to get up and fix this one."
+                            "text": "I was feeling"
                         }
                     ]
                 }
              ]
          },
-         {
-            "speaker": "sister",
-            "text": "[direction- Go fix the frame]",
-            "type": "direction"
-        },
         {
-            "type": "clear"
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "It is straight now",
-                            "pause": 40
-                        },
-                        {
-                            "text": "there is hope",
-                            "pause": 30
-                        },
-                        {
-                            "text": "we can start again."
-                        }
-                    ]
-                }
-             ]
-         },
-         {
-            "speaker": "sister",
-            "text": "I take lots of pictures everyday. Of homes. The people in them they often laugh."
+            "speaker": "dad",
+            "text": "You have to see us if you want to get the full picture."
         },
         {
             "speaker": "sister",
-            "text": "This isn't how it should go for us. Let's start over from the beginning."
-        },
-        {
-            "speaker": "sister",
-            "text": "This time we should start with a laughter."
+            "text": "Teach me how to see you mother."
         },
         {
             "speaker": "mom",
-            "text": "I don't want to laugh. I don't like my teeth. They are never white enough."
+            "text": "Tell her my son"
         },
         {
-            "speaker": "mom",
-            "text": "Maybe it's because I don’t smile enough."
+            "speaker": "brother",
+            "text": "Sister, When I look at our Mother-"
         },
         {
-            "speaker": "mom",
-            "text": "But there is a reason I don't smile enough, you all make my life so difficult."
+            "speaker": "brother",
+            "text": "I see the perfect sun that planted a seed of life that burned my first chakra-"
+        },
+        {
+            "speaker": "brother",
+            "text": "to the third degree and made me the young man I have learned to be."
         },
         {
             "in-ear" : [ 
@@ -528,59 +438,35 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "Interesting.",
-                            "pause": 10
-                        },
-                        {
-                            "text": "Let me look at her teeth now."
+                            "text": "What does he mean?"
                         }
                     ]
                 }
              ]
          },
-        {
-            "speaker": "brother",
-            "text": "Mother, When I look at you-"
+         {
+            "speaker": "mom",
+            "text": "Well said."
         },
         {
-            "speaker": "brother",
-            "text": "I see the perfect mouth that planted a seed of life that burned my first chakra to the third degree-"
-        },
-        {
-            "speaker": "brother",
-            "text": "and made me the young man I have learned to be."
+            "speaker": "sister",
+            "text": "I am confused, but go on."
         },
         {
             "speaker": "dad",
-            "text": "Have you finished? As I was about to say myself, Mother, your smile is fabulous-"
+            "text": "Well, it means your mother is the dream itself. The dream of us melting in the sun."
         },
         {
-            "speaker": "dad",
-            "text": "So let's just try what my fabulous daughter suggested. We are a fabulous family after all. So, let's laugh!"
+            "speaker": "mom",
+            "text": "Yes, anything can happen if you let it."
         },
         {
             "in-ear" : [ 
                 { 
-                    "target" : "sister",
+                    "target" : "dad",
                     "lines": [
                         {
-                            "text": "I've observed it over and over",
-                            "pause": 80
-                        },
-                        {
-                            "text": "It's not my imagination, it's real",
-                            "pause": 80
-                        },
-                        {
-                            "text": "We can get there. As a family.",
-                            "pause": 50
-                        },
-                        {
-                            "text": "Find a way to be like them and be happy. Find a way to generate what is expected of us.",
-                            "pause": 50
-                        },
-                        {
-                            "text": "So, the clock will tick and with it I will start laughing."
+                            "text": "We didn't touch each other in such a long time. Maybe she will finally let me hold her hand for a bit?"
                         }
                     ]
                 },
@@ -588,20 +474,74 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "She doesn’t know what it means to work hard 24 7 to get better at what you are expected to do.",
-                            "pause": 80
-                        },
-
+                            "text": "I didn't felt something toward him in such a long time and that really got me emotional, I feel like holding his hand."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "speaker": "dad",
+            "text": "My woman, how was your day?"
+        },
+        {
+            "speaker": "mom",
+            "text": "A very lovely day, couldn’t be better. And yours?"
+        },
+        {
+            "speaker": "dad",
+            "text": "I had such a fantastic day, so much rain. Kids, how was school?"
+        },
+        {
+            "speaker": "brother",
+            "text": "All day I thought to myself what a wonderful world."
+        },
+        {
+            "speaker": "sister",
+            "text": "Mother, Father, Brother you are so beautiful when you play yourself happy - beyond a shadow of a dream!"
+        },
+        {
+            "speaker": "dad",
+            "text": "That is true."
+        },
+        {
+            "speaker": "mom",
+            "text": "Do you think she can tell what is true?"
+        },
+        {
+            "type": "clear"
+        },
+        {
+            "speaker": "brother",
+            "text": "Any dream is a process of active paranoiac thought, that aims to formulize confusion-"
+        },
+        {
+            "speaker": "brother",
+            "text": "And the total disappearance of the world of reality. It ain't her fault mother."
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "sister",
+                    "lines": [
                         {
-                            "text": "She's too busy finding the neighbour's grass greener.",
-                            "pause": 50
-                        },
+                            "text": "They see right through me, this is going to be an adventure."
+                        }
+                    ]
+                },
+                { 
+                    "target" : "mom",
+                    "lines": [
                         {
-                            "text": "But I can’t say no to a task",
-                            "pause": 10
-                        },
+                            "text": "What kind of information is this? Fragmented thoughts, full of jump cuts and distortion."
+                        }
+                    ]
+                },
+                { 
+                    "target" : "dad",
+                    "lines": [
                         {
-                            "text": "So when the clock will tick and with it I will start laughing."
+                            "text": "What kind of information is this? Fragmented thoughts, full of jump cuts and distortion."
                         }
                     ]
                 },
@@ -609,75 +549,30 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "Smiling can trick your brain into hapiness.",
-                            "pause": 10
-                        },
-                        {
-                            "text": "By faking a laugh for long enough",
-                            "pause": 10
-                        },
-                        {
-                            "text": "I will end up laughing for real.",
-                            "pause": 60
-                        },
-                        {
-                            "text": "The clock will tick and with it I will start laughing, finally."
-                        }
-                    ]
-                },
-                { 
-                    "target" : "dad",
-                    "lines": [
-                        {
-                            "text": "without me they would just fall apart.",
-                            "pause": 20
-                        },
-                        {
-                            "text": "I am the one wiring them together and connecting them to everything else.",
-                            "pause": 80
-                        },
-                        {
-                            "text": "I know what's best for them even, they need a good laugh.",
-                            "pause": 40
-                        },
-                        {
-                            "text": "The clock will tick and with it I will start laughing."
+                            "text": "What kind of information is this? Fragmented thoughts, full of jump cuts and distortion."
                         }
                     ]
                 }
             ]
-        },
-        {
-            "triggers-effect": [
-                {
-                "effect": "ticking",
-                "time": 10,
-                "fades": [0.15, 0.15]
-               }
-            ]
-        },
-        {
-            "speaker": "sister",
-            "text": "See how beautiful you look when you were laughing!! Almost real."
         },
         {
             "type": "clear"
         },
         {
-            "speaker": "sister",
-            "text": "Let's start over from the beginning."
+            "in-ear" : [ 
+                 { 
+                    "target" : "sister",
+                    "lines": [
+                            {
+                                "text": "What is darkness for if not for falling in between worlds?"
+                            }
+                        ]
+                    }
+                ]
         },
         {
-            "in-ear" : [ 
-                { 
-                    "target" : "dad",
-                    "lines": [
-                        {
-                            "text": "Since when my girl is the one calling the shots?"
-                        }
-                    ]
-                }
-            ]
+            "speaker": "sister",
+            "text": "Time stopped."
         },
         {
             "speaker": "dad",
@@ -689,11 +584,19 @@
                     "target" : "mom",
                     "lines": [
                             {
-                                "text": "I'm reading 78 precent sincerity..."
+                                "text": "I'm reading 78 percent ambiguity, as our eyes deceive us I can tell him whatever I want."
                             }
                         ]
-                    }
-                ]
+                },
+                { 
+                        "target" : "dad",
+                        "lines": [
+                                {
+                                    "text": "Am I focusing on the food because there is something else in this room that I don't want to see?"
+                                }
+                        ]
+                }
+            ]
         },
         {
             "target": "mom",
@@ -701,530 +604,70 @@
         },
         {
             "speaker": "brother",
-            "text": "We are on the right path, I can feel it. On the golden brick road that will take us over the rainbow!"
-        },
-        {
-            "speaker": "dad",
-            "text": "Talking about rainbows and colors my girl, have you taken lots of pictures this week?"
+            "text": "That sounds deep, mother. "
         },
         {
             "speaker": "sister",
-            "text": "Yes, father, I have."
-        },
-        {
-            "speaker": "dad",
-            "text": "You really are your daddy's girl. But what kind of pictures exactly?"
-        },
-        {
-            "speaker": "dad",
-            "text": "You know how much I like to know EVERYTHING about my girl."
+            "text": "Deep like that bowl of soup?"
         },
         {
             "in-ear" : [ 
-                { 
+                 { 
                     "target" : "sister",
                     "lines": [
-                        {
-                            "text": "what does he want from me?"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "sister",
-            "text": "I saw somewhere that humans are very social animals."
-        },
-        {
-            "speaker": "sister",
-            "text": "That their biggest need is to belong to a group, to connect to others."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "mom",
-                    "lines": [
-                        {
-                            "text": "Why can't she get to the point?"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "mom",
-            "text": "Alright, but what kind of pictures?!"
-        },
-        {
-            "speaker": "sister",
-            "text": "Well at first I mostly observe...I observe how people look like a family. In their home."
-        },
-        {
-            "speaker": "dad",
-            "text": "Observation counts. What can't be verified is pure invention."
-        },
-        {
-            "speaker": "sister",
-            "text": "Yes. That's why I watch them."
-        },
-        {
-            "speaker": "dad",
-            "text": "Just like I watch over my family. I bet you no one has such a nice family as us."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "brother",
-                    "lines": [
-                        {
-                            "text": "she watches them.",
-                            "pause": 10
-                        },
-                        {
-                            "text": "she digests them.",
-                            "pause": 10
-                        },
-                        {
-                            "text": "and she becomes them?",
-                            "pause": 10
-                        },
-                        {
-                            "text": "She scares me."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "triggers-effect": [
-                {
-                "effect": "whiteNoise",
-                "time": 4,
-                "fades": [0.15, 0.15]
-               }
-            ]
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "I've seen so many families.",
-                            "pause": 100
-                        },
-                        {
-                            "text": "and he is wrong."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "sister",
-            "text": "There are lots of different families. Well... not that different actually-"
-        },
-        {
-            "speaker": "sister",
-            "text": "Most of them have a father, a mother and two children. A boy and a girl."
-        },
-        {
-            "speaker": "dad",
-            "text": "Just like us."
-        },
-        {
-            "speaker": "sister",
-            "text": "You can say that! Most of them are well groomed. Very symmetrical faces-"
-        },
-        {
-            "speaker": "sister",
-            "text": "They smile most of the time. A lot. Very big smile. Let's try to smile, ok? A lot!!"
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "to be like them",
-                            "pause": 10
-                        },
-                        {
-                            "text": "we need to be smiling more in this house.",
-                            "pause": 120
-                        },
-                        {
-                            "text": "So I got to be creative.",
-                            "pause": 80
-                        },
-                        {
-                            "text": "Just a little more effort, and we’ll be like a real family.",
-                            "pause": 60
-                        },
-                        {
-                            "text": "I have learned to listen to the clock.",
-                            "pause": 40
-                        },
-                        {
-                            "text": "I am just going to start smiling with it starts ticking."
-                        }
-                    ]
+                            {
+                                "text": "I saw this bowl a minute ago, I can't remember where, oh on the counter! I will go get it."
+                            }
+                        ]
                 },
                 { 
-                    "target" : "mom",
-                    "lines": [
-                        {
-                            "text": "She sometimes gets stuck on something.",
-                            "pause": 70
-                        },
-                        {
-                            "text": "She is really the obsessive kind.",
-                            "pause": 80
-                        },
-                        {
-                            "text": "Why do children have to act like mirrors.",
-                            "pause": 70
-                        },
-                        {
-                            "text": "What is the point of smiling if it doesn’t bring me anything?",
-                            "pause": 120
-                        },
-                        {
-                            "text": "But since I was told",
-                            "pause": 20
-                        },
-                        {
-                            "text": "As I don’t really get it, I will let the clock guide me and start to smile with its sound again."
-                        }
-                    ]
-                },
-                { 
-                    "target" : "brother",
-                    "lines": [
-                        {
-                            "text": "she needs us to match what she sees",
-                            "pause": 30
-                        },
-                        {
-                            "text": "She is such a conformist.",
-                            "pause": 50
-                        },
-                        {
-                            "text": "I embrace my own existence.",
-                            "pause": 30
-                        },
-                        {
-                            "text": "My singularity.",
-                            "pause": 20
-                        },
-                        {
-                            "text": "But this is entertaining",
-                            "pause": 30
-                        },
-                        {
-                            "text": "Better to be smiling than to hear the platitudes of these limited entities",
-                            "pause": 30
-                        },
-                        {
-                            "text": "And for that I will smile as soon as the clock starts ticking."
-                        }
-                    ]
-                },
-                { 
-                    "target" : "dad",
-                    "lines": [
-                        {
-                            "text": "fact",
-                            "pause": 10
-                        },
-                        {
-                            "text": "Each time you smile",
-                            "pause": 30
-                        },
-                        {
-                            "text": "your brain feels happy",
-                             "pause": 80
-                        },
-                        {
-                            "text": "and when you smile",
-                            "pause": 30
-                        },
-                        {
-                            "text": "people treat you differently",
-                            "pause": 100
-                        },
-                        {
-                            "text": "You're seen as attractive",
-                            "pause": 10
-                        },
-                        {
-                            "text": "reliable",
-                            "pause": 10
-                        },
-                        {
-                            "text": "relaxed and sincere.",
-                            "pause": 10
-                        },
-                        {
-                            "text": "So, for these reasons",
-                            "pause": 10
-                        },
-                        {
-                            "text": "I will smile again as soon as the clock will start ticking."
-                        }
-                    ]
+                        "target" : "brother",
+                        "lines": [
+                                {
+                                    "text": "I meant much deeper than that. mom's food reminds me of the sublime makes me think about where I came from and fear what exists at the end of it all."
+                                }
+                        ]
                 }
             ]
-        },
-        {
-            "triggers-effect": [
-                {
-                "effect": "ticking",
-                "time": 10,
-                "fades": [0.15, 0.15]
-               }
-            ]
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "They are faking it.",
-                            "pause": 180
-                        },
-                        {
-                            "text": "Fake doesn't work."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "sister",
-            "text": "You guys are hilarious!! And they are too!"
-        },
-        {
-            "speaker": "sister",
-            "text": "The ones that I watch. They make each other laugh. They are relaxed. They are together. They are a family."
-        },
-        {
-            "speaker": "dad",
-            "text": "Relaxed, just like us! Together, just like us!"
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "Why do I always have to lie to please him?"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "sister",
-            "text": "YA! Kind of... I mean... There's room for improvement..."
-        },
-        {
-            "speaker": "dad",
-            "text": "Improvement?"
-        },
-        {
-            "speaker": "sister",
-            "text": "Always."
-        },
-        {
-            "speaker": "mom",
-            "text": "Oh, I am done with my improvements!"
-        },
-        {
-            "speaker": "dad",
-            "text": "I am assuming you mean your own improvements daughter, and you are right-"
-        },
-        {
-            "speaker": "dad",
-            "text": "look around you, you have a lot of work there, pumpkin girl."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "brother",
-                    "lines": [
-                        {
-                            "text": "ah! other humans are so limited and predictable.",
-                            "pause": 20
-                        },
-                        {
-                            "text": "Except for my Mother. I feel like holding her hand."
-                        }
-                    ]
-                },
-                { 
-                    "target" : "mom",
-                    "lines": [
-                        {
-                            "text": "My development show so well in my son.",
-                            "pause": 30
-                        },
-                        {
-                            "text": "If I could I would just give birth to him all over again.",
-                            "pause": 20
-                        },
-                        {
-                            "text": "I want to hold his hand.",
-                            "pause": 50
-                        },
-                        {
-                            "text": "Can I?"
-                        }
-                    ]
-                },
-                { 
-                    "target" : "dad",
-                    "lines": [
-                        {
-                            "text": "I'll look at my girl in silence a bit too long.",
-                            "pause": 30
-                        },
-                        {
-                            "text": "just to remind her who is boss here."
-                        }
-                    ]
-                },
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "Why is he looking at me like that again?",
-                            "pause": 30
-                        },
-                        {
-                            "text": "He seems to be seeing right through me. Is he a kind of god?"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "sister",
-            "text": "what do you want?"
         },
         {
             "speaker": "brother",
-            "text": "Father wants to know if you spend your days actually watching real people of flesh and blood-"
+            "text": "Your vision is too shallow my sister, but you intrigued me."
         },
         {
             "speaker": "brother",
-            "text": "or if what you think you’re seeing are just fragments of your distorted imagination?"
-        },
-        {
-            "speaker": "sister",
-            "text": "Distorted imagination? Are you suggesting that..."
-        },
-        {
-            "speaker": "mom",
-            "text": "Yes, you've heard quite well. If it were me, my father would have smacked me for lying like that-"
-        },
-        {
-            "speaker": "mom",
-            "text": "You are a very lucky young lady."
-        },
-        {
-            "speaker": "brother",
-            "text": "It is a horrible thing being fake in a terribly real world."
-        },
-        {
-            "triggers-effect": [
-                {
-                "effect": "fake",
-                "time": 7,
-                "fades": [0.15, 0.15]
-               }
-            ]
-        },
-        {
-            "speaker": "sister",
-            "text": "I want to go home."
-        },
-        {
-            "speaker": "dad",
-            "text": "What do you mean? You are home."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "I remember that I have fixed this frame before.",
-                            "pause": 40
-                        },
-                        {
-                            "text": "but now I'm afraid my own memories may be fake."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "sister",
-            "text": "[direction: Don't give up, fix it]",
-            "type": "direction"
+            "text": "Why do you think this bowl is so deep?"
         },
         {
             "type": "clear"
         },
         {
             "speaker": "sister",
-            "text": "Let's start over from the beginning."
+            "text": "We had so many dinners with this bowl of soup!"
+        },
+        {
+            "speaker": "sister",
+            "text": "I bet that many of our family memories are built around it."
+        },
+        {
+            "speaker": "dad",
+            "text": "It is indeed a very nice bowl."
         },
         {
             "in-ear" : [ 
                 { 
-                    "target" : "mom",
-                    "lines": [
-                        {
-                            "text": "I guess",
-                            "pause": 50
-                        },
-                        {
-                            "text": "there is always room for improvement.",
-                            "pause": 90
-                        },
-                        {
-                            "text": "I will never be done.",
-                            "pause": 40
-                        },
-                        {
-                            "text": "Great! Let's celebrate. But there is no champagne.",
-                            "pause": 20
-                        },
-                        {
-                            "text": "Who can I punish for that?"
-                        }
-                    ]
-                },
-                {
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "I feel now.",
-                            "pause": 50
-                        },
+                            "text": "I remember, One day there was a dog that barked so loud and made so much noise that I just went outside and let him drink some water from this bowl! Mom will kill me if she finds out about it!"
+                        }
+                    ]
+                },
+                { 
+                    "target" : "mom",
+                    "lines": [
                         {
-                            "text": "It is like I feel everything",
-                            "pause": 30
-                        },
-                        {
-                            "text": "Without expectations, one can not be disappointed.",
-                            "pause": 30
-                        },
-                        {
-                            "text": "Real can be fake and fake can be real."
+                            "text": "His Parents got us this bowl for our wedding, I remember how his mom hugged me and kissed me that day. I always liked this bowl, I never liked my mom."
                         }
                     ]
                 },
@@ -1232,19 +675,7 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "Something is changed.",
-                            "pause": 150
-                        },
-                        {
-                            "text": "Even though everything feels more intense",
-                            "pause": 60
-                        },
-                        {
-                            "text": "it also feels much lighter.",
-                            "pause": 20
-                        },
-                        {
-                            "text": "It feels gorgeously complex, just like me."
+                            "text": "Mom is always so careful about this bowl. Once I almost dropped it and I felt like the bowl itself drops through my throat and into my stomach, it filled me with anxiety. I've been trying not to touch it ever since."
                         }
                     ]
                 },
@@ -1252,23 +683,315 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "This is all too familiar.",
-                            "pause": 100
-                        },
-                        {
-                            "text": "I've been here before",
-                            "pause": 30
-                        },
-                        {
-                            "text": "I've seen it all before because I know everything",
-                            "pause": 40
-                        },
-                        {
-                            "text": "What a strange existence"
+                            "text": "The best food she makes is in this bowl. Whenever she uses it, I know she is in a good mood and extra thought was given to dinner. We did have a lot of family moments with this bowl, like that day at the beach."
                         }
                     ]
                 }
             ]
+        },
+        {
+            "speaker": "mom",
+            "text": "It’s a nice bowl. But there is only one way to remember it."
+        },
+        {
+            "speaker": "sister",
+            "text": "there is? what?"
+        },
+        {
+            "speaker": "mom",
+            "text": "It is a bowl of soup."
+        },
+        {
+            "speaker": "sister",
+            "text": "oh, I always thought a memory can come from both directions."
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "dad",
+                    "lines": [
+                        {
+                            "text": "what is she aiming at? I don't think we are at all sitting at the same table."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "speaker": "mom",
+            "text": "Yes, the right direction and the wrong one."
+        },
+        {
+            "speaker": "dad",
+            "text": "Very true. But I do remember a particular day with this bowl of soup"
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "sister",
+                    "lines": [
+                        {
+                            "text": "He is trying to see me, the only one that doesn't give up, I'll pass him that bowl."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "speaker": "sister",
+            "text": "Here you go daddy, pour yourself some soup."
+        },
+        {
+            "speaker": "mom",
+            "text": "You remembered something?"
+        },
+        {
+            "speaker": "dad",
+            "text": "Very true. Do you remember the day that we took grandma to the beach?"
+        },
+        {
+            "speaker": "sister",
+            "text": "I remember! The beach was so beautiful that day. And so is the sun!"
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "sister",
+                    "lines": [
+                        {
+                            "text": "The sun is like this candle it should shine on that bowl, let me move it closer."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "speaker": "brother",
+            "text": "Mother, I think you had flowers there with you."
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "brother",
+                    "lines": [
+                        {
+                            "text": "Colorful flowers like a reflection of light on water, like the water in our glasses. Those glasses should reflect our beautiful mother, I will move them closer to her."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "clear"
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "dad",
+                    "lines": [
+                        {
+                            "text": "Where is the pepper grinder? The food has no taste, I have to bring it over."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "speaker": "sister",
+            "text": "Yes she had them! she had flowers!"
+        },
+        {
+            "speaker": "brother",
+            "text": "Dad, can you pass me the pepper grinder?"
+        },
+        {
+            "speaker": "dad",
+            "text": "No, can't you see that we are in the middle of a process?"
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "mom",
+                    "lines": [
+                        {
+                            "text": "Why doesn't he pass him the pepper grinder?"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "speaker": "mom",
+            "text": "Here you go son"
+        },
+        {
+            "speaker": "sister",
+            "text": "And you brother, you swam a lot? Right?"
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "mom",
+                    "lines": [
+                        {
+                            "text": "Does my food have no taste?"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "speaker": "brother",
+            "text": "I don't remember much but it sounds quite right!"
+        },
+        {
+            "speaker": "sister",
+            "text": "I think so! You are such a great swimmer. You found all those wonderful creatures!"
+        },
+        {
+            "speaker": "sister",
+            "text": "I think you even spotted a boat that day! No it was a huge ship!"
+        },
+        {
+            "speaker": "dad",
+            "text": "Really? I don’t remember that."
+        },
+        {
+            "speaker": "sister",
+            "text": "Oh yes! a big big one! I remember it because grandma yelled-"
+        },
+        {
+            "speaker": "sister",
+            "text": "'watch out from the big big ship, it will take you as well' and we all had such a good laugh!"
+        },
+        {
+            "speaker": "mom",
+            "text": "You have such a vivid memory."
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "mom",
+                    "lines": [
+                        {
+                            "text": "Why are the candles not in the center of the table? let me fix it."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "speaker": "sister",
+            "text": "I try to keep track of what makes us happy!"
+        },
+        {
+            "speaker": "mom",
+            "text": "But you have forgotten everything else, you cleaned it up."
+        },
+        {
+            "speaker": "dad",
+            "text": "That's the creepiest thing about stories."
+        },
+        {
+            "speaker": "brother",
+            "text": "Every time you tell a story you forget it more."
+        },
+        {
+            "speaker": "mom",
+            "text": "Son is there any soup left? can you pass me that bowl?"
+        },
+        {
+            "type": "clear"
+        },
+        {
+            "speaker": "sister",
+            "text": "Is there a missing part I forgot about?"
+        },
+        {
+            "speaker": "mom",
+            "text": "You forgot the sound that people make when they are grieving."
+        },
+        {
+            "speaker": "mom",
+            "text": "In your memory a picture of a crying face and a smiling face look very much the same."
+        },
+        {
+            "speaker": "dad",
+            "text": "It is in the smell of the bowl-"
+        },
+        {
+            "speaker": "dad",
+            "text": "We were coming back from your grandpa's funeral that day, scattering his ashes in the ocean."
+        },
+        {
+            "speaker": "brother",
+            "text": "Ashes to ashes, dust to dust from this bowl arose."
+        },
+        {
+            "speaker": "sister",
+            "text": "Now I remember the rest of it."
+        },
+        {
+            "speaker": "mom",
+            "text": "You should be more careful with how you construct your fragmented stories."
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "sister",
+                    "lines": [
+                        {
+                            "text": "Is there another way I should have constructed it? Other things I have forgotten that were over there and I should bring them over?"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "clear"
+        },
+        {
+            "speaker": "sister",
+            "text": "Memories can be played. It is just likely that stories will get mixed up in stories."
+        },
+        {
+            "speaker": "dad",
+            "text": "When you close your eyes what do you see?"
+        },
+        {
+            "speaker": "sister",
+            "text": "Nothing"
+        },
+        {
+            "speaker": "mom",
+            "text": "So have no fear of perfection - you will never get it."
+        },
+        {
+            "speaker": "sister",
+            "text": "And when your eyes open you see nothing."
+        },
+        {
+            "speaker": "sister",
+            "text": "I'll just turn on the light."
+        },
+        {
+            "type": "clear"
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "sister",
+                    "lines": [
+                        {
+                            "text": "What is light for if not to say something about our own shadows."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "speaker": "brother",
+            "text": "Sister, stop fooling us. We are all hungry and thirsty for concrete images."
         },
         {
             "speaker": "dad",
@@ -1276,99 +999,82 @@
         },
         {
             "speaker": "sister",
-            "text": "Daddy I want to tell you Apples, cherries, pain."
+            "text": "Daddy, apples, worm, dreams."
         },
         {
-            "type": "clear"
-        },
-        {
-            "speaker": "sister",
-            "text": "But it's just Mothers, Fathers, Brothers and Sisters."
-        },
-        {
-            "speaker": "sister",
-            "text": "Something close to who we are-"
-        },
-        {
-            "speaker": "sister",
-            "text": "I can see clearly now. It is all distorted."
-        },
-        {
-            "speaker": "sister",
-            "text": "All this time, I was trying to make us fit in the mold."
-        },
-        {
-            "speaker": "sister",
-            "text": "Generate the perfect image. Of a perfect family."
-        },
-        {
-            "type": "clear"
-        },
-        {
-            "speaker": "dad",
-            "text": "We are a family."
-        },
-        {
-            "speaker": "mom",
-            "text": "You've been staring at other people's homes."
-        },
-        {
-            "type": "clear"
-        },
-        {
-            "speaker": "mom",
-            "text": "Yearning for what you can't have."
-        },
-        {
-            "type": "clear"
-        },
-        {
-            "speaker": "sister",
-            "text": "No! Trying to learn how to belong."
-        },
-        {
-            "type": "clear"
-        },
-        {
-            "speaker": "sister",
-            "text": "But now I understand, I cannot adjust you anymore."
+            "speaker": "mother",
+            "text": "Yes, it is almost time to sleep. The best time of the day."
         },
         {
             "speaker": "brother",
-            "text": "Are you turning into the Buddha, sister?"
-        },
-        {
-            "speaker": "sister",
-            "text": "You are funny but no! There is so much noise in me. Nothing is still."
-        },
-        {
-            "type": "clear"
-        },
-        {
-            "speaker": "dad",
-            "text": "Daughter, We were here to have a nice dinner. Just stay focused."
-        },
-        {
-            "type": "clear"
+            "text": "Apples turn into liberation-"
         },
         {
             "speaker": "brother",
-            "text": "Feelings are the shadow of our thoughts. Darker and emptier."
+            "text": "Worms into desperation-"
+        },
+        {
+            "speaker": "brother",
+            "text": "Dreams to longing after your own happiness."
+        },
+        {
+            "speaker": "sister",
+            "text": "Your mind is overwhelmed by dreams and plans."
+        },
+        {
+            "speaker": "sister",
+            "text": "What am I?"
         },
         {
             "speaker": "mom",
-            "text": "You can't run from what's inside your head. But TV might help."
+            "text": "This is the play of your own mind. Leave attachments behind."
+        },
+        {
+            "speaker": "sister",
+            "text": "No solid self."
+        },
+        {
+            "speaker": "dad",
+            "text": "Longing after your own happiness."
+        },
+        {
+            "speaker": "dad",
+            "text": "Trapped in the flow of your own thought."
+        },
+        {
+            "speaker": "sister",
+            "text": "The clock stopped."
         },
         {
             "type": "clear"
         },
         {
+            "speaker": "sister",
+            "text": "Daddy?"
+        },
+        {
             "speaker": "dad",
-            "text": "For me sugar is what helps. Let's have dessert and watch TV."
+            "text": "Pumpkin?"
         },
         {
             "speaker": "sister",
-            "text": "True."
+            "text": "Why are there families at all and not nothing?"
+        },
+        {
+            "speaker": "dad",
+            "text": "Oh, that is a tricky one, Mother?"
+        },
+        {
+            "speaker": "mom",
+            "text": "They keep you from getting lost in the noise."
+        },
+        {
+            "speaker": "sister",
+            "text": "What ground do families come from?"
+        },
+        {
+            "speaker": "mom",
+            "text": "Homes."
         },
         {
             "in-ear" : [ 
@@ -1376,15 +1082,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "It is time, to tell my story now.",
-                            "pause": 80
-                        },
-                        {
-                            "text": "It is my time to share.",
-                            "pause": 100
-                        },
-                        {
-                            "text": "Let's move them to the living-room."
+                            "text": "It is time, to tell my story now. It is my time to share. Let's move them to the living-room."
                         }
                     ]
                 }
