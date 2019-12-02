@@ -157,50 +157,6 @@
              ]
          },
         {
-            "speaker": "house",
-             "lines": [
-                {
-                    "text": "Text will soon appear on the table",
-                    "pause": 50
-                },
-                {
-                    "text": "It is for you to read",
-                    "pause": 100
-                },
-                {
-                    "text": "Don't worry pictures will follow",
-                    "pause": 80
-                },
-                {
-                    "text": "as there are no good stories without pictures",
-                    "pause": 10
-                },
-                {
-                    "text": "The best way to explain the story",
-                    "pause": 50
-                },
-                {
-                    "text": "of this family",
-                    "pause": 10
-                },
-                {
-                    "text": "is to act it out",
-                    "pause": 70
-                },
-                {
-                    "text": "Treat this text as your own words",
-                    "pause": 70
-                },
-                {
-                    "text": "no more no less",
-                    "pause": 90
-                },
-                {
-                    "text": "Bon appetit!"
-                }
-            ]
-        },
-        {
             "speaker": "dad",
             "text": "Mother, this looks delicious! What are we eating tonight?"
         },
