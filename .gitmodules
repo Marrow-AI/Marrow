@@ -1,3 +1,9 @@
 [submodule "idfa/audio/TTS"]
 	path = idfa/audio/TTS
 	url = https://github.com/mozilla/TTS
+[submodule "gan/gan-deeplab-spade/SPADE"]
+	path = gan/gan-deeplab-spade/SPADE
+	url = https://github.com/Avnerus/SPADE.git
+[submodule "gan/gan-deeplab-spade/deeplab-pytorch"]
+	path = gan/gan-deeplab-spade/deeplab-pytorch
+	url = https://github.com/Avnerus/deeplab-pytorch.git
