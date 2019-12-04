@@ -89,6 +89,11 @@
                 texColor.g = step(texColor.g, _Threshold);
                 texColor.b = step(texColor.b, _Threshold);
                 texColor.a = _Transparency;
+                
+                 if (texColor.r == 1.0) {
+                    IN.color.a = 0.0;
+                }
+
                
                 texColor = all(texColor == _Color1in) ? _Color1out : texColor;
 
