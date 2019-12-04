@@ -15,6 +15,7 @@ class Script:
         if load_nlp:
             self.nlp = spacy.load('en_core_web_sm')
         self.awaiting_index = -1
+        self.script_file = script_file
         self.load_data(script_file)
 
     def load_data(self, script_file):
@@ -22,7 +23,7 @@ class Script:
             self.data = json.load(file)
 
     def reset(self):
-        self.load_data()
+        self.load_data(self.script_file)
         self.awaiting_index = 0
         self.awaiting = self.data["script-lines"][self.awaiting_index]
         self.update()
