@@ -7,3 +7,6 @@
 [submodule "gan/gan-deeplab-spade/deeplab-pytorch"]
 	path = gan/gan-deeplab-spade/deeplab-pytorch
 	url = https://github.com/Avnerus/deeplab-pytorch.git
+[submodule "unity-tests/keijiro/Akvfx"]
+	path = unity-tests/keijiro/Akvfx
+	url = https://github.com/Raycasters/Akvfx
