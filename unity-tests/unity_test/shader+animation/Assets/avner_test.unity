@@ -326,7 +326,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cadade9d79e66642a6893ac902ddf32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sourceName: XMG-FUSION-15 (gst-launch-1)
+  _sourceName: INTERACT-R8 (python3)
   _targetTexture: {fileID: 8400000, guid: 9618a0461c9977ec097af493ce237be9, type: 2}
   _targetRenderer: {fileID: 0}
   _targetMaterialProperty: _MainTex
