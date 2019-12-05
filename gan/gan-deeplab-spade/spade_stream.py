@@ -193,6 +193,9 @@ class Gan(Thread):
 
             #print(labelmap.shape)
 
+            #Bottle to potted plant
+            labelmap[labelmap == 43] = 63
+
             #colormap = colorize(labelmap)
             uniques = np.unique(labelmap)
             instance_counter = 0
