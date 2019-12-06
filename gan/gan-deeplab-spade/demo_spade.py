@@ -283,7 +283,7 @@ def live(config_path, model_path, cuda, crf, camera_id):
         #labelmap[labelmap == 66] = 154
         #labelmap[labelmap == 80] = 154
         #Bottle to flower?
-        #labelmap[labelmap == 43] = 118
+        labelmap[labelmap == 43] = 118
         # Person to rock?
         #labelmap[labelmap == 0] = 168
         #dog to person

@@ -15,6 +15,7 @@ import scipy
 from script import Script
 
 parser = argparse.ArgumentParser(description='Marrow line generator using cloned voices')
+parser.add_argument('character', metavar='Character name', help='Character name')
 parser.add_argument('voice_sample', metavar='Voice sample file', help='Voice sample file')
 args = parser.parse_args()
 
@@ -50,21 +51,22 @@ if __name__ == '__main__':
                 inears = line["in-ear"]
                 for inear in inears:
                     target = inear["target"]
-                    utterance = inear["lines"]
-                    texts = [part['text'] for part in utterance]
-                    embeds = np.stack([embed] * len(texts))
-                    print(texts)
-                    pauses = [(part['pause'] / 10) if 'pause' in part else 1 for part in utterance]
-                    specs = synthesizer.synthesize_spectrograms(texts, embeds)
-                    breaks = [spec.shape[1] for spec in specs]
-                    b_ends = np.cumsum(np.array(breaks) * Synthesizer.hparams.hop_size)
-                    b_starts = np.concatenate(([0], b_ends[:-1]))
-                    spec = np.concatenate(specs, axis=1)
-                    wav = vocoder.infer_waveform(spec)
-                    wavs = [wav[start:end] for start, end, in zip(b_starts, b_ends)]
-                    breaks = [np.zeros(int(0.15 * Synthesizer.sample_rate * pause_length)) for pause_length in pauses] 
-                    final_wav = np.concatenate([i for w, b in zip(wavs, breaks) for i in (w, b)])
-                    scipy.io.wavfile.write("results/in_ear_{}_{}.wav".format(target,index), Synthesizer.sample_rate, wav)
+                    if target == args.character:
+                        utterance = inear["lines"]
+                        texts = [part['text'] for part in utterance]
+                        embeds = np.stack([embed] * len(texts))
+                        print(texts)
+                        pauses = [(part['pause'] / 10) if 'pause' in part else 1 for part in utterance]
+                        specs = synthesizer.synthesize_spectrograms(texts, embeds)
+                        breaks = [spec.shape[1] for spec in specs]
+                        b_ends = np.cumsum(np.array(breaks) * Synthesizer.hparams.hop_size)
+                        b_starts = np.concatenate(([0], b_ends[:-1]))
+                        spec = np.concatenate(specs, axis=1)
+                        wav = vocoder.infer_waveform(spec)
+                        wavs = [wav[start:end] for start, end, in zip(b_starts, b_ends)]
+                        breaks = [np.zeros(int(0.15 * Synthesizer.sample_rate * pause_length)) for pause_length in pauses] 
+                        final_wav = np.concatenate([i for w, b in zip(wavs, breaks) for i in (w, b)])
+                        scipy.io.wavfile.write("results/in_ear_{}_{}.wav".format(target,index), Synthesizer.sample_rate, wav)
 
                     #moz_tts.say(utterance, "gan_new/in_ear_{}_{}.wav".format(target,index))
         except Exception as e:
