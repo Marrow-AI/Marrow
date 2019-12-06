@@ -128,10 +128,6 @@ class Engine:
 
         self.mental_state = MentalState()
 
-        #google_speech = GoogleSpeech()
-        #google_speech.say("Hi")
-        #asyncio.get_event_loop().run_until_complete(ms_speech.say("Pewdiepie"))
-
         self.speaker_counter = {
             "dad": 0,
             "mom": 0,
@@ -140,14 +136,11 @@ class Engine:
         }
 
 
-
         self.time_check()
 
         self.main_loop = asyncio.get_event_loop()
 
         self.queue = janus.Queue(loop=self.main_loop)
-
-        #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
 
         self.server = Server(
                 self.gain_update,
@@ -163,7 +156,10 @@ class Engine:
         if not args.no_speech: 
             print("Consuming speech")
             self.recognizer = Recognizer(self.queue.sync_q, self.args)
+            fut = self.main_loop.run_in_executor(None, self.recognizer.start)
             self.main_loop.run_until_complete(self.consume_speech())
+           
+
 
     def schedule_osc(self, timeout, client, command, args):
         osc_command = ScheduleOSC(timeout,client, command, args, self.del_osc )
@@ -692,12 +688,11 @@ class Engine:
         self.script.reset()
         self.t2i_client.send_message("/control/start",1)
         asyncio.ensure_future(self.server.control("start"))
-        self.t2i_client.send_message("/table/dinner", "Hello world")
         self.t2i_client.send_message("/table/showplates", 1)
         self.t2i_client.send_message("/table/fadein", 1)
         self.t2i_client.send_message("/spotlight", "mom")
+        self.t2i_client.send_message("/table/dinner", "Pasta")
         self.start_script()
-
 
     def start_noise(self):
         self.send_noise = True

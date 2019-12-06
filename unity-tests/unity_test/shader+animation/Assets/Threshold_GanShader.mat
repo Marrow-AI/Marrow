@@ -20,16 +20,17 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 8400000, guid: 59ab50c6f70ec424da4c81243889eed5, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - PixelSnap: 0
+    - _Blend: 0.02
     - _ClusterOne: 0
     - _ClusterTwo: 0
-    - _Threshold: 1.15
-    - _Transparency: 0.75
+    - _Threshold: 0.0005
+    - _Transparency: 0.65
     m_Colors:
     - _Color1in: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1out: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
-    - _ColorTint: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
+    - _Color1out: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
+    - _ColorTint: {r: 1, g: 1, b: 1, a: 1}

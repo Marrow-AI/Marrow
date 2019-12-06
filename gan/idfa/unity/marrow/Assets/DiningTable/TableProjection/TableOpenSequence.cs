@@ -150,9 +150,9 @@ namespace Marrow
 
             // Plates
             plateNormalMaterial.SetFloat("_Blend", 0);
-			plateNormalMaterial.SetFloat("_Fade", 1);
+			//plateNormalMaterial.SetFloat("_Fade", 1);
 			plateTransparentMaterial.SetFloat("_Blend", 0);
-			plateTransparentMaterial.SetFloat("_Fade", 1);
+			//plateTransparentMaterial.SetFloat("_Fade", 1);
 
 			// toggle off stuff
             title.SetActive(false);

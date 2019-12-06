@@ -102,14 +102,15 @@ namespace Marrow
 
 		public void OnAttnGanInputUpdate(string inputText)
         {
-			//Debug.Log("OnAttnGanInputUpdate, startText2Image: " + startText2Image 
-			          //+ ", socketIsConnected: " + socketIsConnected
-			          //+ ", tableOpeningEnded: " + tableOpeningEnded);
+			Debug.Log("OnAttnGanInputUpdate, startText2Image: " + startText2Image 
+			          + ", socketIsConnected: " + socketIsConnected
+			          + ", tableOpeningEnded: " + tableOpeningEnded);
 			if (!startText2Image || !socketIsConnected || !tableOpeningEnded)
 				return;
 			if ((Time.time - lastSpeechTimecode) <= speechTimerLength)
                 return;
 
+            Debug.Log("Requesting");
 			socketCommunication.EmitAttnGanRequest(inputText);
             
 			lastSpeechTimecode = Time.time;
