@@ -109,3 +109,4 @@ temp.csv
 *.blend
 gan/generate-cloned/*.wav
 gan/gan-stream/snapshots
+gan/generate-cloned/results
