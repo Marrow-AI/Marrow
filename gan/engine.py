@@ -28,9 +28,14 @@ from mental_state import MentalState
 from google_recognizer import Recognizer
 
 import wave
+import pyaudio
 import contextlib
-
 import math
+
+import sounddevice as sd
+import soundfile as sf
+
+import functools
 
 # Load English tokenizer, tagger, parser, NER and word vectors
 #nlp = spacy.load('en')
@@ -126,11 +131,14 @@ class Engine:
         #self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
         self.voice_client = udp_client.SimpleUDPClient("172.16.195.167", 8000)
 
-        self.mental_state = MentalState()
+        #self.mental_state = MentalState()
 
         #google_speech = GoogleSpeech()
         #google_speech.say("Hi")
         #asyncio.get_event_loop().run_until_complete(ms_speech.say("Pewdiepie"))
+
+        self.audio_interface = pyaudio.PyAudio()
+
 
         self.speaker_counter = {
             "dad": 0,
@@ -140,30 +148,47 @@ class Engine:
         }
 
 
+        self.in_ear_devices = {
+            "dad": ['Headphones (Trekz Air by AfterS',2], #blue
+            "mom": ['Headphones (2- Trekz Air by Aft',3], #red
+            "brother": ['Headphones (3- Trekz Air by Aft',4], #black
+            "sister": ['Headphones (Air by AfterShokz S',5] #green
+        }
+
+
 
         self.time_check()
 
         self.main_loop = asyncio.get_event_loop()
 
-        self.queue = janus.Queue(loop=self.main_loop)
-
-        #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
+        #self.queue = janus.Queue(loop=self.main_loop)
+        self.queue = asyncio.Queue()
 
         self.server = Server(
                 self.gain_update,
-                self.queue.async_q,
+                self.queue,
                 self.control,
                 self.mood_update,
                 self.pix2pix_update
         )
 
+
+
+
+    async def start(self):
         print("Starting server")
-        self.main_loop.run_until_complete(self.server.start())
+        tasks = []
+        tasks.append(asyncio.create_task(self.server.start()))
 
         if not args.no_speech: 
             print("Consuming speech")
-            self.recognizer = Recognizer(self.queue.sync_q, self.args)
-            self.main_loop.run_until_complete(self.consume_speech())
+            self.recognizer = Recognizer(self.queue, self.args)
+            #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
+            #self.main_loop.run_until_complete(self.consume_speech())
+            tasks.append(asyncio.create_task(self.consume_speech()))
+
+        await asyncio.gather(*tasks, return_exceptions=True)
+
 
     def schedule_osc(self, timeout, client, command, args):
         osc_command = ScheduleOSC(timeout,client, command, args, self.del_osc )
@@ -191,13 +216,16 @@ class Engine:
             self.func_sched[uid].cancel()
         self.func_sched.clear()
 
-    def start_google(self):
+    def start_google(self, device_index):
         print("Resume listening")
-        fut = self.main_loop.run_in_executor(None, self.recognizer.start)
+        self.main_loop.create_task(self.recognizer.start(self.audio_interface, device_index))
+        print("Resumed")
+
 
     async def consume_speech(self):
         while True:
-            item = await self.queue.async_q.get()
+            item = await self.queue.get()
+            print("Item!")
             if item["action"] == "speech":
                 self.speech_text(item["text"])
             else:
@@ -494,7 +522,8 @@ class Engine:
             self.show_open_line(self.script.awaiting)
 
         if "in-ear" in self.script.awaiting:
-            self.play_in_ear(self.script.awaiting["in-ear"])
+            self.pause_listening()
+            self.schedule_function(3, self.play_in_ear)
 
     def end(self):
         self.state = "END"
@@ -507,18 +536,65 @@ class Engine:
         self.schedule_function(10, self.stop)
         #self.pix2pix_client.send_message("/gan/end",1)
 
-    def play_in_ear(self,data):
+
+
+    def play_in_ear(self):
+        data = self.script.awaiting["in-ear"]
         print("Play in ear! {}".format(data))
         for inear in data:
-            target = inear["target"]
-            index = self.speaker_counter[target] + 36
-            channel = SPEAKER_CHANNELS[target]
-            print("Send OSC on channel {} note index {}".format(channel, index))
-            #self.voice_client.send_message("/midi/note/{}".format(16),[index])
-            self.voice_client.send_message("/midi/note/{}".format(channel),[index,127, 1])
-            self.schedule_osc(0.5, self.voice_client,"/midi/note/{}".format(channel), [index,127,0])
-            #self.voice_client.send_message("/test/{}".format(16),[index, 127.0, 1])
-            self.speaker_counter[target] = self.speaker_counter[target] + 1
+            try:
+                target = inear["target"]
+                output_device = self.in_ear_devices[target][0]
+                print("Play in-ear: {}-{} on {}".format(target, self.script.awaiting_index,output_device))
+
+                print("----------------------output device list---------------------")
+                info = self.audio_interface.get_host_api_info_by_index(0)
+                numdevices = info.get('deviceCount')
+                for i in range(0, numdevices):
+                   if (self.audio_interface.get_device_info_by_host_api_device_index(0, i).get('maxOutputChannels')) > 1:
+                       device = self.audio_interface.get_device_info_by_host_api_device_index(0, i)
+                        #print(device)
+                       print("output Device id ", i, " - ", self.audio_interface.get_device_info_by_host_api_device_index(0, i).get('name'))
+
+                print("-------------------------------------------------------------")
+                
+                wf = wave.open('in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index), 'rb')
+
+                def callback(in_data, frame_count, time_info, status):
+                    data = wf.readframes(frame_count)
+                    print("Audio status: {}".format(status))
+                    return (data, pyaudio.paContinue)
+
+                # open stream using callback (3)
+                stream = self.audio_interface.open(format=self.audio_interface.get_format_from_width(wf.getsampwidth()),
+                                channels=wf.getnchannels(),
+                                rate=wf.getframerate(),
+                                output=True,
+                                output_device_index=17,
+                                stream_callback=callback)
+
+                # start the stream (4)
+                stream.start_stream()
+
+
+                #data, fs = sf.read('in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index), dtype='float32')
+                #sd.play(data, fs, device=17)
+
+                
+                """
+                index = self.speaker_counter[target] + 36
+                channel = SPEAKER_CHANNELS[target]
+                print("Send OSC on channel {} note index {}".format(channel, index))
+                #self.voice_client.send_message("/midi/note/{}".format(16),[index])
+                self.voice_client.send_message("/midi/note/{}".format(channel),[index,127, 1])
+                self.schedule_osc(0.5, self.voice_client,"/midi/note/{}".format(channel), [index,127,0])
+                #self.voice_client.send_message("/test/{}".format(16),[index, 127.0, 1])
+                """
+            except Exception as e:
+                print("Audio error!")
+                print(e)
+            finally:
+                self.speaker_counter[target] = self.speaker_counter[target] + 1
 
     def show_open_line(self,data):
         print("Show open line! {}".format(data))
@@ -804,8 +880,9 @@ class Engine:
                     "/script",
                     [self.script.awaiting["speaker"], self.script.awaiting_text]
             )
-
-            print("{}, PLEASE SAY: {}".format(self.script.awaiting["speaker"], self.script.awaiting_text))
+            device_index = self.in_ear_devices[self.script.awaiting["speaker"]][1]
+            print("{} (index {}), PLEASE SAY: {}".format(self.script.awaiting["speaker"], device_index, self.script.awaiting_text))
+            self.start_google(device_index)
 
     def load_effect(self, data):
         print("Load effect {}".format(data["effect"]))
@@ -837,7 +914,7 @@ if __name__ == '__main__':
 
     try:
         engine = Engine(args)
-        asyncio.get_event_loop().run_forever()
+        asyncio.run(engine.start())
     except KeyboardInterrupt:
         print("Stopping everything")
         args.stop = True

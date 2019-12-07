@@ -97,10 +97,11 @@ class MicrophoneStream(object):
 
 
 
-class Recognizer():
+class Recognizer(Thread):
 
     def __init__(self, queue, args):
 
+        Thread.__init__(self)
         self.client = speech.SpeechClient()
         self.args = args
         self.queue = queue
@@ -127,7 +128,7 @@ class Recognizer():
         print("Stopping recognition")
         self.stop_recognition = True
 
-    async def start(self, audio_interface, device_index):
+    def start(self, audio_interface, device_index):
         self.stop_recognition = False
         self.device_index = device_index
         self.audio_interface = audio_interface
@@ -183,7 +184,7 @@ class Recognizer():
 
                 if (transcript != self.last_result):
                     print("({})".format(transcript))
-                    self.queue.put_nowait({
+                    self.queue.put({
                         "action": "mid-speech",
                         "text": transcript
                     })
@@ -191,7 +192,7 @@ class Recognizer():
 
             else:
                 print(" = {}".format(transcript))
-                self.queue.put_nowait({
+                self.queue.put({
                     "action": "speech",
                     "text": transcript
                 })
