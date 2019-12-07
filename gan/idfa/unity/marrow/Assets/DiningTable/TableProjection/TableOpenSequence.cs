@@ -64,6 +64,11 @@ namespace Marrow
         private int textureSwapCount;
         private WaitForSeconds stayWait;
 
+        //animated plates color
+        public float speed = 0.5f;
+        public Color startColor;
+        public Color endColor;
+        float startTime;
 
         private void OnEnable()
         {            
@@ -87,6 +92,7 @@ namespace Marrow
 
         void Start()
         {
+
             textMeshProTitle = title.GetComponent<TextMeshPro>();
 			textMeshProSpeechDetection = speechDetection.GetComponent<TextMeshPro>();
 			textMeshProScript = scriptText.GetComponent<TextMeshPro>();
@@ -150,10 +156,10 @@ namespace Marrow
 
             // Plates
             plateNormalMaterial.SetFloat("_Blend", 0);
-			//plateNormalMaterial.SetFloat("_Fade", 1);
-			plateTransparentMaterial.SetFloat("_Blend", 0);
-			//plateTransparentMaterial.SetFloat("_Fade", 1);
-
+            //plateNormalMaterial.SetFloat("_Fade", 1);
+            plateTransparentMaterial.SetFloat("_Blend", 0);
+            plateTransparentMaterial.SetFloat("_Fade", 1);
+           
 			// toggle off stuff
             title.SetActive(false);
             speechDetection.SetActive(false);
@@ -343,30 +349,32 @@ namespace Marrow
 		IEnumerator ShowPlateSequence()
 		{
 			platesOnlySpotlight.ToggleOn(true, .5f, 2f, 1f);
+          
+            // v1 - Play plates in animation
 
-			// v1 - Play plates in animation
-            /*
             for (int i = 0; i < plates.Length; i++)
             {
 				plates[i].SetActive(true);
-                LeanTween.moveZ(plates[i], platesOriginalPosition[i].z, Random.Range(1f, 1.5f))
-				         .setDelay(i*Random.Range(0.5f, 1f))
-				         .setOnComplete(()=>{  })
-                         .setEaseOutBack();
+                plates[i].GetComponent<Renderer>().material = plateTransparentMaterial;
+                plateTransparentMaterial.color = startColor;
+
             }
-            */
+            LeanTween.value(plates[0], startColor, Color.white, 10f)
+                .setOnUpdate((Color col) => { startColor = col; });
+
+            yield return new WaitForSeconds(10f);
 
             // V2 - Fade in plates
-			for (int i = 0; i < plates.Length; i++)
-            {
-				plates[i].GetComponent<Renderer>().material = plateTransparentMaterial;
-				plateTransparentMaterial.color = Color.clear;
-                plates[i].SetActive(true);
-            }
-			LeanTween.value(plates[0], Color.clear, Color.white, 2f)
-					 .setOnUpdate((Color col) => { plateTransparentMaterial.color = col; });
+   //         for (int i = 0; i < plates.Length; i++)
+   //         {
+			//	plates[i].GetComponent<Renderer>().material = plateTransparentMaterial;
+			//	plateTransparentMaterial.color = Color.clear;
+   //             plates[i].SetActive(true);
+   //         }
+			//LeanTween.value(plates[0], Color.clear, Color.white, 2f)
+			//		 .setOnUpdate((Color col) => { plateTransparentMaterial.color = col; });
 
-			yield return new WaitForSeconds(2.5f);
+			//yield return new WaitForSeconds(2.5f);
 
 			for (int i = 0; i < plates.Length; i++)
 				plates[i].GetComponent<Renderer>().material = plateNormalMaterial;
