@@ -133,6 +133,7 @@ class Engine:
 
         #self.mental_state = MentalState()
 
+<<<<<<< HEAD
         #google_speech = GoogleSpeech()
         #google_speech.say("Hi")
         #asyncio.get_event_loop().run_until_complete(ms_speech.say("Pewdiepie"))
@@ -140,6 +141,8 @@ class Engine:
         self.audio_interface = pyaudio.PyAudio()
 
 
+=======
+>>>>>>> 0f24d9fff3dd1d10c304371c1b8215171f1eb7b0
         self.speaker_counter = {
             "dad": 0,
             "mom": 0,
@@ -148,6 +151,7 @@ class Engine:
         }
 
 
+<<<<<<< HEAD
         self.in_ear_devices = {
             "dad": ['Headphones (Trekz Air by AfterS',2], #blue
             "mom": ['Headphones (2- Trekz Air by Aft',3], #red
@@ -157,12 +161,18 @@ class Engine:
 
 
 
+=======
+>>>>>>> 0f24d9fff3dd1d10c304371c1b8215171f1eb7b0
         self.time_check()
 
         self.main_loop = asyncio.get_event_loop()
 
+<<<<<<< HEAD
         #self.queue = janus.Queue(loop=self.main_loop)
         self.queue = asyncio.Queue()
+=======
+        self.queue = janus.Queue(loop=self.main_loop)
+>>>>>>> 0f24d9fff3dd1d10c304371c1b8215171f1eb7b0
 
         self.server = Server(
                 self.gain_update,
@@ -182,12 +192,19 @@ class Engine:
 
         if not args.no_speech: 
             print("Consuming speech")
+<<<<<<< HEAD
             self.recognizer = Recognizer(self.queue, self.args)
             #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
             #self.main_loop.run_until_complete(self.consume_speech())
             tasks.append(asyncio.create_task(self.consume_speech()))
 
         await asyncio.gather(*tasks, return_exceptions=True)
+=======
+            self.recognizer = Recognizer(self.queue.sync_q, self.args)
+            fut = self.main_loop.run_in_executor(None, self.recognizer.start)
+            self.main_loop.run_until_complete(self.consume_speech())
+           
+>>>>>>> 0f24d9fff3dd1d10c304371c1b8215171f1eb7b0
 
 
     def schedule_osc(self, timeout, client, command, args):
@@ -768,12 +785,11 @@ class Engine:
         self.script.reset()
         self.t2i_client.send_message("/control/start",1)
         asyncio.ensure_future(self.server.control("start"))
-        self.t2i_client.send_message("/table/dinner", "Hello world")
         self.t2i_client.send_message("/table/showplates", 1)
         self.t2i_client.send_message("/table/fadein", 1)
         self.t2i_client.send_message("/spotlight", "mom")
+        self.t2i_client.send_message("/table/dinner", "Pasta")
         self.start_script()
-
 
     def start_noise(self):
         self.send_noise = True

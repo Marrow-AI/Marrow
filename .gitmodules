@@ -10,3 +10,6 @@
 [submodule "unity-tests/keijiro/Akvfx"]
 	path = unity-tests/keijiro/Akvfx
 	url = https://github.com/Raycasters/Akvfx
+[submodule "gan/gan-stream/stylegan"]
+	path = gan/gan-stream/stylegan
+	url = https://github.com/NVlabs/stylegan.git

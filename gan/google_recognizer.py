@@ -80,7 +80,7 @@ class MicrophoneStream(object):
                 current_time = time.time()
                 diff = current_time - self.start_time
                 #print(diff)
-                if (diff > 55):
+                if (diff > 15):
                     print("GOOGLE TIMEOUT, Closing")
                     self.closed = True
                     break
