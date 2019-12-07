@@ -10,6 +10,7 @@ from google.cloud.speech import types
 import pyaudio
 from six.moves import queue
 from threading import Thread
+import asyncio
 
 # Audio recording parameters
 RATE = 16000
@@ -99,11 +100,11 @@ class MicrophoneStream(object):
 
 class Recognizer():
 
-    def __init__(self, queue, args):
+    def __init__(self, speech_queue, args):
 
         self.client = speech.SpeechClient()
         self.args = args
-        self.queue = queue
+        self.queue = speech_queue
 
         self.stop_recognition = False
 
@@ -127,15 +128,16 @@ class Recognizer():
         print("Stopping recognition")
         self.stop_recognition = True
 
-    async def start(self, audio_interface, device_index):
+    def start(self, audio_interface, device_index):
         self.stop_recognition = False
         self.device_index = device_index
         self.audio_interface = audio_interface
+        #print(self.queue)
+        #self.queue.put_nowait({"HAA": "HAA"})
         while not self.args.stop and not self.stop_recognition:
             print("Listening on device index {}".format(device_index))
             self.args.restart = False
             self.listen()
-
 
     def listen(self):
         self.start_time = time.time()

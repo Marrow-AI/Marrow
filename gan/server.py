@@ -56,7 +56,7 @@ class Server:
             print("Unregistering Websocket")
             self.connected.remove(websocket)
 
-    async def start(self):
+    def start(self):
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
         ssl_context.load_cert_chain(certfile='../server.crt', keyfile='../server.key')
         print("Websocket listening")

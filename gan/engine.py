@@ -133,7 +133,6 @@ class Engine:
 
         #self.mental_state = MentalState()
 
-<<<<<<< HEAD
         #google_speech = GoogleSpeech()
         #google_speech.say("Hi")
         #asyncio.get_event_loop().run_until_complete(ms_speech.say("Pewdiepie"))
@@ -141,8 +140,6 @@ class Engine:
         self.audio_interface = pyaudio.PyAudio()
 
 
-=======
->>>>>>> 0f24d9fff3dd1d10c304371c1b8215171f1eb7b0
         self.speaker_counter = {
             "dad": 0,
             "mom": 0,
@@ -151,9 +148,8 @@ class Engine:
         }
 
 
-<<<<<<< HEAD
         self.in_ear_devices = {
-            "dad": ['Headphones (Trekz Air by AfterS',2], #blue
+            "dad": ['Headphones (Trekz Air by AfterS',1], #blue
             "mom": ['Headphones (2- Trekz Air by Aft',3], #red
             "brother": ['Headphones (3- Trekz Air by Aft',4], #black
             "sister": ['Headphones (Air by AfterShokz S',5] #green
@@ -161,18 +157,12 @@ class Engine:
 
 
 
-=======
->>>>>>> 0f24d9fff3dd1d10c304371c1b8215171f1eb7b0
         self.time_check()
 
         self.main_loop = asyncio.get_event_loop()
 
-<<<<<<< HEAD
         #self.queue = janus.Queue(loop=self.main_loop)
-        self.queue = asyncio.Queue()
-=======
-        self.queue = janus.Queue(loop=self.main_loop)
->>>>>>> 0f24d9fff3dd1d10c304371c1b8215171f1eb7b0
+        self.queue = asyncio.Queue(loop=self.main_loop)
 
         self.server = Server(
                 self.gain_update,
@@ -185,27 +175,31 @@ class Engine:
 
 
 
-    async def start(self):
+    def start(self):
         print("Starting server")
         tasks = []
-        tasks.append(asyncio.create_task(self.server.start()))
+        #tasks.append(asyncio.create_task(self.server.start()))
+        self.main_loop.run_until_complete(self.server.start())
+        #asyncio.ensure_future(self.server.start())
 
         if not args.no_speech: 
             print("Consuming speech")
-<<<<<<< HEAD
             self.recognizer = Recognizer(self.queue, self.args)
             #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
+            tasks.append(self.consume_speech())
             #self.main_loop.run_until_complete(self.consume_speech())
-            tasks.append(asyncio.create_task(self.consume_speech()))
+            print("Waiting on queue")
+            #tasks.append(asyncio.create_task(self.consume_speech()))
 
-        await asyncio.gather(*tasks, return_exceptions=True)
-=======
-            self.recognizer = Recognizer(self.queue.sync_q, self.args)
-            fut = self.main_loop.run_in_executor(None, self.recognizer.start)
-            self.main_loop.run_until_complete(self.consume_speech())
-           
->>>>>>> 0f24d9fff3dd1d10c304371c1b8215171f1eb7b0
+        asyncio.gather(*tasks)
 
+        #await asyncio.gather(*tasks, return_exceptions=True)
+
+    async def produce(self, some_queue):
+        await asyncio.sleep(5)
+        print('producing')
+        # put the item in the queue
+        await some_queue.put({"WHAT": "AA"})
 
     def schedule_osc(self, timeout, client, command, args):
         osc_command = ScheduleOSC(timeout,client, command, args, self.del_osc )
@@ -235,14 +229,15 @@ class Engine:
 
     def start_google(self, device_index):
         print("Resume listening")
-        self.main_loop.create_task(self.recognizer.start(self.audio_interface, device_index))
-        print("Resumed")
-
+        print(self.queue)
+        self.main_loop.run_in_executor(None, self.recognizer.start, self.audio_interface, device_index)
+        #asyncio.create_task(self.produce(self.queue))
+        
+        #self.queue.put_nowait({"hello": "hello"})
 
     async def consume_speech(self):
         while True:
             item = await self.queue.get()
-            print("Item!")
             if item["action"] == "speech":
                 self.speech_text(item["text"])
             else:
@@ -930,7 +925,8 @@ if __name__ == '__main__':
 
     try:
         engine = Engine(args)
-        asyncio.run(engine.start())
+        engine.start()
+        asyncio.get_event_loop().run_forever()
     except KeyboardInterrupt:
         print("Stopping everything")
         args.stop = True
