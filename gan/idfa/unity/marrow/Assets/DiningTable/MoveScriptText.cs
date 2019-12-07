@@ -26,6 +26,7 @@ namespace Marrow
 
 		void UpdateText(string newText)
 		{
+          Debug.Log("Update text: " + newText);
 			textMeshProScriptText.text = newText;
 		}
 

@@ -126,7 +126,7 @@ class Engine:
 
         #self.lock = asyncio.Lock()
 
-        self.t2i_client = udp_client.SimpleUDPClient("192.168.1.22", 3838)
+        self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         #self.pix2pix_client = udp_client.SimpleUDPClient("127.0.0.1", 8383)
         #self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
         self.voice_client = udp_client.SimpleUDPClient("172.16.195.167", 8000)
