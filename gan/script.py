@@ -13,7 +13,7 @@ class Script:
     def __init__(self, script_file = 'marrow_script.json', load_nlp = True):
         print("Initializing script engine")
         if load_nlp:
-            self.nlp = spacy.load('en_core_web_sm') # Need md for word vectors
+            self.nlp = spacy.load('en_core_web_md') # Need md for word vectors
         self.awaiting_index = -1
         self.script_file = script_file
         self.load_data(script_file)

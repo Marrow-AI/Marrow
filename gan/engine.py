@@ -32,10 +32,12 @@ import pyaudio
 import contextlib
 import math
 
-import sounddevice as sd
-import soundfile as sf
-
 import functools
+import signal
+
+from scipy.io import wavfile
+import soundcard as sc
+import numpy as np
 
 # Load English tokenizer, tagger, parser, NER and word vectors
 #nlp = spacy.load('en')
@@ -147,23 +149,23 @@ class Engine:
             "brother": 0
         }
 
-
         self.in_ear_devices = {
-            "dad": ['Headphones (Trekz Air by AfterS',1], #blue
-            "mom": ['Headphones (2- Trekz Air by Aft',3], #red
-            "brother": ['Headphones (3- Trekz Air by Aft',4], #black
-            "sister": ['Headphones (Air by AfterShokz S',5] #green
+            "brother": ['Headphones (Trekz Air by AfterS',3], #black
+            "mom": ['Headphones (2- Trekz Air by Aft',5], #red
+            "dad": ['Headphones (3- Trekz Air by Aft',2], #blue
+            "sister": ['Headphones (Air by AfterShokz Stereo)',4] #green
         }
 
-
+    async def start(self):
+        self.main_loop = asyncio.get_running_loop()
 
         self.time_check()
 
-        self.main_loop = asyncio.get_event_loop()
+        #self.queue = asyncio.Queue(loop=self.main_loop)
+        self.queue = janus.Queue(loop=self.main_loop)
 
-        #self.queue = janus.Queue(loop=self.main_loop)
-        self.queue = asyncio.Queue(loop=self.main_loop)
-
+       
+        self.server_stop = self.main_loop.create_future()
         self.server = Server(
                 self.gain_update,
                 self.queue,
@@ -171,35 +173,26 @@ class Engine:
                 self.mood_update,
                 self.pix2pix_update
         )
-
-
-
-
-    def start(self):
         print("Starting server")
         tasks = []
-        #tasks.append(asyncio.create_task(self.server.start()))
-        self.main_loop.run_until_complete(self.server.start())
-        #asyncio.ensure_future(self.server.start())
+        self.server_task = asyncio.create_task(self.server.start(self.server_stop))
 
         if not args.no_speech: 
             print("Consuming speech")
-            self.recognizer = Recognizer(self.queue, self.args)
+            self.recognizer = Recognizer(self.queue, self.main_loop, self.args)
             #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
-            tasks.append(self.consume_speech())
-            #self.main_loop.run_until_complete(self.consume_speech())
+            tasks.append(asyncio.create_task(self.consume_speech()))
             print("Waiting on queue")
-            #tasks.append(asyncio.create_task(self.consume_speech()))
 
-        asyncio.gather(*tasks)
+        tasks.append(self.server_task)
+        print("Gathering tasks")
 
-        #await asyncio.gather(*tasks, return_exceptions=True)
+        self.main_loop.call_soon(self.wakeup)
+        await self.server_task
+        print("Server done!")
 
-    async def produce(self, some_queue):
-        await asyncio.sleep(5)
-        print('producing')
-        # put the item in the queue
-        await some_queue.put({"WHAT": "AA"})
+    def wakeup(self):
+        self.main_loop.call_later(1.0, self.wakeup)
 
     def schedule_osc(self, timeout, client, command, args):
         osc_command = ScheduleOSC(timeout,client, command, args, self.del_osc )
@@ -228,16 +221,22 @@ class Engine:
         self.func_sched.clear()
 
     def start_google(self, device_index):
-        print("Resume listening")
+        print("Resume listening on {}".format(device_index))
         print(self.queue)
-        self.main_loop.run_in_executor(None, self.recognizer.start, self.audio_interface, device_index)
+        asyncio.create_task(self.recognizer.start(self.audio_interface, device_index))
+
+        #data, fs = sf.read('in-ear/in_ear_{}_{}.wav'.format('mom', 1), dtype='float32')
+        #sd.play(data, fs, device='Headphones (2- Trekz Air by Aft')
+        #print("Playing something")
+        #sd.wait()
+
         #asyncio.create_task(self.produce(self.queue))
-        
         #self.queue.put_nowait({"hello": "hello"})
 
     async def consume_speech(self):
         while True:
-            item = await self.queue.get()
+            item = await self.queue.async_q.get()
+            print("Iteam! {}".format(item))
             if item["action"] == "speech":
                 self.speech_text(item["text"])
             else:
@@ -535,7 +534,7 @@ class Engine:
 
         if "in-ear" in self.script.awaiting:
             self.pause_listening()
-            self.schedule_function(3, self.play_in_ear)
+            asyncio.create_task(self.play_in_ear())
 
     def end(self):
         self.state = "END"
@@ -548,65 +547,35 @@ class Engine:
         self.schedule_function(10, self.stop)
         #self.pix2pix_client.send_message("/gan/end",1)
 
-
-
-    def play_in_ear(self):
+    async def play_in_ear(self):
         data = self.script.awaiting["in-ear"]
         print("Play in ear! {}".format(data))
+        tasks = []
         for inear in data:
             try:
                 target = inear["target"]
                 output_device = self.in_ear_devices[target][0]
-                print("Play in-ear: {}-{} on {}".format(target, self.script.awaiting_index,output_device))
+                #wf = wave.open('in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index), 'r')
+                #print(wf.getparams())
+                file_name = 'in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index)
 
-                print("----------------------output device list---------------------")
-                info = self.audio_interface.get_host_api_info_by_index(0)
-                numdevices = info.get('deviceCount')
-                for i in range(0, numdevices):
-                   if (self.audio_interface.get_device_info_by_host_api_device_index(0, i).get('maxOutputChannels')) > 1:
-                       device = self.audio_interface.get_device_info_by_host_api_device_index(0, i)
-                        #print(device)
-                       print("output Device id ", i, " - ", self.audio_interface.get_device_info_by_host_api_device_index(0, i).get('name'))
+                tasks.append(self.main_loop.run_in_executor(None, self.play_file, file_name, output_device))
 
-                print("-------------------------------------------------------------")
-                
-                wf = wave.open('in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index), 'rb')
-
-                def callback(in_data, frame_count, time_info, status):
-                    data = wf.readframes(frame_count)
-                    print("Audio status: {}".format(status))
-                    return (data, pyaudio.paContinue)
-
-                # open stream using callback (3)
-                stream = self.audio_interface.open(format=self.audio_interface.get_format_from_width(wf.getsampwidth()),
-                                channels=wf.getnchannels(),
-                                rate=wf.getframerate(),
-                                output=True,
-                                output_device_index=17,
-                                stream_callback=callback)
-
-                # start the stream (4)
-                stream.start_stream()
-
-
-                #data, fs = sf.read('in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index), dtype='float32')
-                #sd.play(data, fs, device=17)
-
-                
-                """
-                index = self.speaker_counter[target] + 36
-                channel = SPEAKER_CHANNELS[target]
-                print("Send OSC on channel {} note index {}".format(channel, index))
-                #self.voice_client.send_message("/midi/note/{}".format(16),[index])
-                self.voice_client.send_message("/midi/note/{}".format(channel),[index,127, 1])
-                self.schedule_osc(0.5, self.voice_client,"/midi/note/{}".format(channel), [index,127,0])
-                #self.voice_client.send_message("/test/{}".format(16),[index, 127.0, 1])
-                """
             except Exception as e:
                 print("Audio error!")
                 print(e)
             finally:
                 self.speaker_counter[target] = self.speaker_counter[target] + 1
+
+        await asyncio.gather(*tasks)
+        print("Finshed all!")
+        self.next_line()
+
+    def play_file(self, file_name, device):
+        speaker = sc.get_speaker(device)
+        [rate, data] = wavfile.read(file_name)
+        speaker.play(data/np.max(data), samplerate=rate)
+        print("Finished one!")
 
     def show_open_line(self,data):
         print("Show open line! {}".format(data))
@@ -738,7 +707,6 @@ class Engine:
         self.purge_osc()
         self.purge_func()
         #self.pix2pix_client.send_message("/control/stop",1)
-
 
     def start_intro(self):
         if self.state != "WAITING":
@@ -925,8 +893,8 @@ if __name__ == '__main__':
 
     try:
         engine = Engine(args)
-        engine.start()
-        asyncio.get_event_loop().run_forever()
+        asyncio.run(engine.start())
     except KeyboardInterrupt:
         print("Stopping everything")
+        engine.main_loop.close()
         args.stop = True

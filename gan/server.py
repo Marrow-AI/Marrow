@@ -52,15 +52,18 @@ class Server:
                 elif action == 'update-mood':
                     self.mood_callback(data)
 
+        except:
+            pass
         finally:
             print("Unregistering Websocket")
             self.connected.remove(websocket)
 
-    def start(self):
+    async def start(self, stop):
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
         ssl_context.load_cert_chain(certfile='../server.crt', keyfile='../server.key')
         print("Websocket listening")
-        return websockets.serve(self.handler, '0.0.0.0', 9540, ssl=None)
+        async with websockets.serve(self.handler, '0.0.0.0', 9540, ssl=None):
+            await stop
 
     async def emotion_update(self,data, state):
         print("Sending emotion update")
