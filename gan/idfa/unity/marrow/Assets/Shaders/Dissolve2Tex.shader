@@ -9,6 +9,7 @@
         _Blend ("Blend", Range(0,1)) = 0
         _Fade ("Fade to Default", Range(0,1)) = 0
 	}
+
 	SubShader {
 		Tags { "RenderType"="Opaque" }
 		LOD 200
@@ -33,6 +34,7 @@
 		fixed4 _Color;
         float _Blend;
         float _Fade;
+ 
 
 		// Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
 		// See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
@@ -54,6 +56,7 @@
 			o.Smoothness = _Glossiness;
 			o.Alpha = c.a;
 		}
+
 		ENDCG
 	}
 	FallBack "Diffuse"

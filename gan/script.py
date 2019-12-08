@@ -3,17 +3,17 @@ import numpy as np
 from annoy import AnnoyIndex
 import json
 
-SCRIPT_TIMEOUT_GLOBAL = 99999 #11
-SCRIPT_TIMEOUT_NOSPEECH = 99999 #6 
+SCRIPT_TIMEOUT_GLOBAL = 11
+SCRIPT_TIMEOUT_NOSPEECH = 6 
 
-SCRIPT_TIMEOUT_GLOBAL_SHORT = 99999 #9
-SCRIPT_TIMEOUT_NOSPEECH_SHORT = 99999 #6
+SCRIPT_TIMEOUT_GLOBAL_SHORT = 9
+SCRIPT_TIMEOUT_NOSPEECH_SHORT = 6
  
 class Script:
     def __init__(self, script_file = 'marrow_script.json', load_nlp = True):
         print("Initializing script engine")
         if load_nlp:
-            self.nlp = spacy.load('en_core_web_sm')
+            self.nlp = spacy.load('en_core_web_md') # Need md for word vectors
         self.awaiting_index = -1
         self.script_file = script_file
         self.load_data(script_file)

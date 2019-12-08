@@ -191,6 +191,7 @@ namespace Marrow
 
 		void OnAttnGanUpdateResponse(Socket socket, Packet packet, params object[] args)
 		{
+            Debug.Log("AttnGAN response");
 			Dictionary<string, object> data = args[0] as Dictionary<string, object>;
 			string base64Image = data["image"] as string;
 			byte[] receivedBase64Img = Convert.FromBase64String(base64Image);

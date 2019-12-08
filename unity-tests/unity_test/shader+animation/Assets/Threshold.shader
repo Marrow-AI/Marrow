@@ -10,7 +10,8 @@
         _ClusterOne ("Cluster One", Float) = 0
         _ClusterTwo ("Cluster Two", Float) = 0
         [MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
-         _Transparency("Transparency", Range(0.0,0.75)) = 0.25
+        _Transparency("Transparency", Range(0.0,0.75)) = 0.25
+        _Blend("Blend", Range(0.0,1.0)) = 1.0
     }
  
     SubShader
@@ -57,6 +58,7 @@
             fixed4 _Color1out;
             float _Threshold;
             float _Transparency;
+            float _Blend;
  
             v2f vert(appdata_t IN)
             {
@@ -80,6 +82,11 @@
             {
                 // Get the main texture
                 float4 texColor = tex2D( _MainTex, IN.texcoord );
+                float4 origColor = texColor;
+                if (origColor.r <= 0.01 && origColor.g <= 0.01 & origColor.b <= 0.01) {
+                    origColor.a = 0.0;
+                }
+                
 
                 // Change the rgb of the texture to black and white
                 texColor.rgb = dot(texColor.rgb, float3(texColor.x, texColor.y, texColor.z));
@@ -91,14 +98,15 @@
                 texColor.a = _Transparency;
                 
                  if (texColor.r == 1.0) {
-                    IN.color.a = 0.0;
+                    texColor.a = 0.0;
                 }
 
                
                 texColor = all(texColor == _Color1in) ? _Color1out : texColor;
 
                 // Return to the texture color
-                return texColor * IN.color;
+                //return texColor * IN.color;
+                return lerp(texColor, origColor, _Blend);
             }
         ENDCG
         }

@@ -6,8 +6,7 @@ import requests
 import ssl
 import pathlib
 import numpy as np
-from ms_speech import MSSpeech
-from watson_speech import WatsonSpeech
+
 
 class Server:
 
@@ -16,8 +15,8 @@ class Server:
         self.gain_callback = gain_callback
         self.control_callback = control_callback
         self.queue = queue
-        self.ms_speech = MSSpeech()
-        self.watson_speech = WatsonSpeech()
+        #self.ms_speech = MSSpeech()
+        #self.watson_speech = WatsonSpeech()
         self.mood_callback = mood_callback
         self.pix2pix_callback = pix2pix_callback
 
@@ -53,15 +52,18 @@ class Server:
                 elif action == 'update-mood':
                     self.mood_callback(data)
 
+        except:
+            pass
         finally:
             print("Unregistering Websocket")
             self.connected.remove(websocket)
 
-    def start(self):
+    async def start(self, stop):
         ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
         ssl_context.load_cert_chain(certfile='../server.crt', keyfile='../server.key')
         print("Websocket listening")
-        return websockets.serve(self.handler, '0.0.0.0', 9540, ssl=None)
+        async with websockets.serve(self.handler, '0.0.0.0', 9540, ssl=None):
+            await stop
 
     async def emotion_update(self,data, state):
         print("Sending emotion update")

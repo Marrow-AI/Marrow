@@ -20,7 +20,7 @@ namespace Marrow
 		public Material plateMaterial;
 		public Material plateTransparentMaterial;
 		public int attnGanImageWidth = 256;
-        public int attnGanImageHeight = 256;
+       public int attnGanImageHeight = 256;
 		private float lastSpeechTimecode;
 		private Texture2D attnGanTextureA;
 		private Texture2D attnGanTextureB;
@@ -102,14 +102,15 @@ namespace Marrow
 
 		public void OnAttnGanInputUpdate(string inputText)
         {
-			//Debug.Log("OnAttnGanInputUpdate, startText2Image: " + startText2Image 
-			          //+ ", socketIsConnected: " + socketIsConnected
-			          //+ ", tableOpeningEnded: " + tableOpeningEnded);
+			Debug.Log("OnAttnGanInputUpdate, startText2Image: " + startText2Image 
+			          + ", socketIsConnected: " + socketIsConnected
+			          + ", tableOpeningEnded: " + tableOpeningEnded);
 			if (!startText2Image || !socketIsConnected || !tableOpeningEnded)
 				return;
 			if ((Time.time - lastSpeechTimecode) <= speechTimerLength)
                 return;
 
+            Debug.Log("Requesting");
 			socketCommunication.EmitAttnGanRequest(inputText);
             
 			lastSpeechTimecode = Time.time;
@@ -146,9 +147,11 @@ namespace Marrow
 			{
 				LTDescr descr = LeanTween.description(plateTweenId);
 				descr.setOnComplete(()=>{
-					FadeColorToTexture();
-					tableOpenSequence.LightUpWithChosenDinner();
-				});
+					//FadeColorToTexture();
+					tableOpenSequence.StartTableDinner();
+                    DisableText2Image();
+
+                });
 			}
         }
 

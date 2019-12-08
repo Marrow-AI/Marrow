@@ -28,9 +28,16 @@ from mental_state import MentalState
 from google_recognizer import Recognizer
 
 import wave
+import pyaudio
 import contextlib
-
 import math
+
+import functools
+import signal
+
+from scipy.io import wavfile
+import soundcard as sc
+import numpy as np
 
 # Load English tokenizer, tagger, parser, NER and word vectors
 #nlp = spacy.load('en')
@@ -121,16 +128,19 @@ class Engine:
 
         #self.lock = asyncio.Lock()
 
-        self.t2i_client = udp_client.SimpleUDPClient("192.168.1.22", 3838)
+        self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         #self.pix2pix_client = udp_client.SimpleUDPClient("127.0.0.1", 8383)
         #self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
         self.voice_client = udp_client.SimpleUDPClient("172.16.195.167", 8000)
 
-        self.mental_state = MentalState()
+        #self.mental_state = MentalState()
 
         #google_speech = GoogleSpeech()
         #google_speech.say("Hi")
         #asyncio.get_event_loop().run_until_complete(ms_speech.say("Pewdiepie"))
+
+        self.audio_interface = pyaudio.PyAudio()
+
 
         self.speaker_counter = {
             "dad": 0,
@@ -139,31 +149,50 @@ class Engine:
             "brother": 0
         }
 
+        self.in_ear_devices = {
+            "brother": ['Headphones (Trekz Air by AfterS',3], #black
+            "mom": ['Headphones (2- Trekz Air by Aft',2], #red
+            "dad": ['Headphones (3- Trekz Air by Aft',5], #blue
+            "sister": ['Headphones (Air by AfterShokz Stereo)',4] #green
+        }
 
+    async def start(self):
+        self.main_loop = asyncio.get_running_loop()
 
         self.time_check()
 
-        self.main_loop = asyncio.get_event_loop()
-
+        #self.queue = asyncio.Queue(loop=self.main_loop)
         self.queue = janus.Queue(loop=self.main_loop)
 
-        #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
-
+       
+        self.server_stop = self.main_loop.create_future()
         self.server = Server(
                 self.gain_update,
-                self.queue.async_q,
+                self.queue,
                 self.control,
                 self.mood_update,
                 self.pix2pix_update
         )
-
         print("Starting server")
-        self.main_loop.run_until_complete(self.server.start())
+        tasks = []
+        self.server_task = asyncio.create_task(self.server.start(self.server_stop))
 
         if not args.no_speech: 
             print("Consuming speech")
-            self.recognizer = Recognizer(self.queue.sync_q, self.args)
-            self.main_loop.run_until_complete(self.consume_speech())
+            self.recognizer = Recognizer(self.queue, self.main_loop, self.args)
+            #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
+            tasks.append(asyncio.create_task(self.consume_speech()))
+            print("Waiting on queue")
+
+        tasks.append(self.server_task)
+        print("Gathering tasks")
+
+        self.main_loop.call_soon(self.wakeup)
+        await self.server_task
+        print("Server done!")
+
+    def wakeup(self):
+        self.main_loop.call_later(1.0, self.wakeup)
 
     def schedule_osc(self, timeout, client, command, args):
         osc_command = ScheduleOSC(timeout,client, command, args, self.del_osc )
@@ -191,13 +220,23 @@ class Engine:
             self.func_sched[uid].cancel()
         self.func_sched.clear()
 
-    def start_google(self):
-        print("Resume listening")
-        fut = self.main_loop.run_in_executor(None, self.recognizer.start)
+    def start_google(self, device_index):
+        print("Resume listening on {}".format(device_index))
+        print(self.queue)
+        asyncio.create_task(self.recognizer.start(self.audio_interface, device_index))
+
+        #data, fs = sf.read('in-ear/in_ear_{}_{}.wav'.format('mom', 1), dtype='float32')
+        #sd.play(data, fs, device='Headphones (2- Trekz Air by Aft')
+        #print("Playing something")
+        #sd.wait()
+
+        #asyncio.create_task(self.produce(self.queue))
+        #self.queue.put_nowait({"hello": "hello"})
 
     async def consume_speech(self):
         while True:
             item = await self.queue.async_q.get()
+            print("Iteam! {}".format(item))
             if item["action"] == "speech":
                 self.speech_text(item["text"])
             else:
@@ -206,25 +245,16 @@ class Engine:
     def time_check(self):
         # recognition timeout
         now =  time.time()
-        if self.state == "SCRIPT" and self.script.awaiting_global_timeout:
-            if (
-                self.script.awaiting_index > -1
-                and (
-                        (now - self.last_react) > self.script.awaiting_global_timeout
-                        or (now - self.last_speech) > self.script.awaiting_nospeech_timeout
-                    )
-            ):
-                print("Script TIMEOUT! {}, {}, {}".format(now, self.last_react, self.last_speech))
-                asyncio.set_event_loop(self.main_loop)
-                self.last_react = self.last_speech = now
-                if self.timeout_response():
-                    self.last_react = self.last_speech = time.time() + self.speech_duration
-                    # say it
-                    self.say(delay_sec = 1, callback = self.next_variation)
-                elif self.script.next_variation():
-                    self.show_next_line()
-                else:
-                    self.react("")
+        if self.state == "SCRIPT" and self.script.awaiting_type == "OPEN":
+            time_since_speech = now - self.last_speech
+            #print('{} / {}'.format(time_since_speech, self.script.awaiting_nospeech_timeout))
+            if time_since_speech > self.script.awaiting_nospeech_timeout and "timeout" in self.script.awaiting:
+               self.script.awaiting["in-ear"] = self.script.awaiting["timeout"]
+               del self.script.awaiting["timeout"]
+               self.last_speech = now
+               self.script.awaiting_index += 1 # TODO: TEMP
+               self.pause_listening()
+               self.main_loop.create_task(self.play_in_ear())
 
         if not self.args.stop:
             threading.Timer(0.1, self.time_check).start()
@@ -259,7 +289,7 @@ class Engine:
     def speech_text(self, text):
         #print("<{}>".format(text))
         self.t2i_client.send_message("/speech", text)
-        if self.state == "SCRIPT":
+        if self.script.awaiting_type == "LINE":
             if self.mid_text is not None:
                 #print("Looking up {}".format(text))
                 self.lookup(text)
@@ -267,13 +297,14 @@ class Engine:
             self.mid_match = False
             self.matched_to_word = 0
 
-        elif self.state == "QUESTION":
+        elif self.script.awaiting_type == "OPEN":
             self.question_answer = text
-            self.pre_script()
+            print("Question answered! {}".format(self.question_answer))
+            self.next_line()
 
     def mid_speech_text(self, text):
         self.last_speech = time.time()
-        if self.state == "SCRIPT":
+        if self.state == "SCRIPT" and self.script.awaiting_type != "OPEN":
             self.mid_text = text
             #print("({})".format(text))
             self.t2i_client.send_message("/speech", text)
@@ -494,7 +525,8 @@ class Engine:
             self.show_open_line(self.script.awaiting)
 
         if "in-ear" in self.script.awaiting:
-            self.play_in_ear(self.script.awaiting["in-ear"])
+            self.pause_listening()
+            asyncio.create_task(self.play_in_ear())
 
     def end(self):
         self.state = "END"
@@ -507,18 +539,38 @@ class Engine:
         self.schedule_function(10, self.stop)
         #self.pix2pix_client.send_message("/gan/end",1)
 
-    def play_in_ear(self,data):
+    async def play_in_ear(self):
+        data = self.script.awaiting["in-ear"]
         print("Play in ear! {}".format(data))
+        tasks = []
         for inear in data:
-            target = inear["target"]
-            index = self.speaker_counter[target] + 36
-            channel = SPEAKER_CHANNELS[target]
-            print("Send OSC on channel {} note index {}".format(channel, index))
-            #self.voice_client.send_message("/midi/note/{}".format(16),[index])
-            self.voice_client.send_message("/midi/note/{}".format(channel),[index,127, 1])
-            self.schedule_osc(0.5, self.voice_client,"/midi/note/{}".format(channel), [index,127,0])
-            #self.voice_client.send_message("/test/{}".format(16),[index, 127.0, 1])
-            self.speaker_counter[target] = self.speaker_counter[target] + 1
+            try:
+                target = inear["target"]
+                output_device = self.in_ear_devices[target][0]
+                #wf = wave.open('in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index), 'r')
+                #print(wf.getparams())
+                file_name = 'in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index)
+
+                tasks.append(self.main_loop.run_in_executor(None, self.play_file, file_name, output_device))
+
+            except Exception as e:
+                print("Audio error!")
+                print(e)
+            finally:
+                self.speaker_counter[target] = self.speaker_counter[target] + 1
+
+        await asyncio.gather(*tasks)
+        print("Finshed all!")
+        if self.script.awaiting_type != "OPEN":
+            self.next_line()
+        else:
+            self.show_next_line()
+
+    def play_file(self, file_name, device):
+        speaker = sc.get_speaker(device)
+        [rate, data] = wavfile.read(file_name)
+        speaker.play(data/np.max(data), samplerate=rate)
+        print("Finished one!")
 
     def show_open_line(self,data):
         print("Show open line! {}".format(data))
@@ -651,7 +703,6 @@ class Engine:
         self.purge_func()
         #self.pix2pix_client.send_message("/control/stop",1)
 
-
     def start_intro(self):
         if self.state != "WAITING":
             print("Not starting intro twice!")
@@ -692,12 +743,11 @@ class Engine:
         self.script.reset()
         self.t2i_client.send_message("/control/start",1)
         asyncio.ensure_future(self.server.control("start"))
-        self.t2i_client.send_message("/table/dinner", "Hello world")
         self.t2i_client.send_message("/table/showplates", 1)
         self.t2i_client.send_message("/table/fadein", 1)
         self.t2i_client.send_message("/spotlight", "mom")
+        self.t2i_client.send_message("/table/dinner", "Pasta")
         self.start_script()
-
 
     def start_noise(self):
         self.send_noise = True
@@ -804,8 +854,9 @@ class Engine:
                     "/script",
                     [self.script.awaiting["speaker"], self.script.awaiting_text]
             )
-
-            print("{}, PLEASE SAY: {}".format(self.script.awaiting["speaker"], self.script.awaiting_text))
+            device_index = self.in_ear_devices[self.script.awaiting["speaker"]][1]
+            print("{} (index {}), PLEASE SAY: {}".format(self.script.awaiting["speaker"], device_index, self.script.awaiting_text))
+            self.start_google(device_index)
 
     def load_effect(self, data):
         print("Load effect {}".format(data["effect"]))
@@ -837,7 +888,8 @@ if __name__ == '__main__':
 
     try:
         engine = Engine(args)
-        asyncio.get_event_loop().run_forever()
+        asyncio.run(engine.start())
     except KeyboardInterrupt:
         print("Stopping everything")
+        engine.main_loop.close()
         args.stop = True

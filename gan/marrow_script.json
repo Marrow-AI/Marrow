@@ -18,10 +18,9 @@
         },
         {
             "speaker": "mom",
-            "text": "...(open line)"
-        },
-        {
-            "in-ear" : [ 
+            "text": "...(open line)",
+            "type": "OPEN",
+            "timeout" : [ 
                 { 
                     "target" : "mom",
                     "lines": [
