@@ -20,7 +20,7 @@ namespace Marrow
 		public Material plateMaterial;
 		public Material plateTransparentMaterial;
 		public int attnGanImageWidth = 256;
-        public int attnGanImageHeight = 256;
+       public int attnGanImageHeight = 256;
 		private float lastSpeechTimecode;
 		private Texture2D attnGanTextureA;
 		private Texture2D attnGanTextureB;
@@ -147,9 +147,11 @@ namespace Marrow
 			{
 				LTDescr descr = LeanTween.description(plateTweenId);
 				descr.setOnComplete(()=>{
-					FadeColorToTexture();
-					tableOpenSequence.LightUpWithChosenDinner();
-				});
+					//FadeColorToTexture();
+					tableOpenSequence.StartTableDinner();
+                    DisableText2Image();
+
+                });
 			}
         }
 
