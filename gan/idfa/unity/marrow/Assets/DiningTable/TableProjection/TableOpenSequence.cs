@@ -367,8 +367,6 @@ namespace Marrow
 
             yield return new WaitForSeconds(2f);
 
-          
-
 
             Debug.Log("Change table material back");
             tableRenderer.material = tableNormalMaterial;
@@ -389,7 +387,6 @@ namespace Marrow
             scriptText.GetComponent<Renderer>().enabled = false;
 
             yield return new WaitForSeconds(10f);
-
 
             for (int i = 0; i < nameTags.Length; i++)
             {
@@ -414,7 +411,7 @@ namespace Marrow
             //for (int i = 0; i < plates.Length; i++)
             //plates[i].GetComponent<Renderer>().material = plateNormalMaterial;
 
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1f);
 
             // Hide name tags
             //nameTagAnimator.SetTrigger("Hide");
