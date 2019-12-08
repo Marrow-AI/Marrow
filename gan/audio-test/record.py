@@ -1,5 +1,5 @@
 import pyaudio
-import wavefile
+#import wavefile
 import wave
 
 FORMAT = pyaudio.paInt16

@@ -24,10 +24,11 @@ for i in range(0, numdevices):
 print("-------------------------------------------------------------")
 
 
-wf = wave.open('in_ear_{}_{}.wav'.format('mom', 1), 'rb')
+#wf = wave.open('in_ear_{}_{}.wav'.format('mom', 1), 'rb')
+
+"""
 
 def fill_buffer(in_data, frame_count, time_info, status_flags):
-    """Continuously collect data from the audio stream, into the buffer."""
     print("MIC DATA")
     return None, pyaudio.paContinue
 
@@ -37,12 +38,25 @@ input_stream = audio.open(
     # https://goo.gl/z757pE
     channels=1, rate=16000,
     input=True, frames_per_buffer=int(16000 / 10),
-    input_device_index=2,
+    input_device_index=3,
     # Run the audio stream asynchronously to fill the buffer object.
     # This is necessary so that the input device's buffer doesn't
     # overflow while the calling thread makes network requests, etc.
     stream_callback=fill_buffer
 )
+
+time.sleep(5)
+
+input_stream.stop_stream()
+input_stream.close()
+input_stream = None
+
+"""
+
+data, fs = sf.read('in_ear_{}_{}.wav'.format('mom', 1), dtype='float32')
+sd.play(data, fs, device='Headphones (2- Trekz Air by Aft')
+print("Playing something")
+sd.wait()
 
 
 """
@@ -83,11 +97,6 @@ for device in devices:
     print(device)
 """
 
-
-data, fs = sf.read('in_ear_{}_{}.wav'.format('mom', 1), dtype='float32')
-sd.play(data, fs, device=17)
-print("Playing something")
-sd.wait()
 
 """
 
