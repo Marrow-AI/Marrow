@@ -3,11 +3,11 @@ import numpy as np
 from annoy import AnnoyIndex
 import json
 
-SCRIPT_TIMEOUT_GLOBAL = 99999 #11
-SCRIPT_TIMEOUT_NOSPEECH = 99999 #6 
+SCRIPT_TIMEOUT_GLOBAL = 11
+SCRIPT_TIMEOUT_NOSPEECH = 6 
 
-SCRIPT_TIMEOUT_GLOBAL_SHORT = 99999 #9
-SCRIPT_TIMEOUT_NOSPEECH_SHORT = 99999 #6
+SCRIPT_TIMEOUT_GLOBAL_SHORT = 9
+SCRIPT_TIMEOUT_NOSPEECH_SHORT = 6
  
 class Script:
     def __init__(self, script_file = 'marrow_script.json', load_nlp = True):

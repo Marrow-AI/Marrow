@@ -151,8 +151,8 @@ class Engine:
 
         self.in_ear_devices = {
             "brother": ['Headphones (Trekz Air by AfterS',3], #black
-            "mom": ['Headphones (2- Trekz Air by Aft',5], #red
-            "dad": ['Headphones (3- Trekz Air by Aft',2], #blue
+            "mom": ['Headphones (2- Trekz Air by Aft',2], #red
+            "dad": ['Headphones (3- Trekz Air by Aft',5], #blue
             "sister": ['Headphones (Air by AfterShokz Stereo)',4] #green
         }
 
@@ -245,25 +245,16 @@ class Engine:
     def time_check(self):
         # recognition timeout
         now =  time.time()
-        if self.state == "SCRIPT" and self.script.awaiting_global_timeout:
-            if (
-                self.script.awaiting_index > -1
-                and (
-                        (now - self.last_react) > self.script.awaiting_global_timeout
-                        or (now - self.last_speech) > self.script.awaiting_nospeech_timeout
-                    )
-            ):
-                print("Script TIMEOUT! {}, {}, {}".format(now, self.last_react, self.last_speech))
-                asyncio.set_event_loop(self.main_loop)
-                self.last_react = self.last_speech = now
-                if self.timeout_response():
-                    self.last_react = self.last_speech = time.time() + self.speech_duration
-                    # say it
-                    self.say(delay_sec = 1, callback = self.next_variation)
-                elif self.script.next_variation():
-                    self.show_next_line()
-                else:
-                    self.react("")
+        if self.state == "SCRIPT" and self.script.awaiting_type == "OPEN":
+            time_since_speech = now - self.last_speech
+            #print('{} / {}'.format(time_since_speech, self.script.awaiting_nospeech_timeout))
+            if time_since_speech > self.script.awaiting_nospeech_timeout and "timeout" in self.script.awaiting:
+               self.script.awaiting["in-ear"] = self.script.awaiting["timeout"]
+               del self.script.awaiting["timeout"]
+               self.last_speech = now
+               self.script.awaiting_index += 1 # TODO: TEMP
+               self.pause_listening()
+               self.main_loop.create_task(self.play_in_ear())
 
         if not self.args.stop:
             threading.Timer(0.1, self.time_check).start()
@@ -298,7 +289,7 @@ class Engine:
     def speech_text(self, text):
         #print("<{}>".format(text))
         self.t2i_client.send_message("/speech", text)
-        if self.state == "SCRIPT":
+        if self.script.awaiting_type == "LINE":
             if self.mid_text is not None:
                 #print("Looking up {}".format(text))
                 self.lookup(text)
@@ -306,13 +297,14 @@ class Engine:
             self.mid_match = False
             self.matched_to_word = 0
 
-        elif self.state == "QUESTION":
+        elif self.script.awaiting_type == "OPEN":
             self.question_answer = text
-            self.pre_script()
+            print("Question answered! {}".format(self.question_answer))
+            self.next_line()
 
     def mid_speech_text(self, text):
         self.last_speech = time.time()
-        if self.state == "SCRIPT":
+        if self.state == "SCRIPT" and self.script.awaiting_type != "OPEN":
             self.mid_text = text
             #print("({})".format(text))
             self.t2i_client.send_message("/speech", text)
@@ -569,7 +561,10 @@ class Engine:
 
         await asyncio.gather(*tasks)
         print("Finshed all!")
-        self.next_line()
+        if self.script.awaiting_type != "OPEN":
+            self.next_line()
+        else:
+            self.show_next_line()
 
     def play_file(self, file_name, device):
         speaker = sc.get_speaker(device)
