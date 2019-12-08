@@ -43,7 +43,7 @@ namespace Marrow
 		public GameObject scriptText;
 
 		private Vector3[] platesOriginalPosition;
-		private Animator nameTagAnimator;
+		public Animator nameTagAnimator;
 		private MoveSpotLight moveSpotLight;
        private TextMeshPro textMeshProTitle;
 		private TextMeshPro textMeshProSpeechDetection;
@@ -97,7 +97,6 @@ namespace Marrow
           textMeshProTitle = title.GetComponent<TextMeshPro>();
 			textMeshProSpeechDetection = speechDetection.GetComponent<TextMeshPro>();
 			textMeshProScript = scriptText.GetComponent<TextMeshPro>();
- 			nameTagAnimator = nameTags[0].transform.parent.GetComponent<Animator>();
           mainLight.ResetColor();
           spotLight.RestartSoftly();
           platesOnlySpotlight.Restart();
@@ -144,13 +143,12 @@ namespace Marrow
           textMeshProTitle.color = Color.clear;
 			textMeshProSpeechDetection.color = Color.clear;
           //UpdateNameTagsColor(Color.clear);
-			//nameTagAnimator.enabled = true;
 			ExperienceTableManager.Instance.ReactToGanSpeak = false;
 			tableSceneStart = false;
 			tableSequenceIsEnded = false;
 
-			// Table - change material back
-            tableRenderer.material = tableNormalMaterial;
+          // Table - change material back
+          tableRenderer.material = tableNormalMaterial;
 
 			// Lights
 			mainLight.Restart();
@@ -362,7 +360,15 @@ namespace Marrow
             LeanTween.value(tableRenderer.gameObject, 0f, 1f, 1f)
                      .setOnUpdate((float val) => { plateTransparentMaterial.SetFloat("_Fade", val); });
 
+
+            platesOnlySpotlight.ToggleOn(true, 2f, 1f, 0f);
+            mainLight.RestartSoftly();
+
+
             yield return new WaitForSeconds(2f);
+
+          
+
 
             Debug.Log("Change table material back");
             tableRenderer.material = tableNormalMaterial;
@@ -382,7 +388,18 @@ namespace Marrow
 
             scriptText.GetComponent<Renderer>().enabled = false;
 
-            yield return new WaitForSeconds(15f);
+            yield return new WaitForSeconds(10f);
+
+
+            for (int i = 0; i < nameTags.Length; i++)
+            {
+                nameTags[i].SetActive(true);
+                nameTagAnimator = nameTags[i].transform.parent.GetComponent<Animator>();
+                nameTagAnimator.enabled = true;
+            }
+            //nameTagAnimator.SetTrigger("Show");
+            //nameTagAnimator.enabled = true;
+           // nameTagAnimator.SetTrigger("Show");
 
             for (int i = 0; i < plates.Length; i++)
             {
@@ -391,50 +408,23 @@ namespace Marrow
                 plates[i].SetActive(true);
             }
 
-
             LeanTween.value(plates[0], secondColor, Color.white, 15f).setEaseOutElastic();
 
-            yield return new WaitForSeconds(4f);
-
-
-            // V2 - Fade in plates
-            //         for (int i = 0; i < plates.Length; i++)
-            //         {
-            //	plates[i].GetComponent<Renderer>().material = plateTransparentMaterial;
-            //	plateTransparentMaterial.color = Color.clear;
-            //             plates[i].SetActive(true);
-            //         }
-            //LeanTween.value(plates[0], Color.clear, Color.white, 2f)
-            //		 .setOnUpdate((Color col) => { plateTransparentMaterial.color = col; });
-
-            //yield return new WaitForSeconds(2.5f);
-
-            for (int i = 0; i < plates.Length; i++)
-				plates[i].GetComponent<Renderer>().material = plateNormalMaterial;
-            for (int i = 0; i < nameTags.Length; i++)
-				nameTags[i].SetActive(true);
-			//nameTagAnimator.SetTrigger("Show");
-
-            //nameTagAnimator.enabled = true;
+        //open text 2 image texture
+            //for (int i = 0; i < plates.Length; i++)
+            //plates[i].GetComponent<Renderer>().material = plateNormalMaterial;
 
             yield return new WaitForSeconds(3f);
 
-			// Hide name tags
-			//nameTagAnimator.SetTrigger("Hide");
-            
-			
-			platesOnlySpotlight.ToggleOn(true, 2f, 1f, 0f);
-            mainLight.RestartSoftly();
-           
-            yield return new WaitForSeconds(2f);
+            // Hide name tags
+            //nameTagAnimator.SetTrigger("Hide");
+
+            yield return new WaitForSeconds(10f);
 
             scriptText.GetComponent<Renderer>().enabled = true;
-
-
         }
 
        
-
         IEnumerator SpotlightOnRoleSequence(string role)
         {
 			if (!tableSequenceIsEnded && role=="mom")
