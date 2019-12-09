@@ -39,6 +39,14 @@ gi.require_version('Gst', '1.0')
 from gi.repository import GObject, GIRepository, Gst
 from threading import Thread
 import queue
+from collections import deque
+
+import requests
+from requests.auth import HTTPDigestAuth
+
+THETA_ID = 'THETAYN14100015'
+THETA_PASSWORD = '14100015'  # default password. may have been changed
+THETA_URL = 'http://192.168.1.29/osc/'
 
 def get_device(cuda):
     cuda = cuda and torch.cuda.is_available()
@@ -156,13 +164,6 @@ class Gan(Thread):
         coco_dataset.initialize(self.spade_opt)
         print(coco_dataset)
 
-
-
-        # UVC camera stream
-        cap = cv2.VideoCapture(camera_id)
-        cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc(*"YUYV"))
-
-        window_name = "{} + {}".format(CONFIG.MODEL.NAME, CONFIG.DATASET.NAME)
         #cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
 
         self.setup_pipeline()
@@ -170,102 +171,105 @@ class Gan(Thread):
         #np.set_printoptions(threshold=sys.maxsize)
 
         while True:
-            _, frame = cap.read()
-            image, raw_image = preprocessing(frame, device, CONFIG)
-            #print("Image shape {}".format(image.shape))
-            labelmap = inference(model, image, raw_image, postprocessor)
-            colormap = self.colorize(labelmap)
+            if len(self.queue) > 0:
+                frame = self.queue.pop()
+                image, raw_image = preprocessing(frame, device, CONFIG)
+                print("Image shape {}".format(raw_image.shape))
+                labelmap = inference(model, image, raw_image, postprocessor)
+                colormap = self.colorize(labelmap)
 
-            # Frisby and more to sea?
-            #labelmap[labelmap == 33] = 154
-            #labelmap[labelmap == 66] = 154
-            #labelmap[labelmap == 80] = 154
-            #Bottle to flower?
-            #labelmap[labelmap == 43] = 118
-            # Person to rock?
-            #labelmap[labelmap == 0] = 168
-            #dog to person
-            #labelmap[labelmap == 17] = 0
+                # Frisby and more to sea?
+                #labelmap[labelmap == 33] = 154
+                #labelmap[labelmap == 66] = 154
+                #labelmap[labelmap == 80] = 154
+                #Bottle to flower?
+                #labelmap[labelmap == 43] = 118
+                # Person to rock?
+                #labelmap[labelmap == 0] = 168
+                #dog to person
+                #labelmap[labelmap == 17] = 0
 
-            # Sky grass and bottle flower
-            #bottle_mask = (labelmap == 43)
-            #labelmap[0:193,:] = 156
-            #labelmap[:,:] = 123
-            #labelmap[bottle_mask] = 118
-            #print(labelmap.shape)
-            #Bottle to potted plant
-            #labelmap[labelmap == 43] = 63
+                # Sky grass and bottle flower
+                #bottle_mask = (labelmap == 43)
+                #labelmap[0:193,:] = 156
+                #labelmap[:,:] = 123
+                #labelmap[bottle_mask] = 118
+                #print(labelmap.shape)
+                #Bottle to potted plant
+                #labelmap[labelmap == 43] = 63
 
 
-            #dining_stuff = [43,44,45,46,47,48,49,50,66]
-            #dining_mask = np.isin(labelmap, dining_stuff, invert=True)
+                #dining_stuff = [43,44,45,46,47,48,49,50,66]
+                #dining_mask = np.isin(labelmap, dining_stuff, invert=True)
 
-            not_dining_mask = (labelmap < 43) | (labelmap > 50) & (labelmap != 66)
-            dining_objects_mask = (labelmap >= 43) &  (labelmap <= 50)
+                #not_dining_mask = (labelmap < 43) | (labelmap > 50) & (labelmap != 66)
+                #dining_objects_mask = (labelmap >= 43) &  (labelmap <= 50)
 
-            labelmap[not_dining_mask] = 156
-            labelmap[labelmap == 66] = 154
-            #labelmap[dining_objects_mask] = 149
-            labelmap[dining_objects_mask] = 63
+                #labelmap[not_dining_mask] = 156
+                #labelmap[labelmap == 66] = 154
+                #labelmap[dining_objects_mask] = 149
+                #labelmap[dining_objects_mask] = 63
 
-            uniques = np.unique(labelmap)
-            instance_counter = 0
-            instancemap = np.zeros(labelmap.shape)
-            print(uniques)
-            for label_id in uniques:
-                mask = (labelmap == label_id)
-                instancemap[mask] = instance_counter
-                instance_counter += 1
+                uniques = np.unique(labelmap)
+                instance_counter = 0
+                instancemap = np.zeros(labelmap.shape)
+                print(uniques)
 
-            labelimg = Image.fromarray(np.uint8(labelmap), 'L')
-            instanceimg = Image.fromarray(np.uint8(instancemap),'L')
-            
-            item = coco_dataset.get_item_from_images(labelimg, instanceimg)
-            generated = spade_model(item, mode='inference')
+                for label_id in uniques:
+                    mask = (labelmap == label_id)
+                    instancemap[mask] = instance_counter
+                    instance_counter += 1
 
-            generated_np = util.tensor2im(generated[0])
+                labelimg = Image.fromarray(np.uint8(labelmap), 'L')
+                instanceimg = Image.fromarray(np.uint8(instancemap),'L')
+                
+                #item = coco_dataset.get_item_from_images(labelimg, instanceimg)
+                #generated = spade_model(item, mode='inference')
+                #generated_np = util.tensor2im(generated[0])
 
-            # Masking
-            #print("Generated image shape {} label resize shape {}".format(generated_np.shape, label_resized.shape))
-            label_resized = np.array(labelimg.resize((256,256), Image.NEAREST))
-            generated_np[label_resized == 156, :] = [0, 0, 0];
+                # Masking
+                #print("Generated image shape {} label resize shape {}".format(generated_np.shape, label_resized.shape))
+                #label_resized = np.array(labelimg.resize((256,256), Image.NEAREST))
+                #generated_np[label_resized == 156, :] = [0, 0, 0];
 
-            #generated_rgb = cv2.cvtColor(generated_np, cv2.COLOR_BGR2RGB)
-            color_resized = np.array(Image.fromarray(colormap).resize((256,256), Image.NEAREST))
-            color_gray = cv2.cvtColor(color_resized, cv2.COLOR_BGR2GRAY)
-            color_gray_rgb = cv2.cvtColor(color_gray, cv2.COLOR_GRAY2RGB)
-            not_dining_resized = (label_resized < 43) | (label_resized > 50) & (label_resized != 66)
-            color_gray_rgb[label_resized != 154, :] = [0, 0, 0];
+                #generated_rgb = cv2.cvtColor(generated_np, cv2.COLOR_BGR2RGB)
+                #color_resized = np.array(Image.fromarray(colormap).resize((256,256), Image.NEAREST))
+                #color_gray = cv2.cvtColor(color_resized, cv2.COLOR_BGR2GRAY)
+                #color_gray_rgb = cv2.cvtColor(color_gray, cv2.COLOR_GRAY2RGB)
+                #not_dining_resized = (label_resized < 43) | (label_resized > 50) & (label_resized != 66)
+                #color_gray_rgb[label_resized != 154, :] = [0, 0, 0];
 
-            #generated_np[label_resized == 154, :] = [0,0,0]
+                #generated_np[label_resized == 154, :] = [0,0,0]
 
-            raw_image_resized = np.array(Image.fromarray(raw_image).resize((256,256), Image.NEAREST))
-            raw_image_resized[label_resized != 154, :] = [0, 0, 0];
-            cv2.addWeighted(generated_np, 0.5, raw_image_resized, 0.5 , 0.0, raw_image_resized)
+                #raw_image_resized = np.array(Image.fromarray(raw_image).resize((256,256), Image.NEAREST))
+                #raw_image_resized[label_resized != 154, :] = [0, 0, 0];
 
-            #self.push_frame(raw_image_resized)
-            self.push_frame(generated_np)
+                cv2.addWeighted(colormap, 0.5, raw_image, 0.5 , 0.0, raw_image)
 
-            #raw_rgb = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
-            #map_rgb = cv2.cvtColor(colormap, cv2.COLOR_BGR2RGB)
-            #cv2.addWeighted(map_rgb, 0.5, raw_rgb, 0.5, 0.0, raw_rgb)
-            #self.push_frame(raw_rgb)
+                #self.push_frame(raw_image_resized)
+                raw_rgb = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
+                self.push_frame(raw_rgb)
 
-            #print("raw image shape {}".format(raw_image.shape))
-            #print("Generated image {}".format(generated_np))
-            #print("raw image  {}".format(raw_image))
+                #raw_rgb = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
+                #map_rgb = cv2.cvtColor(colormap, cv2.COLOR_BGR2RGB)
+                #cv2.addWeighted(map_rgb, 0.5, raw_rgb, 0.5, 0.0, raw_rgb)
+                #self.push_frame(raw_rgb)
 
-            # Register mouse callback function
-            #cv2.setMouseCallback(window_name, self.mouse_event, labelmap)
+                #print("raw image shape {}".format(raw_image.shape))
+                #print("Generated image {}".format(generated_np))
+                #print("raw image  {}".format(raw_image))
 
-            # Overlay prediction
-            #cv2.addWeighted(colormap, 1.0, raw_image, 0.0, 0.0, raw_image)
+                # Register mouse callback function
+                #cv2.setMouseCallback(window_name, self.mouse_event, labelmap)
 
-            # Quit by pressing "q" key
-            #cv2.imshow(window_name, raw_image)
-            #cv2.resizeWindow(window_name, 1024,1024)
-            #if cv2.waitKey(10) == ord("q"):
-            #    break
+                # Overlay prediction
+                #cv2.addWeighted(colormap, 1.0, raw_image, 0.0, 0.0, raw_image)
+
+                # Quit by pressing "q" key
+                #cv2.imshow(window_name, raw_image)
+                #cv2.resizeWindow(window_name, 1024,1024)
+                #if cv2.waitKey(10) == ord("q"):
+                #    break
 
     def mouse_event(event, x, y, flags, labelmap):
         # Show a class name of a mouse-overed pixel
@@ -318,7 +322,7 @@ class Gan(Thread):
         self.pipeline.add(vcvt)
         self.pipeline.add(ndisink)
 
-        caps = Gst.Caps.from_string("video/x-raw,format=(string)I420,width=256,height=256,framerate=30/1")
+        caps = Gst.Caps.from_string("video/x-raw,format=(string)I420,width=513,height=256,framerate=30/1")
         #caps = Gst.Caps.from_string("video/x-raw,format=(string)I420,width=513,height=385,framerate=30/1")
         self.src_v.set_property("caps", caps)
         self.src_v.set_property("format", Gst.Format.TIME)
@@ -329,7 +333,7 @@ class Gan(Thread):
         self.pipeline.set_state(Gst.State.PLAYING)
 
 
-q = queue.Queue()
+q = deque()
 
 @click.group()
 @click.pass_context
@@ -384,6 +388,26 @@ def live(config_path, model_path, cuda, crf, camera_id):
 
     gan = Gan(q, deeplab_opt, spade_opt)
     gan.start()
+
+    url = THETA_URL + 'commands/execute'
+    payload = {"name": "camera.getLivePreview"}
+    buffer = bytes()
+    with requests.post(url,
+        json=payload,
+        auth=(HTTPDigestAuth(THETA_ID, THETA_PASSWORD)),
+        stream=True) as r:
+        for chunk in r.iter_content(chunk_size=1024):
+            buffer += chunk
+            a = buffer.find(b'\xff\xd8')
+            b = buffer.find(b'\xff\xd9')
+            if a != -1 and b != -1:
+                jpg = buffer[a:b+2]
+                buffer = buffer[b+2:]
+                if len(q) > 1:
+                    continue
+                else:
+                    frame = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
+                    q.append(frame)
 
 
 if __name__ == "__main__":
