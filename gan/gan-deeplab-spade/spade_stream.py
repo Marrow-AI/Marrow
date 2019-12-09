@@ -244,7 +244,7 @@ class Gan(Thread):
                 #raw_image_resized = np.array(Image.fromarray(raw_image).resize((256,256), Image.NEAREST))
                 #raw_image_resized[label_resized != 154, :] = [0, 0, 0];
 
-                #cv2.addWeighted(colormap, 0.5, raw_image, 0.5 , 0.0, raw_image)
+                cv2.addWeighted(colormap, 0.5, raw_image, 0.5 , 0.0, raw_image)
 
                 #self.push_frame(raw_image_resized)
                 raw_rgb = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
