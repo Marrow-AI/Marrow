@@ -10,7 +10,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "He always asks, but I always cook the samee thing"
+                            "text": "He always asks, but I always cook the same thing"
                         }
                     ]
                 }
@@ -61,7 +61,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "His reeactions are 33 percent passive, 67 peerceent aggressive"
+                            "text": "His reeactions are 33 percent passive, 67 peercent aggressive"
                         }
                     ]
                 }
@@ -113,9 +113,9 @@
          },
          {
             "speaker": "sister",
-            "text": "...(open line)"
+            "type": "OPEN"
          },
-         {
+        {
             "in-ear" : [ 
                 { 
                     "target" : "sister",
@@ -125,8 +125,8 @@
                         }
                     ]
                 }
-             ]
-         },
+            ]
+        },
          {
             "speaker": "mom",
             "text": "Why are your answers always so flat?"
@@ -149,7 +149,7 @@
          },
          {
             "speaker": "brother",
-            "text": "If you try you can see beyond the"
+            "text": "If you try you can see beyond the %answer%"
         },
         {
             "in-ear" : [ 
@@ -173,7 +173,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "she must know that none of us choose to be here!"
+                            "text": "she must know that none of us choose to be here."
                         }
                     ]
                 }
@@ -185,7 +185,7 @@
         },
         {
             "speaker": "sister",
-            "text": "well, I wasn't thinking."
+            "text": "I wasn't thinking."
         },
         {
             "in-ear" : [ 
@@ -213,7 +213,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Teach me how to see you mother."
+            "text": "Can you teach me how to see you mother?"
         },
         {
             "speaker": "mom",
@@ -221,15 +221,15 @@
         },
         {
             "speaker": "brother",
-            "text": "Sister, When I look at our Mother-"
+            "text": "Sister, When I look at our Mother I see the perfect sun-"
         },
         {
             "speaker": "brother",
-            "text": "I see the perfect sun that planted a seed of life that burned my first chakra-"
+            "text": "that planted a seed of life that burned my first chakra to the third degree-"
         },
         {
             "speaker": "brother",
-            "text": "to the third degree and made me the young man I have learned to be."
+            "text": "and made me the young man I have learned to be."
         },
         {
             "in-ear" : [ 
@@ -249,7 +249,7 @@
         },
         {
             "speaker": "sister",
-            "text": "I am confused, but go on."
+            "text": "I am confused, but ok."
         },
         {
             "speaker": "dad",
@@ -285,7 +285,7 @@
         },
         {
             "speaker": "mom",
-            "text": "A very lovely day, couldn’t be better. And yours?"
+            "text": "A very lovely day, couldn't be better. And yours?"
         },
         {
             "speaker": "dad",
@@ -297,7 +297,11 @@
         },
         {
             "speaker": "sister",
-            "text": "Mother, Father, Brother you are so beautiful when you play yourself happy - beyond a shadow of a dream!"
+            "text": "Mother, Father, Brother-"
+        },
+        {
+            "speaker": "sister",
+            "text": "you are so beautiful when you play yourself happy - beyond a shadow of a dream!"
         },
         {
             "speaker": "dad",
@@ -312,11 +316,19 @@
         },
         {
             "speaker": "brother",
-            "text": "Any dream is a process of active paranoiac thought, that aims to formulize confusion-"
+            "text": "Any dream is a process of active paranoiac thought-"
         },
         {
             "speaker": "brother",
-            "text": "And the total disappearance of the world of reality. It ain't her fault mother."
+            "text": "that aims to form a confusion and-"
+        },
+        {
+            "speaker": "brother",
+            "text": "the total disappearance of the world of reality."
+        },
+        {
+            "speaker": "brother",
+            "text": "It ain't her fault mother."
         },
         {
             "in-ear" : [ 
@@ -399,7 +411,7 @@
         },
         {
             "target": "mom",
-            "type": "...(open line)"
+            "type": "OPEN"
         },
         {
             "speaker": "brother",
@@ -458,7 +470,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "I remember, One day there was a dog that barked so loud and made so much noise that I just went outside and let him drink some water from this bowl! Mom will kill me if she finds out about it!"
+                            "text": "I remember, one day there was a dog that barked so loud and made so much noise that I just went outside and let him drink some water from this bowl! Mom will kill me if she finds out about it!"
                         }
                     ]
                 },
@@ -490,7 +502,7 @@
         },
         {
             "speaker": "mom",
-            "text": "It’s a nice bowl. But there is only one way to remember it."
+            "text": "It's a nice bowl. But there is only one way to remember it."
         },
         {
             "speaker": "sister",
@@ -581,9 +593,6 @@
             ]
         },
         {
-            "type": "clear"
-        },
-        {
             "in-ear" : [ 
                 { 
                     "target" : "dad",
@@ -653,7 +662,7 @@
         },
         {
             "speaker": "dad",
-            "text": "Really? I don’t remember that."
+            "text": "Really? I don't remember that."
         },
         {
             "speaker": "sister",
@@ -712,7 +721,7 @@
         },
         {
             "speaker": "mom",
-            "text": "In your memory a picture of a crying face and a smiling face look very much the same."
+            "text": "In your memory a picture of a crying face and a smiling face look the same."
         },
         {
             "speaker": "dad",
@@ -720,7 +729,7 @@
         },
         {
             "speaker": "dad",
-            "text": "We were coming back from your grandpa's funeral that day, scattering his ashes in the ocean."
+            "text": "We were coming back from your grandpa's funeral, scattering his ashes in the ocean."
         },
         {
             "speaker": "brother",
