@@ -23,9 +23,14 @@ from threading import Thread
 import queue
 import time
 
+from pythonosc import dispatcher
+from pythonosc import osc_server
+import json
+
 class Gan(Thread):
-    def __init__(self, queue, args):
-        self.queue = queue
+    def __init__(self, osc_queue, args):
+        self.queue = osc_queue
+        self.animation_queue = queue.Queue()
 
         Thread.__init__(self)
 
@@ -54,12 +59,39 @@ class Gan(Thread):
         self.linespace_i = 0
 
         while True:
+            while not self.queue.empty():
+                item = self.queue.get()
+                self.process_queue(item)
             image = self.get_buf()
             self.push_frame(image)
             time.sleep(1./12)
             self.linespace_i += 1
             if (self.linespace_i == self.steps):
                 self.linespace_i = 0
+
+    def process_queue(self,item):
+        if item['command'] == 'start-sequence':
+            self.start_sequence(item['args'])
+
+    def start_sequence(self, sequence):
+        animations = sequence.split(',')
+        print("Run animations {}".format(animations))
+        [self.animation_queue.put(animation) for animation in animations]
+        self.load_next_animation()
+
+    def load_next_animation(self):
+        animation = self.animation_queue.get()
+        print("Loading animation {}".format(animation))
+        with open('animations/{}/info.json'.format(animation)) as json_file:
+            data = json.load(json_file)
+            print(data);
+            self.latent_source = np.load('animations/{}/source.npy'.format(animation))
+            print('Loaded source {}'.format(self.latent_source.shape))
+            self.latent_dest = np.load('animations/{}/dest.npy'.format(animation))
+            print('Loaded dest {}'.format(self.latent_dest.shape))
+            self.steps = int(data['steps'])
+            self.linespaces = np.linspace(0, 1, self.steps)
+            self.linespace_i = 0
 
     def setup_pipeline(self):
         GObject.threads_init()
@@ -99,7 +131,7 @@ class Gan(Thread):
         assert buf is not None
         buf.fill(0, data)
         buf.pts = buf.dts = Gst.CLOCK_TIME_NONE
-        print("Push")
+        #print("Push")
         self.src_v.emit("push-buffer", buf)
 
     def load_latent_source(self):
@@ -127,6 +159,18 @@ class Gan(Thread):
 q = queue.Queue()
 
 if __name__ == '__main__':
+
+
+
+    def osc_handler(addr,args):
+        q.put({"command": addr[1:], "args": args})
+
     gan = Gan(q, None)
     gan.start()
+
+    dispatcher = dispatcher.Dispatcher()
+    dispatcher.set_default_handler(osc_handler)
+    server = osc_server.ThreadingOSCUDPServer(("0.0.0.0", 3800), dispatcher)
+    print("Serving OSC on {}".format(server.server_address))
+    server.serve_forever()
 
