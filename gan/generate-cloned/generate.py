@@ -47,6 +47,8 @@ if __name__ == '__main__':
                 pass
                 #utterance = line["lines"]
                 #dmoz_tts.say(utterance, "gan_new/house_{}.wav".format(index))
+            if "timeout" in line:
+                line["in-ear"] = line["timeout"]
             if "in-ear" in line:
                 inears = line["in-ear"]
                 for inear in inears:

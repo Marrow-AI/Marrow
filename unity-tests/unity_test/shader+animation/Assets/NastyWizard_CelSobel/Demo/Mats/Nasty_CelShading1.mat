@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Nasty_CelShading1
+  m_Shader: {fileID: 4800000, guid: 149a7345b003e6841ae1d339176afbf2, type: 3}
+  m_ShaderKeywords: _SPECULAR_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _EmissiveMap:
+        m_Texture: {fileID: 2800000, guid: 3aa57df75934ce347a6121739c38e416, type: 3}
+        m_Scale: {x: 4, y: 4}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 99eddbf52e5bd7b4d9e33ed163fcb1cf, type: 3}
+        m_Scale: {x: 4, y: 4}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 2800000, guid: 99eddbf52e5bd7b4d9e33ed163fcb1cf, type: 3}
+        m_Scale: {x: 4, y: 4}
+        m_Offset: {x: 0, y: 0}
+    - _SpecularMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - _Ambient: 0.1
+    - _Gloss: 23
+    - _Specular: 1
+    m_Colors:
+    - _ColorBlend: {r: 0.36320752, g: 1, b: 0.95025057, a: 1}
+    - _EmissiveBlend: {r: 1, g: 0, b: 0.028709888, a: 1}
