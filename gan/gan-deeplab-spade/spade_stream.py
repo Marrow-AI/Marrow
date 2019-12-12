@@ -83,6 +83,7 @@ def setup_postprocessor(CONFIG):
 
 def preprocessing(image, device, CONFIG):
     # Resize
+    print("Config size test {}".format(CONFIG.IMAGE.SIZE.TEST))
     scale = CONFIG.IMAGE.SIZE.TEST / max(image.shape[:2])
     image = cv2.resize(image, dsize=None, fx=scale, fy=scale)
     raw_image = image.astype(np.uint8)
@@ -121,18 +122,62 @@ def inference(model, image, raw_image=None, postprocessor=None):
 
     return labelmap
 
-class Gan(Thread):
+
+class NDIStreamer(Thread):
+    def __init__(self, width, height):
+        Thread.__init__(self)
+        self.setup_pipeline(width, height)
+
+    def setup_pipeline(self, width, height):
+        Gst.init(None)
+
+        self.src_v = Gst.ElementFactory.make("appsrc", "vidsrc")
+        vcvt = Gst.ElementFactory.make("videoconvert", "vidcvt")
+
+        ndisink = Gst.ElementFactory.make("ndisink", "video_sink")
+        ndisink.set_property("name", "marrow-spade")
+
+        self.pipeline = Gst.Pipeline()
+        self.pipeline.add(self.src_v)
+        self.pipeline.add(vcvt)
+        self.pipeline.add(ndisink)
+
+        caps = Gst.Caps.from_string("video/x-raw,format=(string)I420,width={},height={},framerate=12/1".format(width, height))
+        self.src_v.set_property("caps", caps)
+        self.src_v.set_property("format", Gst.Format.TIME)
+
+        self.src_v.link(vcvt)
+        vcvt.link(ndisink)
+
+        self.pipeline.set_state(Gst.State.PLAYING)
+
+    def push_frame(self, image):
+        data = cv2.cvtColor(image, cv2.COLOR_RGB2YUV)
+        #print(data.shape)
+        y = data[...,0]
+        u = data[...,1]
+        v = data[...,2]
+        u2 = cv2.resize(u, (0,0), fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA)
+        v2 = cv2.resize(v, (0,0), fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA)
+        data = y.tostring() + u2.tostring() + v2.tostring()
+        buf = Gst.Buffer.new_allocate(None, len(data), None)
+        assert buf is not None
+        buf.fill(0, data)
+        buf.pts = buf.dts = Gst.CLOCK_TIME_NONE
+        print("Push")
+        self.src_v.emit("push-buffer", buf)
+
+
+class Gan(NDIStreamer):
     def __init__(self, queue, deeplab_opt, spade_opt):
+        super().__init__(1024, 512)
         self.queue = queue
         self.deeplab_opt = deeplab_opt
         self.spade_opt = spade_opt
 
-        Thread.__init__(self)
-
     def run(self):
         # Setup
 
-        
         CONFIG = self.deeplab_opt['CONFIG']
         self.CONFIG = CONFIG
         model_path = self.deeplab_opt['model_path']
@@ -166,17 +211,32 @@ class Gan(Thread):
 
         #cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
 
-        self.setup_pipeline()
 
         #np.set_printoptions(threshold=sys.maxsize)
 
         while True:
             if len(self.queue) > 0:
                 frame = self.queue.pop()
+                print("Original Image shape {}".format(frame.shape))
                 image, raw_image = preprocessing(frame, device, CONFIG)
                 print("Image shape {}".format(raw_image.shape))
                 labelmap = inference(model, image, raw_image, postprocessor)
+
+
+                # table to dining table
+                labelmap[labelmap == 164] = 66
+
+                labelimg = Image.fromarray(np.uint8(labelmap), 'L')
+                label_resized = np.array(labelimg.resize((256,256), Image.NEAREST))
+
+
                 colormap = self.colorize(labelmap)
+
+                not_dining_mask = (labelmap < 43) | (labelmap > 50) & (labelmap != 66) 
+                labelmap[not_dining_mask] = 156
+                dining_objects_mask = (labelmap >= 43) &  (labelmap <= 50)
+                labelmap[dining_objects_mask] = 149
+                labelmap[labelmap == 66] = 154
 
                 # Frisby and more to sea?
                 #labelmap[labelmap == 33] = 154
@@ -196,18 +256,15 @@ class Gan(Thread):
                 #labelmap[bottle_mask] = 118
                 #print(labelmap.shape)
                 #Bottle to potted plant
-                #labelmap[labelmap == 43] = 63
+                #labelmap[labelmap == 43] = 63#
 
 
                 #dining_stuff = [43,44,45,46,47,48,49,50,66]
                 #dining_mask = np.isin(labelmap, dining_stuff, invert=True)
 
                 #not_dining_mask = (labelmap < 43) | (labelmap > 50) & (labelmap != 66)
-                #dining_objects_mask = (labelmap >= 43) &  (labelmap <= 50)
 
-                #labelmap[not_dining_mask] = 156
                 #labelmap[labelmap == 66] = 154
-                #labelmap[dining_objects_mask] = 149
                 #labelmap[dining_objects_mask] = 63
 
                 uniques = np.unique(labelmap)
@@ -220,20 +277,28 @@ class Gan(Thread):
                     instancemap[mask] = instance_counter
                     instance_counter += 1
 
-                labelimg = Image.fromarray(np.uint8(labelmap), 'L')
                 instanceimg = Image.fromarray(np.uint8(instancemap),'L')
                 
                 #item = coco_dataset.get_item_from_images(labelimg, instanceimg)
                 #generated = spade_model(item, mode='inference')
                 #generated_np = util.tensor2im(generated[0])
 
+                #color_resized = cv2.cvtColor(np.array(Image.fromarray(colormap).resize((256,256), Image.NEAREST)),cv2.COLOR_BGR2RGB)
+
+                #generated_np[label_resized == 156] = [0, 0, 0];
+
                 # Masking
                 #print("Generated image shape {} label resize shape {}".format(generated_np.shape, label_resized.shape))
-                #label_resized = np.array(labelimg.resize((256,256), Image.NEAREST))
                 #generated_np[label_resized == 156, :] = [0, 0, 0];
+                #generated_np[label_resized == 156, :] = [0, 0, 0];
+                #not_dining_mask = (label_resized < 43) | (label_resized > 50) & (label_resized != 66)
+                #generated_np[not_dining_mask] = [0, 0, 0];
+
+                #only people
+                #people_mask = np.isin(label_resized, [0,66], invert=True)
+                #color_resized[label_resized != 0] = [0,0,0]
 
                 #generated_rgb = cv2.cvtColor(generated_np, cv2.COLOR_BGR2RGB)
-                #color_resized = np.array(Image.fromarray(colormap).resize((256,256), Image.NEAREST))
                 #color_gray = cv2.cvtColor(color_resized, cv2.COLOR_BGR2GRAY)
                 #color_gray_rgb = cv2.cvtColor(color_gray, cv2.COLOR_GRAY2RGB)
                 #not_dining_resized = (label_resized < 43) | (label_resized > 50) & (label_resized != 66)
@@ -241,14 +306,20 @@ class Gan(Thread):
 
                 #generated_np[label_resized == 154, :] = [0,0,0]
 
-                #raw_image_resized = np.array(Image.fromarray(raw_image).resize((256,256), Image.NEAREST))
-                #raw_image_resized[label_resized != 154, :] = [0, 0, 0];
+                #raw_image_resized = cv2.cvtColor(np.array(Image.fromarray(raw_image).resize((256,256), Image.NEAREST)),cv2.COLOR_BGR2RGB)
+                #raw_image_resized[people_mask] = [0, 0, 0];
 
-                cv2.addWeighted(colormap, 0.5, raw_image, 0.5 , 0.0, raw_image)
+                #cv2.addWeighted(color_resized, 0.5, raw_image_resized, 0.5 , 0.0, raw_image_resized)
 
                 #self.push_frame(raw_image_resized)
-                raw_rgb = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
-                self.push_frame(raw_rgb)
+                #raw_rgb = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
+
+                #final = np.concatenate((generated_np, color_resized), axis=1)
+                #print("Gans shape {}, colormap shape {}, Final shape {}".format(generated_np.shape, color_resized.shape, final.shape))
+                #final[:,:256,:] = generated_np
+                #final[:,256:,:] = color_resized
+
+                self.push_frame(colormap)
 
                 #raw_rgb = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
                 #map_rgb = cv2.cvtColor(colormap, cv2.COLOR_BGR2RGB)
@@ -287,51 +358,8 @@ class Gan(Thread):
         colormap = cm.jet_r(labelmap)[..., :-1] * 255.0
         return np.uint8(colormap)
 
-    def push_frame(self, image):
-        data = cv2.cvtColor(image, cv2.COLOR_RGB2YUV)
-        #print(data.shape)
-        y = data[...,0]
-        u = data[...,1]
-        v = data[...,2]
-        u2 = cv2.resize(u, (0,0), fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA)
-        v2 = cv2.resize(v, (0,0), fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA)
-        data = y.tostring() + u2.tostring() + v2.tostring()
-        buf = Gst.Buffer.new_allocate(None, len(data), None)
-        assert buf is not None
-        buf.fill(0, data)
-        buf.pts = buf.dts = Gst.CLOCK_TIME_NONE
-        print("Push")
-        self.src_v.emit("push-buffer", buf)
-
-
     def get_buf(self):
         pass
-
-    def setup_pipeline(self):
-        GObject.threads_init()
-        Gst.init(None)
-
-        self.src_v = Gst.ElementFactory.make("appsrc", "vidsrc")
-        vcvt = Gst.ElementFactory.make("videoconvert", "vidcvt")
-
-        ndisink = Gst.ElementFactory.make("ndisink", "video_sink")
-        ndisink.set_property("name", "marrow-spade")
-
-        self.pipeline = Gst.Pipeline()
-        self.pipeline.add(self.src_v)
-        self.pipeline.add(vcvt)
-        self.pipeline.add(ndisink)
-
-        caps = Gst.Caps.from_string("video/x-raw,format=(string)I420,width=513,height=256,framerate=30/1")
-        #caps = Gst.Caps.from_string("video/x-raw,format=(string)I420,width=513,height=385,framerate=30/1")
-        self.src_v.set_property("caps", caps)
-        self.src_v.set_property("format", Gst.Format.TIME)
-
-        self.src_v.link(vcvt)
-        vcvt.link(ndisink)
-
-        self.pipeline.set_state(Gst.State.PLAYING)
-
 
 q = deque()
 
@@ -372,7 +400,9 @@ def live(config_path, model_path, cuda, crf, camera_id):
     """
     Inference from camera stream
     """
+    GObject.threads_init()
 
+    print("Deeplab config at {}".format(config_path))
     CONFIG = Dict(yaml.load(config_path))
 
     deeplab_opt = {
