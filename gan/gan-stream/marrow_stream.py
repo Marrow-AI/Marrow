@@ -31,6 +31,7 @@ class Gan(Thread):
     def __init__(self, osc_queue, args):
         self.queue = osc_queue
         self.animation_queue = queue.Queue()
+        self.noise = False
 
         Thread.__init__(self)
 
@@ -65,9 +66,15 @@ class Gan(Thread):
             image = self.get_buf()
             self.push_frame(image)
             time.sleep(1./12)
-            self.linespace_i += 1
+            if not self.noise:
+                self.linespace_i += 1
             if (self.linespace_i == self.steps):
-                self.linespace_i = 0
+                if not self.animation_queue.empty():
+                    self.load_next_animation()
+                else:
+                    # Going back to noise
+                    self.linespace_i -= 1
+                    self.noise = True
 
     def process_queue(self,item):
         if item['command'] == 'start-sequence':
@@ -92,6 +99,7 @@ class Gan(Thread):
             self.steps = int(data['steps'])
             self.linespaces = np.linspace(0, 1, self.steps)
             self.linespace_i = 0
+            self.noise = False
 
     def setup_pipeline(self):
         GObject.threads_init()
@@ -144,7 +152,7 @@ class Gan(Thread):
 
     def get_buf(self):
             self.latents = (self.linespaces[self.linespace_i] * self.latent_dest + (1-self.linespaces[self.linespace_i])*self.latent_source)
-            images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=False, output_transform=self.fmt)
+            images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=self.noise, output_transform=self.fmt)
             image = images[0]
             if self.shadows:
                 gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -170,6 +178,7 @@ if __name__ == '__main__':
 
     dispatcher = dispatcher.Dispatcher()
     dispatcher.set_default_handler(osc_handler)
+
     server = osc_server.ThreadingOSCUDPServer(("0.0.0.0", 3800), dispatcher)
     print("Serving OSC on {}".format(server.server_address))
     server.serve_forever()

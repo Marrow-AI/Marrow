@@ -45,7 +45,7 @@ Shader "Hidden/KlakNDI/Receiver"
 
     half4 Fragment_UYVA(v2f_img input) : SV_Target
     {
-        half3 rgb = SampleUYVY(float2(input.uv.x, (1 - input.uv.y) * 2 / 3));
+        half3 rgb = SampleUYVY(float2(input.uv.x , (1 - input.uv.y) * 2 / 3));
 
         // Alpha data retrieval
         float2 uv = input.uv;

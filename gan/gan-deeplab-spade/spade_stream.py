@@ -170,7 +170,7 @@ class NDIStreamer(Thread):
 
 class Gan(NDIStreamer):
     def __init__(self, queue, deeplab_opt, spade_opt):
-        super().__init__(1024, 512)
+        super().__init__(256,256)
         self.queue = queue
         self.deeplab_opt = deeplab_opt
         self.spade_opt = spade_opt
@@ -223,20 +223,29 @@ class Gan(NDIStreamer):
                 labelmap = inference(model, image, raw_image, postprocessor)
 
 
-                # table to dining table
                 labelmap[labelmap == 164] = 66
+                labelmap[labelmap == 109] = 66
 
-                labelimg = Image.fromarray(np.uint8(labelmap), 'L')
-                label_resized = np.array(labelimg.resize((256,256), Image.NEAREST))
+                #not_dining_mask = ((labelmap < 43) | (labelmap > 50)) & (labelmap != 66) & (labelmap != 0) 
+                #labelmap[not_dining_mask] = 156 # Sky
+                # tables to dining table
 
-
-                colormap = self.colorize(labelmap)
-
-                not_dining_mask = (labelmap < 43) | (labelmap > 50) & (labelmap != 66) 
-                labelmap[not_dining_mask] = 156
-                dining_objects_mask = (labelmap >= 43) &  (labelmap <= 50)
-                labelmap[dining_objects_mask] = 149
                 labelmap[labelmap == 66] = 154
+
+
+
+
+                dining_objects_mask = (labelmap >= 43) & (labelmap <= 50) | (labelmap == 138) | (labelmap == 142)
+                appliances_mask = (labelmap >= 71) & (labelmap <= 79)
+                labelmap[dining_objects_mask] = 149
+                labelmap[appliances_mask] = 149
+
+                not_sea_mask = (labelmap != 149) & (labelmap != 154)
+                labelmap[not_sea_mask] = 156
+
+                #colormap = self.colorize(labelmap)
+
+                #labelmap[labelmap == 66] = 154
 
                 # Frisby and more to sea?
                 #labelmap[labelmap == 33] = 154
@@ -257,15 +266,16 @@ class Gan(NDIStreamer):
                 #print(labelmap.shape)
                 #Bottle to potted plant
                 #labelmap[labelmap == 43] = 63#
-
+#
 
                 #dining_stuff = [43,44,45,46,47,48,49,50,66]
                 #dining_mask = np.isin(labelmap, dining_stuff, invert=True)
 
                 #not_dining_mask = (labelmap < 43) | (labelmap > 50) & (labelmap != 66)
 
-                #labelmap[labelmap == 66] = 154
                 #labelmap[dining_objects_mask] = 63
+                labelimg = Image.fromarray(np.uint8(labelmap), 'L')
+                label_resized = np.array(labelimg.resize((256,256), Image.NEAREST))
 
                 uniques = np.unique(labelmap)
                 instance_counter = 0
@@ -278,14 +288,16 @@ class Gan(NDIStreamer):
                     instance_counter += 1
 
                 instanceimg = Image.fromarray(np.uint8(instancemap),'L')
+
+                #colormap[not_dining_mask] = [0, 0, 0];
                 
-                #item = coco_dataset.get_item_from_images(labelimg, instanceimg)
-                #generated = spade_model(item, mode='inference')
-                #generated_np = util.tensor2im(generated[0])
+                item = coco_dataset.get_item_from_images(labelimg, instanceimg)
+                generated = spade_model(item, mode='inference')
+                generated_np = util.tensor2im(generated[0])
 
                 #color_resized = cv2.cvtColor(np.array(Image.fromarray(colormap).resize((256,256), Image.NEAREST)),cv2.COLOR_BGR2RGB)
 
-                #generated_np[label_resized == 156] = [0, 0, 0];
+                generated_np[label_resized == 156] = [0, 0, 0];
 
                 # Masking
                 #print("Generated image shape {} label resize shape {}".format(generated_np.shape, label_resized.shape))
@@ -319,7 +331,6 @@ class Gan(NDIStreamer):
                 #final[:,:256,:] = generated_np
                 #final[:,256:,:] = color_resized
 
-                self.push_frame(colormap)
 
                 #raw_rgb = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
                 #map_rgb = cv2.cvtColor(colormap, cv2.COLOR_BGR2RGB)
@@ -341,6 +352,8 @@ class Gan(NDIStreamer):
                 #cv2.resizeWindow(window_name, 1024,1024)
                 #if cv2.waitKey(10) == ord("q"):
                 #    break
+
+                self.push_frame(generated_np)
 
     def mouse_event(event, x, y, flags, labelmap):
         # Show a class name of a mouse-overed pixel

@@ -25,7 +25,7 @@ IMAGE:
     SIZE:
         BASE: # None
         TRAIN: 321
-        TEST: 1024
+        TEST: 512
 
 MODEL:
     NAME: DeepLabV2_ResNet101_MSC
