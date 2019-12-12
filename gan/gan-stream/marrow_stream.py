@@ -178,6 +178,7 @@ if __name__ == '__main__':
 
     dispatcher = dispatcher.Dispatcher()
     dispatcher.set_default_handler(osc_handler)
+
     server = osc_server.ThreadingOSCUDPServer(("0.0.0.0", 3800), dispatcher)
     print("Serving OSC on {}".format(server.server_address))
     server.serve_forever()

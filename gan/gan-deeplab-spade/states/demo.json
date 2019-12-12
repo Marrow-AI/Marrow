@@ -1,0 +1,15 @@
+{
+    "map": [
+        {
+            "from": ["dining table","table","desk", "desk-stuff", "tv"],
+            "to" : "grass",
+            "invert": false
+        }
+    ],
+    "mask": [
+        {
+            "items": ["grass"],
+            "invert": true
+        }
+    ]
+}
