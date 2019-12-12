@@ -48,8 +48,19 @@ Shader "Hidden/Marrow/BlendReceiver"
 
     half4 Fragment_Blend(v2f_img input) : SV_Target
     {
-        half3 front = tex2D(_MainTex, input.uv).rgb;
-        half3 back = tex2D(_BackTex, input.uv).rgb;
+        half3 front = tex2D(_MainTex, float2(input.uv.x / 3, input.uv.y)).rgb;
+        half3 back = tex2D(_BackTex, float2(input.uv.x / 3, input.uv.y)).rgb;
+
+        half3 blend = lerp(front, back, _BlendFactor);
+
+        return half4(blend, 1);
+    }
+    half4 Fragment_BlendTwo(v2f_img input) : SV_Target
+    { 
+        half3 front = tex2D(_MainTex, float2((2 * input.uv.x + 1)/ 3, input.uv.y)).rgb;
+        half3 back = tex2D(_BackTex, float2((2 * input.uv.x + 1)/ 3, input.uv.y)).rgb;
+        //half3 front = tex2D(_MainTex, float2(input.uv.x, input.uv.y)).rgb;
+        //half3 back = tex2D(_BackTex, float2(input.uv.x, input.uv.y)).rgb;
 
         half3 blend = lerp(front, back, _BlendFactor);
 
@@ -74,6 +85,14 @@ Shader "Hidden/Marrow/BlendReceiver"
             #pragma target 3.0
             #pragma vertex vert_img
             #pragma fragment Fragment_Blend
+            ENDCG
+        }
+        Pass
+        {
+            CGPROGRAM
+            #pragma target 3.0
+            #pragma vertex vert_img
+            #pragma fragment Fragment_BlendTwo
             ENDCG
         }
     }

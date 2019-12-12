@@ -27,11 +27,16 @@ namespace Klak.Ndi
 
         #region Target settings
 
-        [SerializeField] RenderTexture _targetTexture;
+        [SerializeField] RenderTexture _targetTextureOne;
+        [SerializeField] RenderTexture _targetTextureTwo;
 
-        public RenderTexture targetTexture {
-            get { return _targetTexture; }
-            set { _targetTexture = value; }
+        public RenderTexture targetTextureOne {
+            get { return _targetTextureOne; }
+            set { _targetTextureOne = value; }
+        }
+        public RenderTexture targetTextureTwo {
+            get { return _targetTextureTwo; }
+            set { _targetTextureTwo = value; }
         }
 
         [SerializeField] float _FPS;
@@ -64,7 +69,7 @@ namespace Klak.Ndi
         RenderTexture _backTexture;
 
         public Texture receivedTexture {
-            get { return _targetTexture != null ? _targetTexture : _receivedTexture; }
+            get { return _targetTextureOne != null ? _targetTextureOne : _receivedTexture; }
         }
 
         #endregion
@@ -173,7 +178,7 @@ namespace Klak.Ndi
             }
 
             // Receiver texture lazy initialization
-            if (_targetTexture == null && _receivedTexture == null)
+            if (_targetTextureOne == null && _receivedTexture == null)
             {
                 _receivedTexture = new RenderTexture(width, height, 0);
                 _receivedTexture.hideFlags = HideFlags.DontSave;
@@ -198,7 +203,6 @@ namespace Klak.Ndi
 
             _timer += Time.deltaTime;
             if (_timer > _dataTime) {
-                Debug.Log("Update!");
                 _showBack = !_showBack;
                 _timer = 0.0f;
 
@@ -215,9 +219,10 @@ namespace Klak.Ndi
                 _blendFactor = 1 - (_timer / _dataTime);
             }
             _blendMaterial.SetFloat("_BlendFactor", _blendFactor);
-            Graphics.Blit(_frontTexture, _targetTexture, _blendMaterial,  1);
+            Graphics.Blit(_frontTexture, _targetTextureOne, _blendMaterial,  1);
+            Graphics.Blit(_frontTexture, _targetTextureTwo, _blendMaterial,  2);
             // Texture format conversion using the blit shader
-            _targetTexture.IncrementUpdateCount();
+            _targetTextureOne.IncrementUpdateCount();
 
             // Renderer override
             if (_targetRenderer != null)
@@ -228,7 +233,8 @@ namespace Klak.Ndi
 
                 // Read-modify-write
                 _targetRenderer.GetPropertyBlock(_propertyBlock);
-                _propertyBlock.SetTexture(_targetMaterialProperty, _targetTexture);
+                _propertyBlock.SetTexture(_targetMaterialProperty, _targetTextureOne);
+                _propertyBlock.SetTexture(_targetMaterialProperty, _targetTextureTwo);
                 _targetRenderer.SetPropertyBlock(_propertyBlock);
             }
         }

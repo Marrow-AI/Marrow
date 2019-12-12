@@ -362,13 +362,14 @@ class NDIStreamer(Thread):
 
 class Gan(NDIStreamer):
     def __init__(self, queue, osc_queue, deeplab_opt, spade_opt):
-        super().__init__(256,256)
+        super().__init__(768,256)
         self.queue = queue
         self.osc_queue = osc_queue
         self.deeplab_opt = deeplab_opt
         self.spade_opt = spade_opt
-        self.maps = []
-        self.masks = []
+        self.gaugan_maps = []
+        self.gaugan_masks = []
+        self.deeplab_masks = []
 
 
     def run(self):
@@ -422,10 +423,15 @@ class Gan(NDIStreamer):
                 #print("Image shape {}".format(raw_image.shape))
                 labelmap = inference(model, image, raw_image, postprocessor)
 
-                #colormap = self.colorize(labelmap)
+                colormap = self.colorize(labelmap)
+
+                for masking in self.deeplab_masks:
+                    mask = np.isin(labelmap, masking['items'], invert=masking['invert'])
+                    colormap[mask, :] = [0, 0, 0];
+
                 #color_resized = cv2.cvtColor(np.array(Image.fromarray(colormap).resize((256,256), Image.NEAREST)),cv2.COLOR_BGR2RGB)
 
-                for mapping in self.maps:
+                for mapping in self.gaugan_maps:
                     mask = np.isin(labelmap, mapping['from'], invert=mapping['invert'])
                     labelmap[mask] = mapping['to']
 
@@ -450,7 +456,7 @@ class Gan(NDIStreamer):
                 generated = spade_model(item, mode='inference')
                 generated_np = util.tensor2im(generated[0])
 
-                for masking in self.masks:
+                for masking in self.gaugan_masks:
                     mask = np.isin(label_resized, masking['items'], invert=masking['invert'])
                     generated_np[mask, :] = [0, 0, 0];
 
@@ -460,10 +466,12 @@ class Gan(NDIStreamer):
                 #self.push_frame(raw_image_resized)
                 #raw_rgb = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
 
-                #final = np.concatenate((generated_np, color_resized), axis=1)
+                final = np.concatenate((generated_np, colormap), axis=1)
+                #print("Final shape: {}".format(final.shape))
+
                 #print("Gans shape {}, colormap shape {}, Final shape {}".format(generated_np.shape, color_resized.shape, final.shape))
 
-                self.push_frame(generated_np)
+                self.push_frame(final)
 
     def mouse_event(event, x, y, flags, labelmap):
         # Show a class name of a mouse-overed pixel
@@ -481,18 +489,25 @@ class Gan(NDIStreamer):
                 with open('states/{}.json'.format(name)) as json_file:
                     data = json.load(json_file)
                     print(data);
-                    self.maps = list(map(lambda m: {
+                    self.gaugan_maps = list(map(lambda m: {
                         'from': [LABEL_TO_ID[id] for id in m['from']],
                         'to': LABEL_TO_ID[m['to']],
                         'invert': m['invert']
-                    }, data['map']))
+                    }, data['gaugan']['map']))
 
-                    self.masks = list(map(lambda m: {
+                    self.gaugan_masks = list(map(lambda m: {
                         'items': [LABEL_TO_ID[id] for id in m['items']],
                         'invert': m['invert']
-                    }, data['mask']))
+                    }, data['gaugan']['mask']))
 
-                    print("Maps: {} Masks: {}".format(self.maps,self.masks))
+                    print("GAUGAN Maps: {} Masks: {}".format(self.gaugan_maps,self.gaugan_masks))
+
+                    self.deeplab_masks = list(map(lambda m: {
+                        'items': [LABEL_TO_ID[id] for id in m['items']],
+                        'invert': m['invert']
+                    }, data['deeplab']['mask']))
+
+                    print("Deeplab Masks: {}".format(self.deeplab_masks))
 
             except Excpetion as e:
                 print("Error loading state! {}".format(e))
@@ -504,7 +519,7 @@ class Gan(NDIStreamer):
             self.load_state(item['args'])
 
     def colorize(self,labelmap):
-        print(labelmap.shape)
+        #print(labelmap.shape)
         # Assign a unique color to each label
         labelmap = labelmap.astype(np.float32) / self.CONFIG.DATASET.N_CLASSES
         colormap = cm.jet_r(labelmap)[..., :-1] * 255.0

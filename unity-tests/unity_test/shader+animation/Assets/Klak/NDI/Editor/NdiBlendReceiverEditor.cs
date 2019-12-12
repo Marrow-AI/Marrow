@@ -13,7 +13,8 @@ namespace Klak.Ndi
     public sealed class NdiBlendReceiverEditor : Editor
     {
         SerializedProperty _sourceName;
-        SerializedProperty _targetTexture;
+        SerializedProperty _targetTextureOne;
+        SerializedProperty _targetTextureTwo;
         SerializedProperty _targetRenderer;
         SerializedProperty _targetMaterialProperty;
 
@@ -80,7 +81,8 @@ namespace Klak.Ndi
         void OnEnable()
         {
             _sourceName = serializedObject.FindProperty("_sourceName");
-            _targetTexture = serializedObject.FindProperty("_targetTexture");
+            _targetTextureOne = serializedObject.FindProperty("_targetTextureOne");
+            _targetTextureTwo = serializedObject.FindProperty("_targetTextureTwo");
             _FPS = serializedObject.FindProperty("_FPS");
             _targetRenderer = serializedObject.FindProperty("_targetRenderer");
             _targetMaterialProperty = serializedObject.FindProperty("_targetMaterialProperty");
@@ -112,7 +114,8 @@ namespace Klak.Ndi
             EditorGUILayout.EndHorizontal();
 
             // Target texture/renderer
-            EditorGUILayout.PropertyField(_targetTexture);
+            EditorGUILayout.PropertyField(_targetTextureOne);
+            EditorGUILayout.PropertyField(_targetTextureTwo);
             EditorGUILayout.PropertyField(_targetRenderer);
 
             EditorGUILayout.PropertyField(_FPS);
