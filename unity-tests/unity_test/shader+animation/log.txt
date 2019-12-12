@@ -1,0 +1,8 @@
+displays connected: 3
+displays connected: 2
+displays connected: 3
+displays connected: 3
+displays connected: 3
+displays connected: 3
+displays connected: 3
+displays connected: 1

@@ -19,18 +19,68 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 8400000, guid: 59ab50c6f70ec424da4c81243889eed5, type: 2}
+        m_Texture: {fileID: 8400000, guid: 578de914f32713f45af22879a9e8f733, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - PixelSnap: 0
-    - _Blend: 1
+    - _Blend: 0
+    - _BumpScale: 1
     - _ClusterOne: 0
     - _ClusterTwo: 0
-    - _Threshold: 1.31
+    - _Cutoff: 0.5
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 1
+    - _GlossyReflections: 1
+    - _Metallic: 0
+    - _Mode: 0
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _Threshold: 0.000115
     - _Transparency: 0.75
+    - _UVSec: 0
+    - _ZWrite: 1
     m_Colors:
-    - _Color1in: {r: 1, g: 1, b: 1, a: 1}
-    - _Color1out: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
-    - _ColorTint: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color1in: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
+    - _Color1out: {r: 0.3018868, g: 0.29191884, b: 0.29191884, a: 1}
+    - _ColorTint: {r: 0.20754719, g: 0.2065682, b: 0.2065682, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

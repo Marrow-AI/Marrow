@@ -98,11 +98,13 @@
                 texColor.a = _Transparency;
                 
                  if (texColor.r == 1.0) {
-                    texColor.a = 0.0;
+                   texColor.a = 0.0;
+                } else {
+                    texColor = _Color1in;
                 }
 
                
-                texColor = all(texColor == _Color1in) ? _Color1out : texColor;
+                
 
                 // Return to the texture color
                 //return texColor * IN.color;

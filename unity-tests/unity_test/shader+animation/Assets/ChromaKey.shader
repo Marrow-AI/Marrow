@@ -1,4 +1,4 @@
-﻿Shader "Unlit/ChromaKey"
+﻿Shader "Custom/ChromaKey"
 {
     Properties
     {
