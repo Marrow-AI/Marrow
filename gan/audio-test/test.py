@@ -54,7 +54,7 @@ input_stream = None
 """
 
 data, fs = sf.read('in_ear_{}_{}.wav'.format('mom', 1), dtype='float32')
-sd.play(data, fs, device='Headphones (2- Trekz Air by Aft')
+sd.play(data, fs, device=1)
 print("Playing something")
 sd.wait()
 

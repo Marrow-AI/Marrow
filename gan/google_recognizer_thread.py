@@ -18,20 +18,20 @@ CHUNK = int(RATE / 10)  # 100ms
 
 class MicrophoneStream(object):
     """Opens a recording stream as a generator yielding the audio chunks."""
-    def __init__(self, rate, chunk, parent, args, audio_interface, device_index):
+    def __init__(self, rate, chunk, parent, args, device_index):
         self._rate = rate
         self._chunk = chunk
         self.parent = parent
         self.args = args
         self.device_index = device_index
-        self._audio_interface = audio_interface
+        self.audio_interface = pyaudio.PyAudio()
 
         # Create a thread-safe buffer of audio data
         self._buff = queue.Queue()
         self.closed = True
 
     def __enter__(self):
-        self._audio_stream = self._audio_interface.open(
+        self._audio_stream = self.audio_interface.open(
             format=pyaudio.paInt16,
             # The API currently only supports 1-channel (mono) audio
             # https://goo.gl/z757pE
@@ -54,11 +54,11 @@ class MicrophoneStream(object):
         print("Generator exit!!")
         self._audio_stream.stop_stream()
         self._audio_stream.close()
+        self.audio_interface.terminate()
         self.closed = True
         # Signal the generator to terminate so that the client's
         # streaming_recognize method will not block the process termination.
         self._buff.put(None)
-        #self._audio_interface.terminate()
 
     def _fill_buffer(self, in_data, frame_count, time_info, status_flags):
         """Continuously collect data from the audio stream, into the buffer."""
@@ -128,10 +128,9 @@ class Recognizer(Thread):
         print("Stopping recognition")
         self.stop_recognition = True
 
-    def start(self, audio_interface, device_index):
+    def start(self, device_index):
         self.stop_recognition = False
         self.device_index = device_index
-        self.audio_interface = audio_interface
         while not self.args.stop and not self.stop_recognition:
             print("Listening on device index {}".format(device_index))
             self.args.restart = False
@@ -141,7 +140,7 @@ class Recognizer(Thread):
     def listen(self):
         self.start_time = time.time()
 
-        with MicrophoneStream(RATE, CHUNK, self, self.args, self.audio_interface, self.device_index) as stream:
+        with MicrophoneStream(RATE, CHUNK, self, self.args, self.device_index) as stream:
             audio_generator = stream.generator()
             requests = (types.StreamingRecognizeRequest(audio_content=content)
                         for content in audio_generator)

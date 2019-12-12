@@ -130,6 +130,7 @@ class Script:
             return np.array(vecs).mean(axis=0)
 
     def match(self,text):
+        print("MATCHING")
         try:
             text_nlp = self.nlp(text)
             distance =  self.awaiting_nlp.similarity(text_nlp)

@@ -36,7 +36,8 @@ import functools
 import signal
 
 from scipy.io import wavfile
-import soundcard as sc
+import sounddevice as sd
+import soundfile as sf
 import numpy as np
 
 # Load English tokenizer, tagger, parser, NER and word vectors
@@ -139,22 +140,28 @@ class Engine:
         #google_speech.say("Hi")
         #asyncio.get_event_loop().run_until_complete(ms_speech.say("Pewdiepie"))
 
-        self.audio_interface = pyaudio.PyAudio()
-
-
         self.speaker_counter = {
             "dad": 0,
             "mom": 0,
             "sister": 0,
             "brother": 0
         }
-
         self.in_ear_devices = {
-            "brother": ['Headphones (Trekz Air by AfterS',3], #black
-            "mom": ['Headphones (2- Trekz Air by Aft',2], #red
-            "dad": ['Headphones (3- Trekz Air by Aft',5], #blue
-            "sister": ['Headphones (Air by AfterShokz Stereo)',4] #green
+            "brother": [3,2], #black
+            "mom": [5,4], #red
+            "dad": [1,0], #blue
+            "sister": [7,6] #green
         }
+        self.listen_task = None
+
+        """
+        self.in_ear_devices = {
+            "brother": [1,0], #black
+            "mom": [1,0], #red
+            "dad": [1,0], #blue
+            "sister": [1,0] #green
+        }
+        """
 
     async def start(self):
         self.main_loop = asyncio.get_running_loop()
@@ -179,7 +186,7 @@ class Engine:
 
         if not args.no_speech: 
             print("Consuming speech")
-            self.recognizer = Recognizer(self.queue, self.main_loop, self.args)
+            self.recognizer = Recognizer(self.queue.sync_q, self.main_loop, self.args)
             #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
             tasks.append(asyncio.create_task(self.consume_speech()))
             print("Waiting on queue")
@@ -220,23 +227,19 @@ class Engine:
             self.func_sched[uid].cancel()
         self.func_sched.clear()
 
-    def start_google(self, device_index):
+    async def start_google(self, device_index):
+        if self.listen_task and not self.listen_task.done():
+            print("Waiting for previous listen to finish")
+            self.pause_listening()
+            await self.listen_task
+        
         print("Resume listening on {}".format(device_index))
-        print(self.queue)
-        asyncio.create_task(self.recognizer.start(self.audio_interface, device_index))
-
-        #data, fs = sf.read('in-ear/in_ear_{}_{}.wav'.format('mom', 1), dtype='float32')
-        #sd.play(data, fs, device='Headphones (2- Trekz Air by Aft')
-        #print("Playing something")
-        #sd.wait()
-
-        #asyncio.create_task(self.produce(self.queue))
-        #self.queue.put_nowait({"hello": "hello"})
+        self.listen_task = self.main_loop.run_in_executor(None, self.recognizer.start, device_index)
 
     async def consume_speech(self):
         while True:
             item = await self.queue.async_q.get()
-            print("Iteam! {}".format(item))
+            print("Item! {}".format(item))
             if item["action"] == "speech":
                 self.speech_text(item["text"])
             else:
@@ -252,7 +255,6 @@ class Engine:
                self.script.awaiting["in-ear"] = self.script.awaiting["timeout"]
                del self.script.awaiting["timeout"]
                self.last_speech = now
-               self.script.awaiting_index += 1 # TODO: TEMP
                self.pause_listening()
                self.main_loop.create_task(self.play_in_ear())
 
@@ -294,16 +296,19 @@ class Engine:
                 #print("Looking up {}".format(text))
                 self.lookup(text)
 
+            print("SPEECH")
             self.mid_match = False
-            self.matched_to_word = 0
 
         elif self.script.awaiting_type == "OPEN":
+            self.mid_match = False
             self.question_answer = text
             print("Question answered! {}".format(self.question_answer))
+            self.pause_listening()
             self.next_line()
 
     def mid_speech_text(self, text):
         self.last_speech = time.time()
+        print("MID SPEECH")
         if self.state == "SCRIPT" and self.script.awaiting_type != "OPEN":
             self.mid_text = text
             #print("({})".format(text))
@@ -313,6 +318,7 @@ class Engine:
             self.question_answer = text
 
     def lookup(self, text):
+        print("LOOKUP")
         # print("REACT: {}".format(text))
         # update last speech time
         # First get the top line matches
@@ -410,83 +416,31 @@ class Engine:
 
 
     def react(self, matched_utterance):
-
-        # restart google
-        self.args.restart = True
-
-        # Which word was it?
-        self.last_matched_word = self.matched_to_word
-        self.matched_to_word = len(matched_utterance.split())
-        script_text = self.script.awaiting_text
-        words_ahead = max(0, len(script_text.split()) - (len(matched_utterance.split()) - self.last_matched_word))
-        print("Said {} ({}) Matched: {}. Words ahead {}".format(self.script.awaiting_index, script_text, matched_utterance, words_ahead))
-
-
-        line = self.script.awaiting
-
-        # Send a pause the average person speaks at somewhere between 125 and 150 words per minute (2-2.5 per sec)
-        delay = words_ahead / 2.8
-
-        if "triggers-end" in line:
-            self.schedule_osc(delay, self.voice_client, "/control/musicbox", [0.0, 0.0, 0.0, 0.0])
-            self.schedule_osc(delay, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.0])
-            self.schedule_function(delay,self.stop_noise)
-            self.schedule_function(delay,self.hide)
-
-        if "triggers-transition" in line:
-            # Transition sequence
-            self.schedule_osc(delay,self.voice_client, "/control/musicbox", [0.0, 0.5, 0.8, 0.0])
-            self.schedule_osc(delay + 1,self.voice_client, "/control/beacon", [0.9, 0.0])
-            self.schedule_osc(delay + 1 ,self.voice_client, "/control/bassheart", [0.9, 0.9])
-            self.schedule_osc(delay + 1,self.voice_client, "/control/membrane", [0.9, 0.45, 0.0])
-            self.schedule_osc(delay + 4,self.voice_client, "/control/membrane", [0.9, 0.45, 0.2])
-            self.schedule_osc(delay + 5,self.voice_client, "/control/musicbox", [0.7, 0.0, 0.8, 0.0])
+        if not self.script.awaiting_text:
+            print("REACT TO NOTHING??")
+            print(self.script.awaiting)
+        else:
+            print("REACT")
+            self.pause_listening()
+            # Which word was it?
+            self.last_matched_word = self.matched_to_word
+            self.matched_to_word = len(matched_utterance.split())
+            script_text = self.script.awaiting_text
+            words_ahead = max(0, len(script_text.split()) - (len(matched_utterance.split()) - self.last_matched_word))
+            print("Said {} ({}) Matched: {}. Words ahead {}".format(self.script.awaiting_index, script_text, matched_utterance, words_ahead))
 
 
+            line = self.script.awaiting
 
-
-        if "triggers-gan" in line:
-            print("Say response!")
-            self.last_react = self.last_speech = time.time()  + delay + self.speech_duration
-            self.state = "GAN"
-            self.matched_to_word = 0
-            echo = None
-            if "triggers-echo" in line:
-               echo = line["triggers-echo"]
-            distort = None
-            if "triggers-distort" in line:
-               distort = line["triggers-distort"]
-
-            if self.script.awaiting_index == self.script.length -1:
-                print("Ending sequence!!")
-                self.state = "END"
-                self.schedule_osc(delay, self.t2i_client, "/table/fadeout", 1)
-                self.schedule_osc(delay, self.voice_client, "/control/musicbox", [0.0, 0.0, 0.0, 0.5])
-                self.schedule_osc(delay, self.voice_client, "/control/beacon", [0.0, 0.0])
-                self.schedule_osc(delay, self.voice_client, "/control/strings", [0.0, 0.0])
-                self.schedule_osc(delay, self.voice_client, "/control/bells", [0.0, 0.0])
-                self.schedule_osc(delay, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.0])
-
-
-                self.schedule_osc(delay + 2, self.voice_client, "/control/stop", 1)
-
-                self.schedule_osc(delay + 5.5, self.voice_client, "/strings/effect", [3, 0.0])
-                self.schedule_osc(delay + 5.5, self.voice_client, "/control/strings", [0.0, 1.0])
-                #self.schedule_osc(delay + 5.5, self.voice_client, "/control/bells", [0.0, 0.2])
-                #self.schedule_osc(delay + 5.5, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.2])
-
-                self.say(delay + 2, callback = self.next_line, echos = echo, distorts = distort)
-                self.schedule_osc(delay + 12, self.voice_client, "/control/start", 1)
-                self.schedule_osc(delay + 19, self.t2i_client, "/table/titles", 1)
-            else:
-                self.say(delay, callback = self.next_line, echos = echo, distorts = distort)
+            # Send a pause the average person speaks at somewhere between 125 and 150 words per minute (2-2.5 per sec)
+            delay = words_ahead / 2.8
+        
             if "triggers-effect" in line:
                 self.load_effect(line["triggers-effect"])
                 self.schedule_function(delay + line["triggers-effect"]["time"], self.play_effect)
 
-
-        else:
-            self.next_line(delay)
+            else:
+                self.next_line(delay)
 
        # if "triggers-beat" in line:
         #    self.voice_client.send_message("/gan/beat",0.0)
@@ -496,6 +450,8 @@ class Engine:
         self.voice_client.send_message("/effect/play", 1)
 
     def next_line(self, delay = 0):
+        print("NEXT LINE")
+        self.matched_to_word = 0
         self.last_react = self.last_speech = time.time() + delay
         if self.script.next_line():
             self.state = "SCRIPT"
@@ -540,6 +496,11 @@ class Engine:
         #self.pix2pix_client.send_message("/gan/end",1)
 
     async def play_in_ear(self):
+        self.state = "IN-EAR"
+        if self.listen_task and not self.listen_task.done():
+            print("Waiting for previous listen to finish")
+            self.pause_listening()
+            await self.listen_task
         data = self.script.awaiting["in-ear"]
         print("Play in ear! {}".format(data))
         tasks = []
@@ -547,8 +508,6 @@ class Engine:
             try:
                 target = inear["target"]
                 output_device = self.in_ear_devices[target][0]
-                #wf = wave.open('in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index), 'r')
-                #print(wf.getparams())
                 file_name = 'in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index)
 
                 tasks.append(self.main_loop.run_in_executor(None, self.play_file, file_name, output_device))
@@ -561,15 +520,21 @@ class Engine:
 
         await asyncio.gather(*tasks)
         print("Finshed all!")
+        self.state = "SCRIPT"
         if self.script.awaiting_type != "OPEN":
             self.next_line()
         else:
             self.show_next_line()
 
     def play_file(self, file_name, device):
-        speaker = sc.get_speaker(device)
-        [rate, data] = wavfile.read(file_name)
-        speaker.play(data/np.max(data), samplerate=rate)
+        #speaker = sc.get_speaker(device)
+        #[rate, data] = wavfile.read(file_name)
+        #speaker.play(data/np.max(data), samplerate=rate)
+
+        data, fs = sf.read(file_name, dtype='float32')
+        sd.play(data, fs, device=device)
+        print("Playing something")
+        sd.wait()
         print("Finished one!")
 
     def show_open_line(self,data):
@@ -647,9 +612,6 @@ class Engine:
             #asyncio.ensure_future(self.server.pause_listening(duration))
             print("Pause listening for {}".format(duration))
             self.recognizer.stop()
-            if self.state != "INTRO" and duration >= 1:
-                # Minus 1 for the time it takes to start listening
-                self.schedule_function(duration - 0.5, self.start_google)
         except Exception as e:
             pass
 
@@ -856,7 +818,7 @@ class Engine:
             )
             device_index = self.in_ear_devices[self.script.awaiting["speaker"]][1]
             print("{} (index {}), PLEASE SAY: {}".format(self.script.awaiting["speaker"], device_index, self.script.awaiting_text))
-            self.start_google(device_index)
+            asyncio.create_task(self.start_google(device_index))
 
     def load_effect(self, data):
         print("Load effect {}".format(data["effect"]))
