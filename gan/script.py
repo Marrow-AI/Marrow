@@ -4,16 +4,18 @@ from annoy import AnnoyIndex
 import json
 
 SCRIPT_TIMEOUT_GLOBAL = 11
-SCRIPT_TIMEOUT_NOSPEECH = 6 
+SCRIPT_TIMEOUT_NOSPEECH = 11 
 
 SCRIPT_TIMEOUT_GLOBAL_SHORT = 9
-SCRIPT_TIMEOUT_NOSPEECH_SHORT = 6
+SCRIPT_TIMEOUT_NOSPEECH_SHORT = 11
  
 class Script:
     def __init__(self, script_file = 'marrow_script.json', load_nlp = True):
         print("Initializing script engine")
         if load_nlp:
             self.nlp = spacy.load('en_core_web_md') # Need md for word vectors
+        else:
+            self.nlp = None
         self.awaiting_index = -1
         self.script_file = script_file
         self.load_data(script_file)
@@ -23,21 +25,40 @@ class Script:
             self.data = json.load(file)
 
     def reset(self):
-        self.load_data(self.script_file)
-        self.awaiting_index = 0
-        self.awaiting = self.data["script-lines"][self.awaiting_index]
-        self.update()
-        self.length = len(self.data["script-lines"])
+        try:
+            self.load_data(self.script_file)
+            self.awaiting_index = 0
+            self.awaiting = self.data["script-lines"][self.awaiting_index]
+            self.update()
+            self.length = len(self.data["script-lines"])
+            print("Script reset")
+        except Exception as e:
+            print("Script exception {}".format(e))
 
     def update(self):
-        if "text" in self.awaiting:
-            self.awaiting_text = self.awaiting["text"]
-            self.awaiting_variation = 0
-            self.awaiting["words"] = len(self.awaiting_text.split())
-            print("AWAITING: {}".format(self.awaiting_text))
-            self.awaiting_nlp = self.nlp(self.awaiting_text)
-            if self.awaiting_index > 0 and "text" in self.data["script-lines"][self.awaiting_index -1] :
-                self.awaiting["previous"] = self.data["script-lines"][self.awaiting_index -1]["text"]
+        try:
+            if "text" in self.awaiting:
+                self.awaiting_text = self.awaiting["text"]
+                self.awaiting_variation = 0
+                self.awaiting["words"] = len(self.awaiting_text.split())
+                print("AWAITING: {}".format(self.awaiting_text))
+                if self.nlp:
+                    self.awaiting_nlp = self.nlp(self.awaiting_text)
+                if self.awaiting_index > 0 and "text" in self.data["script-lines"][self.awaiting_index -1] :
+                    self.awaiting["previous"] = self.data["script-lines"][self.awaiting_index -1]["text"]
+               
+                # Add some more to the first lines after returning from gan
+                if "timeout-response" in self.awaiting:
+                    self.awaiting_nospeech_timeout += 2
+                    self.awaiting_global_timeout += 2
+            else:
+                self.awaiting_text = None
+                self.awaiting_global_timeout = None
+            if "type" in self.awaiting:
+                self.awaiting_type = self.awaiting["type"]
+            else:
+                self.awaiting_type = "line"
+                
             if "timeout" in self.awaiting:
                 self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH_SHORT
                 self.awaiting_global_timeout = SCRIPT_TIMEOUT_GLOBAL_SHORT
@@ -45,18 +66,10 @@ class Script:
                 self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH
                 self.awaiting_global_timeout = SCRIPT_TIMEOUT_GLOBAL
 
-            # Add some more to the first lines after returning from gan
-            if "timeout-response" in self.awaiting:
-                self.awaiting_nospeech_timeout += 2
-                self.awaiting_global_timeout += 2
-        else:
-            self.awaiting_text = None
-            self.awaiting_global_timeout = None
-        if "type" in self.awaiting:
-            self.awaiting_type = self.awaiting["type"]
-        else:
-            self.awaiting_type = "line"
-        
+        except Exception as e:
+            print("Script exception {}".format(e))
+
+
 
     def next_variation(self):
         if ("variations" in self.awaiting and len(self.awaiting["variations"]) - 1 >= self.awaiting_variation):
@@ -120,16 +133,20 @@ class Script:
 
 
     def meanvector(self,text):
-        s = self.nlp(text)
-        vecs = [word.vector for word in s \
-                if word.pos_ in ('NOUN', 'VERB', 'ADJ', 'ADV', 'PROPN', 'ADP') \
-                and np.any(word.vector)] # skip all-zero vectors
-        if len(vecs) == 0:
-            raise IndexError
+        if self.nlp:
+            s = self.nlp(text)
+            vecs = [word.vector for word in s \
+                    if word.pos_ in ('NOUN', 'VERB', 'ADJ', 'ADV', 'PROPN', 'ADP') \
+                    and np.any(word.vector)] # skip all-zero vectors
+            if len(vecs) == 0:
+                raise IndexError
+            else:
+                return np.array(vecs).mean(axis=0)
         else:
-            return np.array(vecs).mean(axis=0)
+            return None
 
     def match(self,text):
+        print("MATCHING")
         try:
             text_nlp = self.nlp(text)
             distance =  self.awaiting_nlp.similarity(text_nlp)

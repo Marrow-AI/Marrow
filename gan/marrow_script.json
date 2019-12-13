@@ -18,7 +18,6 @@
         },
         {
             "speaker": "mom",
-            "text": "...(open line)",
             "type": "OPEN",
             "timeout" : [ 
                 { 
@@ -77,7 +76,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "My only complaints are that I never hear my daughter, what is wrong with her? just look at her, I wish she was more engaged with this family."
+                            "text": "My only complaints are that I never hear my daughter. What is wrong with her? Just look at her. I wish she was more engaged with this family."
                         }
                     ]
                 },
@@ -85,7 +84,7 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "If my sister will just use her words a bit more, and learn from yesterday's mistakes, she will know that silent moments drive our parents insane, Come on sister."
+                            "text": "My sister needs to learn from yesterday's mistakes and say something. Silent moments are the noisiest moments in our family."
                         }
                     ]
                 },
@@ -93,7 +92,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I can't sense in her voice anything but complaints, she is probably thinking why our daughter hasn't compliment her yet. But I don't want to get angry again, I just want one nice dinner with my family."
+                            "text": "I can't sense in her voice anything but complaints. She is probably thinking why our daughter hasn't compliment her yet. But I don't want to get angry again. I just want one nice dinner with my family."
                         }
                     ]
                 },
@@ -112,21 +111,21 @@
             "text": "And you daughter, do you like the food?"
          },
          {
-            "speaker": "sister",
-            "type": "OPEN"
-         },
-        {
             "in-ear" : [ 
                 { 
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "she is making me so stressed, I do remember that it's exactly what we ate last night."
+                            "text": "she is making me so stressed. I remember that it's exactly what we ate last night."
                         }
                     ]
                 }
             ]
         },
+         {
+            "speaker": "sister",
+            "type": "OPEN"
+         },
          {
             "speaker": "mom",
             "text": "Why are your answers always so flat?"
@@ -141,7 +140,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I wish I could eat something different."
+                            "text": "I wish I was able to eat something different."
                         }
                     ]
                 }
@@ -237,7 +236,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "What does he mean?"
+                            "text": "I can never understand him"
                         }
                     ]
                 }
@@ -265,7 +264,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "We didn't touch each other in such a long time. Maybe she will finally let me hold her hand for a bit?"
+                            "text": "We didn't touch each other in such a long time. I wonder if she will finally let me hold her hand for a bit?"
                         }
                     ]
                 },
@@ -273,7 +272,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "I didn't felt something toward him in such a long time and that really got me emotional, I feel like holding his hand."
+                            "text": "I didn't felt something toward him in such a long time. That really got me emotional, I feel like holding his hand."
                         }
                     ]
                 }
@@ -336,7 +335,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "They see right through me, this is going to be an adventure."
+                            "text": "They see right through me. This is going to be an adventure."
                         }
                     ]
                 },
@@ -350,14 +349,6 @@
                 },
                 { 
                     "target" : "dad",
-                    "lines": [
-                        {
-                            "text": "What kind of information is this? Fragmented thoughts, full of jump cuts and distortion."
-                        }
-                    ]
-                },
-                { 
-                    "target" : "brother",
                     "lines": [
                         {
                             "text": "What kind of information is this? Fragmented thoughts, full of jump cuts and distortion."
@@ -395,7 +386,7 @@
                     "target" : "mom",
                     "lines": [
                             {
-                                "text": "I'm reading 78 percent ambiguity, as our eyes deceive us I can tell him whatever I want."
+                                "text": "I'm reading 78 percent ambiguity. And because our eyes deceive us I can tell him whatever I want."
                             }
                         ]
                 },
@@ -403,7 +394,7 @@
                         "target" : "dad",
                         "lines": [
                                 {
-                                    "text": "Am I focusing on the food because there is something else in this room that I don't want to see?"
+                                    "text": "Am I centering my attention on the food because there is something else in this room that I don't want to see?"
                                 }
                         ]
                 }
@@ -435,7 +426,7 @@
                         "target" : "brother",
                         "lines": [
                                 {
-                                    "text": "I meant much deeper than that. mom's food reminds me of the sublime makes me think about where I came from and fear what exists at the end of it all."
+                                    "text": "I meant much deeper than that. Mother's food reminds me of the sublime. It makes me think about where I came from. And fear what exists at the end of it all."
                                 }
                         ]
                 }
@@ -443,7 +434,7 @@
         },
         {
             "speaker": "brother",
-            "text": "Your vision is too shallow my sister, but you intrigued me."
+            "text": "Your vision is too shallow to my taste, but you intrigued me."
         },
         {
             "speaker": "brother",
