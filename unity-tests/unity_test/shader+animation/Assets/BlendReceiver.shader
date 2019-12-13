@@ -62,9 +62,9 @@ Shader "Hidden/Marrow/BlendReceiver"
         //half3 front = tex2D(_MainTex, float2(input.uv.x, input.uv.y)).rgb;
         //half3 back = tex2D(_BackTex, float2(input.uv.x, input.uv.y)).rgb;
 
-        half3 blend = lerp(front, back, _BlendFactor);
+       // half3 blend = lerp(front, back, _BlendFactor);
 
-        return half4(blend, 1);
+        return half4(front, 1);
     }
 
     ENDCG

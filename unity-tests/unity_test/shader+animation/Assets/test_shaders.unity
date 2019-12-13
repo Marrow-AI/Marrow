@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 227060145}
   - component: {fileID: 227060144}
   m_Layer: 0
-  m_Name: GauGan2
+  m_Name: Deeplab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -307,8 +307,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 227060143}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 48.01119, y: 6.784988, z: 7.069807}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 51.289505, y: 6.784988, z: 7.069807}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -325,7 +325,6 @@ GameObject:
   - component: {fileID: 663498967}
   - component: {fileID: 663498966}
   - component: {fileID: 663498965}
-  - component: {fileID: 663498969}
   m_Layer: 0
   m_Name: Parents Camera
   m_TagString: MainCamera
@@ -404,28 +403,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 663498964}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: 4.6995444, y: 4.1068993, z: 33.38764}
+  m_LocalPosition: {x: 51.244728, y: 6.6233635, z: 30.509842}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 180}
---- !u!114 &663498969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 663498964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cadade9d79e66642a6893ac902ddf32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sourceName: INTERACT-R8 (python3)
-  _targetTexture: {fileID: 8400000, guid: 9618a0461c9977ec097af493ce237be9, type: 2}
-  _targetRenderer: {fileID: 0}
-  _targetMaterialProperty: 
 --- !u!1 &733661279
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,7 +496,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 733661279}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -23.213457, y: 4.8407965, z: 5.080716}
+  m_LocalPosition: {x: 27.476316, y: 5.47322, z: 7.5023537}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -827,7 +810,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415033112}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
-  m_LocalPosition: {x: 27.461636, y: 6.3281016, z: 67.43211}
+  m_LocalPosition: {x: 27.391947, y: 5.4746394, z: 43.497177}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -852,14 +835,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1415033112}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bfb825e376ecf449a9481853cf68bbf, type: 3}
+  m_Script: {fileID: 11500000, guid: 1496ad54eaa3ee944be0b3c7b6f28144, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _sourceName: INTERACT-R8 (python3)
-  _targetTexture: {fileID: 8400000, guid: 9618a0461c9977ec097af493ce237be9, type: 2}
-  _targetTextureTwo: {fileID: 8400000, guid: 33f56c0053fd55b469c185f6e0776f94, type: 2}
+  _targetTextureOne: {fileID: 8400000, guid: 9618a0461c9977ec097af493ce237be9, type: 2}
+  _targetTextureTwo: {fileID: 8400000, guid: 1626fa4449211d6e4b1125a88221d4ea, type: 2}
+  _FPS: 12
   _targetRenderer: {fileID: 0}
   _targetMaterialProperty: 
 --- !u!1 &1694115351
@@ -983,7 +967,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694115351}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 29.161755, y: 7.8117714, z: 20.8}
+  m_LocalPosition: {x: 28.133877, y: 7.232252, z: 8.445398}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1001,7 +985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cadade9d79e66642a6893ac902ddf32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sourceName: INTERACT-R8 (python3)
+  _sourceName: INTERACT-R8 (python3 2)
   _targetTexture: {fileID: 8400000, guid: 578de914f32713f45af22879a9e8f733, type: 2}
   _targetRenderer: {fileID: 0}
   _targetMaterialProperty: 
