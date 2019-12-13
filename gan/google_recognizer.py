@@ -63,12 +63,12 @@ class MicrophoneStream(object):
         self.closed = True
         # Signal the generator to terminate so that the client's
         # streaming_recognize method will not block the process termination.
-        self._buff.put_nowait(None)
+        self._buff.put(None)
         self.audio_interface.terminate()
 
     def _fill_buffer(self, in_data, frame_count, time_info, status_flags):
         """Continuously collect data from the audio stream, into the buffer."""
-        self.main_loop.call_soon_threadsafe(self._buff.put_nowait,in_data)
+        self._buff.put(in_data)
         return None, pyaudio.paContinue
 
     def generator(self):
@@ -78,6 +78,7 @@ class MicrophoneStream(object):
             # end of the audio stream.
             chunk = self._buff.get()
             if chunk is None:
+                print("Empty data")
                 return
             data = [chunk]
 
@@ -93,6 +94,7 @@ class MicrophoneStream(object):
                 try:
                     chunk = self._buff.get(block=False)
                     if chunk is None:
+                        print("No data!")
                         return
                     data.append(chunk)
                 except queue.Empty:
@@ -176,6 +178,7 @@ class Recognizer(Thread):
 
         for response in responses:
             if not response.results:
+                print("No results")
                 continue
 
             # The `results` list is consecutive. For streaming, we only care about

@@ -18,7 +18,6 @@
         },
         {
             "speaker": "mom",
-            "text": "...(open line)",
             "type": "OPEN",
             "timeout" : [ 
                 { 

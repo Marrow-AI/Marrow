@@ -87,7 +87,9 @@ class MicrophoneStream(object):
                 try:
                     chunk = self._buff.get(block=False)
                     if chunk is None:
+                        print("No data")
                         return
+                    print("Append data!")
                     data.append(chunk)
                 except queue.Empty:
                     break

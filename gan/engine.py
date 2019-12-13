@@ -105,7 +105,7 @@ class Engine:
 
         self.args = args
 
-        self.script = Script()
+        self.script = Script(load_nlp = not args.no_speech)
 
         self.send_noise = False
 
@@ -129,7 +129,7 @@ class Engine:
 
         #self.lock = asyncio.Lock()
 
-        self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
+        self.t2i_client = udp_client.SimpleUDPClient("192.168.1.22", 3838)
         #self.pix2pix_client = udp_client.SimpleUDPClient("127.0.0.1", 8383)
         #self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
         self.voice_client = udp_client.SimpleUDPClient("172.16.195.167", 8000)
@@ -146,22 +146,23 @@ class Engine:
             "sister": 0,
             "brother": 0
         }
+        """
         self.in_ear_devices = {
             "brother": [3,2], #black
             "mom": [5,4], #red
             "dad": [1,0], #blue
             "sister": [7,6] #green
         }
+         """
+
         self.listen_task = None
 
-        """
         self.in_ear_devices = {
             "brother": [1,0], #black
             "mom": [1,0], #red
             "dad": [1,0], #blue
             "sister": [1,0] #green
         }
-        """
 
     async def start(self):
         self.main_loop = asyncio.get_running_loop()
@@ -190,6 +191,8 @@ class Engine:
             #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
             tasks.append(asyncio.create_task(self.consume_speech()))
             print("Waiting on queue")
+        else:
+            self.recognizer = None
 
         tasks.append(self.server_task)
         print("Gathering tasks")
@@ -232,9 +235,11 @@ class Engine:
             print("Waiting for previous listen to finish")
             self.pause_listening()
             await self.listen_task
-        
+               
+        self.last_speech = time.time()
         print("Resume listening on {}".format(device_index))
-        self.listen_task = self.main_loop.run_in_executor(None, self.recognizer.start, device_index)
+        if self.recognizer:
+            self.listen_task = self.main_loop.run_in_executor(None, self.recognizer.start, device_index)
 
     async def consume_speech(self):
         while True:
@@ -252,6 +257,7 @@ class Engine:
             time_since_speech = now - self.last_speech
             #print('{} / {}'.format(time_since_speech, self.script.awaiting_nospeech_timeout))
             if time_since_speech > self.script.awaiting_nospeech_timeout and "timeout" in self.script.awaiting:
+               print("TIMEOUT!")
                self.script.awaiting["in-ear"] = self.script.awaiting["timeout"]
                del self.script.awaiting["timeout"]
                self.last_speech = now
@@ -303,12 +309,19 @@ class Engine:
             self.mid_match = False
             self.question_answer = text
             print("Question answered! {}".format(self.question_answer))
+            self.t2i_client.send_message("/table/dinner", self.question_answer)
+            self.t2i_client.send_message("/speech", self.question_answer)
+            self.t2i_client.send_message(
+                    "/script",
+                    [self.script.awaiting["speaker"], self.question_answer]
+              )
+
             self.pause_listening()
             self.next_line()
 
     def mid_speech_text(self, text):
         self.last_speech = time.time()
-        print("MID SPEECH")
+        #print("MID SPEECH")
         if self.state == "SCRIPT" and self.script.awaiting_type != "OPEN":
             self.mid_text = text
             #print("({})".format(text))
@@ -318,7 +331,7 @@ class Engine:
             self.question_answer = text
 
     def lookup(self, text):
-        print("LOOKUP")
+        #print("LOOKUP")
         # print("REACT: {}".format(text))
         # update last speech time
         # First get the top line matches
@@ -466,23 +479,23 @@ class Engine:
             self.run_line(0)
 
     def run_line(self, delay):
-        print ("Preload {}/{}?".format(self.script.awaiting_index +1, self.script.length))
-        if (
-            self.script.awaiting_index + 1 <= self.script.length -1 and
-            "speaker" in self.script.data["script-lines"][self.script.awaiting_index + 1] and
-            self.script.data["script-lines"][self.script.awaiting_index + 1]["speaker"] == "house"
-        ):
-            pass
-            #self.preload_speech("gan_responses/{}.wav".format(self.script.awaiting_index + 1))
+        try:
+            print ("Run line: {}".format(self.script.awaiting))
+            if (
+                self.script.awaiting_index + 1 <= self.script.length -1 and
+                "speaker" in self.script.data["script-lines"][self.script.awaiting_index + 1] and
+                self.script.data["script-lines"][self.script.awaiting_index + 1]["speaker"] == "house"
+            ):
+                pass
+                #self.preload_speech("gan_responses/{}.wav".format(self.script.awaiting_index + 1))
 
-        if self.script.awaiting_text:
             self.schedule_function(delay, self.show_next_line)
-        elif self.script.awaiting_type == "open-line":
-            self.show_open_line(self.script.awaiting)
 
-        if "in-ear" in self.script.awaiting:
-            self.pause_listening()
-            asyncio.create_task(self.play_in_ear())
+            if "in-ear" in self.script.awaiting:
+                self.pause_listening()
+                asyncio.create_task(self.play_in_ear())
+        except Exception as e:
+            print("Engine exception {}".format(e))
 
     def end(self):
         self.state = "END"
@@ -539,6 +552,8 @@ class Engine:
 
     def show_open_line(self,data):
         print("Show open line! {}".format(data))
+        self.t2i_client.send_message("/openline", "mom")
+
 
     def say(self, delay_sec = 0, delay_effect = False, callback = None, echos = None, distorts = None):
 
@@ -611,7 +626,8 @@ class Engine:
         try:
             #asyncio.ensure_future(self.server.pause_listening(duration))
             print("Pause listening for {}".format(duration))
-            self.recognizer.stop()
+            if self.recognizer:
+                self.recognizer.stop()
         except Exception as e:
             pass
 
@@ -620,7 +636,7 @@ class Engine:
         command = data["command"]
         if command == 'start':
             #self.start_intro()
-            self.start_test()
+            self.start_nfb()
         elif command == 'stop':
             self.stop()
         elif command == 'skip-intro':
@@ -700,16 +716,15 @@ class Engine:
         self.schedule_osc(61.51, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.4])
         self.schedule_function(61.51, self.start_noise)
 
-    def start_test(self):
-        print("Start intro!")
+    def start_nfb(self):
+        print("Start intro ///////NFB!")
         self.script.reset()
         self.t2i_client.send_message("/control/start",1)
         asyncio.ensure_future(self.server.control("start"))
         self.t2i_client.send_message("/table/showplates", 1)
         self.t2i_client.send_message("/table/fadein", 1)
         self.t2i_client.send_message("/spotlight", "mom")
-        self.t2i_client.send_message("/table/dinner", "Pasta")
-        self.start_script()
+        self.schedule_function(23, self.start_script)
 
     def start_noise(self):
         self.send_noise = True
@@ -818,6 +833,17 @@ class Engine:
             )
             device_index = self.in_ear_devices[self.script.awaiting["speaker"]][1]
             print("{} (index {}), PLEASE SAY: {}".format(self.script.awaiting["speaker"], device_index, self.script.awaiting_text))
+            asyncio.create_task(self.start_google(device_index))
+   
+        elif self.script.awaiting_type == "OPEN":
+            self.last_speech = time.time()
+            self.show_open_line(self.script.awaiting)
+            self.t2i_client.send_message(
+                    "/script",
+                    [self.script.awaiting["speaker"], ""]
+            )
+            device_index = self.in_ear_devices[self.script.awaiting["speaker"]][1]
+            print("{} (index {}), PLEASE SAY: {}".format(self.script.awaiting["speaker"], device_index, "ANYTHING"))
             asyncio.create_task(self.start_google(device_index))
 
     def load_effect(self, data):

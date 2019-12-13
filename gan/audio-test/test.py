@@ -38,7 +38,7 @@ input_stream = audio.open(
     # https://goo.gl/z757pE
     channels=1, rate=16000,
     input=True, frames_per_buffer=int(16000 / 10),
-    input_device_index=3,
+    input_device_index=1,
     # Run the audio stream asynchronously to fill the buffer object.
     # This is necessary so that the input device's buffer doesn't
     # overflow while the calling thread makes network requests, etc.
