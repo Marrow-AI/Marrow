@@ -129,8 +129,8 @@ class Engine:
 
         #self.lock = asyncio.Lock()
 
-        self.t2i_client = udp_client.SimpleUDPClient("192.168.1.22", 3838)
-        #self.pix2pix_client = udp_client.SimpleUDPClient("127.0.0.1", 8383)
+        #self.t2i_client = udp_client.SimpleUDPClient("192.168.1.22", 3838)
+        self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         #self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
         self.voice_client = udp_client.SimpleUDPClient("172.16.195.167", 8000)
 
@@ -316,8 +316,9 @@ class Engine:
                     [self.script.awaiting["speaker"], self.question_answer]
               )
 
+            self.t2i_client.send_message("/openline", "clear")
             self.pause_listening()
-            self.next_line()
+            self.schedule_function(3, self.next_line)
 
     def mid_speech_text(self, text):
         self.last_speech = time.time()
@@ -517,22 +518,23 @@ class Engine:
         data = self.script.awaiting["in-ear"]
         print("Play in ear! {}".format(data))
         tasks = []
-        for inear in data:
-            try:
-                target = inear["target"]
-                output_device = self.in_ear_devices[target][0]
-                file_name = 'in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index)
+        if not self.args.no_inear:
+            for inear in data:
+                try:
+                    target = inear["target"]
+                    output_device = self.in_ear_devices[target][0]
+                    file_name = 'in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index)
 
-                tasks.append(self.main_loop.run_in_executor(None, self.play_file, file_name, output_device))
+                    tasks.append(self.main_loop.run_in_executor(None, self.play_file, file_name, output_device))
 
-            except Exception as e:
-                print("Audio error!")
-                print(e)
-            finally:
-                self.speaker_counter[target] = self.speaker_counter[target] + 1
+                except Exception as e:
+                    print("Audio error!")
+                    print(e)
+                finally:
+                    self.speaker_counter[target] = self.speaker_counter[target] + 1
 
-        await asyncio.gather(*tasks)
-        print("Finshed all!")
+            await asyncio.gather(*tasks)
+            print("Finshed all!")
         self.state = "SCRIPT"
         if self.script.awaiting_type != "OPEN":
             self.next_line()
@@ -653,7 +655,10 @@ class Engine:
         elif command == 'hide':
             self.hide()
         elif command == 'next':
-            self.next_line()
+            if self.script.awaiting_type == "OPEN":
+                self.speech_text("Apple")
+            else:
+                self.next_line()
         elif command == 'prev':
             self.prev_line()
 
@@ -724,7 +729,8 @@ class Engine:
         self.t2i_client.send_message("/table/showplates", 1)
         self.t2i_client.send_message("/table/fadein", 1)
         self.t2i_client.send_message("/spotlight", "mom")
-        self.schedule_function(23, self.start_script)
+        #self.schedule_function(23, self.start_script)
+        self.schedule_function(0, self.start_script)
 
     def start_noise(self):
         self.send_noise = True
@@ -734,61 +740,6 @@ class Engine:
 
     def hide(self):    
         asyncio.ensure_future(self.server.control("hide"))
-
-    ########### QUESTION ###############
-
-    def pre_question(self):
-        self.preload_speech("gan_question/line.wav")
-        self.schedule_function(6, self.start_question)
-        self.schedule_osc(8.5, self.voice_client, "/control/strings", [0.5, 0.0])
-        self.schedule_osc(8.5, self.voice_client, "/control/bells", [0.7, 0.0])
-        self.schedule_osc(8.5, self.voice_client, "/control/synthbass", [0.8, 0.0, 0.0])
-
-
-    def start_question(self):
-        print("Start question")
-        self.send_noise = True
-        self.current_question_timeout = None
-        self.last_asked = time.time() + self.speech_duration
-        self.question_answer = None
-        self.state = "QUESTION"
-        self.question_timeout_index = 0
-        self.say()
-        self.schedule_function(self.speech_duration - 0.5, self.table_fadein)
-        self.schedule_function(self.speech_duration + 1, self.load_next_question_timeout)
-
-    def table_fadein(self):
-        self.t2i_client.send_message("/table/fadein", 1)
-
-    def check_question(self):
-        if self.state != "QUESTION":
-            return
-
-        if self.question_answer is not None:
-            self.pre_script()
-        else:
-            self.question_timed_out()
-
-    def load_next_question_timeout(self):
-        print("Load question timeout")
-        if self.question_timeout_index < len(self.script.data["question"]["timeouts"]):
-            self.current_question_timeout = self.script.data["question"]["timeouts"][self.question_timeout_index]
-            self.preload_speech("gan_question/timeout{}.wav".format(self.question_timeout_index))
-            self.schedule_function(self.current_question_timeout["after"], self.check_question)
-        else:
-            self.current_question_timeout = None
-            self.pre_script()
-
-    def question_timed_out(self):
-        if self.question_answer == None:
-            print("Question timed out!")
-            self.question_timeout_index += 1
-            self.last_asked = time.time()  + self.speech_duration
-            self.say(callback = self.load_next_question_timeout)
-
-
-    ######### QUESTION ################
-
 
     def pre_script(self):
         self.state = "PRE-SCRIPT"
@@ -871,6 +822,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--no-speech', action='store_true' , help='Disable speech recognition')
+    parser.add_argument('--no-inear', action='store_true' , help='Disable In-Ear voices')
 
     args = parser.parse_args()
 

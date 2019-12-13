@@ -114,10 +114,16 @@ namespace Marrow
 			platesOriginalPosition[i] = plates[i].transform.position;
 
             openLineAnima = GameObject.Find("openLineAnima");
-            openLineAnima.SetActive(false);
-     
+            enableOpenline(false);
 
-            Setup();            
+            Setup();          
+        }
+
+        private void enableOpenline(bool value) {
+           Renderer[] spriteRenderers = openLineAnima.GetComponentsInChildren<Renderer>();
+           foreach (Renderer renderer in spriteRenderers) {
+               renderer.enabled = value;
+           }
         }
 
         private void Update()
@@ -134,7 +140,7 @@ namespace Marrow
 			else if (Input.GetKeyDown("2"))
 				ExperienceTableManager.Instance.ReceivedOscShowChosenDinner(null);
 			else if (Input.GetKeyDown("4"))
-				ReceivedOscShowPlates(null);
+				ReceivedOscShowPlates(1);
 			else if (Input.GetKeyDown("l"))
 				ReceivedOscSpotlight("mom");
 			else if (Input.GetKeyDown("f"))
@@ -260,11 +266,11 @@ namespace Marrow
             StartCoroutine(ShowEndTitlesSequence());
         }
 
-		public void ReceivedOscShowPlates(OSCMessage message)
+		public void ReceivedOscShowPlates(int fast)
         {
             LogCurrentTimecode("Show Plates Ani");
 
-            StartCoroutine(ShowPlateSequence());
+            StartCoroutine(ShowPlateSequence(fast));
         }
 
         public void ReceivedOscSpotlight(string role)   
@@ -277,7 +283,11 @@ namespace Marrow
         public void ReceivedOscOpenLine(string role)
         {
             LogCurrentTimecode("Open line On " + role);
-            openLineAnima.SetActive(true);
+            if (role == "clear") {
+                enableOpenline(false);
+            } else {
+                enableOpenline(true);
+            }
 
 
           //  StartCoroutine(SpotlightOnRoleSequence(role));
@@ -362,13 +372,17 @@ namespace Marrow
 		}
 
 		/// ======================
-		IEnumerator ShowPlateSequence()
+		IEnumerator ShowPlateSequence(int fastInt)
         {
             tableRenderer.material = tableNormalMaterial;
             mainLight.ResetColor();
             spotLight.RestartSoftly();
             platesOnlySpotlight.Restart();
             spotLight.ToggleOn(false, 0f, 0.5f, 0);
+
+            bool fast = (fastInt == 1);
+
+            Debug.Log("Start plate sequence (Fast:" + fast + ")" );
 
             // Table fade to color
             tableRenderer.material = plateTransparentMaterial;
@@ -380,7 +394,7 @@ namespace Marrow
             mainLight.RestartSoftly();
 
 
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(fast ? 0 : 2f);
 
 
             Debug.Log("Change table material back");
@@ -401,7 +415,7 @@ namespace Marrow
 
             scriptText.GetComponent<Renderer>().enabled = false;
 
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(fast ? 0 : 10f);
 
             for (int i = 0; i < nameTags.Length; i++)
             {
@@ -426,12 +440,12 @@ namespace Marrow
              for (int i = 0; i < plates.Length; i++)
                plates[i].GetComponent<Renderer>().material = plateNormalMaterial;
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(fast ? 0 : 1f);
 
             // Hide name tags
             //nameTagAnimator.SetTrigger("Hide");
 
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(fast ? 0 : 10f);
 
             scriptText.GetComponent<Renderer>().enabled = true;
         }
@@ -459,6 +473,7 @@ namespace Marrow
 
 		IEnumerator FadeOutTableSequence()
 		{
+            Debug.Log("Fade out table sequence");
 			EventBus.T2IDisable.Invoke();
 			ExperienceTableManager.Instance.ReactToGanSpeak = false;
             
