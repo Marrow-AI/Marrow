@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+     #!/usr/bin/env python
 import os
 import sys
 import argparse
@@ -453,13 +453,20 @@ class Engine:
             words_ahead = max(0, len(script_text.split()) - (len(matched_utterance.split()) - self.last_matched_word))
             print("Said {} ({}) Matched: {}. Words ahead {}".format(self.script.awaiting_index, script_text, matched_utterance, words_ahead))
 
-
-            line = self.script.awaiting
-
             # Send a pause the average person speaks at somewhere between 125 and 150 words per minute (2-2.5 per sec)
             delay = words_ahead / 2.8
+
+            self.trigger_osc()
         
-            if "triggers-osc" in line:
+            self.next_line(delay)
+
+       # if "triggers-beat" in line:
+        #    self.voice_client.send_message("/gan/beat",0.0)
+
+
+    def trigger_osc(self):
+        line = self.script.awaiting
+        if "triggers-osc" in line:
                 for trigger in line["triggers-osc"]:
                     try:
                         print("Trigger OSC: {} {}".format(trigger["target"],trigger["address"]))
@@ -471,11 +478,6 @@ class Engine:
                     except Exception as e:
                         print("TRIGGERS OSC ERROR {}".format(e))
 
-
-            self.next_line(delay)
-
-       # if "triggers-beat" in line:
-        #    self.voice_client.send_message("/gan/beat",0.0)
 
 
     def play_effect(self):
@@ -553,6 +555,8 @@ class Engine:
 
             await asyncio.gather(*tasks)
             print("Finshed all!")
+
+        self.trigger_osc()
         self.state = "SCRIPT"
         if self.script.awaiting_type != "OPEN":
             self.next_line()

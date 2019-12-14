@@ -16,8 +16,9 @@ namespace Marrow
         private bool socketIsDisconnectedWillTryReconnect;
 
         private Camera styleGANCamera;
+        private GameObject styleGAN;
 
-		private void OnEnable()
+        private void OnEnable()
 		{
 			EventBus.TableOpeningEnded.AddListener(OnTableSequenceEnded);
 			//EventBus.DiningRoomEnded.AddListener(OnDiningRoomEnded);
@@ -45,6 +46,7 @@ namespace Marrow
             Debug.Log("Starting experience manager");
 
             styleGANCamera = GameObject.Find("StyleGAN Camera").GetComponent<Camera>();
+            styleGAN = GameObject.Find("StyleGAN");
 
 			Setup();
 
@@ -121,6 +123,19 @@ namespace Marrow
         public void ReceivedOscCameraStyleGAN(int active)
         {
             styleGANCamera.enabled = (active  == 1);
+        }
+
+        public void ReceivedOscStyleGANScale(int state)
+        {
+            if (state == 1) {
+                LeanTween.moveX(styleGAN, -44.0f, 60.0f);
+                LeanTween.scale(styleGAN, new Vector3(0.5f, 0.5f, 0.5f), 60.0f);
+            }
+        }
+        public void ReceivedOscStyleGANBlend(float value)
+        {
+            Debug.Log("Set StyleGAN Blend " + value);
+            styleGAN.GetComponent<Renderer>().material.SetFloat("_Blend", value);
         }
     }
 }

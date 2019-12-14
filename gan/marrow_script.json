@@ -153,13 +153,19 @@
                 {
                     "target" : "stylegan",
                     "address": "/start-sequence",
-                    "value": "bubble4.3,bubble4.4,bubble4.5,bubble4.6,bubble4.7"
+                    "value": "bubble4.3,bubble4.4,bubble4.5,bubble4.6,bubble4.7,bubble4.8"
                 },
                 {
                     "target" : "visuals",
                     "address": "/camera/stylegan",
                     "value": 1,
                     "delay" : 0.5
+                },
+                {
+                    "target" : "visuals",
+                    "address": "/stylegan/scale",
+                    "value": 1,
+                    "delay" : 90.5
                 }
             ]
         },
@@ -321,10 +327,14 @@
         },
         {
             "speaker": "mom",
-            "text": "Do you think she can tell what is true?"
-        },
-        {
-            "type": "clear"
+            "text": "Do you think she can tell what is true?",
+            "triggers-osc": [
+                {
+                    "target" : "visuals",
+                    "address": "/stylegan/blend",
+                    "value": 1.0
+                }
+            ]
         },
         {
             "speaker": "brother",
@@ -368,10 +378,14 @@
                         }
                     ]
                 }
+            ],
+            "triggers-osc": [
+                {
+                    "target" : "visuals",
+                    "address": "/stylegan/blend",
+                    "value": 0.0
+                }
             ]
-        },
-        {
-            "type": "clear"
         },
         {
             "in-ear" : [ 
