@@ -130,9 +130,19 @@ class Engine:
         #self.lock = asyncio.Lock()
 
         #self.t2i_client = udp_client.SimpleUDPClient("192.168.1.22", 3838)
-        self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         #self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
+
+        self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         self.voice_client = udp_client.SimpleUDPClient("172.16.195.167", 8000)
+        self.stylegan_client = udp_client.SimpleUDPClient("192.168.1.23", 3800)
+        self.gaugan_client = udp_client.SimpleUDPClient("192.168.1.23", 3900)
+
+
+        self.osc_clients = {
+            "visuals": self.t2i_client,
+            "stylegan": self.stylegan_client,
+            "gaugan": self.gaugan_client
+        }
 
         #self.mental_state = MentalState()
 
@@ -307,7 +317,7 @@ class Engine:
 
         elif self.script.awaiting_type == "OPEN":
             self.mid_match = False
-            self.question_answer = text
+            self.question_answer = self.script.question_answer = text
             print("Question answered! {}".format(self.question_answer))
             self.t2i_client.send_message("/table/dinner", self.question_answer)
             self.t2i_client.send_message("/speech", self.question_answer)
@@ -449,12 +459,20 @@ class Engine:
             # Send a pause the average person speaks at somewhere between 125 and 150 words per minute (2-2.5 per sec)
             delay = words_ahead / 2.8
         
-            if "triggers-effect" in line:
-                self.load_effect(line["triggers-effect"])
-                self.schedule_function(delay + line["triggers-effect"]["time"], self.play_effect)
+            if "triggers-osc" in line:
+                for trigger in line["triggers-osc"]:
+                    try:
+                        print("Trigger OSC: {} {}".format(trigger["target"],trigger["address"]))
+                        client = self.osc_clients[trigger["target"]]
+                        delay = 0
+                        if "delay" in trigger:
+                            delay = trigger["delay"]
+                        self.schedule_osc(delay,client, trigger["address"], trigger["value"])
+                    except Exception as e:
+                        print("TRIGGERS OSC ERROR {}".format(e))
 
-            else:
-                self.next_line(delay)
+
+            self.next_line(delay)
 
        # if "triggers-beat" in line:
         #    self.voice_client.send_message("/gan/beat",0.0)
@@ -554,7 +572,7 @@ class Engine:
 
     def show_open_line(self,data):
         print("Show open line! {}".format(data))
-        self.t2i_client.send_message("/openline", "mom")
+        self.t2i_client.send_message("/openline", self.script.awaiting["speaker"])
 
 
     def say(self, delay_sec = 0, delay_effect = False, callback = None, echos = None, distorts = None):
@@ -658,7 +676,7 @@ class Engine:
             if self.script.awaiting_type == "OPEN":
                 self.speech_text("Apple")
             else:
-                self.next_line()
+                self.react(self.script.awaiting_text)
         elif command == 'prev':
             self.prev_line()
 
@@ -726,7 +744,7 @@ class Engine:
         self.script.reset()
         self.t2i_client.send_message("/control/start",1)
         asyncio.ensure_future(self.server.control("start"))
-        self.t2i_client.send_message("/table/showplates", 1)
+        self.t2i_client.send_message("/table/showplates", 0)
         self.t2i_client.send_message("/table/fadein", 1)
         self.t2i_client.send_message("/spotlight", "mom")
         #self.schedule_function(23, self.start_script)
@@ -777,6 +795,7 @@ class Engine:
         self.run_line(0)
 
     def show_next_line(self):
+        print("SHOW NEXT LINE")
         if self.script.awaiting_text:
             self.t2i_client.send_message(
                     "/script",

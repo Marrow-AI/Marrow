@@ -286,6 +286,19 @@ namespace Marrow
             if (role == "clear") {
                 enableOpenline(false);
             } else {
+                if (role == "mom") {
+                    openLineAnima.transform.position = new Vector3(
+                            openLineAnima.transform.position.x,
+                            openLineAnima.transform.position.y,
+                            2.36f
+                    );
+                } else if (role == "sister") {
+                    openLineAnima.transform.position = new Vector3(
+                            openLineAnima.transform.position.x,
+                            openLineAnima.transform.position.y,
+                            -3.1f                           
+                    );
+                }
                 enableOpenline(true);
             }
 

@@ -19,6 +19,7 @@ class Script:
         self.awaiting_index = -1
         self.script_file = script_file
         self.load_data(script_file)
+        self.question_answer = ""
 
     def load_data(self, script_file):
         with open(script_file, 'r') as file:
@@ -38,7 +39,7 @@ class Script:
     def update(self):
         try:
             if "text" in self.awaiting:
-                self.awaiting_text = self.awaiting["text"]
+                self.awaiting_text = self.awaiting["text"].replace("%answer%", self.question_answer.lower())
                 self.awaiting_variation = 0
                 self.awaiting["words"] = len(self.awaiting_text.split())
                 print("AWAITING: {}".format(self.awaiting_text))

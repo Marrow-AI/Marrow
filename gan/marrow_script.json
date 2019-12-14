@@ -121,7 +121,7 @@
                     ]
                 }
             ]
-        },
+         },
          {
             "speaker": "sister",
             "type": "OPEN"
@@ -148,7 +148,20 @@
          },
          {
             "speaker": "brother",
-            "text": "If you try you can see beyond the %answer%"
+            "text": "If you try you can see eyond the %answer%",
+            "triggers-osc": [
+                {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "bubble4.3,bubble4.4,bubble4.5,bubble4.6,bubble4.7"
+                },
+                {
+                    "target" : "visuals",
+                    "address": "/camera/stylegan",
+                    "value": 1,
+                    "delay" : 0.5
+                }
+            ]
         },
         {
             "in-ear" : [ 

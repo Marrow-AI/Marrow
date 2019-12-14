@@ -52,13 +52,11 @@ namespace Marrow
 		//public int pix2pixImageWidth = 1280;
 		//public int pix2pixImageHeight = 720;
 		//public Material pix2pixMaterial;
-		public WebcamAccess webcamAccess;
         
 		//private SocketManager pix2pixSocketManager;
 		//private Socket pix2pixSocket;
 		//private Texture2D pix2pixTexture;
 		private bool pix2pixIsConnected;
-		private Color32[] pix2pixWebcamData;
 		private bool emitFirstPix2PixRequest;
 
 		[Space(10)]
@@ -110,7 +108,6 @@ namespace Marrow
 				genTexture = new Texture2D(imageWidth, imageHeight);
 				genImageMaterial.SetTexture("_ShadowTex", genTexture);
 
-				pix2pixWebcamData = new Color32[imageWidth * imageHeight];
 
 				Debug.Log("pix2pixSocketManager setup");
 			}
@@ -147,11 +144,6 @@ namespace Marrow
 				Debug.Log("AttnGanSocket emit update_request");
 			}
 
-			if (serverType == ServerType.Pix2Pix && pix2pixIsConnected && !emitFirstPix2PixRequest && webcamAccess.webcamTexture.didUpdateThisFrame)
-			{
-				EmitPix2PixRequest();
-				emitFirstPix2PixRequest = true;
-			}
 		}
 
 		IEnumerator CloseSocketBeforeEnd()
@@ -283,29 +275,6 @@ namespace Marrow
         
 		public void EmitPix2PixRequest()
         {
-			// Send webcam image
-			Pix2PixRequestData pix2PixRequestData = new Pix2PixRequestData();
-			webcamAccess.webcamTexture.GetPixels32(pix2pixWebcamData);
-
-			// TODO: try resize to reset, instead of create new texture
-			Destroy(genTexture);
-			genTexture = null;
-			genTexture = new Texture2D(imageWidth, imageHeight);
-			//pix2pixTexture.Resize(pix2pixImageWidth, pix2pixImageHeight);
-			genTexture.SetPixels32(pix2pixWebcamData);
-			//pix2pixTexture.Apply();
-
-            // Scale down seems to crash the server???
-
-			TextureScale.Bilinear(genTexture, imageWidth/2, imageHeight/2);
-			// Debug.Log(genTexture.width + ", " + genTexture.height);
-			     
-			byte[] imageData = genTexture.EncodeToJPG();
-			string base64Image = Convert.ToBase64String(imageData);
-			pix2PixRequestData.data = base64Image;
-			genSocket.Emit("update_request", pix2PixRequestData);
-			//Debug.LogFormat("socket emit pix2pix request: {0}", base64Image);
-			Debug.Log("socket emit pix2pix request");
         }
 
 		void OnPix2PixDisconnect(Socket socket, Packet packet, params object[] args)
