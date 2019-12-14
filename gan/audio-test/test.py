@@ -38,7 +38,7 @@ input_stream = audio.open(
     # https://goo.gl/z757pE
     channels=1, rate=16000,
     input=True, frames_per_buffer=int(16000 / 10),
-    input_device_index=3,
+    input_device_index=1,
     # Run the audio stream asynchronously to fill the buffer object.
     # This is necessary so that the input device's buffer doesn't
     # overflow while the calling thread makes network requests, etc.
@@ -54,7 +54,7 @@ input_stream = None
 """
 
 data, fs = sf.read('in_ear_{}_{}.wav'.format('mom', 1), dtype='float32')
-sd.play(data, fs, device='Headphones (2- Trekz Air by Aft')
+sd.play(data, fs, device=1)
 print("Playing something")
 sd.wait()
 
