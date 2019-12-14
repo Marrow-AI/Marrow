@@ -482,8 +482,9 @@ class Gan(NDIStreamer):
 
     def load_state(self, name):
         if name == 'clear':
-            self.maps.clear()
-            self.masks.clear()
+            self.gaugan_maps.clear()
+            self.gaugan_masks.clear()
+            self.deeplab_masks.clear()
         else:
             try:
                 with open('states/{}.json'.format(name)) as json_file:
