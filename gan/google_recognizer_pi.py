@@ -10,6 +10,7 @@ from google.cloud.speech import types
 import pyaudio
 from six.moves import queue
 from threading import Thread
+import asyncio
 
 # Audio recording parameters
 RATE = 16000
@@ -18,26 +19,25 @@ CHUNK = int(RATE / 10)  # 100ms
 
 class MicrophoneStream(object):
     """Opens a recording stream as a generator yielding the audio chunks."""
-    def __init__(self, rate, chunk, parent, args, device_index):
+    def __init__(self, rate, chunk, parent, args):
         self._rate = rate
         self._chunk = chunk
         self.parent = parent
         self.args = args
-        self.device_index = device_index
         self.audio_interface = pyaudio.PyAudio()
 
-        # Create a thread-safe buffer of audio data
         self._buff = queue.Queue()
         self.closed = True
 
     def __enter__(self):
+
         self._audio_stream = self.audio_interface.open(
             format=pyaudio.paInt16,
             # The API currently only supports 1-channel (mono) audio
             # https://goo.gl/z757pE
             channels=1, rate=self._rate,
             input=True, frames_per_buffer=self._chunk,
-            input_device_index=self.device_index,
+            input_device_index=2,
             # Run the audio stream asynchronously to fill the buffer object.
             # This is necessary so that the input device's buffer doesn't
             # overflow while the calling thread makes network requests, etc.
@@ -48,17 +48,18 @@ class MicrophoneStream(object):
 
         self.closed = False
 
+
         return self
 
     def __exit__(self, type, value, traceback):
         print("Generator exit!!")
         self._audio_stream.stop_stream()
         self._audio_stream.close()
-        self.audio_interface.terminate()
         self.closed = True
         # Signal the generator to terminate so that the client's
         # streaming_recognize method will not block the process termination.
         self._buff.put(None)
+        self.audio_interface.terminate()
 
     def _fill_buffer(self, in_data, frame_count, time_info, status_flags):
         """Continuously collect data from the audio stream, into the buffer."""
@@ -72,6 +73,7 @@ class MicrophoneStream(object):
             # end of the audio stream.
             chunk = self._buff.get()
             if chunk is None:
+                print("Empty data")
                 return
             data = [chunk]
 
@@ -87,9 +89,8 @@ class MicrophoneStream(object):
                 try:
                     chunk = self._buff.get(block=False)
                     if chunk is None:
-                        print("No data")
+                        print("No data!")
                         return
-                    print("Append data!")
                     data.append(chunk)
                 except queue.Empty:
                     break
@@ -98,16 +99,14 @@ class MicrophoneStream(object):
             yield b''.join(data)
 
 
-
 class Recognizer(Thread):
 
-    def __init__(self, queue, args):
+    def __init__(self, speech_queue, args):
 
         Thread.__init__(self)
         self.client = speech.SpeechClient()
         self.args = args
-        self.queue = queue
-
+        self.queue = speech_queue
         self.stop_recognition = False
 
         # See http://g.co/cloud/speech/docs/languages
@@ -123,37 +122,40 @@ class Recognizer(Thread):
             config=config,
             interim_results=True)
 
-        self.last_result = None
-
-
     def stop(self):
-        print("Stopping recognition")
         self.stop_recognition = True
+        print("Listening stopping")
 
-    def start(self, device_index):
+
+    def start(self):
         self.stop_recognition = False
-        self.device_index = device_index
+        #print(self.queue)
+        self.args.restart = False
+
         while not self.args.stop and not self.stop_recognition:
-            print("Listening on device index {}".format(device_index))
-            self.args.restart = False
+            print("Listening...")
             self.listen()
+        
+        #print("Sleeping...")
+        #time.sleep(2)
 
 
     def listen(self):
         self.start_time = time.time()
 
-        with MicrophoneStream(RATE, CHUNK, self, self.args, self.device_index) as stream:
+        with MicrophoneStream(RATE, CHUNK, self, self.args) as stream:
             audio_generator = stream.generator()
-            requests = (types.StreamingRecognizeRequest(audio_content=content)
-                        for content in audio_generator)
 
+            requests = (types.StreamingRecognizeRequest(audio_content=content)
+                         for content in audio_generator)
+            
             responses = self.client.streaming_recognize(self.streaming_config, requests)
 
-            # Now, put the transcription responses to use.
             self.listen_print_loop(responses)
 
 
-    def listen_print_loop(self,responses):
+
+    def listen_print_loop(self, responses):
         """Iterates through server responses and prints them.
 
         The responses passed is a generator that will block until a response
@@ -164,8 +166,12 @@ class Recognizer(Thread):
         print only the transcription for the top alternative of the top result.
 
         """
+
+        last_result = None
+
         for response in responses:
             if not response.results:
+                print("No results")
                 continue
 
             # The `results` list is consecutive. For streaming, we only care about
@@ -178,22 +184,22 @@ class Recognizer(Thread):
             # Display the transcription of the top alternative.
             transcript = result.alternatives[0].transcript
 
-
             if not result.is_final:
                 #sys.stdout.write(transcript + overwrite_chars + '\r')
                 #sys.stdout.flush()
 
-                if (transcript != self.last_result):
+                if (transcript != last_result):
                     print("({})".format(transcript))
-                    self.queue.put({
+                    self.queue.put_nowait({
                         "action": "mid-speech",
                         "text": transcript
                     })
-                    self.last_result = transcript
+                    last_result = transcript
 
             else:
                 print(" = {}".format(transcript))
-                self.queue.put({
+                self.queue.put_nowait({
                     "action": "speech",
                     "text": transcript
                 })
+

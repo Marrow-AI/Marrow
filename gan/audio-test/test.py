@@ -54,7 +54,8 @@ input_stream = None
 """
 
 data, fs = sf.read('in_ear_{}_{}.wav'.format('mom', 1), dtype='float32')
-sd.play(data, fs, device=1)
+#data, fs = sf.read('recordedFile.wav', dtype='float32')
+sd.play(data, fs, device='bluealsa')
 print("Playing something")
 sd.wait()
 
