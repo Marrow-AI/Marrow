@@ -21,12 +21,8 @@ for i in range(0, numdevices):
             print("input Device id ", i, " - ", audio.get_device_info_by_host_api_device_index(0, i).get('name'))
 
 print("-------------------------------------------------------------")
-"""
-index = (input())
-print("recording via index "+str(index))
-
 stream = audio.open(format=FORMAT, channels=CHANNELS,
-                rate=RATE, input=True,input_device_index = int(index),
+                rate=RATE, input=True,input_device_index=2,
                 frames_per_buffer=CHUNK)
 print ("recording started")
 Recordframes = []
@@ -46,4 +42,3 @@ waveFile.setsampwidth(audio.get_sample_size(FORMAT))
 waveFile.setframerate(RATE)
 waveFile.writeframes(b''.join(Recordframes))
 waveFile.close()
-"""	
