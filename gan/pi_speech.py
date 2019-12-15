@@ -40,6 +40,7 @@ if __name__ == '__main__':
     #pi_speech = PiSpeech()
     #pi_speech.start()
 
-    subprocess.run(["aplay","-D", "bluealsa:PROFILE=a2dp", "audio-test/in_ear_mom_1.wav"])    
+    #subprocess.run(["aplay","-D", "bluealsa:PROFILE=a2dp", "audio-test/in_ear_mom_1.wav"])    
+    #subprocess.run(["aplay","-D", "bluealsa", "audio-test/in_ear_mom_1.wav"])    
 
 
