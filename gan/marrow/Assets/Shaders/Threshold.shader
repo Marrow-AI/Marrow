@@ -10,7 +10,7 @@
         _ClusterOne ("Cluster One", Float) = 0
         _ClusterTwo ("Cluster Two", Float) = 0
         [MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
-        _Transparency("Transparency", Range(0.0,0.75)) = 0.25
+        _Transparency("Transparency", Range(0.0,1.0)) = 0.25
         _Blend("Blend", Range(0.0,1.0)) = 1.0
     }
  
@@ -95,12 +95,12 @@
                 texColor.r = step(texColor.r, _Threshold);
                 texColor.g = step(texColor.g, _Threshold);
                 texColor.b = step(texColor.b, _Threshold);
-                texColor.a = _Transparency;
                 
                  if (texColor.r == 1.0) {
                    texColor.a = 0.0;
                 } else {
                     texColor = _Color1in;
+                    texColor.a = _Transparency;             
                 }
 
                
