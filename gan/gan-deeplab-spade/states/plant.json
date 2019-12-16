@@ -1,0 +1,25 @@
+{
+    "map": [
+        {
+            "from": ["bowl"],
+            "to" : "potted plant",
+            "invert": false,
+			"expand": 20
+        }
+    ],
+    "deeplab": {
+        "mask": [
+        ]
+    },
+    "gaugan": {
+        "mask": [
+			{
+				"items": ["potted plant"],
+				"invert": true
+			}
+        ]
+    },
+    "showRaw": false,
+    "mapDeeplab": true
+}
+

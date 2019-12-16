@@ -1,0 +1,30 @@
+{
+    "map": [
+		{
+			"from": ["bowl"],
+			"to" : "sky-other",
+			"invert": true
+		},
+        {
+            "from": ["bowl"],
+            "to" : "waterdrops",
+            "invert": false,
+			"expand": 20
+        }
+    ],
+    "deeplab": {
+        "mask": [
+        ]
+    },
+    "gaugan": {
+        "mask": [
+			{
+				"items": ["waterdrops"],
+				"invert": true
+			}
+        ]
+    },
+    "showRaw": false,
+    "mapDeeplab": true
+}
+

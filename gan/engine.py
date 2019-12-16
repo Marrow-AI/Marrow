@@ -6,11 +6,14 @@ import argparse
 
 from pythonosc import osc_message_builder
 from pythonosc import udp_client
+from pythonosc import osc_server
+from pythonosc import dispatcher
+
 from server import Server
 
 import shutil
 import asyncio
-import threading
+from  threading import Thread, Timer
 import time
 import janus
 
@@ -87,6 +90,22 @@ class ScheduleFunction:
         print("Cacnel function {}".format(self._uuid))
         self._task.cancel()
 
+class OSCServer(Thread):
+    def __init__(self, osc_queue):
+        Thread.__init__(self)
+        self.osc_queue = osc_queue
+
+    def run(self):
+        self.dispatcher = dispatcher.Dispatcher()
+        self.dispatcher.set_default_handler(self.osc_handler)
+        self.server = osc_server.ThreadingOSCUDPServer(("0.0.0.0", 3954), self.dispatcher)
+        print("Serving OSC on {}".format(self.server.server_address))
+        self.server.serve_forever()
+
+    def osc_handler(self, addr,args):
+        print("OSC command! {}".format(addr))
+        self.osc_queue.put({"action": addr[1:], "text": args})
+
 
 SPEAKER_CHANNELS = {
     "dad" : 13,
@@ -146,6 +165,7 @@ class Engine:
             "gaugan": self.gaugan_client
         }
 
+
         #self.mental_state = MentalState()
 
         #google_speech = GoogleSpeech()
@@ -184,6 +204,8 @@ class Engine:
         #self.queue = asyncio.Queue(loop=self.main_loop)
         self.queue = janus.Queue(loop=self.main_loop)
 
+        self.osc_server = OSCServer(self.queue.sync_q)
+        self.osc_server.start()
        
         self.server_stop = self.main_loop.create_future()
         self.server = Server(
@@ -201,11 +223,11 @@ class Engine:
             print("Consuming speech")
             self.recognizer = Recognizer(self.queue.sync_q, self.main_loop, self.args)
             #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
-            tasks.append(asyncio.create_task(self.consume_speech()))
             print("Waiting on queue")
         else:
             self.recognizer = None
 
+        tasks.append(asyncio.create_task(self.consume_speech()))
         tasks.append(self.server_task)
         print("Gathering tasks")
 
@@ -277,7 +299,7 @@ class Engine:
                self.main_loop.create_task(self.play_in_ear())
 
         if not self.args.stop:
-            threading.Timer(0.1, self.time_check).start()
+            Timer(0.1, self.time_check).start()
 
     def next_variation(self):
         if self.script.next_variation():
