@@ -3,6 +3,28 @@
 StyleGAN start: -43.73, 0, 0.67
 Scale: 1, 1, 1
 
-GAN scale = 0.5
+Scale down: 0.5, 0.5, 0.5
+
+GAN scale = 0.5 
 X = -46
 Y = 0.8
+
+
+Deeplab start:
+
+Pos: (-43.9, 1.12, 15.83)
+Scale: (1.530368, 0.7651841, 0.7651841)
+Transparency: 0.27
+TransparencyOrig: 1
+
+GauGAN start:
+
+Pos: (-43.9, 1.12, 17.49)
+Scale (same) : (1.530368, 0.7651841, 0.7651841)
+Transparency: 0
+TransparencyOrig: 0.5
+
+StyleGAN scale up:
+Scale = (0.75, 0.75, 0.75)
+Pos = (-45.11, 1, 18.31)
+

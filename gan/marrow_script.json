@@ -156,13 +156,13 @@
                     "value": "bubble4.3,bubble4.4,bubble4.5,bubble4.6,bubble4.7,bubble4.8"
                 },
                 {
-                    "target" : "visuals",
+                    "target" : "unity",
                     "address": "/camera/stylegan",
                     "value": 1,
                     "delay" : 0.5
                 },
                 {
-                    "target" : "visuals",
+                    "target" : "unity",
                     "address": "/stylegan/scale",
                     "value": 1,
                     "delay" : 90.5
@@ -330,9 +330,19 @@
             "text": "Do you think she can tell what is true?",
             "triggers-osc": [
                 {
-                    "target" : "visuals",
+                    "target" : "unity",
                     "address": "/stylegan/blend",
                     "value": 1.0
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 0
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/display",
+                    "value": 1
                 }
             ]
         },
@@ -389,9 +399,24 @@
             ],
             "triggers-osc": [
                 {
-                    "target" : "visuals",
+                    "target" : "unity",
                     "address": "/stylegan/blend",
                     "value": 0.0
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 1
+                },
+                {
+                    "target" : "unity",
+                    "address": "/gaugan/state",
+                    "value": 1
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan/scale",
+                    "value": 2
                 }
             ]
         },
@@ -445,7 +470,19 @@
         },
         {
             "speaker": "sister",
-            "text": "Deep like that bowl of soup?"
+            "text": "Deep like that bowl of soup?",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "test-bowl"
+                },
+                {
+                    "target" : "unity",
+                    "address": "/gaugan/state",
+                    "value": 2
+                }
+            ]
         },
         {
             "in-ear" : [ 

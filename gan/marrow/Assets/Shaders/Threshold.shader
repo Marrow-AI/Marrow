@@ -11,6 +11,7 @@
         _ClusterTwo ("Cluster Two", Float) = 0
         [MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
         _Transparency("Transparency", Range(0.0,1.0)) = 0.25
+        _TransparencyOrig("TransparencyOrig", Range(0.0,1.0)) = 1.0
         _Blend("Blend", Range(0.0,1.0)) = 1.0
     }
  
@@ -58,6 +59,7 @@
             fixed4 _Color1out;
             float _Threshold;
             float _Transparency;
+            float _TransparencyOrig;
             float _Blend;
  
             v2f vert(appdata_t IN)
@@ -85,6 +87,8 @@
                 float4 origColor = texColor;
                 if (origColor.r <= 0.01 && origColor.g <= 0.01 & origColor.b <= 0.01) {
                     origColor.a = 0.0;
+                } else {
+                    origColor.a = _TransparencyOrig;
                 }
                 
 
@@ -102,7 +106,7 @@
                     texColor = _Color1in;
                     texColor.a = _Transparency;             
                 }
-
+                
                
                 
 

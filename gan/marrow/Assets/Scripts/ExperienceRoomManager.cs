@@ -17,6 +17,9 @@ namespace Marrow
 
         private Camera styleGANCamera;
         private GameObject styleGAN;
+        private GameObject gauGAN;
+        private GameObject deepLab;
+
 
         private void OnEnable()
 		{
@@ -47,8 +50,11 @@ namespace Marrow
 
             styleGANCamera = GameObject.Find("StyleGAN Camera").GetComponent<Camera>();
             styleGAN = GameObject.Find("StyleGAN");
+            gauGAN = GameObject.Find("GauGAN");
+            deepLab = GameObject.Find("Deeplab");
 
-			Setup();
+
+            Setup();
 
 
 			if (devMode)
@@ -60,9 +66,11 @@ namespace Marrow
         void Setup()
 		{
             styleGANCamera.enabled = false;
-		}
+            gauGAN.GetComponent<Renderer>().enabled = false;
+            deepLab.GetComponent<Renderer>().enabled = false;
+        }
 
-		private void Update()
+        private void Update()
 		{
 
 		}
@@ -130,12 +138,37 @@ namespace Marrow
             if (state == 1) {
                 LeanTween.moveX(styleGAN, -44.0f, 60.0f);
                 LeanTween.scale(styleGAN, new Vector3(0.5f, 0.5f, 0.5f), 60.0f);
+            } else if (state == 2) {
+                LeanTween.move(styleGAN, new Vector3(-45.11f, 1.0f, styleGAN.transform.position.z), 35.0f);
+                LeanTween.scale(styleGAN, new Vector3(0.75f, 0.75f, 0.75f), 35.0f);
             }
         }
         public void ReceivedOscStyleGANBlend(float value)
         {
             Debug.Log("Set StyleGAN Blend " + value);
             styleGAN.GetComponent<Renderer>().material.SetFloat("_Blend", value);
+        }
+        public void ReceivedOscGauGANState(int state)
+        {
+            Debug.Log("Set GauGAN state " + state);
+            if (state == 1) {
+                gauGAN.GetComponent<Renderer>().enabled = true;
+                deepLab.GetComponent<Renderer>().enabled = true;
+                Material deeplabMaterial = deepLab.GetComponent<Renderer>().material;
+                LeanTween.value(deepLab, deeplabMaterial.GetFloat("_Transparency"), 1.0f, 30.0f)
+                .setOnUpdate((float val) => {
+                    deeplabMaterial.SetFloat("_Transparency", val);
+                });
+            } else if (state == 2) {
+                deepLab.GetComponent<Renderer>().enabled = false;
+                Material gauganMaterial = gauGAN.GetComponent<Renderer>().material;
+                gauganMaterial.SetFloat("_Blend", 0.0f);
+            } else if (state == 3) {
+                gauGAN.GetComponent<Renderer>().enabled = true;
+                deepLab.GetComponent<Renderer>().enabled = true;
+                Material deeplabMaterial = deepLab.GetComponent<Renderer>().material;
+                deeplabMaterial.SetFloat("_Transparency", 1.0f);              
+            }
         }
     }
 }

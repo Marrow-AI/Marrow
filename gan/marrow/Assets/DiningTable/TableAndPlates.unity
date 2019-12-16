@@ -345,6 +345,7 @@ GameObject:
   - component: {fileID: 183069825}
   - component: {fileID: 183069824}
   - component: {fileID: 183069823}
+  - component: {fileID: 183069827}
   m_Layer: 0
   m_Name: Deeplab
   m_TagString: Untagged
@@ -373,7 +374,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183069822}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -420,12 +421,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183069822}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -42.42, y: 2.05, z: 17.83}
-  m_LocalScale: {x: 1.6810422, y: 0.8109225, z: 0.8622539}
+  m_LocalPosition: {x: -42.42, y: 2.05, z: 15.83}
+  m_LocalScale: {x: 1.530368, y: 0.7651841, z: 0.7651841}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 180}
+--- !u!114 &183069827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183069822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1b4214ce724782788203825ef4491bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sourceTexture: {fileID: 8400000, guid: 07ce8bfd43da67a409afe0bf77b9ae46, type: 2}
+  _alphaSupport: 0
 --- !u!1 &273029594
 GameObject:
   m_ObjectHideFlags: 0
@@ -1050,6 +1065,7 @@ GameObject:
   - component: {fileID: 952249951}
   - component: {fileID: 952249952}
   - component: {fileID: 952249953}
+  - component: {fileID: 952249954}
   m_Layer: 0
   m_Name: ExperienceManager
   m_TagString: Untagged
@@ -1512,6 +1528,35 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &952249954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952249936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f5937ce4de6a4254b9249339eea0c2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  receiver: {fileID: 483687587}
+  address: /gaugan/state
+  mapBundle: {fileID: 0}
+  onReceive:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 952249949}
+        m_MethodName: ReceivedOscGauGANState
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &989952883
 GameObject:
   m_ObjectHideFlags: 0
@@ -1714,7 +1759,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 1
+  m_TargetDisplay: 3
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
@@ -2403,7 +2448,7 @@ MonoBehaviour:
   _sourceName: INTERACT-R8 (python3)
   _targetTextureOne: {fileID: 8400000, guid: d178053f82b919d409bc21a7fd066fae, type: 2}
   _targetTextureTwo: {fileID: 8400000, guid: 07ce8bfd43da67a409afe0bf77b9ae46, type: 2}
-  _FPS: 1
+  _FPS: 12
   _targetRenderer: {fileID: 0}
   _targetMaterialProperty: 
 --- !u!81 &1163833840
@@ -2421,7 +2466,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1163833838}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
@@ -2894,7 +2939,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1321616037}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2941,8 +2986,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1321616037}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -42.46, y: 2.21, z: 17.97}
-  m_LocalScale: {x: 1.7, y: 0.75, z: 1}
+  m_LocalPosition: {x: -43.9, y: 1.12, z: 17.49}
+  m_LocalScale: {x: 1.530368, y: 0.7651841, z: 0.7651841}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 15
@@ -3142,7 +3187,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 2
+  m_TargetDisplay: 1
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
