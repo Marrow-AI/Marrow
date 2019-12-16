@@ -461,7 +461,7 @@
             ]
         },
         {
-            "target": "mom",
+            "speaker": "mom",
             "type": "OPEN"
         },
         {
@@ -517,7 +517,22 @@
         },
         {
             "speaker": "sister",
-            "text": "I mean the memories we are boiling in our soups."
+            "text": "I mean the memories we are boiling in our soups.",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "sister-memory",
+                    "delay" : 5
+                },
+                {
+                    "target" : "unity",
+                    "address": "/gaugan/state",
+                    "value": 4,
+                    "delay": 5
+                   
+                },
+            ]
         },
         {
             "in-ear" : [ 
