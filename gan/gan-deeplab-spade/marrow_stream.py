@@ -46,6 +46,8 @@ from requests.auth import HTTPDigestAuth
 
 from pythonosc import dispatcher
 from pythonosc import osc_server
+from pythonosc import udp_client
+
 import json
 
 THETA_ID = 'THETAYN14100015'
@@ -367,9 +369,14 @@ class Gan(NDIStreamer):
         self.osc_queue = osc_queue
         self.deeplab_opt = deeplab_opt
         self.spade_opt = spade_opt
-        self.gaugan_maps = []
+        self.maps = []
         self.gaugan_masks = []
         self.deeplab_masks = []
+        self.show_raw = False;
+        self.map_deeplab = False;
+        self.current_state = 'clear'
+
+        self.t2i_client = udp_client.SimpleUDPClient("192.168.1.22", 3838)
 
 
     def run(self):
@@ -423,23 +430,37 @@ class Gan(NDIStreamer):
                 #print("Image shape {}".format(raw_image.shape))
                 labelmap = inference(model, image, raw_image, postprocessor)
 
-                colormap = self.colorize(labelmap)
+                if self.current_state == "test-bowl":
+                    self.test_bowl(labelmap)
 
-                for masking in self.deeplab_masks:
-                    mask = np.isin(labelmap, masking['items'], invert=masking['invert'])
-                    colormap[mask, :] = [0, 0, 0];
+                uniques = np.unique(labelmap)
+                print([ID_TO_LABEL[unique] for unique in uniques])
+
+                if not self.map_deeplab:
+                    colormap = self.colorize(labelmap)
+                    for masking in self.deeplab_masks:
+                        mask = np.isin(labelmap, masking['items'], invert=masking['invert'])
+                        colormap[mask, :] = [0, 0, 0];
+
+                for mapping in self.maps:
+                    mask = np.isin(labelmap, mapping['from'], invert=mapping['invert'])
+                    if mapping['expand'] > 0:
+                        mask = self.expand_mask(mask, mapping['expand'])
+                    labelmap[mask] = mapping['to']
+
+                if self.map_deeplab:
+                    colormap = self.colorize(labelmap)
+                    for masking in self.deeplab_masks:
+                        mask = np.isin(labelmap, masking['items'], invert=masking['invert'])
+                        colormap[mask, :] = [0, 0, 0];
+
 
                 #color_resized = cv2.cvtColor(np.array(Image.fromarray(colormap).resize((256,256), Image.NEAREST)),cv2.COLOR_BGR2RGB)
 
-                for mapping in self.gaugan_maps:
-                    mask = np.isin(labelmap, mapping['from'], invert=mapping['invert'])
-                    labelmap[mask] = mapping['to']
 
                 uniques = np.unique(labelmap)
                 instance_counter = 0
                 instancemap = np.zeros(labelmap.shape)
-
-                #print([ID_TO_LABEL[unique] for unique in uniques])
 
                 for label_id in uniques:
                     mask = (labelmap == label_id)
@@ -451,10 +472,13 @@ class Gan(NDIStreamer):
                 labelimg = Image.fromarray(np.uint8(labelmap), 'L')
                 label_resized = np.array(labelimg.resize((256,256), Image.NEAREST))
 
-                item = coco_dataset.get_item_from_images(labelimg, instanceimg)
+                if self.show_raw:
+                    generated_np = cv2.cvtColor(np.array(Image.fromarray(raw_image).resize((256,256), Image.NEAREST)),cv2.COLOR_BGR2RGB)
+                else:
+                    item = coco_dataset.get_item_from_images(labelimg, instanceimg)
 
-                generated = spade_model(item, mode='inference')
-                generated_np = util.tensor2im(generated[0])
+                    generated = spade_model(item, mode='inference')
+                    generated_np = util.tensor2im(generated[0])
 
                 for masking in self.gaugan_masks:
                     mask = np.isin(label_resized, masking['items'], invert=masking['invert'])
@@ -480,9 +504,36 @@ class Gan(NDIStreamer):
         print(name)
 
 
+    def expand_mask(self, input, iters):
+	    """
+	    Expands the True area in an array 'input'.
+
+	    Expansion occurs in the horizontal and vertical directions by one
+	    cell, and is repeated 'iters' times.
+	    """
+	    yLen,xLen = input.shape
+	    output = input.copy()
+	    for iter in range(iters):
+		    for y in range(yLen):
+				    for x in range(xLen):
+					    if (y > 0        and input[y-1,x]) or \
+					       (y < yLen - 1 and input[y+1,x]) or \
+					       (x > 0        and input[y,x-1]) or \
+					       (x < xLen - 1 and input[y,x+1]): output[y,x] = True
+		    input = output.copy()
+	    return output
+
+    def test_bowl(self,labelmap):
+        if np.any(labelmap == LABEL_TO_ID['bowl']):
+            print("FOUND BOWL!!")
+            self.osc_queue.put({"command": "load-state", "args": "found-bowl"})
+            self.t2i_client.send_message("/gaugan/state", 3)
+
+
     def load_state(self, name):
+        self.current_state = name
         if name == 'clear':
-            self.gaugan_maps.clear()
+            self.maps.clear()
             self.gaugan_masks.clear()
             self.deeplab_masks.clear()
         else:
@@ -490,18 +541,22 @@ class Gan(NDIStreamer):
                 with open('states/{}.json'.format(name)) as json_file:
                     data = json.load(json_file)
                     print(data);
-                    self.gaugan_maps = list(map(lambda m: {
+                    self.maps = list(map(lambda m: {
                         'from': [LABEL_TO_ID[id] for id in m['from']],
                         'to': LABEL_TO_ID[m['to']],
-                        'invert': m['invert']
-                    }, data['gaugan']['map']))
+                        'invert': m['invert'],
+                        'expand': m['expand'] if 'expand' in m else 0
+                    }, data['map']))
 
                     self.gaugan_masks = list(map(lambda m: {
                         'items': [LABEL_TO_ID[id] for id in m['items']],
                         'invert': m['invert']
                     }, data['gaugan']['mask']))
 
-                    print("GAUGAN Maps: {} Masks: {}".format(self.gaugan_maps,self.gaugan_masks))
+                    self.show_raw = data['showRaw']
+                    self.map_deeplab = data['mapDeeplab']
+
+                    print("Maps: {} GauGAN Masks: {}, Show raw: {} Map deeplab: {}".format(self.maps,self.gaugan_masks, self.show_raw, self.map_deeplab))
 
                     self.deeplab_masks = list(map(lambda m: {
                         'items': [LABEL_TO_ID[id] for id in m['items']],
@@ -509,6 +564,8 @@ class Gan(NDIStreamer):
                     }, data['deeplab']['mask']))
 
                     print("Deeplab Masks: {}".format(self.deeplab_masks))
+
+
 
             except Excpetion as e:
                 print("Error loading state! {}".format(e))
