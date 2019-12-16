@@ -133,13 +133,15 @@ class Engine:
         #self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
 
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
+        self.td_client = udp_client.SimpleUDPClient("127.0.0.1", 7000)
         self.voice_client = udp_client.SimpleUDPClient("172.16.195.167", 8000)
         self.stylegan_client = udp_client.SimpleUDPClient("192.168.1.23", 3800)
         self.gaugan_client = udp_client.SimpleUDPClient("192.168.1.23", 3900)
 
 
         self.osc_clients = {
-            "visuals": self.t2i_client,
+            "unity": self.t2i_client,
+            "td": self.td_client,
             "stylegan": self.stylegan_client,
             "gaugan": self.gaugan_client
         }

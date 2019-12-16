@@ -175,7 +175,7 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "it's all a matter of perspective, which is unfortunately very limited for my sister."
+                            "text": "it's all a matter of perspective, which is very limited for my sister."
                         }
                     ]
                 }
@@ -183,7 +183,7 @@
          },
         {
             "speaker": "sister",
-            "text": "When I'm opening my eyes, I can even see beyond all of you."
+            "text": "If I want to I can even see beyond all of you."
         },
         {
             "in-ear" : [ 
@@ -342,11 +342,11 @@
         },
         {
             "speaker": "brother",
-            "text": "that aims to form a confusion and-"
+            "text": "that aims to cause the total disappearance-"
         },
         {
             "speaker": "brother",
-            "text": "the total disappearance of the world of reality."
+            "text": "of the world of reality."
         },
         {
             "speaker": "brother",
@@ -372,6 +372,14 @@
                 },
                 { 
                     "target" : "dad",
+                    "lines": [
+                        {
+                            "text": "What kind of information is this? Fragmented thoughts, full of jump cuts and distortion."
+                        }
+                    ]
+                },
+                { 
+                    "target" : "brother",
                     "lines": [
                         {
                             "text": "What kind of information is this? Fragmented thoughts, full of jump cuts and distortion."
@@ -461,62 +469,78 @@
         },
         {
             "speaker": "brother",
-            "text": "Your vision is too shallow to my taste, but you intrigued me."
-        },
-        {
-            "speaker": "brother",
-            "text": "Why do you think this bowl is so deep?"
+            "text": "Your vision is too shallow to my taste, dear sister."
         },
         {
             "type": "clear"
         },
         {
             "speaker": "sister",
-            "text": "We had so many dinners with this bowl of soup!"
+            "text": "I don't mean the taste of our dinners."
         },
         {
             "speaker": "sister",
-            "text": "I bet that many of our family memories are built around it."
-        },
-        {
-            "speaker": "dad",
-            "text": "It is indeed a very nice bowl."
+            "text": "I mean the memories we are boiling in our soups."
         },
         {
             "in-ear" : [ 
-                { 
+                 { 
                     "target" : "sister",
                     "lines": [
-                        {
-                            "text": "I remember, one day there was a dog that barked so loud and made so much noise that I just went outside and let him drink some water from this bowl! Mom will kill me if she finds out about it!"
-                        }
-                    ]
-                },
-                { 
-                    "target" : "mom",
-                    "lines": [
-                        {
-                            "text": "His Parents got us this bowl for our wedding, I remember how his mom hugged me and kissed me that day. I always liked this bowl, I never liked my mom."
-                        }
-                    ]
-                },
-                { 
-                    "target" : "brother",
-                    "lines": [
-                        {
-                            "text": "Mom is always so careful about this bowl. Once I almost dropped it and I felt like the bowl itself drops through my throat and into my stomach, it filled me with anxiety. I've been trying not to touch it ever since."
-                        }
-                    ]
-                },
-                { 
+                            {
+                                "text": "One day there was a dog that was locked outside, barked so loud and made a lot of noise. So I just went outside and let him drink from this bowl. Or maybe it was me, it was a cold day."
+                            }
+                        ]
+                    }
+                ]
+        },
+        {
+            "speaker": "dad",
+            "text": "It is indeed a very nice bowl. Let me look at it."
+        },
+        {
+            "in-ear" : [ 
+                 { 
                     "target" : "dad",
                     "lines": [
-                        {
-                            "text": "The best food she makes is in this bowl. Whenever she uses it, I know she is in a good mood and extra thought was given to dinner. We did have a lot of family moments with this bowl, like that day at the beach."
-                        }
-                    ]
-                }
-            ]
+                            {
+                                "text": "You eat what you've cooked and you need to finish it to the end. Even if it's vomit. I know she loves another, but I will stay with her and won't let go. Only for these moments like we had with this bowl by the beach."
+                            }
+                        ]
+                    }
+                ]
+        },
+        {
+            "speaker": "dad",
+            "text": "Here son, take it from me."
+        },
+        {
+            "in-ear" : [ 
+                 { 
+                    "target" : "brother",
+                    "lines": [
+                            {
+                                "text": "Mother is always so careful about this bowl. Once I almost dropped it. I felt like the bowl itself drops through my throat and into my stomach. It filled me with an infinite anxiety, fearing from her eyes and from his hands. I've been trying not to touch it ever since."
+                            }
+                        ]
+                    }
+                ]
+        },
+        {
+            "speaker": "brother",
+            "text": "Mommy, take it from me."
+        },
+        {
+            "in-ear" : [ 
+                 { 
+                    "target" : "mom",
+                    "lines": [
+                            {
+                                "text": "His Parents got us this bowl for our wedding, I remember how his mom hugged me and kissed me that day. I always liked this bowl. I never liked my mom."
+                            }
+                        ]
+                    }
+                ]
         },
         {
             "speaker": "mom",
@@ -535,64 +559,48 @@
             "text": "oh, I always thought a memory can come from both directions."
         },
         {
-            "in-ear" : [ 
-                { 
-                    "target" : "dad",
-                    "lines": [
-                        {
-                            "text": "what is she aiming at? I don't think we are at all sitting at the same table."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "speaker": "mom",
             "text": "Yes, the right direction and the wrong one."
         },
         {
             "speaker": "dad",
-            "text": "Very true. But I do remember a particular day with this bowl of soup"
+            "text": "Very true. Is there any anger in you?"
+        },
+        {
+            "speaker": "sister",
+            "text": "Of course there is"
         },
         {
             "in-ear" : [ 
                 { 
-                    "target" : "sister",
+                    "target" : "brother",
                     "lines": [
                         {
-                            "text": "He is trying to see me, the only one that doesn't give up, I'll pass him that bowl."
+                            "text": "Of course there is"
                         }
                     ]
                 }
             ]
-        },
-        {
-            "speaker": "sister",
-            "text": "Here you go daddy, pour yourself some soup."
         },
         {
             "speaker": "mom",
-            "text": "You remembered something?"
+            "text": "Of course"
         },
         {
             "speaker": "dad",
-            "text": "Very true. Do you remember the day that we took grandma to the beach?"
+            "text": "Very true. So talk about it."
         },
         {
             "speaker": "sister",
-            "text": "I remember! The beach was so beautiful that day. And so is the sun!"
+            "text": "And from the other side - do you see the ocean?"
         },
         {
-            "in-ear" : [ 
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "The sun is like this candle it should shine on that bowl, let me move it closer."
-                        }
-                    ]
-                }
-            ]
+            "speaker": "dad",
+            "text": "Very true. Like the day that we took grandma to the beach."
+        },
+        {
+            "speaker": "sister",
+            "text": "Yes! The beach was so beautiful that lovely pretty day with so many glossy shiny rocks."
         },
         {
             "speaker": "brother",
@@ -604,7 +612,7 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "Colorful flowers like a reflection of light on water, like the water in our glasses. Those glasses should reflect our beautiful mother, I will move them closer to her."
+                            "text": "Colorful flowers like a reflection of light on our glasses. Those glasses should reflect our beautiful mother. I will move them closer to her."
                         }
                     ]
                 }
@@ -616,7 +624,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "Where is the pepper grinder? The food has no taste, I have to bring it over."
+                            "text": "Not sure what is happening here. But the food has no taste. I'll go grab some wine from the counter."
                         }
                     ]
                 }
@@ -624,11 +632,11 @@
         },
         {
             "speaker": "sister",
-            "text": "Yes she had them! she had flowers!"
+            "text": "Yes she had them! she carried flowers!"
         },
         {
             "speaker": "brother",
-            "text": "Dad, can you pass me the pepper grinder?"
+            "text": "Dad, can you pass me the bottle?"
         },
         {
             "speaker": "dad",
@@ -640,7 +648,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "Why doesn't he pass him the pepper grinder?"
+                            "text": "Why doesn't he pass him the bottle?"
                         }
                     ]
                 }
@@ -648,11 +656,11 @@
         },
         {
             "speaker": "mom",
-            "text": "Here you go son"
+            "text": "Here you go son. But check expiration date."
         },
         {
             "speaker": "sister",
-            "text": "And you brother, you swam a lot? Right?"
+            "text": "And you brother, you swam and dived a lot? Right?"
         },
         {
             "in-ear" : [ 
@@ -660,7 +668,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "Does my food have no taste?"
+                            "text": "Why do they drink so much? Does my food have no taste?"
                         }
                     ]
                 }
@@ -668,11 +676,11 @@
         },
         {
             "speaker": "brother",
-            "text": "I don't remember much but it sounds quite right!"
+            "text": "I don't remember much, but it does sound like me."
         },
         {
             "speaker": "sister",
-            "text": "I think so! You are such a great swimmer. You found all those wonderful creatures!"
+            "text": "I think so! you found all those wonderful creatures!"
         },
         {
             "speaker": "sister",
@@ -700,7 +708,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "Why are the candles not in the center of the table? let me fix it."
+                            "text": "Why the glasses are not in the right place? I have to arrange them back in the right order."
                         }
                     ]
                 }
@@ -721,13 +729,6 @@
         {
             "speaker": "brother",
             "text": "Every time you tell a story you forget it more."
-        },
-        {
-            "speaker": "mom",
-            "text": "Son is there any soup left? can you pass me that bowl?"
-        },
-        {
-            "type": "clear"
         },
         {
             "speaker": "sister",
@@ -754,27 +755,8 @@
             "text": "Ashes to ashes, dust to dust from this bowl arose."
         },
         {
-            "speaker": "sister",
-            "text": "Now I remember the rest of it."
-        },
-        {
             "speaker": "mom",
             "text": "You should be more careful with how you construct your fragmented stories."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "Is there another way I should have constructed it? Other things I have forgotten that were over there and I should bring them over?"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "type": "clear"
         },
         {
             "speaker": "sister",
@@ -849,7 +831,7 @@
         },
         {
             "speaker": "sister",
-            "text": "What am I?"
+            "text": "What even am I?"
         },
         {
             "speaker": "mom",
