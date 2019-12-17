@@ -52,6 +52,7 @@ class OSCServer(threading.Thread):
         self.dispatcher = dispatcher
         self.loop = loop
         threading.Thread.__init__(self)
+        self.record_future = None
 
     def run(self):
         self.dispatcher = dispatcher.Dispatcher()
@@ -68,7 +69,10 @@ class OSCServer(threading.Thread):
         self.server.serve_forever()
 
     def start_play(self, addr, role, file_name):
-        self.loop.create_task(self.play(role, file_name))
+        print("Start play {}".format(file_name))
+        self.loop.call_soon_threadsafe(
+            self.loop.create_task,self.play(role, file_name)
+        )
 
     async def play(self, role, file_name):
         global ROLE
@@ -111,6 +115,7 @@ if __name__ == '__main__':
 
     asyncio.run(main())
 
+    #popenAndCall(main, ["aplay","-D", "bluealsa:PROFILE=a2dp", "/home/pi/{}".format("in-ear/in_ear_mom_1.wav")])    
     #subprocess.run(["aplay","-D", "bluealsa", "audio-test/in_ear_mom_1.wav"])    
 
 
