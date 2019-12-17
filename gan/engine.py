@@ -583,7 +583,11 @@ class Engine:
         self.trigger_osc()
         self.state = "SCRIPT"
         if self.script.awaiting_type != "OPEN":
-            self.next_line()
+            if "delay" in self.script.awaiting:
+                delay = self.script.awaiting["delay"]
+            else:
+                delay = 0
+            self.schedule_function(delay, self.next_line)
         else:
             self.show_next_line()
 
@@ -778,6 +782,9 @@ class Engine:
         self.t2i_client.send_message("/spotlight", "mom")
         self.td_client.send_message("/td/display", 0)
         self.gaugan_client.send_message("/load-state", "beginning")
+        self.t2i_client.send_message("/gaugan/state", 1)
+
+
 
         #self.schedule_function(23, self.start_script)
         self.schedule_function(0, self.start_script)

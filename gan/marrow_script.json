@@ -410,11 +410,6 @@
                 },
                 {
                     "target" : "unity",
-                    "address": "/gaugan/state",
-                    "value": 1
-                },
-                {
-                    "target" : "unity",
                     "address": "/stylegan/scale",
                     "value": 2
                 }
@@ -476,11 +471,6 @@
                     "target" : "gaugan",
                     "address": "/load-state",
                     "value": "test-bowl"
-                },
-                {
-                    "target" : "unity",
-                    "address": "/gaugan/state",
-                    "value": 2
                 }
             ]
         },
@@ -509,9 +499,6 @@
             "text": "Your vision is too shallow to my taste, dear sister."
         },
         {
-            "type": "clear"
-        },
-        {
             "speaker": "sister",
             "text": "I don't mean the taste of our dinners."
         },
@@ -522,16 +509,16 @@
                 {
                     "target" : "gaugan",
                     "address": "/load-state",
-                    "value": "sister-memory",
+                    "value": "waterdrops",
                     "delay" : 5
                 },
                 {
                     "target" : "unity",
                     "address": "/gaugan/state",
-                    "value": 4,
+                    "value": 2,
                     "delay": 5
                    
-                },
+                }
             ]
         },
         {
@@ -544,11 +531,20 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "delay": 5
         },
         {
             "speaker": "dad",
-            "text": "It is indeed a very nice bowl. Let me look at it."
+            "text": "It is indeed a very nice bowl. Let me look at it.",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "apple",
+                    "delay" : 5
+                }
+            ]
         },
         {
             "in-ear" : [ 
@@ -560,11 +556,20 @@
                             }
                         ]
                     }
-                ]
+                ],
+            "delay": 5
         },
         {
             "speaker": "dad",
-            "text": "Here son, take it from me."
+            "text": "Here son, take it from me.",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "clock",
+                    "delay" : 5
+                }
+            ]
         },
         {
             "in-ear" : [ 
@@ -576,11 +581,20 @@
                             }
                         ]
                     }
-                ]
+                ],
+            "delay": 5
         },
         {
             "speaker": "brother",
-            "text": "Mommy, take it from me."
+            "text": "Mommy, take it from me.",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "plant",
+                    "delay" : 5
+                }
+            ]
         },
         {
             "in-ear" : [ 
@@ -592,7 +606,8 @@
                             }
                         ]
                     }
-                ]
+                ],
+            "delay": 5
         },
         {
             "speaker": "mom",
@@ -608,7 +623,19 @@
         },
         {
             "speaker": "sister",
-            "text": "oh, I always thought a memory can come from both directions."
+            "text": "oh, I always thought a memory can come from both directions.",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "real"
+                },
+                {
+                    "target" : "unity",
+                    "address": "/gaugan/state",
+                    "value": 3
+                }
+            ]
         },
         {
             "speaker": "mom",

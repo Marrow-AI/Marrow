@@ -93,7 +93,7 @@ Material:
     - _Threshold: 0
     - _Transparency: 0
     - _TransparencyInv: 0
-    - _TransparencyOrig: 0.5
+    - _TransparencyOrig: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
