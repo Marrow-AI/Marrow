@@ -57,7 +57,6 @@ if __name__ == '__main__':
                         utterance = inear["lines"]
                         texts = [part['text'] for part in utterance]
                         embeds = np.stack([embed] * len(texts))
-                        print(texts)
                         pauses = [(part['pause'] / 10) if 'pause' in part else 1 for part in utterance]
                         specs = synthesizer.synthesize_spectrograms(texts, embeds)
                         breaks = [spec.shape[1] for spec in specs]
@@ -68,7 +67,7 @@ if __name__ == '__main__':
                         wavs = [wav[start:end] for start, end, in zip(b_starts, b_ends)]
                         breaks = [np.zeros(int(0.15 * Synthesizer.sample_rate * pause_length)) for pause_length in pauses] 
                         final_wav = np.concatenate([i for w, b in zip(wavs, breaks) for i in (w, b)])
-                        scipy.io.wavfile.write("results/in_ear_{}_{}.wav".format(target,index), Synthesizer.sample_rate, wav)
+                        scipy.io.wavfile.write("results/in_ear_{}_{}.wav".format(target,index), Synthesizer.sample_rate, final_wav)
 
                     #moz_tts.say(utterance, "gan_new/in_ear_{}_{}.wav".format(target,index))
         except Exception as e:

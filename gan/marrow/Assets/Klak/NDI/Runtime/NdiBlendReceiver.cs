@@ -221,7 +221,7 @@ namespace Klak.Ndi
             if (_timer > _dataTime) {
                 _showBack = !_showBack;
                 _timer = 0.0f;
-                Debug.Log("Blit!!");
+               // Debug.Log("Blit!!");
                 if (_showBack) {
                     Graphics.Blit(_sourceTexture, _frontTexture, _blendMaterial, 0);
                 } else {

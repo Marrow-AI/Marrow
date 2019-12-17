@@ -499,8 +499,7 @@
                 {
                     "target" : "gaugan",
                     "address": "/load-state",
-                    "value": "waterdrops",
-                    "delay" : 5
+                    "value": "waterdrops"
                 },
                 {
                     "target" : "unity",
@@ -661,7 +660,19 @@
         },
         {
             "speaker": "sister",
-            "text": "And from the other side - do you see the ocean?"
+            "text": "And from the other side - do you see the ocean?",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "sea"
+                },
+                {
+                    "target" : "unity",
+                    "address": "/gaugan/state",
+                    "value": 4  
+                }
+            ]
         },
         {
             "speaker": "dad",

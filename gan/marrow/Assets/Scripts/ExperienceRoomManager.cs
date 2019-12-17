@@ -163,8 +163,7 @@ namespace Marrow
                 gauGAN.GetComponent<Renderer>().enabled = true;
             }  else if (state == 3) {
 
-
-                gauGAN.transform.position.Set(-43.78f, -0.65f, 17.49f);
+                gauGAN.transform.position = new Vector3(-43.78f, -0.65f, 15f);
 
                 deepLab.GetComponent<Renderer>().enabled = true;
                 rawImage.GetComponent<Renderer>().enabled = true;
@@ -176,7 +175,7 @@ namespace Marrow
                     0.5f, 1.0f, 15f
                 )
                 .setOnUpdate((float val) => {
-                    deeplabMaterial.SetFloat("_Tran sparency", val);
+                    deeplabMaterial.SetFloat("_Transparency", val);
                 });
 
                 LeanTween.value(
@@ -184,8 +183,11 @@ namespace Marrow
                     1.0f, 0.0f, 15f
                 )
                 .setOnUpdate((float val) => {
-                    deeplabMaterial.SetFloat("_Transparency", val);
+                    rawImageMaterial.SetFloat("_Transparency", val);
                 });
+            } else if (state == 4) {
+                deepLab.GetComponent<Renderer>().enabled = false;
+                rawImage.GetComponent<Renderer>().enabled = false;
             }
         }
     }
