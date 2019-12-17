@@ -72,35 +72,59 @@
          },
         {
             "in-ear" : [ 
-                { 
+                {
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "My only complaints are that I never hear my daughter. What is wrong with her? Just look at her. I wish she was more engaged with this family."
+                            "text": "My only complaints are that I never hear my daughter. What is wrong with her?",
+                            "pause": 10
+                        },
+                        {
+                            "text": "Just look at her. I wish she was more like me."
                         }
                     ]
                 },
-                { 
+                {
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "My sister needs to learn from yesterday's mistakes and talk. Silent moments are the noisiest moments in our family."
+                            "text": "My sister needs to learn from the mistakes of yesterday and talk",
+                            "pause": 10
+                        },
+                        {
+                            "text": "she must know Silent moments are the noisiest moments in our family"
                         }
                     ]
                 },
-                { 
+                {
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "In her voice you can sense anything but complaints. She is probably thinking why our daughter hasn't compliment her yet. But I don not want to get angry again. I just want one nice dinner with my family."
+                            "text": "I hear from her only complaints.",
+                            "pause": 30
+                        },
+                        {
+                            "text": "She is probably thinking that our daughter doesn't like her food.",
+                            "pause": 30
+                        },
+                        {
+                            "text": "But I don’t want to get angry again. I just want one nice dinner with my family."
                         }
                     ]
                 },
-                { 
+                {
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "I cannot tell if everything here is what it is or what it isn't, are they looking at me because I did something wrong or maybe they are not looking at me at all? my mind often leads me to false alarms!"
+                            "text": "I cannot tell if everything here is what it is or what it isn't",
+                            "pause": 20
+                        },
+                        {
+                            "text": "are they looking at me because I did something wrong? or maybe they are not looking at me at all?",
+                            "pause":10
+                        },
+                        {
+                            "text": "my mind often leads me into false analysis"
                         }
                     ]
                 }
@@ -116,7 +140,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "she is making me so stressed. I remember that it's exactly what we ate last night."
+                            "text": "she is stressing me out so much, it's exactly what we ate last night."
                         }
                     ]
                 }
@@ -140,7 +164,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I wish I was able to eat something different."
+                            "text": "I wish I was able to eat something different, I would take anything else right now."
                         }
                     ]
                 }
@@ -191,7 +215,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "she must know that none of us choose each other."
+                            "text": "she needs to know that none of us choose to be here."
                         }
                     ]
                 }
@@ -255,7 +279,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I can never understand what he is saying."
+                            "text": "I do not understand what he is trying to say"
                         }
                     ]
                 }
@@ -282,16 +306,24 @@
                 { 
                     "target" : "dad",
                     "lines": [
+                       {
+                           "text": "So much time passed since we last touch each other",
+                           "pause": 10
+                        },
                         {
-                            "text": "We didn't touch each other in such a long time. I wonder if she will finally let me hold her hand for a bit?"
+                            "text": "I wonder if she will finally let me hold her hand for a bit?"
                         }
                     ]
                 },
                 { 
                     "target" : "mom",
                     "lines": [
+                       {
+                            "text": "It's been a while since I felt something to him.",
+                            "pause": 15
+                        },
                         {
-                            "text": "I didn't felt something toward him in such a long time. What he just said really got me emotional, I feel like holding his hand."
+                            "text": "What he just said got me emotional, I feel I want to hold his hand."
                         }
                     ]
                 }
@@ -366,7 +398,11 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "What kind of information is this? Fragmented thoughts, full of jump cuts and distortion."
+                            "text": "What is this information for? are there even words for it?",
+                            "pause": 10
+                        },
+                        {
+                            "text": "or just ragmented thoughts, full of jump cuts and distortion."
                         }
                     ]
                 },
@@ -374,7 +410,11 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "What kind of information is this? Fragmented thoughts, full of jump cuts and distortion."
+                            "text": "What is this information for? are there even words for it?",
+                            "pause": 10
+                        },
+                        {
+                            "text": "or just ragmented thoughts, full of jump cuts and distortion."
                         }
                     ]
                 },
@@ -382,7 +422,11 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "What kind of information is this? Fragmented thoughts, full of jump cuts and distortion."
+                            "text": "What is this information for? are there even words for it?",
+                            "pause": 10
+                        },
+                        {
+                            "text": "or just ragmented thoughts, full of jump cuts and distortion."
                         }
                     ]
                 }
@@ -430,8 +474,12 @@
                  { 
                     "target" : "mom",
                     "lines": [
+                           {
+                                "text": "I'm reading here 78 percent ambiguity.",
+                                "pause": 10
+                            },
                             {
-                                "text": "I'm reading 78 percent ambiguity. And because our eyes deceive us I can tell him whatever I want."
+                                "text": "And because our eyes deceive us I can tell him whatever I want."
                             }
                         ]
                 },
@@ -469,17 +517,21 @@
                  { 
                     "target" : "sister",
                     "lines": [
-                            {
-                                "text": "I saw this bowl a minute ago, I can't remember where, oh on the counter! I will go get it."
+                           {
+                                "text": "I mean that bowl that on the counter. I will get up to get it."
                             }
                         ]
                 },
                 { 
                         "target" : "brother",
                         "lines": [
-                                {
-                                    "text": "I meant much deeper than that. Mother's food reminds me of the end of time. It makes me think about where I came from. And fear what exists at the end of it all."
-                                }
+                            {
+                              "text": "I meant much deeper than that, because the food of our mother reminds me of the end of time.",
+                              "pause": 10
+                            },
+                            {
+                              "text": "It makes me think about where I came from, and fear what exists at the end of it all."
+                            }
                         ]
                 }
             ]
@@ -516,7 +568,19 @@
                     "target" : "sister",
                     "lines": [
                             {
-                                "text": "One day there was a dog that was locked outside, barked so loud and made a lot of noise. So I just went outside and let him drink from this bowl. Or maybe it was me, it was a cold day."
+                                "text": "One day there was a dog that was locked outside.", 
+                                "pause":10
+                            },
+                             {
+                                "text": "She barked so loud and made a lot of noise.", 
+                                "pause":10
+                            },
+                            {
+                                "text": "So I just went outside and let her drink from this bowl.", 
+                                "pause":10
+                            },
+                            {
+                                "text": "Or maybe it was me, it is hard to remember. I think it was a very cold day."
                             }
                         ]
                     }
@@ -541,7 +605,15 @@
                     "target" : "dad",
                     "lines": [
                             {
-                                "text": "You eat what you've cooked and you need to finish it to the end. Even if it's vomit. I know she loves another, but I will stay with her and won't let go. Only for these moments like we had with this bowl by the beach."
+                                "text": "You eat what you have cooked and you need to finish it to the end, even if it is vomit.",
+                                "pause": 10
+                            },
+                            {
+                                "text": "I know she loves another, but I will stay with her and not let go.",
+                                "pause":10
+                            },
+                            {
+                                "text": "Even just for these moments like we had with this bowl by the beach."
                             }
                         ]
                     }
@@ -566,7 +638,19 @@
                     "target" : "brother",
                     "lines": [
                             {
-                                "text": "Mother is always so careful about this bowl. Once I almost dropped it. I felt like the bowl itself drops through my throat and into my stomach. It filled me with an infinite anxiety, fearing from her eyes and from his hands. I've been trying not to touch it ever since."
+                                "text": "oh, my mother is always so careful about this bowl.",
+                                "pause": 10
+                            },
+                            {
+                                "text": "Once I almost dropped it, I felt like the bowl itself drops through my throat and into my stomach.",
+                                "pause":10
+                            },
+                            {
+                                "text": "It filled me with an infinite anxiety, fearing from her eyes and from his hands.",
+                                "pause": 30 
+                            },
+                            {
+                                "text": "I have been avoiding touching it ever since."
                             }
                         ]
                     }
@@ -591,7 +675,19 @@
                     "target" : "mom",
                     "lines": [
                             {
-                                "text": "His Parents got us this bowl for our wedding, I remember how his mom hugged me and kissed me that day. I always liked this bowl. I never liked my mom."
+                                "text": "We got this bowl to our wedding as a gift from his parents.",
+                                "pause": 10
+                            },
+                            {
+                                "text": "I remember how his mom hugged me and kissed me that day.",
+                                "pause":10
+                            },
+                             {
+                                "text": "It was the first time I felt belong in my life.",
+                                "pause":10
+                            },
+                            {
+                                "text": "I always liked this bowl more than I ever liked my mother."
                             }
                         ]
                     }
@@ -644,7 +740,11 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "Of course there is anger. "
+                            "text": "Of course.",
+                            "pause": 5
+                        },
+                        {
+                            "text": "there is always anger."
                         }
                     ]
                 }
@@ -692,8 +792,12 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "Colorful flowers like a reflection of light on our glasses. Those glasses should reflect our beautiful mother. I will move them closer to her."
-                        }
+                            "text": "Colorful flowers like a reflection of light on our glasses.",
+                            "pause": 10
+                       },
+                       {
+                           "text": "Those glasses should reflect our beautiful mother. I will move them closer to her."
+                       }
                     ]
                 }
             ]
@@ -704,7 +808,11 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "Not sure what is happening here. But the food has no taste. I'll go grab some wine from the counter."
+                            "text": "I am really not sure what is happening here.",
+                            "pause": 10
+                        },
+                        {
+                            "text": "But the food has no taste, I'll go grab some wine from the counter."
                         }
                     ]
                 }
@@ -728,7 +836,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "What is the problem to pass him the bottle?"
+                            "text": "I can't understand what is the problem to pass to him the bottle?"
                         }
                     ]
                 }
@@ -748,7 +856,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "Why do they drink so much? Does my food has no taste?"
+                            "text": "By the way they are drinking, I feel like they are telling me that the food has no taste again."
                         }
                     ]
                 }
@@ -970,7 +1078,11 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "It is time, to tell my story now. It is my time to share. Let's move them to the living-room."
+                            "text": "It is time, to tell my story now. It is my time to share.",
+                            "pause": 5
+                        },
+                        {
+                            "text": "now we need to move together, as a family, to the living-room."
                         }
                     ]
                 }

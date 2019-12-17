@@ -1,5 +1,5 @@
 from pathlib import Path
-RTVC_PATH = Path('/home/avnerus/Code/Real-Time-Voice-Cloning')
+RTVC_PATH = Path('C:/Real-Time-Voice-Cloning')
 
 import sys
 sys.path.append(str(RTVC_PATH))
@@ -38,7 +38,7 @@ if __name__ == '__main__':
     encoder_wav = encoder.preprocess_wav(Path(args.voice_sample))
     embed, partial_embeds, _ = encoder.embed_utterance(encoder_wav, return_partials=True)
 
-    script = Script(script_file = '../marrow_script.json', load_nlp = False)
+    script = Script(script_file = './marrow_script_test.json', load_nlp = False)
 
     index = 0
     for line in script.data["script-lines"]:
