@@ -60,7 +60,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "His reeactions are 33 percent passive, 67 peercent aggressive"
+                            "text": "His reeactions are 33 percent passive, 67 percent aggressive"
                         }
                     ]
                 }
@@ -76,15 +76,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "My only complaints are that I never hear my daughter.",
-                            "pause": 30
-                        },
-                        {
-                            "text": "What is wrong with her? Just look at her.",
-                            "pause": 50
-                        },
-                        {
-                            "text": "I wish she was more engaged with this family."
+                            "text": "My only complaints are that I never hear my daughter. What is wrong with her? Just look at her. I wish she was more engaged with this family."
                         }
                     ]
                 },
@@ -92,7 +84,7 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "My sister needs to learn from yesterday's mistakes and say something. Silent moments are the noisiest moments in our family."
+                            "text": "My sister needs to learn from yesterday's mistakes and talk. Silent moments are the noisiest moments in our family."
                         }
                     ]
                 },
@@ -100,7 +92,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I can't sense in her voice anything but complaints. She is probably thinking why our daughter hasn't compliment her yet. But I don't want to get angry again. I just want one nice dinner with my family."
+                            "text": "In her voice you can sense anything but complaints. She is probably thinking why our daughter hasn't compliment her yet. But I don not want to get angry again. I just want one nice dinner with my family."
                         }
                     ]
                 },
@@ -164,13 +156,13 @@
                     "value": "bubble4.3,bubble4.4,bubble4.5,bubble4.6,bubble4.7,bubble4.8"
                 },
                 {
-                    "target" : "unity",
+                    "target" : "visuals",
                     "address": "/camera/stylegan",
                     "value": 1,
                     "delay" : 0.5
                 },
                 {
-                    "target" : "unity",
+                    "target" : "visuals",
                     "address": "/stylegan/scale",
                     "value": 1,
                     "delay" : 90.5
@@ -199,7 +191,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "she must know that none of us choose to be here."
+                            "text": "she must know that none of us choose each other."
                         }
                     ]
                 }
@@ -219,7 +211,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "If you don't think you should not talk"
+                            "text": "If you do not think you should not talk"
                         }
                     ]
                 },
@@ -263,7 +255,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I can never understand him"
+                            "text": "I can never understand what he is saying."
                         }
                     ]
                 }
@@ -299,7 +291,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "I didn't felt something toward him in such a long time. That really got me emotional, I feel like holding his hand."
+                            "text": "I didn't felt something toward him in such a long time. What he just said really got me emotional, I feel like holding his hand."
                         }
                     ]
                 }
@@ -338,19 +330,9 @@
             "text": "Do you think she can tell what is true?",
             "triggers-osc": [
                 {
-                    "target" : "unity",
+                    "target" : "visuals",
                     "address": "/stylegan/blend",
                     "value": 1.0
-                },
-                {
-                    "target" : "td",
-                    "address": "/td/edge",
-                    "value": 0
-                },
-                {
-                    "target" : "td",
-                    "address": "/td/display",
-                    "value": 1
                 }
             ]
         },
@@ -407,24 +389,9 @@
             ],
             "triggers-osc": [
                 {
-                    "target" : "unity",
+                    "target" : "visuals",
                     "address": "/stylegan/blend",
                     "value": 0.0
-                },
-                {
-                    "target" : "td",
-                    "address": "/td/edge",
-                    "value": 1
-                },
-                {
-                    "target" : "unity",
-                    "address": "/gaugan/state",
-                    "value": 1
-                },
-                {
-                    "target" : "unity",
-                    "address": "/stylegan/scale",
-                    "value": 2
                 }
             ]
         },
@@ -469,7 +436,7 @@
             ]
         },
         {
-            "speaker": "mom",
+            "target": "mom",
             "type": "OPEN"
         },
         {
@@ -478,19 +445,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Deep like that bowl of soup?",
-            "triggers-osc": [
-                {
-                    "target" : "gaugan",
-                    "address": "/load-state",
-                    "value": "test-bowl"
-                },
-                {
-                    "target" : "unity",
-                    "address": "/gaugan/state",
-                    "value": 2
-                }
-            ]
+            "text": "Deep like that bowl of soup?"
         },
         {
             "in-ear" : [ 
@@ -506,7 +461,7 @@
                         "target" : "brother",
                         "lines": [
                                 {
-                                    "text": "I meant much deeper than that. Mother's food reminds me of the sublime. It makes me think about where I came from. And fear what exists at the end of it all."
+                                    "text": "I meant much deeper than that. Mother's food reminds me of the end of time. It makes me think about where I came from. And fear what exists at the end of it all."
                                 }
                         ]
                 }
@@ -525,22 +480,7 @@
         },
         {
             "speaker": "sister",
-            "text": "I mean the memories we are boiling in our soups.",
-            "triggers-osc": [
-                {
-                    "target" : "gaugan",
-                    "address": "/load-state",
-                    "value": "sister-memory",
-                    "delay" : 5
-                },
-                {
-                    "target" : "unity",
-                    "address": "/gaugan/state",
-                    "value": 4,
-                    "delay": 5
-                   
-                },
-            ]
+            "text": "I mean the memories we are boiling in our soups."
         },
         {
             "in-ear" : [ 
@@ -636,7 +576,7 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "Of course there is"
+                            "text": "Of course there is anger. "
                         }
                     ]
                 }
@@ -708,7 +648,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "Why doesn't he pass him the bottle?"
+                            "text": "What is the problem to pass him the bottle?"
                         }
                     ]
                 }
@@ -728,7 +668,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "Why do they drink so much? Does my food have no taste?"
+                            "text": "Why do they drink so much? Does my food has no taste?"
                         }
                     ]
                 }
