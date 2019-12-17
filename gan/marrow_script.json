@@ -392,6 +392,16 @@
                     "target" : "visuals",
                     "address": "/stylegan/blend",
                     "value": 0.0
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 1
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan/scale",
+                    "value": 2
                 }
             ]
         },
@@ -445,7 +455,14 @@
         },
         {
             "speaker": "sister",
-            "text": "Deep like that bowl of soup?"
+            "text": "Deep like that bowl of soup?",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "test-bowl"
+                }
+            ]
         },
         {
             "in-ear" : [ 
@@ -472,15 +489,27 @@
             "text": "Your vision is too shallow to my taste, dear sister."
         },
         {
-            "type": "clear"
-        },
-        {
             "speaker": "sister",
             "text": "I don't mean the taste of our dinners."
         },
         {
             "speaker": "sister",
-            "text": "I mean the memories we are boiling in our soups."
+            "text": "I mean the memories we are boiling in our soups.",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "waterdrops",
+                    "delay" : 5
+                },
+                {
+                    "target" : "unity",
+                    "address": "/gaugan/state",
+                    "value": 2,
+                    "delay": 5
+                   
+                }
+            ]
         },
         {
             "in-ear" : [ 
@@ -492,11 +521,20 @@
                             }
                         ]
                     }
-                ]
+                ],
+                "delay": 5
         },
         {
             "speaker": "dad",
-            "text": "It is indeed a very nice bowl. Let me look at it."
+            "text": "It is indeed a very nice bowl. Let me look at it.",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "apple",
+                    "delay" : 5
+                }
+            ]
         },
         {
             "in-ear" : [ 
@@ -508,11 +546,20 @@
                             }
                         ]
                     }
-                ]
+                ],
+            "delay": 5
         },
         {
             "speaker": "dad",
-            "text": "Here son, take it from me."
+            "text": "Here son, take it from me.",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "clock",
+                    "delay" : 5
+                }
+            ]
         },
         {
             "in-ear" : [ 
@@ -524,11 +571,20 @@
                             }
                         ]
                     }
-                ]
+                ],
+            "delay": 5
         },
         {
             "speaker": "brother",
-            "text": "Mommy, take it from me."
+            "text": "Mommy, take it from me.",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "plant",
+                    "delay" : 5
+                }
+            ]
         },
         {
             "in-ear" : [ 
@@ -540,7 +596,8 @@
                             }
                         ]
                     }
-                ]
+                ],
+            "delay": 5
         },
         {
             "speaker": "mom",
@@ -556,7 +613,19 @@
         },
         {
             "speaker": "sister",
-            "text": "oh, I always thought a memory can come from both directions."
+            "text": "oh, I always thought a memory can come from both directions.",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "real"
+                },
+                {
+                    "target" : "unity",
+                    "address": "/gaugan/state",
+                    "value": 3
+                }
+            ]
         },
         {
             "speaker": "mom",
