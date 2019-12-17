@@ -76,7 +76,15 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "My only complaints are that I never hear my daughter. What is wrong with her? Just look at her. I wish she was more engaged with this family."
+                            "text": "My only complaints are that I never hear my daughter.",
+                            "pause": 30
+                        },
+                        {
+                            "text": "What is wrong with her? Just look at her.",
+                            "pause": 50
+                        },
+                        {
+                            "text": "I wish she was more engaged with this family."
                         }
                     ]
                 },
