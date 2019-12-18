@@ -69,9 +69,9 @@ namespace Marrow
 
         void Setup()
 		{
-            styleGANCamera.enabled = false;
             gauGAN.GetComponent<Renderer>().enabled = false;
             deepLab.GetComponent<Renderer>().enabled = false;
+            styleGAN.GetComponent<Renderer>().enabled = false;
         }
 
         private void Update()
@@ -134,7 +134,7 @@ namespace Marrow
 
         public void ReceivedOscCameraStyleGAN(int active)
         {
-            styleGANCamera.enabled = (active  == 1);
+            styleGAN.GetComponent<Renderer>().enabled = (active  == 1);
         }
 
         public void ReceivedOscStyleGANScale(int state)
@@ -188,6 +188,25 @@ namespace Marrow
             } else if (state == 4) {
                 deepLab.GetComponent<Renderer>().enabled = false;
                 rawImage.GetComponent<Renderer>().enabled = false;
+            }
+        }
+        public void ReceivedStyleGANAnimationState(int state) {
+            Debug.Log("Set StyleGAN Animation state " + state);
+            Animator[] animators = styleGAN.GetComponentsInChildren<Animator>();
+            SpriteRenderer[] renderers = styleGAN.GetComponentsInChildren<SpriteRenderer>();
+
+            if (state == 1) {
+                animators[1].enabled = false;
+                renderers[1].enabled = false;
+                animators[0].enabled = true;
+                renderers[0].enabled = true;
+
+            } else if (state == 2) {
+                animators[0].enabled = false;
+                animators[1].enabled = true;
+                renderers[0].enabled = false;
+                renderers[1].enabled = true;
+            } else if (state == 3) {
             }
         }
     }

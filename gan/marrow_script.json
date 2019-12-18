@@ -172,7 +172,7 @@
          },
          {
             "speaker": "brother",
-            "text": "If you try you can see eyond the %answer%",
+            "text": "If you try you can see beyond the %answer%",
             "triggers-osc": [
                 {
                     "target" : "stylegan",
@@ -180,13 +180,13 @@
                     "value": "bubble4.3,bubble4.4,bubble4.5,bubble4.6,bubble4.7,bubble4.8"
                 },
                 {
-                    "target" : "visuals",
+                    "target" : "unity",
                     "address": "/camera/stylegan",
                     "value": 1,
                     "delay" : 0.5
                 },
                 {
-                    "target" : "visuals",
+                    "target" : "unity",
                     "address": "/stylegan/scale",
                     "value": 1,
                     "delay" : 90.5
@@ -291,7 +291,7 @@
         },
         {
             "speaker": "sister",
-            "text": "I am confused, but ok."
+            "text": "I am confused, but okay, go on."
         },
         {
             "speaker": "dad",
@@ -347,11 +347,11 @@
         },
         {
             "speaker": "sister",
-            "text": "Mother, Father, Brother-"
+            "text": "Mother, Father, Brother, you are so beautiful-"
         },
         {
             "speaker": "sister",
-            "text": "you are so beautiful when you play yourself happy - beyond a shadow of a dream!"
+            "text": "when you play yourself happy. Beyond a shadow of a dream!"
         },
         {
             "speaker": "dad",
@@ -362,9 +362,14 @@
             "text": "Do you think she can tell what is true?",
             "triggers-osc": [
                 {
-                    "target" : "visuals",
+                    "target" : "unity",
                     "address": "/stylegan/blend",
                     "value": 1.0
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/display",
+                    "value": 1
                 }
             ]
         },
@@ -433,7 +438,7 @@
             ],
             "triggers-osc": [
                 {
-                    "target" : "visuals",
+                    "target" : "unity",
                     "address": "/stylegan/blend",
                     "value": 0.0
                 },
@@ -494,7 +499,7 @@
             ]
         },
         {
-            "target": "mom",
+            "speaker": "mom",
             "type": "OPEN"
         },
         {
@@ -771,6 +776,16 @@
                     "target" : "unity",
                     "address": "/gaugan/state",
                     "value": 4  
+                },
+                {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "Beginning_Option_3"
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 1  
                 }
             ]
         },
