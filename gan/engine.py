@@ -95,7 +95,10 @@ class OSCServer:
 
     async def start(self, future):
         self.dispatcher = dispatcher.Dispatcher()
-        self.dispatcher.set_default_handler(self.osc_handler)
+        self.dispatcher.map("/speech", self.speech_handler)
+        self.dispatcher.map("/mid-speech", self.speech_handler)
+        self.dispatcher.map("/play-finished", self.finished_handler)
+
         self.server = osc_server.AsyncIOOSCUDPServer(("0.0.0.0", 3954), self.dispatcher, self.loop)
         print("Serving OSC on {}".format("0.0.0.0"))
 
@@ -107,9 +110,13 @@ class OSCServer:
         transport.close()
         #print(self.server.serve())
 
-    def osc_handler(self, addr,args):
-        print("OSC command! {} {}".format(addr, args))
-        self.osc_queue.put_nowait({"action": addr[1:], "text": args})
+    def speech_handler(self, addr, role, text):
+        print("OSC command! {} {} {}".format(addr, role, text))
+        self.osc_queue.put_nowait({"action": addr[1:], "role": role, "text": text})
+
+    def finished_handler(self, addr, role):
+        print("OSC command! {} {}".format(addr, role))
+        self.osc_queue.put_nowait({"action": addr[1:], "role": role})
 
 
 class Engine:
@@ -274,12 +281,12 @@ class Engine:
         print("Consuming speech")
         while True:
             item = await self.queue.async_q.get()
-            if item["action"] == "speech":
+            if item["action"] == "speech" and item["role"] == self.script.awaiting["speaker"]:
                 self.speech_text(item["text"])
-            elif item["action"] == "mid-speech":
+            elif item["action"] == "mid-speech" and item["role"] == self.script.awaiting["speaker"]:
                 self.mid_speech_text(item["text"])
             elif item["action"] == "play-finished":
-                role = item["text"]
+                role = item["role"]
                 print("PLAY FINISHED!! {}".format(role))
                 self.play_futures[role].set_result(1)
 
@@ -783,8 +790,8 @@ class Engine:
         self.gaugan_client.send_message("/load-state", "beginning")
         self.t2i_client.send_message("/gaugan/state", 1)
         #self.send_midi_note(48)
-        self.schedule_function(23, self.start_script)
-        #self.schedule_function(0, self.start_script)
+        #self.schedule_function(23, self.start_script)
+        self.schedule_function(0, self.start_script)
 
     def start_noise(self):
         self.send_noise = True

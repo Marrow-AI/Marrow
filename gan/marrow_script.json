@@ -867,7 +867,26 @@
         },
         {
             "speaker": "sister",
-            "text": "And you brother, you swam and dived a lot? Right?"
+            "text": "And you brother, you swam and dived a lot? Right?",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "sea-boats"
+                },
+                {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "Scene2_Option_3",
+                    "delay": 2
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 2 ,
+                    "delay": 2
+                }
+            ]
         },
         {
             "in-ear" : [ 
@@ -907,7 +926,20 @@
         },
         {
             "speaker": "mom",
-            "text": "You have such a vivid memory."
+            "text": "You have such a vivid memory.",
+            "triggers-osc": [
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "sand"
+                },
+                {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "scsene3_option5",
+                    "delay": 2
+                }
+            ]
         },
         {
             "in-ear" : [ 
@@ -987,10 +1019,45 @@
         },
         {
             "speaker": "sister",
-            "text": "I'll just turn on the light."
-        },
-        {
-            "type": "clear"
+            "text": "I'll just turn on the light.",
+            "triggers-osc": [
+                {
+                    "target" : "unity",
+                    "address": "/stylegan/blend",
+                    "value": 1.0
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 0
+                },
+                {
+                    "target" : "gaugan",
+                    "address": "/load-state",
+                    "value": "clear"
+                },
+                {
+                    "target" : "unity",
+                    "address": "/gaugan/state",
+                    "value": 1                   
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan/blend",
+                    "value": 0.0,
+                    "delay": 7
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/display",
+                    "value": 0,
+                    "delay": 7
+                },
+                {
+                    "target" : "stylegan",
+                    "address": "/random"
+                }
+            ]
         },
         {
             "in-ear" : [ 
