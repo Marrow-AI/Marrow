@@ -109,6 +109,7 @@ class Recognizer(Thread):
         self.engine = engine
         self.stop_recognition = False
         self.loop = loop
+        self.role = "UNKOWN"
 
         # See http://g.co/cloud/speech/docs/languages
         # for a list of supported languages.
@@ -194,7 +195,7 @@ class Recognizer(Thread):
                     print("({})".format(transcript))
                     self.engine.send_message(
                         "/mid-speech",
-                        transcript
+                        [self.role,transcript]
                     )
                     last_result = transcript
 
@@ -202,6 +203,6 @@ class Recognizer(Thread):
                 print(" = {}".format(transcript))
                 self.engine.send_message(
                     "/speech",
-                    transcript
+                    [self.role,transcript]
                 )
 

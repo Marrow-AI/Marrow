@@ -114,6 +114,7 @@ class Recognizer(Thread):
         self.queue = speech_queue
         self.main_loop = main_loop
         self.stop_recognition = False
+        self.role = "UNKNOWN"
 
         # See http://g.co/cloud/speech/docs/languages
         # for a list of supported languages.

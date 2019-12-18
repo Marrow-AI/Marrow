@@ -25,15 +25,16 @@ class PiSpeech:
         self.recognizer = Recognizer(self.engine, self, self.loop)
         self.recognizer.start()
 
-    def start(self, future):
+    def start(self, future, role):
         self.recognizer.future = future
+        self.recognizer.role = role
         self.stop = False
 
     def stop_rec(self):
         self.stop = True
 
 ROLE = ""
-engine_client = udp_client.SimpleUDPClient("192.168.1.26", 3954)
+engine_client = udp_client.SimpleUDPClient("192.168.1.22", 3954)
 
 def popenAndCall(onExit, popenArgs):
     def runInThread(onExit, popenArgs):
@@ -94,7 +95,7 @@ class OSCServer(threading.Thread):
         print("Start recording {}!".format(role))
 
         self.record_future = self.loop.create_future()
-        self.pi_speech.start(self.record_future)
+        self.pi_speech.start(self.record_future, role)
 
     def record_stop(self,addr, role):
         print("Stop recording!")
