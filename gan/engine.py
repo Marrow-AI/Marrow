@@ -88,21 +88,28 @@ class ScheduleFunction:
         print("Cacnel function {}".format(self._uuid))
         self._task.cancel()
 
-class OSCServer(Thread):
-    def __init__(self, osc_queue):
-        Thread.__init__(self)
+class OSCServer:
+    def __init__(self, loop, osc_queue):
         self.osc_queue = osc_queue
+        self.loop = loop
 
-    def run(self):
+    async def start(self, future):
         self.dispatcher = dispatcher.Dispatcher()
         self.dispatcher.set_default_handler(self.osc_handler)
-        self.server = osc_server.ThreadingOSCUDPServer(("0.0.0.0", 3954), self.dispatcher)
-        print("Serving OSC on {}".format(self.server.server_address))
-        self.server.serve_forever()
+        self.server = osc_server.AsyncIOOSCUDPServer(("0.0.0.0", 3954), self.dispatcher, self.loop)
+        print("Serving OSC on {}".format("0.0.0.0"))
+
+        transport, protocol = await self.server.create_serve_endpoint() 
+        await future
+
+        print("Closing transport")
+
+        transport.close()
+        #print(self.server.serve())
 
     def osc_handler(self, addr,args):
         print("OSC command! {} {}".format(addr, args))
-        self.osc_queue.put({"action": addr[1:], "text": args})
+        self.osc_queue.put_nowait({"action": addr[1:], "text": args})
 
 
 class Engine:
@@ -188,10 +195,12 @@ class Engine:
         #self.queue = asyncio.Queue(loop=self.main_loop)
         self.queue = janus.Queue(loop=self.main_loop)
 
-        self.osc_server = OSCServer(self.queue.sync_q)
-        self.osc_server.start()
-       
+        tasks = []
         self.server_stop = self.main_loop.create_future()
+
+        self.osc_server = OSCServer(self.main_loop, self.queue.async_q)
+        tasks.append(asyncio.create_task(self.osc_server.start(self.server_stop)))
+
         self.server = Server(
                 self.gain_update,
                 self.queue,
@@ -200,7 +209,6 @@ class Engine:
                 self.pix2pix_update
         )
         print("Starting server")
-        tasks = []
         self.server_task = asyncio.create_task(self.server.start(self.server_stop))
 
         if not args.no_speech: 
@@ -215,7 +223,10 @@ class Engine:
         print("Gathering tasks")
 
         self.main_loop.call_soon(self.wakeup)
-        await self.server_task
+
+        self.tasks = asyncio.gather(*tasks)
+        await self.tasks
+        
         print("Server done!")
 
     def wakeup(self):
@@ -712,14 +723,12 @@ class Engine:
         self.td_client.send_message("/td/display", 0)
         self.send_midi_note(36)
         self.send_noise = False
-        asyncio.ensure_future(self.server.control("stop"))
+        self.main_loop.create_task(self.server.control("stop"))
         self.pause_listening()
         self.state = "WAITING"
         self.purge_osc()
         self.purge_func()
         #self.pix2pix_client.send_message("/control/stop",1)
-
-
 
     def send_midi_note(self,note): 
         self.audio_client.send_message("/midi/note/1",[note,127, 1])
@@ -877,7 +886,11 @@ if __name__ == '__main__':
     try:
         engine = Engine(args)
         asyncio.run(engine.start())
-    except KeyboardInterrupt:
+    except Exception as e:
+        print("Exception {}".format(e))
         print("Stopping everything")
-        engine.main_loop.close()
         args.stop = True
+        engine.tasks.cancel()
+        engine.tasks.exception()
+    finally:
+        pass

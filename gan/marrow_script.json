@@ -723,7 +723,8 @@
                 {
                     "target" : "unity",
                     "address": "/gaugan/state",
-                    "value": 3
+                    "value": 3,
+                    "delay" : 5
                 }
             ]
         },
@@ -775,17 +776,20 @@
                 {
                     "target" : "unity",
                     "address": "/gaugan/state",
-                    "value": 4  
+                    "value": 4,
+                    "delay": 1
                 },
                 {
                     "target" : "stylegan",
                     "address": "/start-sequence",
-                    "value": "Beginning_Option_3"
+                    "value": "Beginning_Option_3",
+                    "delay": 1
                 },
                 {
                     "target" : "unity",
                     "address": "/stylegan-animation/state",
-                    "value": 1  
+                    "value": 1 ,
+                    "delay": 1
                 }
             ]
         },

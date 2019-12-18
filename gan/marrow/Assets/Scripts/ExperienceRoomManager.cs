@@ -144,7 +144,8 @@ namespace Marrow
                 LeanTween.scale(styleGAN, new Vector3(0.68f, 0.68f, 0.68f), 60.0f);
             } else if (state == 2) {
                 LeanTween.move(styleGAN, new Vector3(-45.11f, -0.55f, styleGAN.transform.position.z), 35.0f);
-                LeanTween.scale(styleGAN, new Vector3(0.75f, 0.75f, 0.75f), 35.0f);
+                // LeanTween.scale(styleGAN, new Vector3(0.75f, 0.75f, 0.75f), 35.0f);
+                LeanTween.scale(styleGAN, new Vector3(0.6f, 0.6f, 0.6f), 35.0f);
             }
         }
         public void ReceivedOscStyleGANBlend(float value)
@@ -163,6 +164,8 @@ namespace Marrow
                 gauGAN.GetComponent<Renderer>().enabled = true;
             }  else if (state == 3) {
 
+                gauGAN.GetComponent<Renderer>().enabled = true;
+
                 gauGAN.transform.position = new Vector3(-43.78f, -0.65f, 15f);
 
                 deepLab.GetComponent<Renderer>().enabled = true;
@@ -172,7 +175,7 @@ namespace Marrow
 
                 LeanTween.value(
                     deepLab,
-                    0.5f, 1.0f, 15f
+                    0.1f, 1.0f, 7.0f
                 )
                 .setOnUpdate((float val) => {
                     deeplabMaterial.SetFloat("_Transparency", val);
@@ -180,14 +183,31 @@ namespace Marrow
 
                 LeanTween.value(
                     rawImage,
-                    1.0f, 0.0f, 15f
+                    1.0f, 0.0f, 7.0f
                 )
                 .setOnUpdate((float val) => {
-                    rawImageMaterial.SetFloat("_Transparency", val);
+             //       rawImageMaterial.SetFloat("_TransparencyOrig", val);
                 });
             } else if (state == 4) {
-                deepLab.GetComponent<Renderer>().enabled = false;
+                Material rawImageMaterial = rawImage.GetComponent<Renderer>().material;
+                Material deeplabMaterial = deepLab.GetComponent<Renderer>().material;
+
                 rawImage.GetComponent<Renderer>().enabled = false;
+
+
+                LeanTween.value(
+                    deepLab,
+                    1.0f, 0.0f, 3.0f
+                )
+                .setOnUpdate((float val) => {
+                    deeplabMaterial.SetFloat("_Transparency", val);
+                })
+                .setOnComplete(() => {
+                    deepLab.GetComponent<Renderer>().enabled = false;
+                });
+
+
+                deepLab.GetComponent<Renderer>().enabled = false;
             }
         }
         public void ReceivedStyleGANAnimationState(int state) {

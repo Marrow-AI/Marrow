@@ -126,7 +126,7 @@ namespace Klak.Ndi
         }
         void OnEnable()
         {
-            _FPS = 0.5f;
+            _FPS = 1.0f;
             _FPS2 = 2.0f;
 
         }
