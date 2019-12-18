@@ -1,4 +1,5 @@
 from pathlib import Path
+#RTVC_PATH = Path('C:/Real-Time-Voice-Cloning')
 RTVC_PATH = Path('/home/avnerus/Code/Real-Time-Voice-Cloning')
 
 import sys

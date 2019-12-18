@@ -92,6 +92,7 @@ Material:
     - _SrcBlend: 1
     - _Threshold: 0.005
     - _Transparency: 1
+    - _TransparencyOrig: 1
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:

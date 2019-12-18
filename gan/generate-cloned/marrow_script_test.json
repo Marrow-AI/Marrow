@@ -1,0 +1,32 @@
+{
+    "script-lines": [
+        {
+            "speaker": "dad",
+            "text": "Mother, this looks delicious! What are we eating tonight?"
+        },
+        {
+            "in-ear" : [ 
+                {
+                    "target" : "mom",
+                    "lines": [
+                     {
+                                "text": "One day there was a dog that was locked outside.", 
+                                "pause":10
+                            },
+                             {
+                                "text": "She barked so loud and made a lot of noise.", 
+                                "pause":10
+                            },
+                            {
+                                "text": "So I just went outside and let her drink from this bowl.", 
+                                "pause":10
+                            },
+                            {
+                                "text": "Or maybe it was me, it is hard to remember. I think it was a very cold day."
+                            }
+                    ]
+                }
+             ]
+        }
+    ]
+}
