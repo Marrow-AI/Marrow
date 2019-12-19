@@ -166,7 +166,8 @@ class Engine:
             "unity": self.t2i_client,
             "td": self.td_client,
             "stylegan": self.stylegan_client,
-            "gaugan": self.gaugan_client
+            "gaugan": self.gaugan_client,
+            "audio": self.audio_client
         }
 
 
@@ -362,6 +363,7 @@ class Engine:
               )
 
             self.t2i_client.send_message("/openline", "clear")
+            self.trigger_osc()
             self.pause_listening()
             self.schedule_function(3, self.next_line)
 
@@ -513,6 +515,19 @@ class Engine:
                     except Exception as e:
                         print("TRIGGERS OSC ERROR {}".format(e))
 
+        if "triggers-midi" in line:
+                for trigger in line["triggers-midi"]:
+                    try:
+                        print("Trigger MIDI: {}".format(trigger["note"]))
+                        delay = 0
+                        if "delay" in trigger:
+                            delay = trigger["delay"]
+                        self.send_midi_note(trigger["note"], delay)
+                    except Exception as e:
+                        print("TRIGGERS MIDI ERROR {}".format(e))
+
+    
+
 
 
     def play_effect(self):
@@ -598,6 +613,7 @@ class Engine:
             print("Finshed all!")
 
         self.trigger_osc()
+
         self.state = "SCRIPT"
         if self.script.awaiting_type != "OPEN":
             if "delay" in self.script.awaiting:
@@ -743,14 +759,13 @@ class Engine:
         self.main_loop.create_task(self.server.control("stop"))
         self.pause_listening()
         self.state = "WAITING"
-        self.purge_osc()
+        self.schedule_function(2, self.purge_osc)
         self.purge_func()
         #self.pix2pix_client.send_message("/control/stop",1)
 
-    def send_midi_note(self,note): 
-        self.audio_client.send_message("/midi/note/1",[note,127, 1])
-        self.audio_client.send_message("/midi/note/1",[note,127, 0])
-
+    def send_midi_note(self,note, delay = 0): 
+        self.schedule_osc(delay, self.audio_client, "/midi/note/1", [note,127, 1])
+        self.schedule_osc(delay + 0.5, self.audio_client, "/midi/note/1", [note,127, 0])
 
     def start_intro(self):
         if self.state != "WAITING":
@@ -799,9 +814,10 @@ class Engine:
         self.td_client.send_message("/td/display", 0)
         self.gaugan_client.send_message("/load-state", "beginning")
         self.t2i_client.send_message("/gaugan/state", 1)
-        #self.send_midi_note(48)
-        #self.schedule_function(23, self.start_script)
-        self.schedule_function(0, self.start_script)
+        self.send_midi_note(60, 2) # C3 - START
+        self.send_midi_note(61, 4.7) 
+        self.schedule_function(23, self.start_script)
+        #self.schedule_function(0, self.start_script)
 
     def start_noise(self):
         self.send_noise = True

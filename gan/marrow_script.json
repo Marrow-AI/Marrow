@@ -29,7 +29,12 @@
                     ]
                 }
              ],
-             "save": true
+             "save": true,
+             "triggers-midi": [
+                 {
+                    "note": 62
+                 } 
+             ]
          },
          {
             "speaker": "dad",
@@ -53,7 +58,12 @@
          },
          {
             "speaker": "dad",
-            "text": "Please don't tell me you don't like what you've cooked, mother."
+            "text": "Please don't tell me you don't like what you've cooked, mother.",
+            "triggers-midi": [
+                {
+                   "note": 63
+                } 
+            ]
          },
          {
             "in-ear" : [ 
@@ -149,7 +159,12 @@
          },
          {
             "speaker": "sister",
-            "type": "OPEN"
+            "type": "OPEN",
+            "triggers-midi": [
+                {
+                   "note": 64
+                } 
+            ]
          },
          {
             "speaker": "mom",
@@ -192,6 +207,11 @@
                     "value": 1,
                     "delay" : 90.5
                 }
+            ],
+            "triggers-midi": [
+                {
+                   "note": 65
+                } 
             ]
         },
         {
@@ -228,7 +248,12 @@
         },
         {
             "speaker": "sister",
-            "text": "I wasn't thinking."
+            "text": "I wasn't thinking.",
+            "triggers-midi": [
+                {
+                   "note": 66
+                } 
+            ]
         },
         {
             "in-ear" : [ 
@@ -260,7 +285,12 @@
         },
         {
             "speaker": "mom",
-            "text": "Tell her my son"
+            "text": "Tell her my son",
+            "triggers-midi": [
+                {
+                   "note": 67
+                } 
+            ]
         },
         {
             "speaker": "brother",
@@ -272,7 +302,12 @@
         },
         {
             "speaker": "brother",
-            "text": "and made me the young man I have learned to be."
+            "text": "and made me the young man I have learned to be.",
+            "triggers-midi": [
+                {
+                   "note": 68
+                } 
+            ]
         },
         {
             "in-ear" : [ 
@@ -296,7 +331,12 @@
         },
         {
             "speaker": "dad",
-            "text": "Well, it means your mother is the dream itself. The dream of us melting in the sun."
+            "text": "Well, it means your mother is the dream itself. The dream of us melting in the sun.",
+            "triggers-midi": [
+                {
+                   "note": 69
+                } 
+            ]
         },
         {
             "speaker": "mom",
@@ -336,7 +376,12 @@
         },
         {
             "speaker": "mom",
-            "text": "A very lovely day, couldn't be better. And yours?"
+            "text": "A very lovely day, couldn't be better. And yours?",
+            "triggers-midi": [
+                {
+                   "note": 70
+                } 
+            ]
         },
         {
             "speaker": "dad",
@@ -352,7 +397,12 @@
         },
         {
             "speaker": "sister",
-            "text": "when you play yourself happy. Beyond a shadow of a dream!"
+            "text": "when you play yourself happy. Beyond a shadow of a dream!",
+            "triggers-midi": [
+                {
+                   "note": 71
+                } 
+            ]
         },
         {
             "speaker": "dad",
