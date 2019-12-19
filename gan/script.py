@@ -28,7 +28,7 @@ class Script:
     def reset(self):
         try:
             self.load_data(self.script_file)
-            self.awaiting_index = 0
+            self.awaiting_index = 75
             self.awaiting = self.data["script-lines"][self.awaiting_index]
             self.update()
             self.length = len(self.data["script-lines"])

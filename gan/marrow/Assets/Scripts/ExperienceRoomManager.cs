@@ -227,6 +227,8 @@ namespace Marrow
                 renderers[0].enabled = false;
                 renderers[1].enabled = true;
             } else if (state == 3) {
+                renderers[0].enabled = false;
+                renderers[1].enabled = false;
             }
         }
     }

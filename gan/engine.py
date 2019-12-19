@@ -281,15 +281,14 @@ class Engine:
         print("Consuming speech")
         while True:
             item = await self.queue.async_q.get()
-            if item["action"] == "speech" and item["role"] == self.script.awaiting["speaker"]:
-                self.speech_text(item["text"])
-            elif item["action"] == "mid-speech" and item["role"] == self.script.awaiting["speaker"]:
-                self.mid_speech_text(item["text"])
-            elif item["action"] == "play-finished":
+            if item["action"] == "play-finished":
                 role = item["role"]
                 print("PLAY FINISHED!! {}".format(role))
                 self.play_futures[role].set_result(1)
-
+            elif item["action"] == "speech" and "speaker" in self.script.awaiting and item["role"] == self.script.awaiting["speaker"]:
+                self.speech_text(item["text"])
+            elif item["action"] == "mid-speech" and "speaker" in self.script.awaiting and item["role"] == self.script.awaiting["speaker"]:
+                self.mid_speech_text(item["text"])
 
     def time_check(self):
         # recognition timeout
@@ -348,8 +347,13 @@ class Engine:
 
         elif self.script.awaiting_type == "OPEN":
             self.mid_match = False
-            self.question_answer = self.script.question_answer = text
+            self.question_answer = text
             print("Question answered! {}".format(self.question_answer))
+            print(self.script.awaiting)
+            if "save" in self.script.awaiting:
+                print("Saving answer")
+                self.script.question_answer = self.question_answer
+
             self.t2i_client.send_message("/table/dinner", self.question_answer)
             self.t2i_client.send_message("/speech", self.question_answer)
             self.t2i_client.send_message(
@@ -489,7 +493,7 @@ class Engine:
 
             self.trigger_osc()
         
-            self.next_line(delay)
+            self.schedule_function(delay, self.next_line)
 
        # if "triggers-beat" in line:
         #    self.audio_client.send_message("/gan/beat",0.0)
@@ -514,13 +518,19 @@ class Engine:
     def play_effect(self):
         self.audio_client.send_message("/effect/play", 1)
 
-    def next_line(self, delay = 0):
+    def next_line(self):
         print("NEXT LINE")
         self.matched_to_word = 0
-        self.last_react = self.last_speech = time.time() + delay
+        self.last_react = self.last_speech = time.time()
+        # Clear the text
+        if "speaker" in self.script.awaiting:
+            self.t2i_client.send_message(
+                        "/script",
+                        [self.script.awaiting["speaker"], ""]
+            )
         if self.script.next_line():
             self.state = "SCRIPT"
-            self.run_line(delay)
+            self.run_line()
         else:
             self.end()
 
@@ -528,9 +538,9 @@ class Engine:
         self.last_react = self.last_speech = time.time() + delay
         if self.script.prev_line():
             self.state = "SCRIPT"
-            self.run_line(0)
+            self.run_line()
 
-    def run_line(self, delay):
+    def run_line(self):
         try:
             print ("Run line: {}".format(self.script.awaiting))
             if (
@@ -541,7 +551,7 @@ class Engine:
                 pass
                 #self.preload_speech("gan_responses/{}.wav".format(self.script.awaiting_index + 1))
 
-            self.schedule_function(delay, self.show_next_line)
+            self.show_next_line()
 
             if "in-ear" in self.script.awaiting:
                 self.pause_listening()
@@ -835,7 +845,7 @@ class Engine:
         print("Start script")
         self.last_react =  self.last_speech = time.time()
         self.state = "SCRIPT"
-        self.run_line(0)
+        self.run_line()
 
     def show_next_line(self):
         print("SHOW NEXT LINE")
@@ -847,7 +857,8 @@ class Engine:
             role = self.script.awaiting["speaker"]
             endpoint = self.in_ear_endpoints[role]
             print("{} , PLEASE SAY: {}".format(role, self.script.awaiting_text))
-            self.start_google(endpoint, role)
+            if not self.args.no_speech:
+                self.start_google(endpoint, role)
    
         elif self.script.awaiting_type == "OPEN":
             self.last_speech = time.time()
@@ -859,7 +870,8 @@ class Engine:
             role = self.script.awaiting["speaker"]
             endpoint = self.in_ear_endpoints[role]
             print("{} , PLEASE SAY: {}".format(role, "ANYTHING"))
-            self.start_google(endpoint, role)
+            if not self.args.no_speech:
+                self.start_google(endpoint, role)
 
     def load_effect(self, data):
         print("Load effect {}".format(data["effect"]))
@@ -894,7 +906,7 @@ if __name__ == '__main__':
         engine = Engine(args)
         asyncio.run(engine.start())
     except Exception as e:
-        print("Exception {}".format(e))
+        print("Fatal Exception",e)
         print("Stopping everything")
         args.stop = True
         engine.tasks.cancel()

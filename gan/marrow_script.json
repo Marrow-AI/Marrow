@@ -28,7 +28,8 @@
                         }
                     ]
                 }
-             ]
+             ],
+             "save": true
          },
          {
             "speaker": "dad",
@@ -347,7 +348,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Mother, Father, Brother, you are so beautiful-"
+            "text": "Mother, father, brother you are so beautiful-"
         },
         {
             "speaker": "sister",
@@ -938,6 +939,12 @@
                     "address": "/start-sequence",
                     "value": "scsene3_option5",
                     "delay": 2
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 3 ,
+                    "delay": 2
                 }
             ]
         },
@@ -1055,7 +1062,8 @@
                 },
                 {
                     "target" : "stylegan",
-                    "address": "/random"
+                    "address": "/random",
+                    "value": 1
                 }
             ]
         },
