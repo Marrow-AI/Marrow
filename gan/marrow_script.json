@@ -1354,26 +1354,6 @@
         {
             "speaker": "mom",
             "text": "Homes."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "mom",
-                    "lines": [
-                        {
-                            "text": "It is time, to tell my story now. It is my time to share.",
-                            "pause": 5
-                        },
-                        {
-                            "text": "now we need to move together, as a family, to the living-room."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "mom",
-            "text": "My advice to you - don't wander off. Just follow me."
         }
     ]
 }
