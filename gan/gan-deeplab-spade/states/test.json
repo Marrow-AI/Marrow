@@ -1,20 +1,18 @@
 {
     "map": [
-        {
-            "from": ["bowl"],
-            "to" : "teddy bear",
-            "invert": false,
-			"expand": 30
-        }
     ],
     "deeplab": {
         "mask": [
+            {
+                "items": ["light"],
+                "invert": true
+            }
         ]
     },
     "gaugan": {
         "mask": [
 			{
-				"items": ["teddy bear"],
+                "items": ["light"],
 				"invert": true
 			}
         ]

@@ -1,0 +1,33 @@
+{
+    "map": [
+        {
+            "from": ["dining table","table", "desk-stuff", "floor-other"],
+            "to" : "sea",
+            "invert": false
+        },
+        {
+            "from": ["frisbee", "plastic", "paper", "metal", "mouse", "rock","bowl","wine glass", "bottle"],
+            "to" : "rock",
+            "invert": false
+        }
+    ],
+    "deeplab": {
+        "mask": [
+            {
+                "items": ["sea", "rock"],
+                "invert": true
+            }
+        ]
+    },
+    "gaugan": {
+        "mask": [
+            {
+                "items": ["sea", "rock"],
+                "invert": true
+            }
+        ]
+    },
+    "showRaw": false,
+    "mapDeeplab": true
+}
+

@@ -1,7 +1,7 @@
 {
     "map": [
         {
-            "from": ["dining table","table", "desk-stuff", "cup", "wine glass", "plastic", "light", "floor-other"],
+            "from": ["dining table","table", "desk-stuff", "cup", "wine glass", "plastic", "floor-other", "mouse"],
             "to" : "dining table",
             "invert": false
         }
@@ -22,7 +22,7 @@
             }
         ]
     },
-    "showRaw": true,
+    "showRaw": false,
     "mapDeeplab": true
 }
 

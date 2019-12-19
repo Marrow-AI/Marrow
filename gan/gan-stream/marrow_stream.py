@@ -32,6 +32,7 @@ class Gan(Thread):
         self.queue = osc_queue
         self.animation_queue = queue.Queue()
         self.noise = False
+        self.random = False
 
         Thread.__init__(self)
 
@@ -65,11 +66,18 @@ class Gan(Thread):
                 self.process_queue(item)
             image = self.get_buf()
             self.push_frame(image)
-            time.sleep(1./12)
+            if self.noise:
+                time.sleep(1./12)
+            else:
+                time.sleep(1./24)
             if not self.noise:
                 self.linespace_i += 1
             if (self.linespace_i == self.steps):
-                if not self.animation_queue.empty():
+                if self.random:
+                    self.latent_source = self.latent_dest
+                    self.load_latent_dest()
+                    self.linespace_i = 0
+                elif not self.animation_queue.empty():
                     self.load_next_animation()
                 else:
                     # Going back to noise
@@ -79,6 +87,18 @@ class Gan(Thread):
     def process_queue(self,item):
         if item['command'] == 'start-sequence':
             self.start_sequence(item['args'])
+        elif item['command'] == 'random':
+            self.start_random()
+
+    def start_random(self):
+        print("Start random")
+        self.steps = 288
+        self.linespaces = np.linspace(0, 1, self.steps)
+        self.linespace_i = 0
+        self.noise = False
+        self.random = True
+        self.latent_source = self.latent_dest
+        self.load_latent_dest()
 
     def start_sequence(self, sequence):
         animations = sequence.split(',')
@@ -100,6 +120,7 @@ class Gan(Thread):
             self.linespaces = np.linspace(0, 1, self.steps)
             self.linespace_i = 0
             self.noise = False
+            self.random = False
 
     def setup_pipeline(self):
         GObject.threads_init()
@@ -117,7 +138,7 @@ class Gan(Thread):
         self.pipeline.add(vcvt)
         self.pipeline.add(ndisink)
 
-        caps = Gst.Caps.from_string("video/x-raw,format=(string)I420,width=512,height=512,framerate=12/1")
+        caps = Gst.Caps.from_string("video/x-raw,format=(string)I420,width=512,height=512,framerate=24/1")
         self.src_v.set_property("caps", caps)
         self.src_v.set_property("format", Gst.Format.TIME)
 
