@@ -111,7 +111,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I hear from her only complaints.",
+                            "text": "I hear her words, but in her voice I hear nothing but complaints.",
                             "pause": 30
                         },
                         {
@@ -588,8 +588,12 @@
                  { 
                     "target" : "sister",
                     "lines": [
-                           {
-                                "text": "I mean that bowl that on the counter. I will get up to get it."
+                            {
+                              "text": "I meant about that bowl that is on the counter.",
+                              "pause": 10
+                            },
+                            {
+                                "text": "I will get up now and go get it."
                             }
                         ]
                 },
@@ -597,11 +601,11 @@
                         "target" : "brother",
                         "lines": [
                             {
-                              "text": "I meant much deeper than that, because the food of our mother reminds me of the end of time.",
+                              "text": "i meant much deeper than that, because the food of our mother reminds me of the end of time.",
                               "pause": 10
                             },
                             {
-                              "text": "It makes me think about where I came from, and fear what exists at the end of it all."
+                              "text": "it makes me think about where i came from, and fear what exists at the end of it all."
                             }
                         ]
                 }
