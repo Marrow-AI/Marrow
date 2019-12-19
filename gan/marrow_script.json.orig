@@ -28,8 +28,7 @@
                         }
                     ]
                 }
-             ],
-             "save": true
+             ]
          },
          {
             "speaker": "dad",
@@ -73,59 +72,35 @@
          },
         {
             "in-ear" : [ 
-                {
+                { 
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "My only complaints are that I never hear my daughter. What is wrong with her?",
-                            "pause": 10
-                        },
-                        {
-                            "text": "Just look at her. I wish she was more like me."
+                            "text": "My only complaints are that I never hear my daughter. What is wrong with her? Just look at her. I wish she was more engaged with this family."
                         }
                     ]
                 },
-                {
+                { 
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "My sister needs to learn from the mistakes of yesterday and talk",
-                            "pause": 10
-                        },
-                        {
-                            "text": "she must know Silent moments are the noisiest moments in our family"
+                            "text": "My sister needs to learn from yesterday's mistakes and talk. Silent moments are the noisiest moments in our family."
                         }
                     ]
                 },
-                {
+                { 
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I hear from her only complaints.",
-                            "pause": 30
-                        },
-                        {
-                            "text": "She is probably thinking that our daughter doesn't like her food.",
-                            "pause": 30
-                        },
-                        {
-                            "text": "But I don’t want to get angry again. I just want one nice dinner with my family."
+                            "text": "In her voice you can sense anything but complaints. She is probably thinking why our daughter hasn't compliment her yet. But I don not want to get angry again. I just want one nice dinner with my family."
                         }
                     ]
                 },
-                {
+                { 
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "I cannot tell if everything here is what it is or what it isn't",
-                            "pause": 20
-                        },
-                        {
-                            "text": "are they looking at me because I did something wrong? or maybe they are not looking at me at all?",
-                            "pause":10
-                        },
-                        {
-                            "text": "my mind often leads me into false analysis"
+                            "text": "I cannot tell if everything here is what it is or what it isn't, are they looking at me because I did something wrong or maybe they are not looking at me at all? my mind often leads me to false alarms!"
                         }
                     ]
                 }
@@ -141,7 +116,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "she is stressing me out so much, it's exactly what we ate last night."
+                            "text": "she is making me so stressed. I remember that it's exactly what we ate last night."
                         }
                     ]
                 }
@@ -165,7 +140,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I wish I was able to eat something different, I would take anything else right now."
+                            "text": "I wish I was able to eat something different."
                         }
                     ]
                 }
@@ -173,7 +148,7 @@
          },
          {
             "speaker": "brother",
-            "text": "If you try you can see beyond the %answer%",
+            "text": "If you try you can see eyond the %answer%",
             "triggers-osc": [
                 {
                     "target" : "stylegan",
@@ -181,13 +156,13 @@
                     "value": "bubble4.3,bubble4.4,bubble4.5,bubble4.6,bubble4.7,bubble4.8"
                 },
                 {
-                    "target" : "unity",
+                    "target" : "visuals",
                     "address": "/camera/stylegan",
                     "value": 1,
                     "delay" : 0.5
                 },
                 {
-                    "target" : "unity",
+                    "target" : "visuals",
                     "address": "/stylegan/scale",
                     "value": 1,
                     "delay" : 90.5
@@ -216,7 +191,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "she needs to know that none of us choose to be here."
+                            "text": "she must know that none of us choose each other."
                         }
                     ]
                 }
@@ -280,7 +255,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I do not understand what he is trying to say"
+                            "text": "I can never understand what he is saying."
                         }
                     ]
                 }
@@ -292,7 +267,7 @@
         },
         {
             "speaker": "sister",
-            "text": "I am confused, but okay, go on."
+            "text": "I am confused, but ok."
         },
         {
             "speaker": "dad",
@@ -307,24 +282,16 @@
                 { 
                     "target" : "dad",
                     "lines": [
-                       {
-                           "text": "So much time passed since we last touch each other",
-                           "pause": 10
-                        },
                         {
-                            "text": "I wonder if she will finally let me hold her hand for a bit?"
+                            "text": "We didn't touch each other in such a long time. I wonder if she will finally let me hold her hand for a bit?"
                         }
                     ]
                 },
                 { 
                     "target" : "mom",
                     "lines": [
-                       {
-                            "text": "It's been a while since I felt something to him.",
-                            "pause": 15
-                        },
                         {
-                            "text": "What he just said got me emotional, I feel I want to hold his hand."
+                            "text": "I didn't felt something toward him in such a long time. What he just said really got me emotional, I feel like holding his hand."
                         }
                     ]
                 }
@@ -348,11 +315,11 @@
         },
         {
             "speaker": "sister",
-            "text": "Mother, father, brother you are so beautiful-"
+            "text": "Mother, Father, Brother-"
         },
         {
             "speaker": "sister",
-            "text": "when you play yourself happy. Beyond a shadow of a dream!"
+            "text": "you are so beautiful when you play yourself happy - beyond a shadow of a dream!"
         },
         {
             "speaker": "dad",
@@ -363,14 +330,9 @@
             "text": "Do you think she can tell what is true?",
             "triggers-osc": [
                 {
-                    "target" : "unity",
+                    "target" : "visuals",
                     "address": "/stylegan/blend",
                     "value": 1.0
-                },
-                {
-                    "target" : "td",
-                    "address": "/td/display",
-                    "value": 1
                 }
             ]
         },
@@ -404,11 +366,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "What is this information for? are there even words for it?",
-                            "pause": 10
-                        },
-                        {
-                            "text": "or just ragmented thoughts, full of jump cuts and distortion."
+                            "text": "What kind of information is this? Fragmented thoughts, full of jump cuts and distortion."
                         }
                     ]
                 },
@@ -416,11 +374,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "What is this information for? are there even words for it?",
-                            "pause": 10
-                        },
-                        {
-                            "text": "or just ragmented thoughts, full of jump cuts and distortion."
+                            "text": "What kind of information is this? Fragmented thoughts, full of jump cuts and distortion."
                         }
                     ]
                 },
@@ -428,20 +382,18 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "What is this information for? are there even words for it?",
-                            "pause": 10
-                        },
-                        {
-                            "text": "or just ragmented thoughts, full of jump cuts and distortion."
+                            "text": "What kind of information is this? Fragmented thoughts, full of jump cuts and distortion."
                         }
                     ]
                 }
             ],
             "triggers-osc": [
                 {
-                    "target" : "unity",
+                    "target" : "visuals",
                     "address": "/stylegan/blend",
                     "value": 0.0
+<<<<<<< HEAD
+=======
                 },
                 {
                     "target" : "td",
@@ -452,6 +404,7 @@
                     "target" : "unity",
                     "address": "/stylegan/scale",
                     "value": 2
+>>>>>>> cc3d3bb7a86bad8a9f1b0b72750af359fda8e4a9
                 }
             ]
         },
@@ -480,12 +433,8 @@
                  { 
                     "target" : "mom",
                     "lines": [
-                           {
-                                "text": "I'm reading here 78 percent ambiguity.",
-                                "pause": 10
-                            },
                             {
-                                "text": "And because our eyes deceive us I can tell him whatever I want."
+                                "text": "I'm reading 78 percent ambiguity. And because our eyes deceive us I can tell him whatever I want."
                             }
                         ]
                 },
@@ -500,7 +449,7 @@
             ]
         },
         {
-            "speaker": "mom",
+            "target": "mom",
             "type": "OPEN"
         },
         {
@@ -509,6 +458,9 @@
         },
         {
             "speaker": "sister",
+<<<<<<< HEAD
+            "text": "Deep like that bowl of soup?"
+=======
             "text": "Deep like that bowl of soup?",
             "triggers-osc": [
                 {
@@ -517,27 +469,24 @@
                     "value": "test-bowl"
                 }
             ]
+>>>>>>> cc3d3bb7a86bad8a9f1b0b72750af359fda8e4a9
         },
         {
             "in-ear" : [ 
                  { 
                     "target" : "sister",
                     "lines": [
-                           {
-                                "text": "I mean that bowl that on the counter. I will get up to get it."
+                            {
+                                "text": "I saw this bowl a minute ago, I can't remember where, oh on the counter! I will go get it."
                             }
                         ]
                 },
                 { 
                         "target" : "brother",
                         "lines": [
-                            {
-                              "text": "I meant much deeper than that, because the food of our mother reminds me of the end of time.",
-                              "pause": 10
-                            },
-                            {
-                              "text": "It makes me think about where I came from, and fear what exists at the end of it all."
-                            }
+                                {
+                                    "text": "I meant much deeper than that. Mother's food reminds me of the end of time. It makes me think about where I came from. And fear what exists at the end of it all."
+                                }
                         ]
                 }
             ]
@@ -552,12 +501,16 @@
         },
         {
             "speaker": "sister",
+<<<<<<< HEAD
+            "text": "I mean the memories we are boiling in our soups."
+=======
             "text": "I mean the memories we are boiling in our soups.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
                     "address": "/load-state",
-                    "value": "waterdrops"
+                    "value": "waterdrops",
+                    "delay" : 5
                 },
                 {
                     "target" : "unity",
@@ -567,6 +520,7 @@
                    
                 }
             ]
+>>>>>>> cc3d3bb7a86bad8a9f1b0b72750af359fda8e4a9
         },
         {
             "in-ear" : [ 
@@ -574,19 +528,7 @@
                     "target" : "sister",
                     "lines": [
                             {
-                                "text": "One day there was a dog that was locked outside.", 
-                                "pause":10
-                            },
-                             {
-                                "text": "She barked so loud and made a lot of noise.", 
-                                "pause":10
-                            },
-                            {
-                                "text": "So I just went outside and let her drink from this bowl.", 
-                                "pause":10
-                            },
-                            {
-                                "text": "Or maybe it was me, it is hard to remember. I think it was a very cold day."
+                                "text": "One day there was a dog that was locked outside, barked so loud and made a lot of noise. So I just went outside and let him drink from this bowl. Or maybe it was me, it was a cold day."
                             }
                         ]
                     }
@@ -611,15 +553,7 @@
                     "target" : "dad",
                     "lines": [
                             {
-                                "text": "You eat what you have cooked and you need to finish it to the end, even if it is vomit.",
-                                "pause": 10
-                            },
-                            {
-                                "text": "I know she loves another, but I will stay with her and not let go.",
-                                "pause":10
-                            },
-                            {
-                                "text": "Even just for these moments like we had with this bowl by the beach."
+                                "text": "You eat what you've cooked and you need to finish it to the end. Even if it's vomit. I know she loves another, but I will stay with her and won't let go. Only for these moments like we had with this bowl by the beach."
                             }
                         ]
                     }
@@ -644,19 +578,7 @@
                     "target" : "brother",
                     "lines": [
                             {
-                                "text": "oh, my mother is always so careful about this bowl.",
-                                "pause": 10
-                            },
-                            {
-                                "text": "Once I almost dropped it, I felt like the bowl itself drops through my throat and into my stomach.",
-                                "pause":10
-                            },
-                            {
-                                "text": "It filled me with an infinite anxiety, fearing from her eyes and from his hands.",
-                                "pause": 30 
-                            },
-                            {
-                                "text": "I have been avoiding touching it ever since."
+                                "text": "Mother is always so careful about this bowl. Once I almost dropped it. I felt like the bowl itself drops through my throat and into my stomach. It filled me with an infinite anxiety, fearing from her eyes and from his hands. I've been trying not to touch it ever since."
                             }
                         ]
                     }
@@ -681,19 +603,7 @@
                     "target" : "mom",
                     "lines": [
                             {
-                                "text": "We got this bowl to our wedding as a gift from his parents.",
-                                "pause": 10
-                            },
-                            {
-                                "text": "I remember how his mom hugged me and kissed me that day.",
-                                "pause":10
-                            },
-                             {
-                                "text": "It was the first time I felt belong in my life.",
-                                "pause":10
-                            },
-                            {
-                                "text": "I always liked this bowl more than I ever liked my mother."
+                                "text": "His Parents got us this bowl for our wedding, I remember how his mom hugged me and kissed me that day. I always liked this bowl. I never liked my mom."
                             }
                         ]
                     }
@@ -724,8 +634,7 @@
                 {
                     "target" : "unity",
                     "address": "/gaugan/state",
-                    "value": 3,
-                    "delay" : 5
+                    "value": 3
                 }
             ]
         },
@@ -734,8 +643,12 @@
             "text": "Yes, the right direction and the wrong one."
         },
         {
+            "speaker": "dad",
+            "text": "Very true. Is there any anger in you?"
+        },
+        {
             "speaker": "sister",
-            "text": "So from which direction does my anger comes from?"
+            "text": "Of course there is"
         },
         {
             "in-ear" : [ 
@@ -743,175 +656,35 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "I am not sure"
+                            "text": "Of course there is anger. "
                         }
                     ]
                 }
             ]
         },
         {
-            "speaker": "brother",
-            "text": "Left"
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "mom",
-                    "lines": [
-                        {
-                            "text": "Deep deep inside"
-                        }
-                    ]
-                }
-            ]
+            "speaker": "mom",
+            "text": "Of course"
         },
         {
             "speaker": "dad",
-            "text": "I have heard those things before."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "dad",
-                    "lines": [
-                        {
-                            "text": "I am not the only one to blame."
-                        }
-                    ]
-                }
-            ]
+            "text": "Very true. So talk about it."
         },
         {
             "speaker": "sister",
-            "text": "And from the other side - do you see the ocean?",
-            "triggers-osc": [
-                {
-                    "target" : "gaugan",
-                    "address": "/load-state",
-                    "value": "sea"
-                },
-                {
-                    "target" : "unity",
-                    "address": "/gaugan/state",
-                    "value": 4,
-                    "delay": 1
-                },
-                {
-                    "target" : "stylegan",
-                    "address": "/start-sequence",
-                    "value": "Beginning_Option_3",
-                    "delay": 1
-                },
-                {
-                    "target" : "unity",
-                    "address": "/stylegan-animation/state",
-                    "value": 1 ,
-                    "delay": 1
-                }
-            ]
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "dad",
-                    "lines": [
-                        {
-                            "text": "I usually don't look that far."
-                        }
-                    ]
-                }
-            ]
+            "text": "And from the other side - do you see the ocean?"
         },
         {
             "speaker": "dad",
-            "text": "Very true, everyday."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "mom",
-                    "lines": [
-                        {
-                            "text": "What kind of life exists beyond the ocean?",
-                            "pause": 10
-                        },
-                        {
-                            "text": "If I could, would I start over?"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "brother",
-            "text": "The wind is quiet"
+            "text": "Very true. Like the day that we took grandma to the beach."
         },
         {
             "speaker": "sister",
-            "text": "Doesn't have to be. I can see us laughing."
-        },
-        {
-            "speaker": "sister",
-            "text": "Anything can happen if you let it.",
-            "triggers-osc": [
-                {
-                    "target" : "gaugan",
-                    "address": "/load-state",
-                    "value": "sea-boats"
-                },
-                {
-                    "target" : "stylegan",
-                    "address": "/start-sequence",
-                    "value": "Scene2_Option_3",
-                    "delay": 2
-                },
-                {
-                    "target" : "unity",
-                    "address": "/stylegan-animation/state",
-                    "value": 2 ,
-                    "delay": 2
-                }
-            ]
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "mom",
-                    "lines": [
-                        {
-                            "text": "When it happens, you will know it."
-                        }
-                    ]
-                },
-                { 
-                    "target" : "dad",
-                    "lines": [
-                        {
-                            "text": "For that I might need some wine.",
-                            "pause": 10
-                        },
-                        {
-                            "text": "I'll go get some from the counter."
-                        }
-                    ]
-                },
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "Daddy, don't go."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "dad",
-            "text": "Distant ships."
+            "text": "Yes! The beach was so beautiful that lovely pretty day with so many glossy shiny rocks."
         },
         {
             "speaker": "brother",
-            "text": "A moving wind."
+            "text": "Mother, I think you had flowers there with you."
         },
         {
             "in-ear" : [ 
@@ -919,7 +692,63 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "Moving bowels moving boats, wish they would take you with them father."
+                            "text": "Colorful flowers like a reflection of light on our glasses. Those glasses should reflect our beautiful mother. I will move them closer to her."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "dad",
+                    "lines": [
+                        {
+                            "text": "Not sure what is happening here. But the food has no taste. I'll go grab some wine from the counter."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "speaker": "sister",
+            "text": "Yes she had them! she carried flowers!"
+        },
+        {
+            "speaker": "brother",
+            "text": "Dad, can you pass me the bottle?"
+        },
+        {
+            "speaker": "dad",
+            "text": "No, can't you see that we are in the middle of a process?"
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "mom",
+                    "lines": [
+                        {
+                            "text": "What is the problem to pass him the bottle?"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "speaker": "mom",
+            "text": "Here you go son. But check expiration date."
+        },
+        {
+            "speaker": "sister",
+            "text": "And you brother, you swam and dived a lot? Right?"
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "mom",
+                    "lines": [
+                        {
+                            "text": "Why do they drink so much? Does my food has no taste?"
                         }
                     ]
                 }
@@ -927,66 +756,31 @@
         },
         {
             "speaker": "brother",
-            "text": "Father, can you pass me the bottle?"
+            "text": "I don't remember much, but it does sound like me."
         },
         {
             "speaker": "sister",
-            "text": "All wet."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "My inside and outside, no borders."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "mom",
-            "text": "You are taking us down to a moonless dark night."
+            "text": "I think so! you found all those wonderful creatures!"
         },
         {
             "speaker": "sister",
-            "text": "Just a landscape of a toothless smile."
+            "text": "I think you even spotted a boat that day! No it was a huge ship!"
         },
         {
-            "in-ear" : [ 
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "Shuffling the bowls will shuffles the sound of their open eyes."
-                        }
-                    ]
-                }
-            ]
+            "speaker": "dad",
+            "text": "Really? I don't remember that."
+        },
+        {
+            "speaker": "sister",
+            "text": "Oh yes! a big big one! I remember it because grandma yelled-"
+        },
+        {
+            "speaker": "sister",
+            "text": "'watch out from the big big ship, it will take you as well' and we all had such a good laugh!"
         },
         {
             "speaker": "mom",
-            "text": "You have such a vivid memory.",
-            "triggers-osc": [
-                {
-                    "target" : "gaugan",
-                    "address": "/load-state",
-                    "value": "sand"
-                },
-                {
-                    "target" : "stylegan",
-                    "address": "/start-sequence",
-                    "value": "scsene3_option5",
-                    "delay": 2
-                },
-                {
-                    "target" : "unity",
-                    "address": "/stylegan-animation/state",
-                    "value": 3 ,
-                    "delay": 2
-                }
-            ]
+            "text": "You have such a vivid memory."
         },
         {
             "in-ear" : [ 
@@ -1002,15 +796,19 @@
         },
         {
             "speaker": "sister",
-            "text": "I try to keep track of what makes us a family."
+            "text": "I try to keep track of what makes us happy!"
         },
         {
             "speaker": "mom",
-            "text": "Dear child, we never been there."
+            "text": "But you have forgotten everything else, you cleaned it up."
         },
         {
             "speaker": "dad",
             "text": "That's the creepiest thing about stories."
+        },
+        {
+            "speaker": "brother",
+            "text": "Every time you tell a story you forget it more."
         },
         {
             "speaker": "sister",
@@ -1018,43 +816,27 @@
         },
         {
             "speaker": "mom",
-            "text": "We can not go anywhere."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "mom",
-                    "lines": [
-                        {
-                            "text": "Especially not from here."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "brother",
-            "text": "It is cold outside."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "brother",
-                    "lines": [
-                        {
-                            "text": "Distant siren."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "father",
-            "text": "Smoke. Try add some smell next time."
+            "text": "You forgot the sound that people make when they are grieving."
         },
         {
             "speaker": "mom",
-            "text": "I am grieving and in your memory I am smiling."
+            "text": "In your memory a picture of a crying face and a smiling face look the same."
+        },
+        {
+            "speaker": "dad",
+            "text": "It is in the smell of the bowl-"
+        },
+        {
+            "speaker": "dad",
+            "text": "We were coming back from your grandpa's funeral, scattering his ashes in the ocean."
+        },
+        {
+            "speaker": "brother",
+            "text": "Ashes to ashes, dust to dust from this bowl arose."
+        },
+        {
+            "speaker": "mom",
+            "text": "You should be more careful with how you construct your fragmented stories."
         },
         {
             "speaker": "sister",
@@ -1078,46 +860,10 @@
         },
         {
             "speaker": "sister",
-            "text": "I'll just turn on the light.",
-            "triggers-osc": [
-                {
-                    "target" : "unity",
-                    "address": "/stylegan/blend",
-                    "value": 1.0
-                },
-                {
-                    "target" : "td",
-                    "address": "/td/edge",
-                    "value": 0
-                },
-                {
-                    "target" : "gaugan",
-                    "address": "/load-state",
-                    "value": "clear"
-                },
-                {
-                    "target" : "unity",
-                    "address": "/gaugan/state",
-                    "value": 1                   
-                },
-                {
-                    "target" : "unity",
-                    "address": "/stylegan/blend",
-                    "value": 0.0,
-                    "delay": 7
-                },
-                {
-                    "target" : "td",
-                    "address": "/td/display",
-                    "value": 0,
-                    "delay": 7
-                },
-                {
-                    "target" : "stylegan",
-                    "address": "/random",
-                    "value": 1
-                }
-            ]
+            "text": "I'll just turn on the light."
+        },
+        {
+            "type": "clear"
         },
         {
             "in-ear" : [ 
@@ -1224,11 +970,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "It is time, to tell my story now. It is my time to share.",
-                            "pause": 5
-                        },
-                        {
-                            "text": "now we need to move together, as a family, to the living-room."
+                            "text": "It is time, to tell my story now. It is my time to share. Let's move them to the living-room."
                         }
                     ]
                 }
