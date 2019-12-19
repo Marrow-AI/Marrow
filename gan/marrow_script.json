@@ -1250,23 +1250,25 @@
                     "target" : "unity",
                     "address": "/stylegan/blend",
                     "value": 0.0,
-                    "delay": 7
+                    "delay": 15
                 },
                 {
                     "target" : "td",
                     "address": "/td/lights",
-                    "value": 0
+                    "value": 0,
+                    "delay": 15
                 },
                 {
                     "target" : "td",
                     "address": "/td/display",
                     "value": 0,
-                    "delay": 7
+                    "delay": 15
                 },
                 {
                     "target" : "stylegan",
                     "address": "/random",
-                    "value": 1
+                    "value": 1,
+                    "delay": 15
                 }
             ],
             "triggers-midi": [
@@ -1275,7 +1277,7 @@
                 },
                 {
                     "note": 109,
-                    "delay": 7
+                    "delay": 15
                 } 
             ]
         },
