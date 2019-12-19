@@ -327,7 +327,7 @@
         },
         {
             "speaker": "sister",
-            "text": "I am confused, but okay, go on."
+            "text": "I am lost and confused, but okay, go on."
         },
         {
             "speaker": "dad",
@@ -781,7 +781,7 @@
         },
         {
             "speaker": "sister",
-            "text": "there is? what?"
+            "text": "There is? Can you tell me how?"
         },
         {
             "speaker": "mom",
@@ -831,7 +831,7 @@
         },
         {
             "speaker": "brother",
-            "text": "Left",
+            "text": "From your left side",
             "triggers-midi": [
                 {
                    "note": 78
@@ -914,7 +914,7 @@
         },
         {
             "speaker": "dad",
-            "text": "Very true, everyday."
+            "text": "Very true. Usually I notice it everyday."
         },
         {
             "in-ear" : [ 
@@ -930,7 +930,7 @@
         },
         {
             "speaker": "brother",
-            "text": "The wind is quiet"
+            "text": "The wind is quiet."
         },
         {
             "speaker": "sister",
@@ -994,11 +994,11 @@
         },
         {
             "speaker": "dad",
-            "text": "Distant ships."
+            "text": "The ships are distant."
         },
         {
             "speaker": "brother",
-            "text": "A moving wind.",
+            "text": "The wind is moving.",
             "triggers-midi": [
                 {
                    "note": 86
@@ -1188,7 +1188,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Nothing"
+            "text": "Nothing."
         },
         {
             "speaker": "mom",
@@ -1324,15 +1324,12 @@
             "text": "The clock stopped."
         },
         {
-            "type": "clear"
-        },
-        {
             "speaker": "sister",
             "text": "Daddy?"
         },
         {
             "speaker": "dad",
-            "text": "Pumpkin?"
+            "text": "Yes pumpkin?"
         },
         {
             "speaker": "sister",
