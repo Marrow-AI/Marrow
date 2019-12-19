@@ -422,6 +422,11 @@
                     "address": "/td/display",
                     "value": 1
                 }
+            ],
+            "triggers-midi": [
+                {
+                   "note": 72
+                } 
             ]
         },
         {
@@ -519,7 +524,12 @@
         },
         {
             "speaker": "sister",
-            "text": "Time stopped."
+            "text": "Time stopped.",
+            "triggers-midi": [
+                {
+                   "note": 73
+                } 
+            ]
         },
         {
             "speaker": "dad",
@@ -566,6 +576,11 @@
                     "address": "/load-state",
                     "value": "test-bowl"
                 }
+            ],
+            "triggers-midi": [
+                {
+                   "note": 74
+                } 
             ]
         },
         {
@@ -616,6 +631,11 @@
                     "delay": 5
                    
                 }
+            ],
+            "triggers-midi": [
+                {
+                   "note": 75
+                } 
             ]
         },
         {
@@ -723,6 +743,11 @@
                     "value": "plant",
                     "delay" : 5
                 }
+            ],
+            "triggers-midi": [
+                {
+                   "note": 76
+                } 
             ]
         },
         {
@@ -777,6 +802,11 @@
                     "value": 3,
                     "delay" : 5
                 }
+            ],
+            "triggers-midi": [
+                {
+                   "note": 77
+                } 
             ]
         },
         {
@@ -801,7 +831,12 @@
         },
         {
             "speaker": "brother",
-            "text": "Left"
+            "text": "Left",
+            "triggers-midi": [
+                {
+                   "note": 78
+                } 
+            ]
         },
         {
             "in-ear" : [ 
@@ -858,6 +893,11 @@
                     "value": 1 ,
                     "delay": 1
                 }
+            ],
+            "triggers-midi": [
+                {
+                   "note": 84
+                } 
             ]
         },
         {
@@ -917,6 +957,11 @@
                     "value": 2 ,
                     "delay": 2
                 }
+            ],
+            "triggers-midi": [
+                {
+                   "note": 85
+                } 
             ]
         },
         {
@@ -953,7 +998,12 @@
         },
         {
             "speaker": "brother",
-            "text": "A moving wind."
+            "text": "A moving wind.",
+            "triggers-midi": [
+                {
+                   "note": 86
+                } 
+            ]
         },
         {
             "in-ear" : [ 
@@ -973,7 +1023,12 @@
         },
         {
             "speaker": "sister",
-            "text": "All wet."
+            "text": "All wet.",
+            "triggers-midi": [
+                {
+                   "note": 87
+                } 
+            ]
         },
         {
             "in-ear" : [ 
@@ -993,7 +1048,12 @@
         },
         {
             "speaker": "sister",
-            "text": "Just a landscape of a toothless smile."
+            "text": "Just a landscape of a toothless smile.",
+            "triggers-midi": [
+                {
+                   "note": 88
+                } 
+            ]
         },
         {
             "in-ear" : [ 
@@ -1028,6 +1088,11 @@
                     "value": 3 ,
                     "delay": 2
                 }
+            ],
+            "triggers-midi": [
+                {
+                   "note": 96
+                } 
             ]
         },
         {
@@ -1052,7 +1117,12 @@
         },
         {
             "speaker": "dad",
-            "text": "That's the creepiest thing about stories."
+            "text": "That's the creepiest thing about stories.",
+            "triggers-midi": [
+                {
+                   "note": 97
+                } 
+            ]
         },
         {
             "speaker": "sister",
@@ -1076,7 +1146,12 @@
         },
         {
             "speaker": "brother",
-            "text": "It is cold outside."
+            "text": "It is cold outside.",
+            "triggers-midi": [
+                {
+                   "note": 98
+                } 
+            ]
         },
         {
             "in-ear" : [ 
@@ -1091,7 +1166,7 @@
             ]
         },
         {
-            "speaker": "father",
+            "speaker": "dad",
             "text": "Smoke. Try add some smell next time."
         },
         {
@@ -1100,7 +1175,12 @@
         },
         {
             "speaker": "sister",
-            "text": "Memories can be played. It is just likely that stories will get mixed up in stories."
+            "text": "Memories can be played. It is just likely that stories will get mixed up in stories.",
+            "triggers-midi": [
+                {
+                   "note": 99
+                } 
+            ]
         },
         {
             "speaker": "dad",
@@ -1112,7 +1192,12 @@
         },
         {
             "speaker": "mom",
-            "text": "So have no fear of perfection - you will never get it."
+            "text": "So have no fear of perfection - you will never get it.",
+            "triggers-midi": [
+                {
+                   "note": 100
+                } 
+            ]
         },
         {
             "speaker": "sister",
@@ -1159,6 +1244,15 @@
                     "address": "/random",
                     "value": 1
                 }
+            ],
+            "triggers-midi": [
+                {
+                   "note": 108
+                },
+                {
+                    "note": 109,
+                    "delay": 7
+                } 
             ]
         },
         {

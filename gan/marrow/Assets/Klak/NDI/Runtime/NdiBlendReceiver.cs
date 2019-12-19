@@ -127,7 +127,7 @@ namespace Klak.Ndi
         void OnEnable()
         {
             _FPS = 1.0f;
-            _FPS2 = 2.0f;
+            _FPS2 = 3.0f;
 
         }
 
@@ -141,7 +141,7 @@ namespace Klak.Ndi
 
         void Awake() {
             _FPS = 0.5f;
-            _FPS2 = 2.0f;
+            _FPS2 = 3.0f;
             _dataTime = 1.0f / _FPS;
             _dataTime2 = 1.0f / _FPS2;
             _showBack = true;

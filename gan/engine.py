@@ -572,7 +572,7 @@ class Engine:
                 self.pause_listening()
                 asyncio.create_task(self.play_in_ear())
         except Exception as e:
-            print("Engine exception {}".format(e))
+            print("Engine exception",e)
 
     def end(self):
         self.state = "END"
