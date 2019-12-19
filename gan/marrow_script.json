@@ -565,7 +565,7 @@
         },
         {
             "speaker": "brother",
-            "text": "That sounds deep, mother. "
+            "text": "Mother, that sounds very deep. "
         },
         {
             "speaker": "sister",
@@ -702,7 +702,7 @@
         },
         {
             "speaker": "dad",
-            "text": "Here son, take it from me.",
+            "text": "Here you go son, take it from me.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -819,7 +819,7 @@
         },
         {
             "speaker": "sister",
-            "text": "So from which direction does my anger comes from?"
+            "text": "So from which direction does my anger come from?"
         },
         {
             "in-ear" : [ 
@@ -998,7 +998,7 @@
         },
         {
             "speaker": "dad",
-            "text": "The ships are distant."
+            "text": "The ships look so distant."
         },
         {
             "speaker": "brother",
@@ -1192,7 +1192,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Nothing."
+            "text": "Usually I see nothing."
         },
         {
             "speaker": "mom",
@@ -1281,10 +1281,10 @@
         },
         {
             "speaker": "sister",
-            "text": "Daddy, apples, worm, dreams."
+            "text": "Daddy, it is made of apples, worm, dreams."
         },
         {
-            "speaker": "mother",
+            "speaker": "mom",
             "text": "Yes, it is almost time to sleep. The best time of the day."
         },
         {
@@ -1329,11 +1329,11 @@
         },
         {
             "speaker": "sister",
-            "text": "Daddy?"
+            "text": "Daddy? Can I ask you something?"
         },
         {
             "speaker": "dad",
-            "text": "Yes pumpkin?"
+            "text": "Sure you can my little pumpkin."
         },
         {
             "speaker": "sister",
@@ -1354,26 +1354,6 @@
         {
             "speaker": "mom",
             "text": "Homes."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "mom",
-                    "lines": [
-                        {
-                            "text": "It is time, to tell my story now. It is my time to share.",
-                            "pause": 5
-                        },
-                        {
-                            "text": "now we need to move together, as a family, to the living-room."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "mom",
-            "text": "My advice to you - don't wander off. Just follow me."
         }
     ]
 }
