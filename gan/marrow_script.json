@@ -743,7 +743,7 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "I am not sure"
+                            "text": "I feel exactly the same, I don't know how to answer this question."
                         }
                     ]
                 }
@@ -759,7 +759,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "Deep deep inside"
+                            "text": "it comes from deep, deep inside of you"
                         }
                     ]
                 }
@@ -775,7 +775,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I am not the only one to blame."
+                            "text": "I am refusing to be the only one to blame."
                         }
                     ]
                 }
@@ -816,7 +816,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "I usually don't look that far."
+                            "text": "I usually do not notice what exist in front of me."
                         }
                     ]
                 }
@@ -832,11 +832,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "What kind of life exists beyond the ocean?",
-                            "pause": 10
-                        },
-                        {
-                            "text": "If I could, would I start over?"
+                            "text": "What kind of life exists beyond the ocean? If I could would I start over?"
                         }
                     ]
                 }
@@ -879,7 +875,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "When it happens, you will know it."
+                            "text": "When it happens believe me you cannot miss it."
                         }
                     ]
                 },
@@ -887,11 +883,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "For that I might need some wine.",
-                            "pause": 10
-                        },
-                        {
-                            "text": "I'll go get some from the counter."
+                            "text": "For that I might need some wine, I will go bring the bottle from the counter."
                         }
                     ]
                 },
@@ -899,7 +891,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "Daddy, don't go."
+                            "text": "Daddy please do not leave me here alone."
                         }
                     ]
                 }
@@ -919,7 +911,7 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "Moving bowels moving boats, wish they would take you with them father."
+                            "text": "Moving bowls moving boats, I wish they would take you with them father."
                         }
                     ]
                 }
@@ -939,7 +931,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "My inside and outside, no borders."
+                            "text": "My inside and outside have no borders."
                         }
                     ]
                 }
@@ -959,7 +951,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "Shuffling the bowls will shuffles the sound of their open eyes."
+                            "text": "Shuffling the bowls will also shuffle the sound of their open eyes."
                         }
                     ]
                 }
@@ -1026,7 +1018,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "Especially not from here."
+                            "text": "Especially and most importantly not from here."
                         }
                     ]
                 }
