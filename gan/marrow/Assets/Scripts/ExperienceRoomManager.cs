@@ -186,7 +186,7 @@ namespace Marrow
                     1.0f, 0.0f, 7.0f
                 )
                 .setOnUpdate((float val) => {
-             //       rawImageMaterial.SetFloat("_TransparencyOrig", val);
+                       rawImageMaterial.SetFloat("_TransparencyOrig", val);
                 });
             } else if (state == 4) {
                 Material rawImageMaterial = rawImage.GetComponent<Renderer>().material;

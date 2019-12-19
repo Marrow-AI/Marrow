@@ -421,6 +421,11 @@
                     "target" : "td",
                     "address": "/td/display",
                     "value": 1
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/lights",
+                    "value": 2
                 }
             ],
             "triggers-midi": [
@@ -502,6 +507,11 @@
                     "target" : "td",
                     "address": "/td/edge",
                     "value": 1
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/lights",
+                    "value": 0
                 },
                 {
                     "target" : "unity",
@@ -1218,6 +1228,11 @@
                     "value": 0
                 },
                 {
+                    "target" : "td",
+                    "address": "/td/lights",
+                    "value": 2
+                },
+                {
                     "target" : "gaugan",
                     "address": "/load-state",
                     "value": "clear"
@@ -1232,6 +1247,11 @@
                     "address": "/stylegan/blend",
                     "value": 0.0,
                     "delay": 7
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/lights",
+                    "value": 0
                 },
                 {
                     "target" : "td",
