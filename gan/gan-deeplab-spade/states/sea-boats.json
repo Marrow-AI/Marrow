@@ -1,0 +1,43 @@
+{
+    "map": [
+        {
+            "from": ["dining table","table", "desk-stuff", "floor-other"],
+            "to" : "sea",
+            "invert": false
+        },
+        {
+            "from": ["frisbee", "plastic", "paper", "metal", "mouse", "rock"],
+            "to" : "rock",
+            "invert": false
+        },
+        {
+            "from": ["bowl","wine glass", "bottle"],
+            "to" : "boat",
+            "invert": false
+        },
+        {
+            "from": ["airplane", "window-other"],
+            "to" : "bridge",
+            "invert": false 
+        }
+    ],
+    "deeplab": {
+        "mask": [
+            {
+                "items": ["sea", "rock", "boat", "bridge"],
+                "invert": true
+            }
+        ]
+    },
+    "gaugan": {
+        "mask": [
+            {
+                "items": ["sea", "rock", "boat", "bridge"],
+                "invert": true
+            }
+        ]
+    },
+    "showRaw": false,
+    "mapDeeplab": true
+}
+

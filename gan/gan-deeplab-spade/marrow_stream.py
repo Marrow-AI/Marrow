@@ -364,7 +364,7 @@ class NDIStreamer(Thread):
 
 class Gan(NDIStreamer):
     def __init__(self, queue, osc_queue, deeplab_opt, spade_opt):
-        super().__init__(768,256)
+        super().__init__(1280,256)
         self.queue = queue
         self.osc_queue = osc_queue
         self.deeplab_opt = deeplab_opt
@@ -427,6 +427,7 @@ class Gan(NDIStreamer):
                 frame = self.queue.pop()
                 #print("Original Image shape {}".format(frame.shape))
                 image, raw_image = preprocessing(frame, device, CONFIG)
+                raw_image  = cv2.cvtColor(raw_image,cv2.COLOR_BGR2RGB)
                 #print("Image shape {}".format(raw_image.shape))
                 labelmap = inference(model, image, raw_image, postprocessor)
 
@@ -453,6 +454,11 @@ class Gan(NDIStreamer):
                     for masking in self.deeplab_masks:
                         mask = np.isin(labelmap, masking['items'], invert=masking['invert'])
                         colormap[mask, :] = [0, 0, 0];
+                    if self.show_raw:
+                         for masking in self.deeplab_masks:
+                             mask = np.isin(labelmap, masking['items'], invert=masking['invert'])
+                             raw_image[mask, :] = [0, 0, 0];
+
 
 
                 #color_resized = cv2.cvtColor(np.array(Image.fromarray(colormap).resize((256,256), Image.NEAREST)),cv2.COLOR_BGR2RGB)
@@ -472,25 +478,20 @@ class Gan(NDIStreamer):
                 labelimg = Image.fromarray(np.uint8(labelmap), 'L')
                 label_resized = np.array(labelimg.resize((256,256), Image.NEAREST))
 
-                if self.show_raw:
-                    generated_np = cv2.cvtColor(np.array(Image.fromarray(raw_image).resize((256,256), Image.NEAREST)),cv2.COLOR_BGR2RGB)
-                else:
-                    item = coco_dataset.get_item_from_images(labelimg, instanceimg)
+                item = coco_dataset.get_item_from_images(labelimg, instanceimg)
 
-                    generated = spade_model(item, mode='inference')
-                    generated_np = util.tensor2im(generated[0])
+                generated = spade_model(item, mode='inference')
+                generated_np = util.tensor2im(generated[0])
 
                 for masking in self.gaugan_masks:
                     mask = np.isin(label_resized, masking['items'], invert=masking['invert'])
                     generated_np[mask, :] = [0, 0, 0];
 
-
-                #cv2.addWeighted(color_resized, 0.5, raw_image_resized, 0.5 , 0.0, raw_image_resized)
+                final = np.concatenate((generated_np, colormap, raw_image), axis=1)
 
                 #self.push_frame(raw_image_resized)
                 #raw_rgb = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
 
-                final = np.concatenate((generated_np, colormap), axis=1)
                 #print("Final shape: {}".format(final.shape))
 
                 #print("Gans shape {}, colormap shape {}, Final shape {}".format(generated_np.shape, color_resized.shape, final.shape))
@@ -527,7 +528,6 @@ class Gan(NDIStreamer):
         if np.any(labelmap == LABEL_TO_ID['bowl']):
             print("FOUND BOWL!!")
             self.osc_queue.put({"command": "load-state", "args": "found-bowl"})
-            self.t2i_client.send_message("/gaugan/state", 3)
 
 
     def load_state(self, name):
@@ -567,7 +567,7 @@ class Gan(NDIStreamer):
 
 
 
-            except Excpetion as e:
+            except Exception as e:
                 print("Error loading state! {}".format(e))
 
 

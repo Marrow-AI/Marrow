@@ -4,25 +4,31 @@
             "from": ["dining table","table", "desk-stuff", "cup", "wine glass", "plastic", "floor-other"],
             "to" : "dining table",
             "invert": false
+        },
+        {
+            "from": ["bowl"],
+            "to" : "apple",
+            "invert": false,
+			"expand": 20
         }
     ],
     "deeplab": {
         "mask": [
             {
-                "items": ["bowl", "plastic" ],
+                "items": ["dining table","apple"],
                 "invert": true
             }
         ]
     },
     "gaugan": {
         "mask": [
-            {
-                "items": ["dining table","frisbee"],
-                "invert": true
-            }
+			{
+				"items": ["apple"],
+				"invert": true
+			}
         ]
     },
-    "showRaw": true,
-    "mapDeeplab": false
+    "showRaw": false,
+    "mapDeeplab": true
 }
 
