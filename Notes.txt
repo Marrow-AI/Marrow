@@ -1,8 +1,68 @@
 .\sendosc.exe 192.168.1.23 3800 /start-sequence s bubble4.3,bubble4.4,bubble4.5,bubble4.6,bubble4.7,bubble4.8
 
 StyleGAN start: -43.73, 0, 0.67
-Scale: 1, 1, 1
+Scale: 1.2, 1.2, 1.2
 
-GAN scale = 0.5
+Scale down: 0.68, 0.68, 0.68
+
+GAN scale = 0.5 
 X = -46
 Y = 0.8
+
+
+Deeplab start:
+
+Pos: (-43.9, 1.12, 15.83)
+Scale: (1.530368, 0.7651841, 0.7651841)
+Transparency: 0.27
+TransparencyOrig: 1
+
+GauGAN start:
+
+Pos: (-43.9, 1.12, 17.49)
+Scale (same) : (1.530368, 0.7651841, 0.7651841)
+Transparency: 0
+TransparencyOrig: 0.5,
+
+new pos= (-43.9,0,17.49)
+
+StyleGAN scale up:
+Scale = (0.75, 0.75, 0.75)
+
+new pos = (-45.11,-0.55,18.31)
+
+
+
+
+Looking for bowl
+
+test-bowl state
+Threshold 0.0001
+Blend 0
+No deeplab plane
+
+found bowl
+GauGAN
+TransparencyOrig
+Threshold 1
+Scale = (1.146797, 0.5733984, 0.5733984)
+Pos = (-43.78, -0.65, 17.49)
+
+
+GauGAN after
+Pos = (-43.78, -0.65, 17.49)
+Scale = (1.628004, 0.8140017, 0.8140017)
+
+
+
+Gray scene
+------------
+Deeplab/Raw scale: 1.644871, 8224356
+Deeplab pos: -44.03, -0.7 16.68
+Raw pos: -44.03, -0.7 16.68, 18
+
+Deeplab Threshold: 0.37
+Transparency from 0.8 to 1
+
+Raw transparency from 1 to 0
+

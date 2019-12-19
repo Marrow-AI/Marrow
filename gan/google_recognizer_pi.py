@@ -101,13 +101,15 @@ class MicrophoneStream(object):
 
 class Recognizer(Thread):
 
-    def __init__(self, speech_queue, args):
+    def __init__(self, engine, args, loop):
 
         Thread.__init__(self)
         self.client = speech.SpeechClient()
         self.args = args
-        self.queue = speech_queue
+        self.engine = engine
         self.stop_recognition = False
+        self.loop = loop
+        self.role = "UNKOWN"
 
         # See http://g.co/cloud/speech/docs/languages
         # for a list of supported languages.
@@ -127,19 +129,20 @@ class Recognizer(Thread):
         print("Listening stopping")
 
 
-    def start(self):
+    def run(self):
         self.stop_recognition = False
-        #print(self.queue)
         self.args.restart = False
+        print("Recognizer starting")
 
-        while not self.args.stop and not self.stop_recognition:
-            print("Listening...")
-            self.listen()
-        
-        #print("Sleeping...")
-        #time.sleep(2)
-
-
+        while True:
+            if not self.args.stop:
+                print("Listening...")
+                self.listen()
+                print("Sleeping...")
+                time.sleep(1)
+                self.loop.call_soon_threadsafe(
+                    self.future.set_result, 1
+                )
     def listen(self):
         self.start_time = time.time()
 
@@ -190,16 +193,16 @@ class Recognizer(Thread):
 
                 if (transcript != last_result):
                     print("({})".format(transcript))
-                    self.queue.put_nowait({
-                        "action": "mid-speech",
-                        "text": transcript
-                    })
+                    self.engine.send_message(
+                        "/mid-speech",
+                        [self.role,transcript]
+                    )
                     last_result = transcript
 
             else:
                 print(" = {}".format(transcript))
-                self.queue.put_nowait({
-                    "action": "speech",
-                    "text": transcript
-                })
+                self.engine.send_message(
+                    "/speech",
+                    [self.role,transcript]
+                )
 

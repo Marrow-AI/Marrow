@@ -6,11 +6,14 @@ import argparse
 
 from pythonosc import osc_message_builder
 from pythonosc import udp_client
+from pythonosc import osc_server
+from pythonosc import dispatcher
+
 from server import Server
 
 import shutil
 import asyncio
-import threading
+from  threading import Thread, Timer
 import time
 import janus
 
@@ -24,8 +27,6 @@ sys.path.append(os.path.abspath('./emotion'))
 
 #from offline_ser import LiveSer
 from mental_state import MentalState
-
-from google_recognizer import Recognizer
 
 import wave
 import pyaudio
@@ -87,13 +88,35 @@ class ScheduleFunction:
         print("Cacnel function {}".format(self._uuid))
         self._task.cancel()
 
+class OSCServer:
+    def __init__(self, loop, osc_queue):
+        self.osc_queue = osc_queue
+        self.loop = loop
 
-SPEAKER_CHANNELS = {
-    "dad" : 13,
-    "mom": 14,
-    "brother": 15,
-    "sister": 16
-}
+    async def start(self, future):
+        self.dispatcher = dispatcher.Dispatcher()
+        self.dispatcher.map("/speech", self.speech_handler)
+        self.dispatcher.map("/mid-speech", self.speech_handler)
+        self.dispatcher.map("/play-finished", self.finished_handler)
+
+        self.server = osc_server.AsyncIOOSCUDPServer(("0.0.0.0", 3954), self.dispatcher, self.loop)
+        print("Serving OSC on {}".format("0.0.0.0"))
+
+        transport, protocol = await self.server.create_serve_endpoint() 
+        await future
+
+        print("Closing transport")
+
+        transport.close()
+        #print(self.server.serve())
+
+    def speech_handler(self, addr, role, text):
+        print("OSC command! {} {} {}".format(addr, role, text))
+        self.osc_queue.put_nowait({"action": addr[1:], "role": role, "text": text})
+
+    def finished_handler(self, addr, role):
+        print("OSC command! {} {}".format(addr, role))
+        self.osc_queue.put_nowait({"action": addr[1:], "role": role})
 
 
 class Engine:
@@ -130,11 +153,11 @@ class Engine:
         #self.lock = asyncio.Lock()
 
         #self.t2i_client = udp_client.SimpleUDPClient("192.168.1.22", 3838)
-        #self.voice_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
+        #self.audio_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
 
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         self.td_client = udp_client.SimpleUDPClient("127.0.0.1", 7000)
-        self.voice_client = udp_client.SimpleUDPClient("172.16.195.167", 8000)
+        self.audio_client = udp_client.SimpleUDPClient("192.168.1.25", 8000)
         self.stylegan_client = udp_client.SimpleUDPClient("192.168.1.23", 3800)
         self.gaugan_client = udp_client.SimpleUDPClient("192.168.1.23", 3900)
 
@@ -145,6 +168,7 @@ class Engine:
             "stylegan": self.stylegan_client,
             "gaugan": self.gaugan_client
         }
+
 
         #self.mental_state = MentalState()
 
@@ -158,23 +182,17 @@ class Engine:
             "sister": 0,
             "brother": 0
         }
-        """
-        self.in_ear_devices = {
-            "brother": [3,2], #black
-            "mom": [5,4], #red
-            "dad": [1,0], #blue
-            "sister": [7,6] #green
-        }
-         """
 
         self.listen_task = None
 
-        self.in_ear_devices = {
-            "brother": [1,0], #black
-            "mom": [1,0], #red
-            "dad": [1,0], #blue
-            "sister": [1,0] #green
+        self.in_ear_endpoints = {
+            "mom": udp_client.SimpleUDPClient("192.168.1.39", 3954),
+            "brother": udp_client.SimpleUDPClient("192.168.1.41", 3954),
+            "dad": udp_client.SimpleUDPClient("192.168.1.38", 3954),
+            "sister": udp_client.SimpleUDPClient("192.168.1.42", 3954)
         }
+
+        self.play_futures = {}
 
     async def start(self):
         self.main_loop = asyncio.get_running_loop()
@@ -184,8 +202,12 @@ class Engine:
         #self.queue = asyncio.Queue(loop=self.main_loop)
         self.queue = janus.Queue(loop=self.main_loop)
 
-       
+        tasks = []
         self.server_stop = self.main_loop.create_future()
+
+        self.osc_server = OSCServer(self.main_loop, self.queue.async_q)
+        tasks.append(asyncio.create_task(self.osc_server.start(self.server_stop)))
+
         self.server = Server(
                 self.gain_update,
                 self.queue,
@@ -194,23 +216,24 @@ class Engine:
                 self.pix2pix_update
         )
         print("Starting server")
-        tasks = []
         self.server_task = asyncio.create_task(self.server.start(self.server_stop))
 
         if not args.no_speech: 
-            print("Consuming speech")
-            self.recognizer = Recognizer(self.queue.sync_q, self.main_loop, self.args)
+            #self.recognizer = Recognizer(self.queue.sync_q, self.main_loop, self.args#)
             #fut = self.main_loop.run_in_executor(None, self.recognizer.start)
-            tasks.append(asyncio.create_task(self.consume_speech()))
             print("Waiting on queue")
         else:
             self.recognizer = None
 
+        tasks.append(asyncio.create_task(self.consume_speech()))
         tasks.append(self.server_task)
         print("Gathering tasks")
 
         self.main_loop.call_soon(self.wakeup)
-        await self.server_task
+
+        self.tasks = asyncio.gather(*tasks)
+        await self.tasks
+        
         print("Server done!")
 
     def wakeup(self):
@@ -242,25 +265,31 @@ class Engine:
             self.func_sched[uid].cancel()
         self.func_sched.clear()
 
-    async def start_google(self, device_index):
+    def start_google(self, endpoint, role):
+        """
         if self.listen_task and not self.listen_task.done():
             print("Waiting for previous listen to finish")
             self.pause_listening()
             await self.listen_task
-               
+        """
         self.last_speech = time.time()
-        print("Resume listening on {}".format(device_index))
-        if self.recognizer:
-            self.listen_task = self.main_loop.run_in_executor(None, self.recognizer.start, device_index)
+        print("Resume listening")
+        endpoint.send_message("/record-start", role)
+        #self.listen_task = self.main_loop.run_in_executor(None, self.recognizer.start, device_index)
 
     async def consume_speech(self):
+        print("Consuming speech")
         while True:
             item = await self.queue.async_q.get()
-            print("Item! {}".format(item))
-            if item["action"] == "speech":
+            if item["action"] == "speech" and item["role"] == self.script.awaiting["speaker"]:
                 self.speech_text(item["text"])
-            else:
+            elif item["action"] == "mid-speech" and item["role"] == self.script.awaiting["speaker"]:
                 self.mid_speech_text(item["text"])
+            elif item["action"] == "play-finished":
+                role = item["role"]
+                print("PLAY FINISHED!! {}".format(role))
+                self.play_futures[role].set_result(1)
+
 
     def time_check(self):
         # recognition timeout
@@ -277,7 +306,7 @@ class Engine:
                self.main_loop.create_task(self.play_in_ear())
 
         if not self.args.stop:
-            threading.Timer(0.1, self.time_check).start()
+            Timer(0.1, self.time_check).start()
 
     def next_variation(self):
         if self.script.next_variation():
@@ -463,7 +492,7 @@ class Engine:
             self.next_line(delay)
 
        # if "triggers-beat" in line:
-        #    self.voice_client.send_message("/gan/beat",0.0)
+        #    self.audio_client.send_message("/gan/beat",0.0)
 
 
     def trigger_osc(self):
@@ -483,7 +512,7 @@ class Engine:
 
 
     def play_effect(self):
-        self.voice_client.send_message("/effect/play", 1)
+        self.audio_client.send_message("/effect/play", 1)
 
     def next_line(self, delay = 0):
         print("NEXT LINE")
@@ -524,9 +553,9 @@ class Engine:
         self.state = "END"
         print("END")
 
-        self.schedule_osc(4, self.voice_client,"/control/strings", [0.0, 0.0])
-        self.schedule_osc(4, self.voice_client,"/control/bells", [0.0, 0.0])
-        self.schedule_osc(4, self.voice_client,"/control/synthbass", [0.0, 0.0, 0.0])
+        self.schedule_osc(4, self.audio_client,"/control/strings", [0.0, 0.0])
+        self.schedule_osc(4, self.audio_client,"/control/bells", [0.0, 0.0])
+        self.schedule_osc(4, self.audio_client,"/control/synthbass", [0.0, 0.0, 0.0])
 
         self.schedule_function(10, self.stop)
         #self.pix2pix_client.send_message("/gan/end",1)
@@ -544,10 +573,10 @@ class Engine:
             for inear in data:
                 try:
                     target = inear["target"]
-                    output_device = self.in_ear_devices[target][0]
-                    file_name = 'in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index)
-
-                    tasks.append(self.main_loop.run_in_executor(None, self.play_file, file_name, output_device))
+                    output_endpoint = self.in_ear_endpoints[target]
+                    if output_endpoint:
+                        file_name = 'in-ear/in_ear_{}_{}.wav'.format(target, self.script.awaiting_index)
+                        tasks.append(self.play_file(file_name, target, output_endpoint))
 
                 except Exception as e:
                     print("Audio error!")
@@ -561,20 +590,20 @@ class Engine:
         self.trigger_osc()
         self.state = "SCRIPT"
         if self.script.awaiting_type != "OPEN":
-            self.next_line()
+            if "delay" in self.script.awaiting:
+                delay = self.script.awaiting["delay"]
+            else:
+                delay = 0
+            self.schedule_function(delay, self.next_line)
         else:
             self.show_next_line()
 
-    def play_file(self, file_name, device):
-        #speaker = sc.get_speaker(device)
-        #[rate, data] = wavfile.read(file_name)
-        #speaker.play(data/np.max(data), samplerate=rate)
-
-        data, fs = sf.read(file_name, dtype='float32')
-        sd.play(data, fs, device=device)
-        print("Playing something")
-        sd.wait()
-        print("Finished one!")
+    def play_file(self, file_name, role, endpoint):
+        print("Sending /play message!")
+        future = self.main_loop.create_future()
+        self.play_futures[role] = future
+        endpoint.send_message("/play", [role, file_name])
+        return future
 
     def show_open_line(self,data):
         print("Show open line! {}".format(data))
@@ -591,8 +620,8 @@ class Engine:
 
             effect_time = 0.05
 
-            self.schedule_osc(delay_sec,self.voice_client, "/speech/play", 1)
-            self.schedule_osc(delay_sec + self.speech_duration + 0.2,self.voice_client, "/speech/stop", 1)
+            self.schedule_osc(delay_sec,self.audio_client, "/speech/play", 1)
+            self.schedule_osc(delay_sec + self.speech_duration + 0.2,self.audio_client, "/speech/stop", 1)
             self.schedule_osc(delay_sec,self.t2i_client, "/gan/speaks", 1)
 
             if echos:
@@ -601,8 +630,8 @@ class Engine:
                     echos = [echos]
 
                 for echo in echos:
-                    self.schedule_osc(delay_sec + echo[0],self.voice_client, "/gan/echo", 3) 
-                    self.schedule_osc(delay_sec + echo[1],self.voice_client, "/gan/echo", 2)
+                    self.schedule_osc(delay_sec + echo[0],self.audio_client, "/gan/echo", 3) 
+                    self.schedule_osc(delay_sec + echo[1],self.audio_client, "/gan/echo", 2)
 
 
             if distorts:
@@ -611,18 +640,18 @@ class Engine:
                     distorts = [distorts]
 
                 for distort in distorts:
-                    self.schedule_osc(delay_sec + distort[0],self.voice_client, "/gan/distort", 1.0)
-                    self.schedule_osc(delay_sec + distort[1],self.voice_client, "/gan/distort", 0.0)
+                    self.schedule_osc(delay_sec + distort[0],self.audio_client, "/gan/distort", 1.0)
+                    self.schedule_osc(delay_sec + distort[1],self.audio_client, "/gan/distort", 0.0)
 
             if self.state == "GAN":
 
                 # coming back
-                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/bassheart", [0.65, 0.0])
-                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/musicbox", [0.65, 0.5, 0.65, 0.5])
-                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/membrane", [0.6, 0.0, 0.0])
-                self.schedule_osc(delay_sec + self.speech_duration, self.voice_client, "/control/beacon", [0.8, 0.26])
-            #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/heartbeat", 0)
-            #self.schedule_osc(self.speech_duration + delay_sec, self.voice_client, "/gan/bassheart", [1.0, 0.0])
+                self.schedule_osc(delay_sec + self.speech_duration, self.audio_client, "/control/bassheart", [0.65, 0.0])
+                self.schedule_osc(delay_sec + self.speech_duration, self.audio_client, "/control/musicbox", [0.65, 0.5, 0.65, 0.5])
+                self.schedule_osc(delay_sec + self.speech_duration, self.audio_client, "/control/membrane", [0.6, 0.0, 0.0])
+                self.schedule_osc(delay_sec + self.speech_duration, self.audio_client, "/control/beacon", [0.8, 0.26])
+            #self.schedule_osc(self.speech_duration + delay_sec, self.audio_client, "/gan/heartbeat", 0)
+            #self.schedule_osc(self.speech_duration + delay_sec, self.audio_client, "/gan/bassheart", [1.0, 0.0])
 
             self.schedule_osc(self.speech_duration + delay_sec, self.t2i_client, "/gan/speaks", 0)
 
@@ -644,18 +673,15 @@ class Engine:
         #        "tmp/gan.wav"
         #)
         #print("Copied")
-        #self.voice_client.send_message("/speech/reload",1)
+        #self.audio_client.send_message("/speech/reload",1)
         absPath = os.path.abspath(file_name)
-        self.voice_client.send_message("/speech/load",absPath)
+        self.audio_client.send_message("/speech/load",absPath)
 
     def pause_listening(self,duration = 0):
-        try:
-            #asyncio.ensure_future(self.server.pause_listening(duration))
-            print("Pause listening for {}".format(duration))
-            if self.recognizer:
-                self.recognizer.stop()
-        except Exception as e:
-            pass
+        print("Pause listening")
+        for (role, endpoint) in self.in_ear_endpoints.items():
+            if endpoint:
+                endpoint.send_message("/record-stop", role)
 
     def control(self, data):
         print("Control command! {}".format(data))
@@ -697,18 +723,24 @@ class Engine:
     def stop(self):
         print("Stopping experience")
         self.script.reset()
-        self.voice_client.send_message("/control/membrane", [0.0, 0.0, 0.0])
-        self.voice_client.send_message("/control/stop",1)
+        self.audio_client.send_message("/control/membrane", [0.0, 0.0, 0.0])
+        self.audio_client.send_message("/control/stop",1)
         self.t2i_client.send_message("/table/fadeout",1)
         self.t2i_client.send_message("/control/stop",1)
-        self.voice_client.send_message("/speech/stop",1)
+        self.td_client.send_message("/td/display", 0)
+        self.send_midi_note(36)
         self.send_noise = False
-        asyncio.ensure_future(self.server.control("stop"))
+        self.main_loop.create_task(self.server.control("stop"))
         self.pause_listening()
         self.state = "WAITING"
         self.purge_osc()
         self.purge_func()
         #self.pix2pix_client.send_message("/control/stop",1)
+
+    def send_midi_note(self,note): 
+        self.audio_client.send_message("/midi/note/1",[note,127, 1])
+        self.audio_client.send_message("/midi/note/1",[note,127, 0])
+
 
     def start_intro(self):
         if self.state != "WAITING":
@@ -720,19 +752,19 @@ class Engine:
 
         self.state = "INTRO"
         self.send_noise = False
-        self.voice_client.send_message("/control/stop", 1)
+        self.audio_client.send_message("/control/stop", 1)
         self.pause_listening()
 
-        self.voice_client.send_message("/control/bells", [0.0, 0.26])
-        self.voice_client.send_message("/control/musicbox", [0.0, 0.0, 0.0, 0.5])
-        self.voice_client.send_message("/control/strings", [0.0, 0.0])
-        self.voice_client.send_message("/strings/effect", [2, 0.0])
-        self.voice_client.send_message("/control/bassheart", [0.0, 0.0])
-        self.voice_client.send_message("/control/membrane", [0.0, 0.0, 0.0])
-        self.voice_client.send_message("/control/beacon", [0.0, 0.0])
-        self.voice_client.send_message("/control/synthbass", [0.0, 0.0, 0.0])
-        self.voice_client.send_message("/gan/distort", 0.0)
-        self.voice_client.send_message("/gan/echo", 2)
+        self.audio_client.send_message("/control/bells", [0.0, 0.26])
+        self.audio_client.send_message("/control/musicbox", [0.0, 0.0, 0.0, 0.5])
+        self.audio_client.send_message("/control/strings", [0.0, 0.0])
+        self.audio_client.send_message("/strings/effect", [2, 0.0])
+        self.audio_client.send_message("/control/bassheart", [0.0, 0.0])
+        self.audio_client.send_message("/control/membrane", [0.0, 0.0, 0.0])
+        self.audio_client.send_message("/control/beacon", [0.0, 0.0])
+        self.audio_client.send_message("/control/synthbass", [0.0, 0.0, 0.0])
+        self.audio_client.send_message("/gan/distort", 0.0)
+        self.audio_client.send_message("/gan/echo", 2)
 
         self.t2i_client.send_message("/control/start",1)
         asyncio.ensure_future(self.server.control("start"))
@@ -740,19 +772,24 @@ class Engine:
         #self.load_effect(self.script.data["intro-effect"])
         #self.schedule_function(0.5, self.play_effect)
         self.say(delay_sec = 0.5, callback=self.pre_question)
-        self.schedule_osc(13.4, self.voice_client, "/control/start", 1)
-        self.schedule_osc(31.51, self.voice_client, "/control/strings", [0.0, 0.95])
-        self.schedule_osc(61.51, self.voice_client, "/control/synthbass", [0.0, 0.0, 0.4])
+        self.schedule_osc(13.4, self.audio_client, "/control/start", 1)
+        self.schedule_osc(31.51, self.audio_client, "/control/strings", [0.0, 0.95])
+        self.schedule_osc(61.51, self.audio_client, "/control/synthbass", [0.0, 0.0, 0.4])
         self.schedule_function(61.51, self.start_noise)
 
     def start_nfb(self):
         print("Start intro ///////NFB!")
-        self.script.reset()
+        self.script.reset()        
         self.t2i_client.send_message("/control/start",1)
         asyncio.ensure_future(self.server.control("start"))
         self.t2i_client.send_message("/table/showplates", 0)
         self.t2i_client.send_message("/table/fadein", 1)
         self.t2i_client.send_message("/spotlight", "mom")
+        self.td_client.send_message("/td/edge", 0)
+        self.td_client.send_message("/td/display", 0)
+        self.gaugan_client.send_message("/load-state", "beginning")
+        self.t2i_client.send_message("/gaugan/state", 1)
+        #self.send_midi_note(48)
         #self.schedule_function(23, self.start_script)
         self.schedule_function(0, self.start_script)
 
@@ -774,7 +811,7 @@ class Engine:
             self.question_answer = affects["default"]
         print("PRE SCRIPT!! Chosen food: {}".format(self.question_answer))
         self.t2i_client.send_message("/table/dinner", self.question_answer)
-        self.voice_client.send_message("/control/synthbass", [0.0, 0.4, 0.0])
+        self.audio_client.send_message("/control/synthbass", [0.0, 0.4, 0.0])
         target["text"] = target["text"].replace("%ANSWER%",self.question_answer)
         self.schedule_function(7, self.say_pre_script)
         self.schedule_function(13, self.show_plates)
@@ -787,8 +824,8 @@ class Engine:
         self.t2i_client.send_message("/table/showplates", 1)
 
         # Main theme
-        self.voice_client.send_message("/control/musicbox", [0.7, 0.5, 0.0, 0.5])
-        self.voice_client.send_message("/control/beacon", [0.8, 0.26])
+        self.audio_client.send_message("/control/musicbox", [0.7, 0.5, 0.0, 0.5])
+        self.audio_client.send_message("/control/beacon", [0.8, 0.26])
 
     def spotlight_mom(self):
         print("Spotlight on mom")
@@ -807,9 +844,10 @@ class Engine:
                     "/script",
                     [self.script.awaiting["speaker"], self.script.awaiting_text]
             )
-            device_index = self.in_ear_devices[self.script.awaiting["speaker"]][1]
-            print("{} (index {}), PLEASE SAY: {}".format(self.script.awaiting["speaker"], device_index, self.script.awaiting_text))
-            asyncio.create_task(self.start_google(device_index))
+            role = self.script.awaiting["speaker"]
+            endpoint = self.in_ear_endpoints[role]
+            print("{} , PLEASE SAY: {}".format(role, self.script.awaiting_text))
+            self.start_google(endpoint, role)
    
         elif self.script.awaiting_type == "OPEN":
             self.last_speech = time.time()
@@ -818,15 +856,16 @@ class Engine:
                     "/script",
                     [self.script.awaiting["speaker"], ""]
             )
-            device_index = self.in_ear_devices[self.script.awaiting["speaker"]][1]
-            print("{} (index {}), PLEASE SAY: {}".format(self.script.awaiting["speaker"], device_index, "ANYTHING"))
-            asyncio.create_task(self.start_google(device_index))
+            role = self.script.awaiting["speaker"]
+            endpoint = self.in_ear_endpoints[role]
+            print("{} , PLEASE SAY: {}".format(role, "ANYTHING"))
+            self.start_google(endpoint, role)
 
     def load_effect(self, data):
         print("Load effect {}".format(data["effect"]))
-        self.voice_client.send_message("/effect/fades", data["fades"])
+        self.audio_client.send_message("/effect/fades", data["fades"])
         absPath = os.path.abspath("effects/{}.wav".format(data["effect"]))
-        self.voice_client.send_message("/effect/load", absPath)
+        self.audio_client.send_message("/effect/load", absPath)
 
 
     def mood_update(self, data):
@@ -835,11 +874,11 @@ class Engine:
 
     def pix2pix_update(self,loss = None):
         if self.send_noise:
-            self.voice_client.send_message("/noise/trigger", 1)
+            self.audio_client.send_message("/noise/trigger", 1)
         if loss:
             mapped = interp(loss, [0.016, 0.03],[0,1])
             print("Sending loss function update. {} mapped to {} ".format(loss, mapped))
-            self.voice_client.send_message("/synthbass/effect", mapped)
+            self.audio_client.send_message("/synthbass/effect", mapped)
 
 
 if __name__ == '__main__':
@@ -854,7 +893,11 @@ if __name__ == '__main__':
     try:
         engine = Engine(args)
         asyncio.run(engine.start())
-    except KeyboardInterrupt:
+    except Exception as e:
+        print("Exception {}".format(e))
         print("Stopping everything")
-        engine.main_loop.close()
         args.stop = True
+        engine.tasks.cancel()
+        engine.tasks.exception()
+    finally:
+        pass

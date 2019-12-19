@@ -15,6 +15,7 @@ namespace Klak.Ndi
         SerializedProperty _sourceName;
         SerializedProperty _targetTextureOne;
         SerializedProperty _targetTextureTwo;
+        SerializedProperty _targetTextureThree;
         SerializedProperty _targetRenderer;
         SerializedProperty _targetMaterialProperty;
 
@@ -83,6 +84,7 @@ namespace Klak.Ndi
             _sourceName = serializedObject.FindProperty("_sourceName");
             _targetTextureOne = serializedObject.FindProperty("_targetTextureOne");
             _targetTextureTwo = serializedObject.FindProperty("_targetTextureTwo");
+            _targetTextureThree = serializedObject.FindProperty("_targetTextureThree");
             _FPS = serializedObject.FindProperty("_FPS");
             _targetRenderer = serializedObject.FindProperty("_targetRenderer");
             _targetMaterialProperty = serializedObject.FindProperty("_targetMaterialProperty");
@@ -116,6 +118,7 @@ namespace Klak.Ndi
             // Target texture/renderer
             EditorGUILayout.PropertyField(_targetTextureOne);
             EditorGUILayout.PropertyField(_targetTextureTwo);
+            EditorGUILayout.PropertyField(_targetTextureThree);
             EditorGUILayout.PropertyField(_targetRenderer);
 
             EditorGUILayout.PropertyField(_FPS);
