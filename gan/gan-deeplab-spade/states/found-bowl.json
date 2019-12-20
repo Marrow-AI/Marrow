@@ -1,7 +1,7 @@
 {
     "map": [
         {
-            "from": ["dining table","table", "desk-stuff", "cup", "wine glass", "plastic", "floor-other"],
+            "from": ["dining table","table", "desk-stuff", "cup", "wine glass", "plastic", "floor-other", "mouse", "bed", "car"],
             "to" : "dining table",
             "invert": false
         }
@@ -9,7 +9,7 @@
     "deeplab": {
         "mask": [
             {
-                "items": ["dining table","bowl"],
+                "items": ["bowl"],
                 "invert": true
             }
         ]
@@ -17,7 +17,7 @@
     "gaugan": {
         "mask": [
             {
-                "items": ["dining table","bowl"],
+                "items": ["bowl"],
                 "invert": true
             }
         ]

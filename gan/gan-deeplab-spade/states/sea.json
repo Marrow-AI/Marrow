@@ -1,12 +1,12 @@
 {
     "map": [
         {
-            "from": ["dining table","table", "desk-stuff", "floor-other"],
+            "from": ["dining table","table", "desk-stuff", "floor-other", "bed", "car"],
             "to" : "sea",
             "invert": false
         },
         {
-            "from": ["frisbee", "plastic", "paper", "metal", "mouse", "rock","bowl","wine glass", "bottle"],
+            "from": ["frisbee", "paper", "metal", "mouse", "rock","bowl","wine glass", "bottle"],
             "to" : "rock",
             "invert": false
         }
