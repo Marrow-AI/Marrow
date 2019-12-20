@@ -1,7 +1,7 @@
 {
     "map": [
         {
-            "from": ["dining table","table", "desk-stuff", "floor-other"],
+            "from": ["dining table","table", "desk-stuff", "floor-other", "bed", "car"],
             "to" : "sand",
             "invert": false
         },
