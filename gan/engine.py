@@ -166,7 +166,8 @@ class Engine:
             "unity": self.t2i_client,
             "td": self.td_client,
             "stylegan": self.stylegan_client,
-            "gaugan": self.gaugan_client
+            "gaugan": self.gaugan_client,
+            "audio": self.audio_client
         }
 
 
@@ -281,15 +282,14 @@ class Engine:
         print("Consuming speech")
         while True:
             item = await self.queue.async_q.get()
-            if item["action"] == "speech" and item["role"] == self.script.awaiting["speaker"]:
-                self.speech_text(item["text"])
-            elif item["action"] == "mid-speech" and item["role"] == self.script.awaiting["speaker"]:
-                self.mid_speech_text(item["text"])
-            elif item["action"] == "play-finished":
+            if item["action"] == "play-finished":
                 role = item["role"]
                 print("PLAY FINISHED!! {}".format(role))
                 self.play_futures[role].set_result(1)
-
+            elif item["action"] == "speech" and "speaker" in self.script.awaiting and item["role"] == self.script.awaiting["speaker"]:
+                self.speech_text(item["text"])
+            elif item["action"] == "mid-speech" and "speaker" in self.script.awaiting and item["role"] == self.script.awaiting["speaker"]:
+                self.mid_speech_text(item["text"])
 
     def time_check(self):
         # recognition timeout
@@ -348,8 +348,13 @@ class Engine:
 
         elif self.script.awaiting_type == "OPEN":
             self.mid_match = False
-            self.question_answer = self.script.question_answer = text
+            self.question_answer = text
             print("Question answered! {}".format(self.question_answer))
+            print(self.script.awaiting)
+            if "save" in self.script.awaiting:
+                print("Saving answer")
+                self.script.question_answer = self.question_answer
+
             self.t2i_client.send_message("/table/dinner", self.question_answer)
             self.t2i_client.send_message("/speech", self.question_answer)
             self.t2i_client.send_message(
@@ -358,6 +363,7 @@ class Engine:
               )
 
             self.t2i_client.send_message("/openline", "clear")
+            self.trigger_osc()
             self.pause_listening()
             self.schedule_function(3, self.next_line)
 
@@ -489,7 +495,7 @@ class Engine:
 
             self.trigger_osc()
         
-            self.next_line(delay)
+            self.schedule_function(delay, self.next_line)
 
        # if "triggers-beat" in line:
         #    self.audio_client.send_message("/gan/beat",0.0)
@@ -509,18 +515,37 @@ class Engine:
                     except Exception as e:
                         print("TRIGGERS OSC ERROR {}".format(e))
 
+        if "triggers-midi" in line:
+                for trigger in line["triggers-midi"]:
+                    try:
+                        print("Trigger MIDI: {}".format(trigger["note"]))
+                        delay = 0
+                        if "delay" in trigger:
+                            delay = trigger["delay"]
+                        self.send_midi_note(trigger["note"], delay)
+                    except Exception as e:
+                        print("TRIGGERS MIDI ERROR {}".format(e))
+
+    
+
 
 
     def play_effect(self):
         self.audio_client.send_message("/effect/play", 1)
 
-    def next_line(self, delay = 0):
+    def next_line(self):
         print("NEXT LINE")
         self.matched_to_word = 0
-        self.last_react = self.last_speech = time.time() + delay
+        self.last_react = self.last_speech = time.time()
+        # Clear the text
+        if "speaker" in self.script.awaiting:
+            self.t2i_client.send_message(
+                        "/script",
+                        [self.script.awaiting["speaker"], ""]
+            )
         if self.script.next_line():
             self.state = "SCRIPT"
-            self.run_line(delay)
+            self.run_line()
         else:
             self.end()
 
@@ -528,9 +553,9 @@ class Engine:
         self.last_react = self.last_speech = time.time() + delay
         if self.script.prev_line():
             self.state = "SCRIPT"
-            self.run_line(0)
+            self.run_line()
 
-    def run_line(self, delay):
+    def run_line(self):
         try:
             print ("Run line: {}".format(self.script.awaiting))
             if (
@@ -541,13 +566,13 @@ class Engine:
                 pass
                 #self.preload_speech("gan_responses/{}.wav".format(self.script.awaiting_index + 1))
 
-            self.schedule_function(delay, self.show_next_line)
+            self.show_next_line()
 
             if "in-ear" in self.script.awaiting:
                 self.pause_listening()
                 asyncio.create_task(self.play_in_ear())
         except Exception as e:
-            print("Engine exception {}".format(e))
+            print("Engine exception",e)
 
     def end(self):
         self.state = "END"
@@ -588,6 +613,7 @@ class Engine:
             print("Finshed all!")
 
         self.trigger_osc()
+
         self.state = "SCRIPT"
         if self.script.awaiting_type != "OPEN":
             if "delay" in self.script.awaiting:
@@ -733,14 +759,13 @@ class Engine:
         self.main_loop.create_task(self.server.control("stop"))
         self.pause_listening()
         self.state = "WAITING"
-        self.purge_osc()
+        self.schedule_function(2, self.purge_osc)
         self.purge_func()
         #self.pix2pix_client.send_message("/control/stop",1)
 
-    def send_midi_note(self,note): 
-        self.audio_client.send_message("/midi/note/1",[note,127, 1])
-        self.audio_client.send_message("/midi/note/1",[note,127, 0])
-
+    def send_midi_note(self,note, delay = 0): 
+        self.schedule_osc(delay, self.audio_client, "/midi/note/1", [note,127, 1])
+        self.schedule_osc(delay + 0.5, self.audio_client, "/midi/note/1", [note,127, 0])
 
     def start_intro(self):
         if self.state != "WAITING":
@@ -789,9 +814,10 @@ class Engine:
         self.td_client.send_message("/td/display", 0)
         self.gaugan_client.send_message("/load-state", "beginning")
         self.t2i_client.send_message("/gaugan/state", 1)
-        #self.send_midi_note(48)
-        #self.schedule_function(23, self.start_script)
-        self.schedule_function(0, self.start_script)
+        self.send_midi_note(60, 2) # C3 - START
+        self.send_midi_note(61, 4.7) 
+        self.schedule_function(23, self.start_script)
+        #self.schedule_function(0, self.start_script)
 
     def start_noise(self):
         self.send_noise = True
@@ -835,7 +861,7 @@ class Engine:
         print("Start script")
         self.last_react =  self.last_speech = time.time()
         self.state = "SCRIPT"
-        self.run_line(0)
+        self.run_line()
 
     def show_next_line(self):
         print("SHOW NEXT LINE")
@@ -847,7 +873,8 @@ class Engine:
             role = self.script.awaiting["speaker"]
             endpoint = self.in_ear_endpoints[role]
             print("{} , PLEASE SAY: {}".format(role, self.script.awaiting_text))
-            self.start_google(endpoint, role)
+            if not self.args.no_speech:
+                self.start_google(endpoint, role)
    
         elif self.script.awaiting_type == "OPEN":
             self.last_speech = time.time()
@@ -859,7 +886,8 @@ class Engine:
             role = self.script.awaiting["speaker"]
             endpoint = self.in_ear_endpoints[role]
             print("{} , PLEASE SAY: {}".format(role, "ANYTHING"))
-            self.start_google(endpoint, role)
+            if not self.args.no_speech:
+                self.start_google(endpoint, role)
 
     def load_effect(self, data):
         print("Load effect {}".format(data["effect"]))
@@ -894,7 +922,7 @@ if __name__ == '__main__':
         engine = Engine(args)
         asyncio.run(engine.start())
     except Exception as e:
-        print("Exception {}".format(e))
+        print("Fatal Exception",e)
         print("Stopping everything")
         args.stop = True
         engine.tasks.cancel()
