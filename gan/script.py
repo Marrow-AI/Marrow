@@ -58,7 +58,7 @@ class Script:
             if "type" in self.awaiting:
                 self.awaiting_type = self.awaiting["type"]
             else:
-                self.awaiting_type = "line"
+                self.awaiting_type = "LINE"
                 
             if "timeout" in self.awaiting:
                 self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH_SHORT
