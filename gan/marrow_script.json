@@ -421,6 +421,11 @@
                     "target" : "td",
                     "address": "/td/display",
                     "value": 1
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/lights",
+                    "value": 2
                 }
             ],
             "triggers-midi": [
@@ -504,6 +509,11 @@
                     "value": 1
                 },
                 {
+                    "target" : "td",
+                    "address": "/td/lights",
+                    "value": 0
+                },
+                {
                     "target" : "unity",
                     "address": "/stylegan/scale",
                     "value": 2
@@ -541,11 +551,11 @@
                     "target" : "mom",
                     "lines": [
                            {
-                                "text": "I'm reading here 78 percent ambiguity.",
+                                "text": "His readings are showing 78 percent ambiguity.",
                                 "pause": 10
                             },
                             {
-                                "text": "And because our eyes deceive us I can tell him whatever I want."
+                                "text": "And because our eyes deceive us I can tell him whatever I feel like eating."
                             }
                         ]
                 },
@@ -1222,6 +1232,11 @@
                     "value": 0
                 },
                 {
+                    "target" : "td",
+                    "address": "/td/lights",
+                    "value": 2
+                },
+                {
                     "target" : "gaugan",
                     "address": "/load-state",
                     "value": "clear"
@@ -1235,18 +1250,25 @@
                     "target" : "unity",
                     "address": "/stylegan/blend",
                     "value": 0.0,
-                    "delay": 7
+                    "delay": 15
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/lights",
+                    "value": 0,
+                    "delay": 15
                 },
                 {
                     "target" : "td",
                     "address": "/td/display",
                     "value": 0,
-                    "delay": 7
+                    "delay": 15
                 },
                 {
                     "target" : "stylegan",
                     "address": "/random",
-                    "value": 1
+                    "value": 1,
+                    "delay": 15
                 }
             ],
             "triggers-midi": [
@@ -1255,7 +1277,7 @@
                 },
                 {
                     "note": 109,
-                    "delay": 7
+                    "delay": 15
                 } 
             ]
         },
@@ -1281,7 +1303,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Daddy, it is made of apples, worm, dreams."
+            "text": "Daddy, this dinner is made of apples, worms, and dreams."
         },
         {
             "speaker": "mom",
@@ -1329,7 +1351,12 @@
         },
         {
             "speaker": "sister",
-            "text": "Daddy? Can I ask you something?"
+            "text": "Daddy? Can I ask you something?",
+            "triggers-midi": [
+                {
+                   "note": 36
+                } 
+            ]
         },
         {
             "speaker": "dad",

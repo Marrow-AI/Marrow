@@ -110,7 +110,7 @@ class OSCServer:
         transport.close()
         #print(self.server.serve())
 
-    def speech_handler(self, addr, role, text):
+    def speech_handler(self, addr, role, text):         
         print("OSC command! {} {} {}".format(addr, role, text))
         self.osc_queue.put_nowait({"action": addr[1:], "role": role, "text": text})
 
@@ -342,8 +342,6 @@ class Engine:
             if self.mid_text is not None:
                 #print("Looking up {}".format(text))
                 self.lookup(text)
-
-            print("SPEECH")
             self.mid_match = False
 
         elif self.script.awaiting_type == "OPEN":
