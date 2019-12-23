@@ -9,7 +9,6 @@
 from __future__ import absolute_import, division, print_function
 import sys
 
-sys.path.append('./SPADE')
 sys.path.append('./deeplab-pytorch')
 
 import click
@@ -27,11 +26,7 @@ from addict import Dict
 from libs.models import *
 from libs.utils import DenseCRF
 
-from options.test_options import TestOptions
-from models.pix2pix_model import Pix2PixModel
-from data.coco_dataset import CocoDataset
 from PIL import Image
-from util import util
 
 import gi
 gi.require_version('GIRepository', '2.0')
@@ -44,13 +39,10 @@ from collections import deque
 import requests
 from requests.auth import HTTPDigestAuth
 
+import json
+
 from pythonosc import dispatcher
 from pythonosc import osc_server
-from pythonosc import udp_client
-
-import json
-import time
-from scipy import ndimage
 
 THETA_ID = 'THETAYN14100015'
 THETA_PASSWORD = '14100015'  # default password. may have been changed
@@ -375,13 +367,8 @@ class Gan(NDIStreamer):
         self.gaugan_masks = []
         self.deeplab_masks = []
         self.show_raw = False;
-        self.map_deeplab = False
+        self.map_deeplab = False;
         self.current_state = 'clear'
-        self.show_gaugan = False
-        self.show_labels = False
-
-        self.t2i_client = udp_client.SimpleUDPClient("192.168.1.22", 3838)
-
 
     def run(self):
         # Setup
@@ -407,16 +394,10 @@ class Gan(NDIStreamer):
         model.to(device)
         print("Model:", CONFIG.MODEL.NAME)
 
-        # SPADE model
-        spade_model = Pix2PixModel(self.spade_opt)
-        spade_model.eval()
-        spade_model.to(device)
-        print("Spade!")
-        print(spade_model)
+        #cv2.namedWindow(window_name, cv2.WINDOW_NORMAL)
 
-        coco_dataset = CocoDataset()
-        coco_dataset.initialize(self.spade_opt)
-        print(coco_dataset)
+
+        #np.set_printoptions(threshold=sys.maxsize)
 
         while True:
             while not self.osc_queue.empty():
@@ -431,105 +412,21 @@ class Gan(NDIStreamer):
                 #print("Image shape {}".format(raw_image.shape))
                 labelmap = inference(model, image, raw_image, postprocessor)
 
-                if self.current_state == "test-bowl":
-                    self.test_bowl(labelmap)
-
                 uniques = np.unique(labelmap)
                 print([ID_TO_LABEL[unique] for unique in uniques])
 
+                final = colormap
 
-                if not self.map_deeplab:
-                    colormap = self.colorize(labelmap)
-                    for masking in self.deeplab_masks:
-                        mask = np.isin(labelmap, masking['items'], invert=masking['invert'])
-                        colormap[mask, :] = [0, 0, 0];
+                #self.push_frame(raw_image_resized)
+                #raw_rgb = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
 
-                for mapping in self.maps:
-                    mask = np.isin(labelmap, mapping['from'], invert=mapping['invert'])
-                    if mapping['expand'] > 0:
-                        mask = self.expand_mask(mask, mapping['expand'])
-                    labelmap[mask] = mapping['to']
+                #print("Final shape: {}".format(final.shape))
 
-                if self.map_deeplab:
-                    colormap = self.colorize(labelmap)
-                    for masking in self.deeplab_masks:
-                        mask = np.isin(labelmap, masking['items'], invert=masking['invert'])
-                        colormap[mask, :] = [0, 0, 0];
-                    if self.show_raw:
-                         for masking in self.deeplab_masks:
-                             mask = np.isin(labelmap, masking['items'], invert=masking['invert'])
-                             raw_image[mask, :] = [0, 0, 0];
-
-                if self.show_labels:
-                    for unique in uniques:
-                        box = self.get_bounding_box_of(unique, labelmap)
-                        self.put_text_in_center(colormap,box,ID_TO_LABEL[unique])
-
-                #color_resized = cv2.cvtColor(np.array(Image.fromarray(colormap).resize((256,256), Image.NEAREST)),cv2.COLOR_BGR2RGB)
-
-
-                if self.show_gaugan:
-                    uniques = np.unique(labelmap)
-                    instance_counter = 0
-                    instancemap = np.zeros(labelmap.shape)
-
-                    for label_id in uniques:
-                        mask = (labelmap == label_id)
-                        instancemap[mask] = instance_counter
-                        instance_counter += 1
-
-                    instanceimg = Image.fromarray(np.uint8(instancemap),'L')
-
-                    labelimg = Image.fromarray(np.uint8(labelmap), 'L')
-                    label_resized = np.array(labelimg.resize((256,256), Image.NEAREST))
-
-                    item = coco_dataset.get_item_from_images(labelimg, instanceimg)
-
-                    generated = spade_model(item, mode='inference')
-                    generated_np = util.tensor2im(generated[0])
-
-                    for masking in self.gaugan_masks:
-                        mask = np.isin(label_resized, masking['items'], invert=masking['invert'])
-                        generated_np[mask, :] = [0, 0, 0];
-                    print("SPADE Shape {}".format(generated_np.shape))
-                else:
-                    generated_np = np.uint8(np.zeros((256,256,3)))
-
-                final = np.concatenate((generated_np, colormap, raw_image), axis=1)
+                #print("Gans shape {}, colormap shape {}, Final shape {}".format(generated_np.shape, color_resized.shape, final.shape))
 
                 self.push_frame(final)
 
-    def put_text_in_center(self, data, box, text):
-        fontFace = cv2.FONT_HERSHEY_SIMPLEX
-        fontScale = 0.5
-        thickness = 1 
-        color = (255, 255, 255)
-        (rmin, cmin, rmax, cmax) = box
-        cv2.putText(data, text, (int((cmin + cmax) / 2), int((rmin + rmax) / 2)), fontFace, fontScale, color, thickness)   
-
-
-    def get_bounding_box_of(self, label_id, labelmap):
-        print("Bounding box of {}:".format(ID_TO_LABEL[label_id]))
-        img = labelmap == label_id
-        rows = np.any(img, axis=1)
-        cols = np.any(img, axis=0)
-        rmin, rmax = np.where(rows)[0][[0, -1]]
-        cmin, cmax = np.where(cols)[0][[0, -1]]
-
-        result = (rmin, cmin, rmax, cmax)
-        print(result)
-
-        return result
-
-        """
-        x_components, _ = ndimage.measurements.label(image, np.ones((3, 3)))
-        bboxes = ndimage.measurements.find_objects(x_components)
-        print("Bounding boxes:")
-        for bbox in bboxes:
-            print(bbox)
-        """
-
-    def mouse_event(self, event, x, y, flags, labelmap):
+    def mouse_event(event, x, y, flags, labelmap):
         # Show a class name of a mouse-overed pixel
         label = labelmap[y, x]
         name = classes[label]
@@ -559,47 +456,6 @@ class Gan(NDIStreamer):
         if np.any(labelmap == LABEL_TO_ID['bowl']):
             print("FOUND BOWL!!")
             self.osc_queue.put({"command": "load-state", "args": "found-bowl"})
-
-
-    def load_state(self, name):
-        self.current_state = name
-        if name == 'clear':
-            self.maps.clear()
-            self.gaugan_masks.clear()
-            self.deeplab_masks.clear()
-        else:
-            try:
-                with open('states/{}.json'.format(name)) as json_file:
-                    data = json.load(json_file)
-                    print(data);
-                    self.maps = list(map(lambda m: {
-                        'from': [LABEL_TO_ID[id] for id in m['from']],
-                        'to': LABEL_TO_ID[m['to']],
-                        'invert': m['invert'],
-                        'expand': m['expand'] if 'expand' in m else 0
-                    }, data['map']))
-
-                    self.gaugan_masks = list(map(lambda m: {
-                        'items': [LABEL_TO_ID[id] for id in m['items']],
-                        'invert': m['invert']
-                    }, data['gaugan']['mask']))
-
-                    self.show_raw = data['showRaw']
-                    self.map_deeplab = data['mapDeeplab']
-
-                    print("Maps: {} GauGAN Masks: {}, Show raw: {} Map deeplab: {}".format(self.maps,self.gaugan_masks, self.show_raw, self.map_deeplab))
-
-                    self.deeplab_masks = list(map(lambda m: {
-                        'items': [LABEL_TO_ID[id] for id in m['items']],
-                        'invert': m['invert']
-                    }, data['deeplab']['mask']))
-
-                    print("Deeplab Masks: {}".format(self.deeplab_masks))
-
-
-
-            except Exception as e:
-                print("Error loading state! {}".format(e))
 
 
     def process_queue(self,item):
@@ -672,14 +528,7 @@ def main(ctx):
 )
 @click.option("--crf", is_flag=True, show_default=True, help="CRF post-processing")
 @click.option("--camera-id", type=int, default=0, show_default=True, help="Device ID")
-@click.option(
-    "-i",
-    "--image-path",
-    type=click.Path(exists=True),
-    required=False,
-    help="Image to be processed",
-)
-def live(config_path, model_path, cuda, crf, camera_id, image_path):
+def live(config_path, model_path, cuda, crf, camera_id):
     """
     Inference from camera stream
     """
@@ -695,9 +544,7 @@ def live(config_path, model_path, cuda, crf, camera_id, image_path):
         'crf' : crf,
         'camera_id': camera_id
     }
-    spade_opt = TestOptions().parse()
-    print(spade_opt)
-    spade_opt.use_vae = False
+    spade_opt = {}
 
     gan = Gan(q, osc_queue, deeplab_opt, spade_opt)
     gan.start()
@@ -709,18 +556,9 @@ def live(config_path, model_path, cuda, crf, camera_id, image_path):
     payload = {"name": "camera.getLivePreview"}
     buffer = bytes()
 
+    out = cv2.VideoWriter('capture.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 24, (1024,512))
 
-    if image_path:
-        print("Reading from image")
-        frame = cv2.imread(image_path, cv2.IMREAD_COLOR)
-        while True:
-            if len(q) > 1:
-                continue
-            else:
-                q.append(frame)
-                time.sleep(1.0 / 12.0)
-
-    else:
+    try:
         with requests.post(url,
             json=payload,
             auth=(HTTPDigestAuth(THETA_ID, THETA_PASSWORD)),
@@ -736,7 +574,14 @@ def live(config_path, model_path, cuda, crf, camera_id, image_path):
                         continue
                     else:
                         frame = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
-                        q.append(frame)
+                        image = frame.astype(np.uint8)
+                        print("Frame {}".format(image.shape))
+                        out.write(image)
+                        cv2.imshow('frame',image)
+                        #q.append(frame)
+    finally:
+        print("Record done")
+        out.release()
 
 
 if __name__ == "__main__":
