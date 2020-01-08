@@ -551,11 +551,11 @@
                     "target" : "mom",
                     "lines": [
                            {
-                                "text": "His readings are showing 78 percent ambiguity.",
+                                "text": "His reading are showing 78 percent ambiguity.",
                                 "pause": 10
                             },
                             {
-                                "text": "And because our eyes deceive us I can tell him whatever I feel like eating."
+                                "text": "And because our eyes deceive us I can tell him whatever I feel like."
                             }
                         ]
                 },
@@ -858,7 +858,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "it comes from deep, deep inside of you"
+                            "text": "It comes from deep, deep inside of you"
                         }
                     ]
                 }
@@ -1012,7 +1012,7 @@
         },
         {
             "speaker": "brother",
-            "text": "The wind is moving.",
+            "text": "Moving with a constant wind that keep refreshing itself.",
             "triggers-midi": [
                 {
                    "note": 86
@@ -1037,7 +1037,7 @@
         },
         {
             "speaker": "sister",
-            "text": "All wet.",
+            "text": "Wet layers.",
             "triggers-midi": [
                 {
                    "note": 87
@@ -1160,7 +1160,7 @@
         },
         {
             "speaker": "brother",
-            "text": "It is cold outside.",
+            "text": "The wildest quest is to reach the bottom of each ocean, but all you will find there is sand.",
             "triggers-midi": [
                 {
                    "note": 98
