@@ -117,7 +117,10 @@ def main(ctx):
     print("Mode:", ctx.invoked_subcommand)
 
 
-@main.command()
+@main.command(name='single', context_settings=dict(
+    ignore_unknown_options=True,
+    allow_extra_args=True,
+))
 @click.option(
     "-c",
     "--config-path",
