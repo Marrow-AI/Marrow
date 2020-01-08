@@ -9,7 +9,7 @@
     "deeplab": {
         "mask": [
             {
-                "items": ["dining table","frisbee"],
+                "items": ["dining table","frisbee", "person"],
                 "invert": true
             }
         ]

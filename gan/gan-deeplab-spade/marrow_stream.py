@@ -49,6 +49,7 @@ from pythonosc import osc_server
 from pythonosc import udp_client
 
 import json
+import time
 
 THETA_ID = 'THETAYN14100015'
 THETA_PASSWORD = '14100015'  # default password. may have been changed
@@ -69,7 +70,7 @@ LABELMAP = \
      11: 'fire hydrant',
      12: 'street sign',
      13: 'stop sign',
-     14: 'parking meter',
+     14: 'parking meter', 
      15: 'bench',
      16: 'bird',
      17: 'cat',
@@ -96,7 +97,7 @@ LABELMAP = \
      38: 'kite',
      39: 'baseball bat',
      40: 'baseball glove',
-     41: 'skateboard',
+     41: 'skateboard', 
      42: 'surfboard',
      43: 'tennis racket',
      44: 'bottle',
@@ -318,18 +319,18 @@ def inference(model, image, raw_image=None, postprocessor=None):
 
 
 class NDIStreamer(Thread):
-    def __init__(self, width, height):
+    def __init__(self, width, height, name):
         Thread.__init__(self)
-        self.setup_pipeline(width, height)
+        self.setup_pipeline(width, height, name)
 
-    def setup_pipeline(self, width, height):
+    def setup_pipeline(self, width, height, name):
         Gst.init(None)
 
         self.src_v = Gst.ElementFactory.make("appsrc", "vidsrc")
         vcvt = Gst.ElementFactory.make("videoconvert", "vidcvt")
 
         ndisink = Gst.ElementFactory.make("ndisink", "video_sink")
-        ndisink.set_property("name", "marrow-spade")
+        ndisink.set_property("name", name)
 
         self.pipeline = Gst.Pipeline()
         self.pipeline.add(self.src_v)
@@ -361,10 +362,24 @@ class NDIStreamer(Thread):
         #print("Push")
         self.src_v.emit("push-buffer", buf)
 
+class Camera(NDIStreamer):
+    def __init__(self, queue):
+        super().__init__(1024,512, "marrow-theta")
+        self.queue = queue
+
+    def run(self):
+
+        while True:
+            if len(self.queue) > 0:
+                frame = self.queue.pop()
+                print("Original Image shape {}".format(frame.shape))
+                final  = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+                self.push_frame(final)
+                time.sleep(1./12)
 
 class Gan(NDIStreamer):
     def __init__(self, queue, osc_queue, deeplab_opt, spade_opt):
-        super().__init__(1280,256)
+        super().__init__(1280,256, "marrow-spade")
         self.queue = queue
         self.osc_queue = osc_queue
         self.deeplab_opt = deeplab_opt
@@ -372,8 +387,9 @@ class Gan(NDIStreamer):
         self.maps = []
         self.gaugan_masks = []
         self.deeplab_masks = []
-        self.show_raw = False;
-        self.map_deeplab = False;
+        self.show_raw = False
+        self.map_deeplab = False
+        self.autumn = False
         self.current_state = 'clear'
 
         self.t2i_client = udp_client.SimpleUDPClient("192.168.1.22", 3838)
@@ -488,6 +504,7 @@ class Gan(NDIStreamer):
                     generated_np[mask, :] = [0, 0, 0];
 
                 final = np.concatenate((generated_np, colormap, raw_image), axis=1)
+                #final = np.concatenate((generated_np, colormap), axis=1)
 
                 #self.push_frame(raw_image_resized)
                 #raw_rgb = cv2.cvtColor(raw_image, cv2.COLOR_BGR2RGB)
@@ -555,6 +572,10 @@ class Gan(NDIStreamer):
 
                     self.show_raw = data['showRaw']
                     self.map_deeplab = data['mapDeeplab']
+                    if 'autumn' in data:
+                        self.autumn = data['autumn']
+                    else:
+                        self.autumn = False
 
                     print("Maps: {} GauGAN Masks: {}, Show raw: {} Map deeplab: {}".format(self.maps,self.gaugan_masks, self.show_raw, self.map_deeplab))
 
@@ -580,13 +601,19 @@ class Gan(NDIStreamer):
         #print(labelmap.shape)
         # Assign a unique color to each label
         labelmap = labelmap.astype(np.float32) / self.CONFIG.DATASET.N_CLASSES
-        colormap = cm.jet_r(labelmap)[..., :-1] * 255.0
+        if self.autumn:
+            colormap = cm.autumn(labelmap)[..., :-1] * 255.0
+        else:
+            colormap = cm.jet_r(labelmap)[..., :-1] * 255.0
+            
         return np.uint8(colormap)
 
     def get_buf(self):
         pass
 
 q = deque()
+cam_q = deque()
+
 osc_queue = queue.Queue()
 
 class OSCServer(Thread):
@@ -664,6 +691,9 @@ def live(config_path, model_path, cuda, crf, camera_id):
     gan = Gan(q, osc_queue, deeplab_opt, spade_opt)
     gan.start()
 
+    cam = Camera(cam_q)
+    cam.start()
+
     osc_server = OSCServer(osc_queue)
     osc_server.start()
 
@@ -683,11 +713,11 @@ def live(config_path, model_path, cuda, crf, camera_id):
             if a != -1 and b != -1:
                 jpg = buffer[a:b+2]
                 buffer = buffer[b+2:]
-                if len(q) > 1:
-                    continue
-                else:
-                    frame = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
+                frame = cv2.imdecode(np.fromstring(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
+                if len(q) <= 1:
                     q.append(frame)
+                if len(cam_q) <= 1:
+                    cam_q.append(frame)
 
 
 if __name__ == "__main__":
