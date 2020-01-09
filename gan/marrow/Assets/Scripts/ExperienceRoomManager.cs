@@ -20,6 +20,7 @@ namespace Marrow
         private GameObject gauGAN;
         private GameObject deepLab;
         private GameObject rawImage;
+        private GameObject memory;
 
 
 
@@ -55,6 +56,7 @@ namespace Marrow
             gauGAN = GameObject.Find("GauGAN");
             deepLab = GameObject.Find("Deeplab");
             rawImage = GameObject.Find("RawImage");
+            memory = GameObject.Find("Memory");
 
 
 
@@ -230,6 +232,17 @@ namespace Marrow
                 renderers[0].enabled = false;
                 renderers[1].enabled = false;
             }
+        }
+        public void ReceivedDeeplabBowl(OSCMessage message) {
+
+            int x = message.Values[0].IntValue;
+            int y = message.Values[1].IntValue;
+
+            Debug.Log("Received bowl position! (" + x + "," + y + ")");
+
+            float memX = (x / 512.0f) * 14.0f - 7.0f;
+            memory.transform.localPosition = new Vector3(memX, 3.0f, -7.0f);
+
         }
     }
 }

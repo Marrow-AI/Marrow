@@ -752,6 +752,8 @@ class Engine:
         self.t2i_client.send_message("/table/fadeout",1)
         self.t2i_client.send_message("/control/stop",1)
         self.td_client.send_message("/td/display", 0)
+        self.td_client.send_message("/td/faces", 0)
+        self.td_client.send_message("/td/lights", 0)
         self.send_midi_note(36)
         self.send_noise = False
         self.main_loop.create_task(self.server.control("stop"))
@@ -810,6 +812,9 @@ class Engine:
         self.t2i_client.send_message("/spotlight", "mom")
         self.td_client.send_message("/td/edge", 0)
         self.td_client.send_message("/td/display", 0)
+        self.td_client.send_message("/td/faces", 0)
+        self.td_client.send_message("/td/lights", 0)
+        self.td_client.send_message("/td/face-color", 0)
         self.gaugan_client.send_message("/load-state", "beginning")
         self.t2i_client.send_message("/gaugan/state", 1)
         self.send_midi_note(60, 2) # C3 - START

@@ -639,11 +639,15 @@
                     "value": "waterdrops"
                 },
                 {
+                    "target" : "td",
+                    "address": "/td/faces",
+                    "value": 1
+                },
+                {
                     "target" : "unity",
                     "address": "/gaugan/state",
                     "value": 2,
-                    "delay": 5
-                   
+                    "delay": 5                   
                 }
             ],
             "triggers-midi": [
@@ -829,7 +833,14 @@
         },
         {
             "speaker": "sister",
-            "text": "So from which direction does my anger come from?"
+            "text": "So from which direction does my anger come from?",
+            "triggers-osc": [
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 2
+                }
+            ]
         },
         {
             "in-ear" : [ 
@@ -970,6 +981,11 @@
                     "address": "/stylegan-animation/state",
                     "value": 2 ,
                     "delay": 2
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/face-color",
+                    "value": 1
                 }
             ],
             "triggers-midi": [
@@ -1041,7 +1057,19 @@
             "triggers-midi": [
                 {
                    "note": 87
-                } 
+                }
+            ],
+            "triggers-osc": [
+                {
+                    "target" : "td",
+                    "address": "/td/face-color",
+                    "value": 0
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 1
+                }
             ]
         },
         {
@@ -1101,6 +1129,11 @@
                     "address": "/stylegan-animation/state",
                     "value": 3 ,
                     "delay": 2
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/faces",
+                    "value": 0
                 }
             ],
             "triggers-midi": [
@@ -1237,6 +1270,16 @@
                     "value": 2
                 },
                 {
+                    "target" : "td",
+                    "address": "/td/face-color",
+                    "value": 1
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/faces",
+                    "value": 1
+                },
+                {
                     "target" : "gaugan",
                     "address": "/load-state",
                     "value": "clear"
@@ -1257,6 +1300,11 @@
                     "address": "/td/lights",
                     "value": 0,
                     "delay": 15
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/face-color",
+                    "value": 0
                 },
                 {
                     "target" : "td",
