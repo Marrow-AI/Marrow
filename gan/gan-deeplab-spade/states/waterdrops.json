@@ -5,14 +5,9 @@
             "to" : "dining table",
             "invert": false
         },
-		{
-			"from": ["bowl", "dining table"],
-			"to" : "sky-other",
-			"invert": true
-		},
         {
             "from": ["bowl"],
-            "to" : "waterdrops",
+            "to" : "clouds",
             "invert": false,
 			"expand": 20
         }
@@ -20,7 +15,7 @@
     "deeplab": {
         "mask": [
             {
-                "items": ["dining table","waterdrops", "sky-other"],
+                "items": ["dining table","person", "clouds"],
                 "invert": true
             }
         ]
@@ -28,7 +23,7 @@
     "gaugan": {
         "mask": [
 			{
-				"items": ["waterdrops"],
+				"items": ["clouds"],
 				"invert": true
 			}
         ]

@@ -2,14 +2,9 @@
     "map": [
         {
             "from": ["dining table","table", "desk-stuff", "cup", "wine glass", "plastic", "floor-other", "mouse", "bed", "car"],
-            "to" : "dining table",
+            "to" : "wall-concrete",
             "invert": false
         },
-		{
-			"from": ["bowl", "dining table"],
-			"to" : "wall-concrete",
-			"invert": true
-		},
         {
             "from": ["bowl"],
             "to" : "clock",
@@ -20,7 +15,7 @@
     "deeplab": {
         "mask": [
             {
-                "items": ["dining table","clock", "wall-concrete"],
+                "items": ["dining table","clock", "wall-concrete", "person"],
                 "invert": true
             }
         ]
@@ -34,6 +29,7 @@
         ]
     },
     "showRaw": false,
+    "autumn": true,
     "mapDeeplab": true
 }
 
