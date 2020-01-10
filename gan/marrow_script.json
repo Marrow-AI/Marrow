@@ -648,6 +648,12 @@
                     "address": "/gaugan/state",
                     "value": 2,
                     "delay": 5                   
+                },
+                {
+                    "target" : "unity",
+                    "address": "/memory/state",
+                    "value": 1,
+                    "delay": 6                   
                 }
             ],
             "triggers-midi": [
@@ -1255,6 +1261,11 @@
             "text": "I'll just turn on the light.",
             "triggers-osc": [
                 {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "glitch2_7,part3_1,part3_2_option1"
+                },
+                {
                     "target" : "unity",
                     "address": "/stylegan/blend",
                     "value": 1.0
@@ -1310,12 +1321,6 @@
                     "target" : "td",
                     "address": "/td/display",
                     "value": 0,
-                    "delay": 15
-                },
-                {
-                    "target" : "stylegan",
-                    "address": "/random",
-                    "value": 1,
                     "delay": 15
                 }
             ],

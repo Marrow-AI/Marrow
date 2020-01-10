@@ -754,6 +754,7 @@ class Engine:
         self.td_client.send_message("/td/display", 0)
         self.td_client.send_message("/td/faces", 0)
         self.td_client.send_message("/td/lights", 0)
+        self.t2i_client.send_message("/memory/state", 0)
         self.send_midi_note(36)
         self.send_noise = False
         self.main_loop.create_task(self.server.control("stop"))
@@ -817,6 +818,7 @@ class Engine:
         self.td_client.send_message("/td/face-color", 0)
         self.gaugan_client.send_message("/load-state", "beginning")
         self.t2i_client.send_message("/gaugan/state", 1)
+        self.t2i_client.send_message("/memory/state", 0)
         self.send_midi_note(60, 2) # C3 - START
         self.send_midi_note(61, 4.7) 
         self.schedule_function(23, self.start_script)
