@@ -373,7 +373,7 @@ class Camera(NDIStreamer):
         while True:
             if len(self.queue) > 0:
                 frame = self.queue.pop()
-                print("Original Image shape {}".format(frame.shape))
+                #print("Original Image shape {}".format(frame.shape))
                 final  = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
                 self.push_frame(final)
                 time.sleep(1./12)
@@ -392,8 +392,9 @@ class Gan(NDIStreamer):
         self.map_deeplab = False
         self.autumn = False
         self.current_state = 'clear'
-        self.show_gaugan = False
+        self.show_gaugan = True
         self.show_labels = False
+        self.send_bowl = False
 
         self.t2i_client = udp_client.SimpleUDPClient("192.168.1.22", 3838)
 
@@ -452,6 +453,13 @@ class Gan(NDIStreamer):
                 uniques = np.unique(labelmap)
                 print([ID_TO_LABEL[unique] for unique in uniques])
 
+                if self.send_bowl and LABEL_TO_ID['bowl'] in uniques:
+                    box = self.get_bounding_box_of(LABEL_TO_ID['bowl'], labelmap)
+                    (rmin, cmin, rmax, cmax) = box
+                    coords = (int((cmin + cmax) / 2), int((rmin + rmax) / 2))
+                    print("Bowl coords {} out of {} ".format(coords,labelmap.shape))
+                    self.t2i_client.send_message("/deeplab/bowl", [coords[0], coords[1]])
+
 
                 if not self.map_deeplab:
                     colormap = self.colorize(labelmap)
@@ -479,6 +487,7 @@ class Gan(NDIStreamer):
                     for unique in uniques:
                         box = self.get_bounding_box_of(unique, labelmap)
                         self.put_text_in_center(colormap,box,ID_TO_LABEL[unique])
+
 
                 #color_resized = cv2.cvtColor(np.array(Image.fromarray(colormap).resize((256,256), Image.NEAREST)),cv2.COLOR_BGR2RGB)
 
@@ -606,6 +615,11 @@ class Gan(NDIStreamer):
                         self.autumn = data['autumn']
                     else:
                         self.autumn = False
+
+                    if 'sendBowl' in data:
+                        self.send_bowl = data['sendBowl']
+                    else:
+                        self.send_bowl = False
 
                     print("Maps: {} GauGAN Masks: {}, Show raw: {} Map deeplab: {}".format(self.maps,self.gaugan_masks, self.show_raw, self.map_deeplab))
 
