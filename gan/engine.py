@@ -318,7 +318,7 @@ class Engine:
                 else:
                     self.pause_listening()
                     self.main_loop.call_soon_threadsafe(self.next_line)    
-                                 
+
         if not self.args.stop:
             Timer(0.1, self.time_check).start()
 
@@ -775,8 +775,10 @@ class Engine:
         #self.pix2pix_client.send_message("/control/stop",1)
 
     def send_midi_note(self,note, delay = 0): 
-        self.schedule_osc(delay, self.audio_client, "/midi/note/1", [note,127, 1])
-        self.schedule_osc(delay + 0.5, self.audio_client, "/midi/note/1", [note,127, 0])
+        #self.schedule_osc(delay, self.audio_client, "/midi/note/1", [note,127, 1])
+        #self.schedule_osc(delay + 0.5, self.audio_client, "/midi/note/1", [note,127, 0])
+        self.schedule_osc(delay, self.audio_client, "/noteOn", [note,127])
+        self.schedule_osc(delay + 0.5, self.audio_client, "/noteOff", [note])
 
     def start_intro(self):
         if self.state != "WAITING":

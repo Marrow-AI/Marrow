@@ -543,6 +543,11 @@
                     "target" : "unity",
                     "address": "/stylegan/scale",
                     "value": 2
+                },
+                {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "Middle_Option_2,Middle_to_Beginning"
                 }
             ]
         },

@@ -251,13 +251,19 @@ namespace Marrow
         }
         public void ReceivedMemoryState(int state) {
             Debug.Log("Set Memory Animation state " + state);
+            VideoSelector videoSelector = memory.GetComponent<VideoSelector>();
 
-            if (state == 0) {
-                memory.GetComponent<Renderer>().enabled = false;
-
-            } else if (state == 1) {
-                memory.GetComponent<UnityEngine.Video.VideoPlayer>().frame = 0;
-                memory.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
+            memory.GetComponent<Renderer>().enabled = false;
+            if (state == 1) {
+                videoSelector.playVideo(videoSelector.sister);  
+            } else if (state == 2) {
+                videoSelector.playVideo(videoSelector.father);
+            } else if (state == 3) {
+                videoSelector.playVideo(videoSelector.brother);
+            } else if (state == 4) {
+                videoSelector.playVideo(videoSelector.mother);
+            }
+            if (state > 0) {
                 StartCoroutine(ShowMemoryAfter(0.5f));
             }
         }
