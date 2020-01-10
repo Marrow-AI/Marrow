@@ -3,7 +3,7 @@
         {
             "speaker": "dad",
             "text": "Mother, this looks delicious! What are we eating tonight?",
-            "timeout": "I just don't want to let the white plate effect me."
+            "timeout": "I just don't want to let the white plate affect me."
         },
         {
             "in-ear" : [ 
@@ -379,7 +379,7 @@
                     "target" : "mom",
                     "lines": [
                        {
-                            "text": "It's been a while since I felt something to him.",
+                            "text": "It's been a while since I felt something for him.",
                             "pause": 15
                         },
                         {
