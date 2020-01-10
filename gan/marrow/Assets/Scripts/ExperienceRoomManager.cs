@@ -20,6 +20,9 @@ namespace Marrow
         private GameObject gauGAN;
         private GameObject deepLab;
         private GameObject rawImage;
+        private GameObject memory;
+
+        private int bowlTweenId;
 
 
 
@@ -55,6 +58,8 @@ namespace Marrow
             gauGAN = GameObject.Find("GauGAN");
             deepLab = GameObject.Find("Deeplab");
             rawImage = GameObject.Find("RawImage");
+            memory = GameObject.Find("Memory");
+            bowlTweenId = 0;
 
 
 
@@ -195,13 +200,13 @@ namespace Marrow
                 rawImage.GetComponent<Renderer>().enabled = false;
 
 
-                LeanTween.value(
-                    deepLab,
-                    1.0f, 0.0f, 3.0f
-                )
-                .setOnUpdate((float val) => {
-                    deeplabMaterial.SetFloat("_Transparency", val);
-                })
+                    LeanTween.value(
+                        deepLab,
+                        1.0f, 0.0f, 3.0f
+                    )
+                    .setOnUpdate((float val) => {
+                        deeplabMaterial.SetFloat("_Transparency", val);
+                    })
                 .setOnComplete(() => {
                     deepLab.GetComponent<Renderer>().enabled = false;
                 });
@@ -230,6 +235,35 @@ namespace Marrow
                 renderers[0].enabled = false;
                 renderers[1].enabled = false;
             }
+        }
+        public void ReceivedDeeplabBowl(OSCMessage message) {
+
+            int x = message.Values[0].IntValue;
+            int y = message.Values[1].IntValue;
+
+            Debug.Log("Received bowl position! (" + x + "," + y + ")");
+
+            float memX = (x / 512.0f) * 14.0f - 7.0f;
+            LeanTween.cancel(bowlTweenId);
+            Vector3 worldPos = memory.transform.parent.TransformPoint(memX, memory.transform.localPosition.y, memory.transform.localPosition.z);
+            Debug.Log("World pos: " + worldPos.x);
+            bowlTweenId = LeanTween.moveX(memory, worldPos.x, 2.0f).id;
+        }
+        public void ReceivedMemoryState(int state) {
+            Debug.Log("Set Memory Animation state " + state);
+
+            if (state == 0) {
+                memory.GetComponent<Renderer>().enabled = false;
+
+            } else if (state == 1) {
+                memory.GetComponent<UnityEngine.Video.VideoPlayer>().frame = 0;
+                memory.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
+                StartCoroutine(ShowMemoryAfter(0.5f));
+            }
+        }
+        IEnumerator ShowMemoryAfter(float time) {
+            yield return new WaitForSeconds(time);
+            memory.GetComponent<Renderer>().enabled = true;
         }
     }
 }
