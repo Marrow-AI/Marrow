@@ -421,6 +421,7 @@
         {
             "speaker": "sister",
             "text": "when you play yourself happy. Beyond the shadow of a dream!",
+            "timeout": "Without a doubt!",
             "triggers-midi": [
                 {
                    "note": 71
@@ -657,11 +658,13 @@
         },
         {
             "speaker": "sister",
-            "text": "I don't mean the taste of our dinners."
+            "text": "I don't mean the taste of our dinners.",
+            "timeout": "As okay as they might be."
         },
         {
             "speaker": "sister",
             "text": "I mean the memories we are boiling in our soups.",
+            "timeout": "Sometimes it can get pretty hot.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -710,6 +713,7 @@
         {
             "speaker": "dad",
             "text": "It is indeed a very nice bowl. Let me look at it.",
+            "timeout": "I like to touch things.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -823,7 +827,8 @@
         },
         {
             "speaker": "mom",
-            "text": "It's a nice bowl. But there is only one way to remember it."
+            "text": "It's a nice bowl. But there is only one way to remember it.",
+            "timeout": "No need to complicate things"
         },
         {
             "speaker": "sister",
@@ -833,12 +838,12 @@
         {
             "speaker": "mom",
             "text": "It is a bowl of soup.",
-            "timeout": "No double meaning, child."
+            "timeout": "A bowl of soup is a bowl of soup."
         },
         {
             "speaker": "sister",
             "text": "oh, I always thought a memory can come from both directions.",
-            "timeout": "Like front door and back door.",
+            "timeout": "Like a front door and back door.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -922,6 +927,7 @@
         {
             "speaker": "sister",
             "text": "And from the other side - do you see the ocean?",
+            "timeout": "The other side of the left.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -989,11 +995,13 @@
         },
         {
             "speaker": "sister",
-            "text": "Doesn't have to be. I can see us laughing."
+            "text": "Doesn't have to be. I can see us laughing.",
+            "timeout": "Can you see that as well?"
         },
         {
             "speaker": "sister",
             "text": "Anything can happen if you let it.",
+            "timeout": "Trust me.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -1050,7 +1058,7 @@
         {
             "speaker": "dad",
             "text": "There were many ships. They looked so distant.",
-            "timeout": "Or were those boats moving closer?"
+            "timeout": "Or were they boats? coming in our direction?"
         },
         {
             "speaker": "brother",
@@ -1182,7 +1190,7 @@
         {
             "speaker": "dad",
             "text": "That's the creepiest thing about stories.",
-            "timeout": "Every time you tell them you forget a bit more.",
+            "timeout": "Every time you tell them you change them more.",
             "triggers-midi": [
                 {
                    "note": 97
@@ -1191,13 +1199,13 @@
         },
         {
             "speaker": "sister",
-            "text": "Would you tell it differently?",
-            "timeout": "Tell me, mother."
+            "text": "Would you tell differently?",
+            "timeout": "Tell me, mother"
         },
         {
             "speaker": "mom",
             "text": "We can not go anywhere.",
-            "timeout": "anywhere."
+            "timeout": "Our lives are like a lonely desert, or so I have been told."
         },
         {
             "in-ear" : [ 
@@ -1246,7 +1254,7 @@
         {
             "speaker": "sister",
             "text": "Memories can be played. It is just likely that stories will get mixed up in stories.",
-            "timeout": "I am not sure anymore what is true and what is not.",
+            "timeout": "Does it matter if you have been there or not?",
             "triggers-midi": [
                 {
                    "note": 99
@@ -1275,11 +1283,13 @@
         },
         {
             "speaker": "sister",
-            "text": "And when your eyes open you see nothing."
+            "text": "And when your eyes open you see nothing.",
+            "timeout": "You keep pushing me."
         },
         {
             "speaker": "sister",
             "text": "I'll just turn on the light.",
+            "timeout": "To overcome this darkness",
             "triggers-osc": [
                 {
                     "target" : "unity",
@@ -1387,11 +1397,8 @@
         },
         {
             "speaker": "sister",
-            "text": "Your mind is overwhelmed by dreams and plans."
-        },
-        {
-            "speaker": "sister",
-            "text": "What even am I?"
+            "text": "What even am I?",
+            "timeout": "I keep forgetting."
         },
         {
             "speaker": "mom",
@@ -1405,11 +1412,13 @@
         },
         {
             "speaker": "dad",
-            "text": "Longing after your own happiness."
+            "text": "Longing after your own happiness.",
+            "timeout": "This is not about us."
         },
         {
             "speaker": "dad",
-            "text": "Trapped in the flow of your own thought."
+            "text": "Trapped in the flow of your own thought.",
+            "timeout": "It is a loop."
         },
         {
             "speaker": "sister",
