@@ -184,8 +184,6 @@ class Engine:
             "brother": 0
         }
 
-        self.listen_task = None
-
         self.in_ear_endpoints = {
             "mom": udp_client.SimpleUDPClient("192.168.1.39", 3954),
             "brother": udp_client.SimpleUDPClient("192.168.1.41", 3954),
@@ -198,7 +196,8 @@ class Engine:
     async def start(self):
         self.main_loop = asyncio.get_running_loop()
 
-        self.time_check()
+        if not args.no_speech:
+            self.time_check()
 
         #self.queue = asyncio.Queue(loop=self.main_loop)
         self.queue = janus.Queue(loop=self.main_loop)
@@ -267,16 +266,9 @@ class Engine:
         self.func_sched.clear()
 
     def start_google(self, endpoint, role):
-        """
-        if self.listen_task and not self.listen_task.done():
-            print("Waiting for previous listen to finish")
-            self.pause_listening()
-            await self.listen_task
-        """
         self.last_speech = time.time()
         print("Resume listening")
         endpoint.send_message("/record-start", role)
-        #self.listen_task = self.main_loop.run_in_executor(None, self.recognizer.start, device_index)
 
     async def consume_speech(self):
         print("Consuming speech")
@@ -294,23 +286,45 @@ class Engine:
     def time_check(self):
         # recognition timeout
         now =  time.time()
-        if self.state == "SCRIPT" and self.script.awaiting_type == "OPEN":
+        if self.state == "SCRIPT":
             time_since_speech = now - self.last_speech
+            time_since_react = now - self.last_react
+
             #print('{} / {}'.format(time_since_speech, self.script.awaiting_nospeech_timeout))
-            if time_since_speech > self.script.awaiting_nospeech_timeout and "timeout" in self.script.awaiting:
-               print("TIMEOUT!")
+            #print('{} / {}'.format(time_since_react, self.script.awaiting_global_timeout))
+            if (
+                self.script.awaiting_type == "OPEN" and 
+                time_since_speech > self.script.awaiting_nospeech_timeout and
+                "timeout" in self.script.awaiting
+            ):
+               print("OPEN LINE TIMEOUT!")
                self.script.awaiting["in-ear"] = self.script.awaiting["timeout"]
                del self.script.awaiting["timeout"]
                self.last_speech = now
                self.pause_listening()
                self.main_loop.create_task(self.play_in_ear())
 
+            elif (
+                self.script.awaiting_type == "LINE" and 
+                (
+                    time_since_speech > self.script.awaiting_nospeech_timeout  or 
+                    time_since_react > self.script.awaiting_global_timeout
+                )
+            ):
+                print("LINE TIMEOUT!")
+                self.last_react = self.last_speech = now
+                if "timeout" in self.script.awaiting:
+                    self.next_variation()
+                else:
+                    self.pause_listening()
+                    self.main_loop.call_soon_threadsafe(self.next_line)    
+                                 
         if not self.args.stop:
             Timer(0.1, self.time_check).start()
 
     def next_variation(self):
-        if self.script.next_variation():
-            self.show_next_line()
+        self.script.next_variation()
+        self.show_next_line()
 
     def timeout_response(self):
         if "timeout-response" in self.script.awaiting:
@@ -585,10 +599,6 @@ class Engine:
 
     async def play_in_ear(self):
         self.state = "IN-EAR"
-        if self.listen_task and not self.listen_task.done():
-            print("Waiting for previous listen to finish")
-            self.pause_listening()
-            await self.listen_task
         data = self.script.awaiting["in-ear"]
         print("Play in ear! {}".format(data))
         tasks = []
@@ -877,6 +887,7 @@ class Engine:
             )
             role = self.script.awaiting["speaker"]
             endpoint = self.in_ear_endpoints[role]
+            self.last_speech = time.time()
             print("{} , PLEASE SAY: {}".format(role, self.script.awaiting_text))
             if not self.args.no_speech:
                 self.start_google(endpoint, role)
