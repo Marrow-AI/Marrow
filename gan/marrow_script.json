@@ -730,6 +730,12 @@
                     "address": "/load-state",
                     "value": "apple",
                     "delay" : 5
+                },
+                {
+                    "target" : "unity",
+                    "address": "/memory/state",
+                    "value": 2,
+                    "delay": 6                   
                 }
             ]
         },
