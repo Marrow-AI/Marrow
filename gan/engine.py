@@ -319,7 +319,7 @@ class Engine:
                 else:
                     print("Showing next line")
                     self.pause_listening()
-                    self.trigger_osc()
+                    self.main_loop.call_soon_threadsafe(self.trigger_osc)
                     self.main_loop.call_soon_threadsafe(self.next_line)    
 
         if not self.args.stop:
@@ -354,8 +354,10 @@ class Engine:
 
     def speech_text(self, text):
         #print("<{}>".format(text))
+        print("Speech, state {}".format(self.state))
+
         self.t2i_client.send_message("/speech", text)
-        if self.script.awaiting_type == "LINE":
+        if self.state == "SCRIPT" and self.script.awaiting_type == "LINE":
             if self.mid_text is not None:
                 #print("Looking up {}".format(text))
                 self.lookup(text)
@@ -380,11 +382,12 @@ class Engine:
             self.t2i_client.send_message("/openline", "clear")
             self.trigger_osc()
             self.pause_listening()
+            print("Going to next line in 3s")
             self.schedule_function(3, self.next_line)
 
     def mid_speech_text(self, text):
         self.last_speech = time.time()
-        #print("MID SPEECH")
+        print("Mid-speech, state {}".format(self.state))
         if self.state == "SCRIPT" and self.script.awaiting_type != "OPEN":
             self.mid_text = text
             #print("({})".format(text))
@@ -509,7 +512,8 @@ class Engine:
             delay = words_ahead / 2.8
 
             self.trigger_osc()
-        
+            self.state = "WAITING"
+            print("Next line in {}s".format(delay))
             self.schedule_function(delay, self.next_line)
 
        # if "triggers-beat" in line:
@@ -551,7 +555,6 @@ class Engine:
     def next_line(self):
         print("NEXT LINE")
         self.matched_to_word = 0
-        self.state = "SCRIPT"
         self.last_react = self.last_speech = time.time()
         # Clear the text
         if "speaker" in self.script.awaiting:
@@ -559,9 +562,14 @@ class Engine:
                         "/script",
                         [self.script.awaiting["speaker"], ""]
             )
+
+        if "delay" in self.script.awaiting:
+            delay = self.script.awaiting["delay"]
+        else:
+            delay = 0
         if self.script.next_line():
-            self.state = "SCRIPT"
-            self.run_line()
+            print("Calling run_line in {}".format(delay))
+            self.schedule_function(delay, self.run_line)
         else:
             self.end()
 
@@ -621,6 +629,7 @@ class Engine:
                 finally:
                     self.speaker_counter[target] = self.speaker_counter[target] + 1
 
+            print("Waiting for plays to finish")
             await asyncio.gather(*tasks)
             print("Finshed all!")
 
@@ -628,12 +637,15 @@ class Engine:
 
         self.last_react = self.last_speech = time.time()
         if self.script.awaiting_type != "OPEN":
+            """
             if "delay" in self.script.awaiting:
                 delay = self.script.awaiting["delay"]
             else:
                 delay = 0
             print("Calling next line in {}s".format(delay))
             self.schedule_function(delay, self.next_line)
+            """
+            self.next_line()
         else:
             self.show_next_line()
 
