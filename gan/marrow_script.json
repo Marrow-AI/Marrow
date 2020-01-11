@@ -576,7 +576,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Time stopped.",
+            "text": "Time has stopped.",
             "timeout": "The clock has stopped ticking.",
             "triggers-midi": [
                 {
@@ -620,7 +620,7 @@
         {
             "speaker": "brother",
             "text": "Mother, that sounds very deep.",
-            "timeout": "So many layers lie in this answer."
+            "timeout": "You are a deep person, mother."
         },
         {
             "speaker": "sister",
@@ -869,7 +869,7 @@
         {
             "speaker": "sister",
             "text": "oh, I always thought a memory can come from both directions.",
-            "timeout": "But isn't a memory can have two sides? like a back door and front door?",
+            "timeout": "But can't a memory have two sides?",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
