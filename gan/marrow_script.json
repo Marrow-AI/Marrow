@@ -1018,7 +1018,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Anything can happen if you let it."
+            "text": "Anything can happen if you let it.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
