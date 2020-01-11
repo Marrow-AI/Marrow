@@ -3,7 +3,7 @@
         {
             "speaker": "dad",
             "text": "Mother, this looks delicious! What are we eating tonight?",
-            "timeout": "I just don't want to let the white plate affect me."
+            "noskip":  true
         },
         {
             "in-ear" : [ 
@@ -149,7 +149,7 @@
         {
             "speaker": "mom",
             "text": "And you daughter, do you like the food?",
-            "timeout": "Daughter?"
+            "timeout": "Daughter, do you hear me?"
          },
          {
             "in-ear" : [ 
@@ -197,7 +197,6 @@
          {
             "speaker": "brother",
             "text": "If you try you can see beyond the %answer%",
-            "timeout": "After all, it is all a matter of perspective.",
             "triggers-osc": [
                 {
                     "target" : "stylegan",
@@ -250,7 +249,8 @@
                         }
                     ]
                 }
-             ]
+             ],
+             "delay": 20
          },
         {
             "speaker": "mom",
@@ -260,7 +260,7 @@
         {
             "speaker": "sister",
             "text": "I wasn't thinking.",
-            "timeout": "I think...",
+            "timeout": "I think I wasn't thinking",
             "triggers-midi": [
                 {
                    "note": 66

@@ -305,7 +305,7 @@ class Engine:
                self.main_loop.create_task(self.play_in_ear())
 
             elif (
-                self.script.awaiting_type == "LINE" and 
+                self.script.awaiting_type == "LINE" and not "noskip" in self.script.awaiting and
                 (
                     time_since_speech > self.script.awaiting_nospeech_timeout  or 
                     time_since_react > self.script.awaiting_global_timeout
@@ -314,9 +314,12 @@ class Engine:
                 print("LINE TIMEOUT!")
                 self.last_react = self.last_speech = now
                 if "timeout" in self.script.awaiting:
+                    print("Showing variation")
                     self.next_variation()
                 else:
+                    print("Showing next line")
                     self.pause_listening()
+                    self.trigger_osc()
                     self.main_loop.call_soon_threadsafe(self.next_line)    
 
         if not self.args.stop:
@@ -548,6 +551,7 @@ class Engine:
     def next_line(self):
         print("NEXT LINE")
         self.matched_to_word = 0
+        self.state = "SCRIPT"
         self.last_react = self.last_speech = time.time()
         # Clear the text
         if "speaker" in self.script.awaiting:
@@ -622,12 +626,13 @@ class Engine:
 
         self.trigger_osc()
 
-        self.state = "SCRIPT"
+        self.last_react = self.last_speech = time.time()
         if self.script.awaiting_type != "OPEN":
             if "delay" in self.script.awaiting:
                 delay = self.script.awaiting["delay"]
             else:
                 delay = 0
+            print("Calling next line in {}s".format(delay))
             self.schedule_function(delay, self.next_line)
         else:
             self.show_next_line()
@@ -882,6 +887,7 @@ class Engine:
 
     def show_next_line(self):
         print("SHOW NEXT LINE")
+        self.state = "SCRIPT"
         if self.script.awaiting_text:
             self.t2i_client.send_message(
                     "/script",
@@ -889,7 +895,7 @@ class Engine:
             )
             role = self.script.awaiting["speaker"]
             endpoint = self.in_ear_endpoints[role]
-            self.last_speech = time.time()
+            self.last_react = self.last_speech = time.time()
             print("{} , PLEASE SAY: {}".format(role, self.script.awaiting_text))
             if not self.args.no_speech:
                 self.start_google(endpoint, role)
