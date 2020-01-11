@@ -4,7 +4,7 @@ from annoy import AnnoyIndex
 import json
 
 SCRIPT_TIMEOUT_GLOBAL = 11
-SCRIPT_TIMEOUT_NOSPEECH = 11 
+SCRIPT_TIMEOUT_NOSPEECH = 5 
 
 SCRIPT_TIMEOUT_GLOBAL_SHORT = 9
 SCRIPT_TIMEOUT_NOSPEECH_SHORT = 11
@@ -60,12 +60,8 @@ class Script:
             else:
                 self.awaiting_type = "LINE"
                 
-            if "timeout" in self.awaiting:
-                self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH_SHORT
-                self.awaiting_global_timeout = SCRIPT_TIMEOUT_GLOBAL_SHORT
-            else:
-                self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH
-                self.awaiting_global_timeout = SCRIPT_TIMEOUT_GLOBAL
+            self.awaiting_nospeech_timeout = SCRIPT_TIMEOUT_NOSPEECH
+            self.awaiting_global_timeout = SCRIPT_TIMEOUT_GLOBAL
 
         except Exception as e:
             print("Script exception {}".format(e))
@@ -73,9 +69,9 @@ class Script:
 
 
     def next_variation(self):
-        if ("variations" in self.awaiting and len(self.awaiting["variations"]) - 1 >= self.awaiting_variation):
-            self.awaiting_text = self.awaiting["variations"][self.awaiting_variation]
-            self.awaiting_variation += 1
+        if "timeout" in self.awaiting:
+            self.awaiting["text"] = self.awaiting["timeout"]
+            del self.awaiting["timeout"]
             self.update()
             return True
         else:

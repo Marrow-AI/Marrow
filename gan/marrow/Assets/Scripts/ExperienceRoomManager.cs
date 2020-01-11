@@ -22,6 +22,8 @@ namespace Marrow
         private GameObject rawImage;
         private GameObject memory;
 
+        private int bowlTweenId;
+
 
 
         private void OnEnable()
@@ -57,6 +59,7 @@ namespace Marrow
             deepLab = GameObject.Find("Deeplab");
             rawImage = GameObject.Find("RawImage");
             memory = GameObject.Find("Memory");
+            bowlTweenId = 0;
 
 
 
@@ -197,13 +200,13 @@ namespace Marrow
                 rawImage.GetComponent<Renderer>().enabled = false;
 
 
-                LeanTween.value(
-                    deepLab,
-                    1.0f, 0.0f, 3.0f
-                )
-                .setOnUpdate((float val) => {
-                    deeplabMaterial.SetFloat("_Transparency", val);
-                })
+                    LeanTween.value(
+                        deepLab,
+                        1.0f, 0.0f, 3.0f
+                    )
+                    .setOnUpdate((float val) => {
+                        deeplabMaterial.SetFloat("_Transparency", val);
+                    })
                 .setOnComplete(() => {
                     deepLab.GetComponent<Renderer>().enabled = false;
                 });
@@ -241,8 +244,32 @@ namespace Marrow
             Debug.Log("Received bowl position! (" + x + "," + y + ")");
 
             float memX = (x / 512.0f) * 14.0f - 7.0f;
-            memory.transform.localPosition = new Vector3(memX, 3.0f, -7.0f);
+            LeanTween.cancel(bowlTweenId);
+            Vector3 worldPos = memory.transform.parent.TransformPoint(memX, memory.transform.localPosition.y, memory.transform.localPosition.z);
+            Debug.Log("World pos: " + worldPos.x);
+            bowlTweenId = LeanTween.moveX(memory, worldPos.x, 2.0f).id;
+        }
+        public void ReceivedMemoryState(int state) {
+            Debug.Log("Set Memory Animation state " + state);
+            VideoSelector videoSelector = memory.GetComponent<VideoSelector>();
 
+            memory.GetComponent<Renderer>().enabled = false;
+            if (state == 1) {
+                videoSelector.playVideo(videoSelector.sister);  
+            } else if (state == 2) {
+                videoSelector.playVideo(videoSelector.father);
+            } else if (state == 3) {
+                videoSelector.playVideo(videoSelector.brother);
+            } else if (state == 4) {
+                videoSelector.playVideo(videoSelector.mother);
+            }
+            if (state > 0) {
+                StartCoroutine(ShowMemoryAfter(0.5f));
+            }
+        }
+        IEnumerator ShowMemoryAfter(float time) {
+            yield return new WaitForSeconds(time);
+            memory.GetComponent<Renderer>().enabled = true;
         }
     }
 }

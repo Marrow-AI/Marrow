@@ -553,10 +553,25 @@ def live(config_path, model_path, cuda, crf, camera_id):
     osc_server.start()
 
     url = THETA_URL + 'commands/execute'
+    print("Setting preview options")
+
+    payload = {
+        "name": "camera.setOptions",
+        "parameters": {
+            "options": {
+                "previewFormat": {
+                    "width": 1920, "height": 960, "framerate": 8
+                }
+            }
+        }
+    }
+    res = requests.post(url, json = payload, auth = (HTTPDigestAuth(THETA_ID, THETA_PASSWORD)))
+    print(res.text)
+
     payload = {"name": "camera.getLivePreview"}
     buffer = bytes()
 
-    out = cv2.VideoWriter('capture.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 24, (1024,512))
+    out = cv2.VideoWriter('capture.avi',cv2.VideoWriter_fourcc('M','J','P','G'), 24, (1920,960))
 
     try:
         with requests.post(url,
@@ -582,7 +597,6 @@ def live(config_path, model_path, cuda, crf, camera_id):
     finally:
         print("Record done")
         out.release()
-
 
 if __name__ == "__main__":
     main()

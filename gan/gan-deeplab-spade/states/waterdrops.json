@@ -9,7 +9,7 @@
             "from": ["bowl"],
             "to" : "clouds",
             "invert": false,
-			"expand": 20
+			"expand": 5
         }
     ],
     "deeplab": {
@@ -29,6 +29,7 @@
         ]
     },
     "showRaw": false,
-    "mapDeeplab": true
+    "mapDeeplab": true,
+    "sendBowl": true
 }
 

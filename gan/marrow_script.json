@@ -290,7 +290,7 @@
         {
             "speaker": "dad",
             "text": "You have to see us if you want to get the full picture.",
-            "timeout": "what is that saying? “..The whole is greater than the sum of its parts”? yes."
+            "timeout": "what is that saying? '...The whole is greater than the sum of its parts'? yes."
         },
         {
             "speaker": "sister",
@@ -543,6 +543,11 @@
                     "target" : "unity",
                     "address": "/stylegan/scale",
                     "value": 2
+                },
+                {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "Middle_Option_2,Middle_to_Beginning"
                 }
             ]
         },
@@ -675,8 +680,13 @@
                     "target" : "unity",
                     "address": "/gaugan/state",
                     "value": 2,
-                    "delay": 5
-                   
+                    "delay": 5                   
+                },
+                {
+                    "target" : "unity",
+                    "address": "/memory/state",
+                    "value": 1,
+                    "delay": 6                   
                 }
             ],
             "triggers-midi": [
@@ -1292,6 +1302,11 @@
             "timeout": "To overcome this darkness",
             "triggers-osc": [
                 {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "glitch2_7,part3_1,part3_2_option1"
+                },
+                {
                     "target" : "unity",
                     "address": "/stylegan/blend",
                     "value": 1.0
@@ -1332,12 +1347,6 @@
                     "target" : "td",
                     "address": "/td/display",
                     "value": 0,
-                    "delay": 15
-                },
-                {
-                    "target" : "stylegan",
-                    "address": "/random",
-                    "value": 1,
                     "delay": 15
                 }
             ],

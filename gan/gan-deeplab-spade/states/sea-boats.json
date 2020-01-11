@@ -19,7 +19,7 @@
     "deeplab": {
         "mask": [
             {
-                "items": ["sea", "rock", "boat", "bridge"],
+                "items": ["sea", "rock", "boat", "bridge", "person"],
                 "invert": true
             }
         ]
@@ -33,6 +33,7 @@
         ]
     },
     "showRaw": false,
+    "autumn": true,
     "mapDeeplab": true
 }
 
