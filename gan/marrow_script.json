@@ -40,7 +40,7 @@
          {
             "speaker": "dad",
             "text": "Hmm... What's that saying again? Eating well everyday...",
-            "timeout": "I have a saying on the tip of the tongue... Eating well..."
+            "timeout": "I have a saying on the tip of my tongue... Eating well..."
          },
          {
             "speaker": "brother",
@@ -62,7 +62,7 @@
          {
             "speaker": "dad",
             "text": "Please don't tell me you don't like what you've cooked, mother.",
-            "timeout": "I really hope you can enjoy a bit what you have cooked",
+            "timeout": "I really hope you can enjoy what you have cooked",
             "triggers-midi": [
                 {
                    "note": 63
@@ -237,7 +237,7 @@
         {
             "speaker": "sister",
             "text": "If I want to I can even see beyond all of you.",
-            "timeout": "And I do want to see you all differently..."
+            "timeout": "If I want to I would see all of you differently."
         },
         {
             "in-ear" : [ 
@@ -425,8 +425,8 @@
         },
         {
             "speaker": "sister",
-            "text": "when you play yourself happy. Beyond the shadow of a dream!",
-            "timeout": "when you act happy! Without a doubt!",
+            "text": "When you play yourself happy. Beyond the shadow of a dream!",
+            "timeout": "When you act happy! Without a doubt!",
             "triggers-midi": [
                 {
                    "note": 71
