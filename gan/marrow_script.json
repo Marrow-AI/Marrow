@@ -313,11 +313,7 @@
         },
         {
             "speaker": "brother",
-            "text": "that planted a seed of life that burned my first chakra to the third degree-"
-        },
-        {
-            "speaker": "brother",
-            "text": "and made me the young man I have learned to be.",
+            "text": "that planted a seed of life and made me the young man I have learned to be.",
             "triggers-midi": [
                 {
                    "note": 68
@@ -343,13 +339,13 @@
         },
         {
             "speaker": "sister",
-            "text": "I am confused, but okay. Something is starting to take shape in my mind.",
+            "text": "I am confused but okay. Something is starting to take shape in my mind.",
             "timeout": "I am starting to see something."
         },
         {
             "speaker": "dad",
-            "text": "Well, it means your mother is the dream itself. The dream of us melting in the sun.",
-            "timeout": "Always better than the dream of us freezing on the moon.",
+            "text": "Well, it means your mother is the love of my life.",
+            "timeout": "I know you ask me not to say it, but I couldn’t help it",
             "triggers-midi": [
                 {
                    "note": 69
@@ -372,6 +368,14 @@
                         },
                         {
                             "text": "I wonder if she will finally let me hold her hand for a bit?"
+                        }
+                    ]
+                },
+                { 
+                    "target" : "brother",
+                    "lines": [
+                        {
+                            "text": "I want to hold my mommy’s hand. Would she let me?"
                         }
                     ]
                 },
@@ -436,7 +440,7 @@
         {
             "speaker": "mom",
             "text": "Do you think she can tell what is true?",
-            "timeout": "I am just wondering out loud about it",
+            "timeout": "I am just wondering about it out loud",
             "triggers-osc": [
                 {
                     "target" : "unity",
@@ -566,7 +570,7 @@
         {
             "speaker": "sister",
             "text": "Time stopped.",
-            "timeout": "Tik Tak, the clock has stopped ticking.",
+            "timeout": "The clock has stopped ticking.",
             "triggers-midi": [
                 {
                    "note": 73
@@ -1132,7 +1136,7 @@
         },
         {
             "speaker": "sister",
-            "text": "I see a landscape of a toothless smile.",
+            "text": "I just see a landscape of a toothless smile.",
             "timeout": "It was happy day.",
             "triggers-midi": [
                 {
@@ -1305,7 +1309,7 @@
         {
             "speaker": "sister",
             "text": "I'll just turn on the light.",
-            "timeout": "To overcome this darkness",
+            "timeout": "To overcome your darkness",
             "triggers-osc": [
                 {
                     "target" : "stylegan",
