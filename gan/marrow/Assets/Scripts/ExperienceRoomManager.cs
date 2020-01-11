@@ -188,7 +188,7 @@ namespace Marrow
 
                 LeanTween.value(
                     rawImage,
-                    1.0f, 0.0f, 7.0f
+                    0.3f, 0.0f, 7.0f
                 )
                 .setOnUpdate((float val) => {
                        rawImageMaterial.SetFloat("_TransparencyOrig", val);

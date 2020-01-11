@@ -175,7 +175,8 @@
          {
             "speaker": "mom",
             "text": "Why are your answers always so flat?",
-            "timeout": "Never heard such a flat answer."
+            "timeout": "Never heard such a flat answer.",
+            "delay": 5
          },
          {
             "speaker": "dad",
@@ -255,7 +256,7 @@
         {
             "speaker": "mom",
             "text": "But then you are missing the point.",
-            "timeout": "You are failing to understand."
+            "noskip": true
         },
         {
             "speaker": "sister",
@@ -295,7 +296,8 @@
         {
             "speaker": "sister",
             "text": "Can you teach me how to see you mother?",
-            "timeout": "Please mother, teach me how to see you."
+            "timeout": "Please mother, teach me how to see you.",
+            "delay": 5
         },
         {
             "speaker": "mom",
@@ -340,7 +342,8 @@
         {
             "speaker": "sister",
             "text": "I am confused but okay. Something is starting to take shape in my mind.",
-            "timeout": "I am starting to see something."
+            "timeout": "I am starting to see something.",
+            "delay": 5
         },
         {
             "speaker": "dad",
@@ -431,7 +434,8 @@
                 {
                    "note": 71
                 } 
-            ]
+            ],
+            "delay": 5
         },
         {
             "speaker": "dad",
@@ -464,11 +468,12 @@
                    "note": 72
                 } 
             ],
-            "delay": 15
+            "delay": 20
         },
         {
             "speaker": "brother",
-            "text": "Any dream is a process of active paranoiac thought-"
+            "text": "Any dream is a process of active paranoiac thought-",
+            "noskip": true
         },
         {
             "speaker": "brother",
@@ -723,7 +728,7 @@
                         ]
                     }
                 ],
-                "delay": 5
+                "delay": 15
         },
         {
             "speaker": "dad",
@@ -763,7 +768,7 @@
                         ]
                     }
                 ],
-            "delay": 5
+            "delay": 15
         },
         {
             "speaker": "dad",
@@ -801,7 +806,7 @@
                         ]
                     }
                 ],
-            "delay": 5
+            "delay": 15
         },
         {
             "speaker": "brother",
@@ -844,7 +849,7 @@
                         ]
                     }
                 ],
-            "delay": 5
+            "delay": 15
         },
         {
             "speaker": "mom",
