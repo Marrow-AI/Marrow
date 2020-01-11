@@ -420,12 +420,13 @@
         },
         {
             "speaker": "sister",
-            "text": "Mother, father, brother you are so beautiful-"
+            "text": "Mother, father, brother you are so beautiful-",
+            "timeout": "Family, you are beautiful!"
         },
         {
             "speaker": "sister",
             "text": "when you play yourself happy. Beyond the shadow of a dream!",
-            "timeout": "Family! you are beautiful when you act happy!",
+            "timeout": "when you act happy! Without a doubt!",
             "triggers-midi": [
                 {
                    "note": 71
