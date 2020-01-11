@@ -1,0 +1,11 @@
+[Unit]
+Description=BluezAlsa proxy (Marrow)
+Requires=bluetooth.service
+After=bluetooth.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/bluealsa
+
+[Install]
+WantedBy=multi-user.target

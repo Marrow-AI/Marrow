@@ -67,7 +67,7 @@ class MicrophoneStream(object):
         return None, pyaudio.paContinue
 
     def generator(self):
-        while not self.closed and not self.args.restart and not self.args.stop and not self.parent.stop_recognition:
+        while not self.closed and not self.args.stop and not self.parent.stop_recognition:
             # Use a blocking get() to ensure there's at least one chunk of
             # data, and stop iteration if the chunk is None, indicating the
             # end of the audio stream.
@@ -110,6 +110,7 @@ class Recognizer(Thread):
         self.stop_recognition = False
         self.loop = loop
         self.role = "UNKOWN"
+        self.crash = False
 
         # See http://g.co/cloud/speech/docs/languages
         # for a list of supported languages.
@@ -131,30 +132,35 @@ class Recognizer(Thread):
 
     def run(self):
         self.stop_recognition = False
-        self.args.restart = False
         print("Recognizer starting")
 
-        while True:
-            if not self.args.stop:
+        while not self.crash:
+            if not self.args.stop and not self.crash:
                 print("Listening...")
                 self.listen()
                 print("Sleeping...")
                 time.sleep(1)
-                self.loop.call_soon_threadsafe(
-                    self.future.set_result, 1
-                )
+                if not self.crash:
+                    self.loop.call_soon_threadsafe(
+                        self.future.set_result, 1
+                    )
+        print("Exiting due to crash")
+
     def listen(self):
         self.start_time = time.time()
+        try:
+            with MicrophoneStream(RATE, CHUNK, self, self.args) as stream:
+                audio_generator = stream.generator()
 
-        with MicrophoneStream(RATE, CHUNK, self, self.args) as stream:
-            audio_generator = stream.generator()
+                requests = (types.StreamingRecognizeRequest(audio_content=content)
+                             for content in audio_generator)
+                
+                responses = self.client.streaming_recognize(self.streaming_config, requests)
 
-            requests = (types.StreamingRecognizeRequest(audio_content=content)
-                         for content in audio_generator)
-            
-            responses = self.client.streaming_recognize(self.streaming_config, requests)
-
-            self.listen_print_loop(responses)
+                self.listen_print_loop(responses)
+        except Exception as e:
+            print("Listen exception! {}".format(e))
+            self.crash = True
 
 
 
@@ -171,38 +177,40 @@ class Recognizer(Thread):
         """
 
         last_result = None
+        try:
+            for response in responses:
+                if not response.results:
+                    print("No results")
+                    continue
 
-        for response in responses:
-            if not response.results:
-                print("No results")
-                continue
+                # The `results` list is consecutive. For streaming, we only care about
+                # the first result being considered, since once it's `is_final`, it
+                # moves on to considering the next utterance.
+                result = response.results[0]
+                if not result.alternatives:
+                    continue
 
-            # The `results` list is consecutive. For streaming, we only care about
-            # the first result being considered, since once it's `is_final`, it
-            # moves on to considering the next utterance.
-            result = response.results[0]
-            if not result.alternatives:
-                continue
+                # Display the transcription of the top alternative.
+                transcript = result.alternatives[0].transcript
 
-            # Display the transcription of the top alternative.
-            transcript = result.alternatives[0].transcript
+                if not result.is_final:
+                    #sys.stdout.write(transcript + overwrite_chars + '\r')
+                    #sys.stdout.flush()
 
-            if not result.is_final:
-                #sys.stdout.write(transcript + overwrite_chars + '\r')
-                #sys.stdout.flush()
+                    if (transcript != last_result):
+                        print("({})".format(transcript))
+                        self.engine.send_message(
+                            "/mid-speech",
+                            [self.role,transcript]
+                        )
+                        last_result = transcript
 
-                if (transcript != last_result):
-                    print("({})".format(transcript))
+                else:
+                    print(" = {}".format(transcript))
                     self.engine.send_message(
-                        "/mid-speech",
+                        "/speech",
                         [self.role,transcript]
                     )
-                    last_result = transcript
-
-            else:
-                print(" = {}".format(transcript))
-                self.engine.send_message(
-                    "/speech",
-                    [self.role,transcript]
-                )
+        except Exception as e:
+            print("Print loop Exception!")
 

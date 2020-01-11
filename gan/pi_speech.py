@@ -2,7 +2,7 @@
 # -*- coding: utf-8
 # Create a fake video that can test synchronization features
 
-import sys, os, time, re
+import sys, os, signal, time, re
 
 from google_recognizer_pi import Recognizer
 
@@ -24,6 +24,17 @@ class PiSpeech:
         self.loop = loop
         self.recognizer = Recognizer(self.engine, self, self.loop)
         self.recognizer.start()
+        self.watch()
+
+    def watch(self):
+        threading.Timer(1.0, self.time_check).start()
+
+    def time_check(self):
+        if not self.recognizer.is_alive():
+            print("Recognizer died! exiting brutally")
+            os.kill(os.getpid(), signal.SIGKILL)
+        else:
+            threading.Timer(1.0, self.time_check).start()
 
     def start(self, future, role):
         self.recognizer.future = future

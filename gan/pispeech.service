@@ -1,0 +1,15 @@
+[Unit]
+Description=Marrrow PiSpeech
+
+[Service]
+WorkingDirectory=/home/pi/marrow/gan
+ExecStart=/home/pi/marrow_env/bin/python /home/pi/marrow/gan/pi_speech.py
+Restart=always
+User=pi
+Group=pi
+Type=simple
+Environment=PYTHONUNBUFFERED=1
+Environment=GOOGLE_APPLICATION_CREDENTIALS=/home/pi/ONFinteractif-e65c3a63743d.json
+
+[Install]
+WantedBy=multi-user.target
