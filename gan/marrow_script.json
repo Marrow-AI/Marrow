@@ -642,7 +642,7 @@
                               "pause": 10
                             },
                             {
-                                "text": "I will get up now and go get it."
+                                "text": "I will get up now and bring it to the table."
                             }
                         ]
                 },
@@ -834,7 +834,7 @@
                                 "pause":10
                             },
                              {
-                                "text": "It was the first time I felt belong in my life.",
+                                "text": "It was the first time in my life that I felt like I belong.",
                                 "pause":10
                             },
                             {
@@ -1053,7 +1053,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "When it happens believe me you cannot miss it."
+                            "text": "When it happens believe me, you will not be able to miss it."
                         }
                     ]
                 },
