@@ -174,7 +174,7 @@ namespace Marrow
                 gauGAN.transform.position = new Vector3(-43.78f, -0.65f, 15f);
 
                 deepLab.GetComponent<Renderer>().enabled = true;
-                rawImage.GetComponent<Renderer>().enabled = true;
+                //rawImage.GetComponent<Renderer>().enabled = true;
                 Material rawImageMaterial = rawImage.GetComponent<Renderer>().material;
                 Material deeplabMaterial = deepLab.GetComponent<Renderer>().material;
 
@@ -185,14 +185,14 @@ namespace Marrow
                 .setOnUpdate((float val) => {
                     deeplabMaterial.SetFloat("_Transparency", val);
                 });
-
+                /*
                 LeanTween.value(
                     rawImage,
                     0.3f, 0.0f, 7.0f
                 )
                 .setOnUpdate((float val) => {
                        rawImageMaterial.SetFloat("_TransparencyOrig", val);
-                });
+                });*/
             } else if (state == 4) {
                 Material rawImageMaterial = rawImage.GetComponent<Renderer>().material;
                 Material deeplabMaterial = deepLab.GetComponent<Renderer>().material;

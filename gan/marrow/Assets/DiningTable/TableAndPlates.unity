@@ -681,6 +681,7 @@ GameObject:
   - component: {fileID: 405762716}
   - component: {fileID: 405762715}
   - component: {fileID: 405762718}
+  - component: {fileID: 405762719}
   m_Layer: 0
   m_Name: Memory
   m_TagString: Untagged
@@ -696,7 +697,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 405762713}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -7}
+  m_LocalPosition: {x: 0, y: 2.7, z: -7}
   m_LocalScale: {x: 0.3174226, y: 0.3174226, z: 0.3174226}
   m_Children: []
   m_Father: {fileID: 153618867}
@@ -781,7 +782,7 @@ VideoPlayer:
   m_RenderMode: 3
   m_AspectRatio: 2
   m_DataSource: 0
-  m_PlaybackSpeed: 1
+  m_PlaybackSpeed: 0.7
   m_AudioOutputMode: 2
   m_TargetAudioSources: []
   m_DirectAudioVolumes: []
@@ -794,6 +795,22 @@ VideoPlayer:
   m_Looping: 0
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
+--- !u!114 &405762719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 405762713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 981d27b886365884b85b9b22a8cf5383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mother: {fileID: 0}
+  father: {fileID: 32900000, guid: f6abedf771dae7a4cbdc3bb4c350f848, type: 3}
+  sister: {fileID: 32900000, guid: cbff3a3015da7be468d029ac09f2eaf8, type: 3}
+  brother: {fileID: 0}
 --- !u!1 &438660129
 GameObject:
   m_ObjectHideFlags: 0
@@ -3308,7 +3325,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1321616037}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

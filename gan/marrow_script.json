@@ -315,7 +315,7 @@
         },
         {
             "speaker": "brother",
-            "text": "that planted a seed of life and made me the young man I have learned to be.",
+            "text": "that planted my seed of life and made me the young man I have learned to be.",
             "triggers-midi": [
                 {
                    "note": 68
@@ -347,8 +347,8 @@
         },
         {
             "speaker": "dad",
-            "text": "Well, it means your mother is the love of my life.",
-            "timeout": "It means your mother is the dream itself. the dream of us melting in the sun.",
+            "text": "If your mother had asked me, I would have said that she is the love of my life.",
+            "timeout": "Your mother is the dream itself. the dream of us melting in the sun.",
             "triggers-midi": [
                 {
                    "note": 69
@@ -378,7 +378,7 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "I want to hold my mommy’s hand. Would she let me?"
+                            "text": "I want to hold my mother's hand. Would she even let me?"
                         }
                     ]
                 },
@@ -403,7 +403,7 @@
         },
         {
             "speaker": "mom",
-            "text": "A very lovely day, couldn't be better. And yours?",
+            "text": "A very lovely day, couldn't be better, actually. And yours?",
             "timeout": "How was your day?",
             "triggers-midi": [
                 {
@@ -595,7 +595,7 @@
                     "target" : "mom",
                     "lines": [
                            {
-                                "text": "His reading are showing 78 percent ambiguity.",
+                                "text": "His readings are showing 78 percent ambiguity.",
                                 "pause": 10
                             },
                             {
@@ -664,8 +664,16 @@
                               "text": "it makes me think about where i came from, and fear what exists at the end of it all."
                             }
                         ]
+                }         
+            ],
+            "triggers-osc": [
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 2
                 }
-            ]
+            ],
+            "delay": 10
         },
         {
             "speaker": "brother",
@@ -690,13 +698,18 @@
                     "target" : "unity",
                     "address": "/gaugan/state",
                     "value": 2,
-                    "delay": 5                   
+                    "delay": 3                   
                 },
                 {
                     "target" : "unity",
                     "address": "/memory/state",
                     "value": 1,
-                    "delay": 6                   
+                    "delay": 3                   
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 1
                 }
             ],
             "triggers-midi": [
@@ -728,7 +741,7 @@
                         ]
                     }
                 ],
-                "delay": 15
+                "delay": 5
         },
         {
             "speaker": "dad",
@@ -738,14 +751,12 @@
                 {
                     "target" : "gaugan",
                     "address": "/load-state",
-                    "value": "apple",
-                    "delay" : 5
+                    "value": "apple"
                 },
                 {
                     "target" : "unity",
                     "address": "/memory/state",
-                    "value": 2,
-                    "delay": 6                   
+                    "value": 2                
                 }
             ]
         },
@@ -768,7 +779,7 @@
                         ]
                     }
                 ],
-            "delay": 15
+            "delay": 5
         },
         {
             "speaker": "dad",
@@ -778,8 +789,7 @@
                 {
                     "target" : "gaugan",
                     "address": "/load-state",
-                    "value": "clock",
-                    "delay" : 5
+                    "value": "clock"
                 }
             ]
         },
@@ -806,18 +816,17 @@
                         ]
                     }
                 ],
-            "delay": 15
+            "delay": 5
         },
         {
             "speaker": "brother",
-            "text": "Mommy, take it from me.",
-            "timeout": "Mommy take it quickly from me, please!",
+            "text": "Mother, take it from me.",
+            "timeout": "Mother take it from me quickly, please!",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
                     "address": "/load-state",
-                    "value": "plant",
-                    "delay" : 5
+                    "value": "plant"
                 }
             ],
             "triggers-midi": [
@@ -849,7 +858,7 @@
                         ]
                     }
                 ],
-            "delay": 15
+            "delay": 5
         },
         {
             "speaker": "mom",
@@ -870,29 +879,18 @@
             "speaker": "sister",
             "text": "oh, I always thought a memory can come from both directions.",
             "timeout": "But can't a memory have two sides?",
-            "triggers-osc": [
-                {
-                    "target" : "gaugan",
-                    "address": "/load-state",
-                    "value": "real"
-                },
-                {
-                    "target" : "unity",
-                    "address": "/gaugan/state",
-                    "value": 3,
-                    "delay" : 5
-                }
-            ],
             "triggers-midi": [
                 {
                    "note": 77
                 } 
-            ]
+            ],
+            "delay": 5
         },
         {
             "speaker": "mom",
             "text": "Yes, the right direction and the wrong one.",
-            "timeout": "Yes, memory can be either right or wrong."
+            "timeout": "Yes, memory can be either right or wrong.",
+            "delay": 5
         },
         {
             "speaker": "sister",
@@ -977,6 +975,16 @@
                     "address": "/stylegan-animation/state",
                     "value": 1 ,
                     "delay": 1
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/faces",
+                    "value": 1
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/face-color",
+                    "value": 0 
                 }
             ],
             "triggers-midi": [
@@ -995,7 +1003,8 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "delay": 15
         },
         {
             "speaker": "dad",
@@ -1077,7 +1086,8 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "delay": 10
         },
         {
             "speaker": "dad",
@@ -1163,7 +1173,29 @@
         {
             "speaker": "mom",
             "text": "You have such a vivid memory.",
-            "timeout": "Your memory is a parade of pictures.",
+            "timeout": "Your memory is a parade of pictures."
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "mom",
+                    "lines": [
+                        {
+                            "text": "Why the glasses are not in the right place? I have to arrange them back in the right order."
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "speaker": "sister",
+            "text": "I try to keep track of what makes us a family.",
+            "timeout": "I am trying to hold on what keeps us together."
+        },
+        {
+            "speaker": "mom",
+            "text": "Dear child, we have never been there.",
+            "timeout": "Oh, I think you know something is off.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -1190,28 +1222,6 @@
             ]
         },
         {
-            "in-ear" : [ 
-                { 
-                    "target" : "mom",
-                    "lines": [
-                        {
-                            "text": "Why the glasses are not in the right place? I have to arrange them back in the right order."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "speaker": "sister",
-            "text": "I try to keep track of what makes us a family.",
-            "timeout": "I am trying to hold on what keeps us together."
-        },
-        {
-            "speaker": "mom",
-            "text": "Dear child, we have never been there.",
-            "timeout": "Oh, I think you know something is off."
-        },
-        {
             "speaker": "dad",
             "text": "That's the creepiest thing about stories.",
             "timeout": "Every time you tell a story you change it.",
@@ -1224,12 +1234,20 @@
         {
             "speaker": "sister",
             "text": "Would you tell differently?",
-            "timeout": "Is there a missing part I forgot about?"
+            "timeout": "Is there a missing part I forgot about?",
+            "triggers-osc": [
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 2
+                }
+            ]
         },
         {
             "speaker": "mom",
-            "text": "We can not go anywhere.",
-            "timeout": "Our lives are like a lonely desert, or so I have been told."
+            "text": "We cannot go anywhere.",
+            "timeout": "Our lives are like a lonely desert, or so I have been told.",
+            "delay": 5         
         },
         {
             "in-ear" : [ 
@@ -1283,6 +1301,13 @@
                 {
                    "note": 99
                 } 
+            ],
+            "triggers-osc": [
+                {
+                    "target" : "td",
+                    "address": "/td/face-color",
+                    "value": 1
+                }
             ]
         },
         {
@@ -1316,8 +1341,8 @@
             "triggers-osc": [
                 {
                     "target" : "stylegan",
-                    "address": "/start-sequence",
-                    "value": "glitch2_7,part3_1,part3_2_option1"
+                    "address": "/random",
+                    "value": 1
                 },
                 {
                     "target" : "unity",
@@ -1343,34 +1368,12 @@
                     "target" : "unity",
                     "address": "/gaugan/state",
                     "value": 1                   
-                },
-                {
-                    "target" : "unity",
-                    "address": "/stylegan/blend",
-                    "value": 0.0,
-                    "delay": 15
-                },
-                {
-                    "target" : "td",
-                    "address": "/td/lights",
-                    "value": 0,
-                    "delay": 15
-                },
-                {
-                    "target" : "td",
-                    "address": "/td/display",
-                    "value": 0,
-                    "delay": 15
                 }
             ],
             "triggers-midi": [
                 {
                    "note": 108
-                },
-                {
-                    "note": 109,
-                    "delay": 15
-                } 
+                }
             ]
         },
         {
@@ -1383,12 +1386,13 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "delay": 15
         },
         {
             "speaker": "brother",
             "text": "Sister, stop fooling us. We are all hungry and thirsty for concrete images.",
-            "timeout": "I came for dinner and I'm still not full, whatt is going on?"
+            "noskip": true
         },
         {
             "speaker": "dad",
@@ -1445,17 +1449,44 @@
         {
             "speaker": "sister",
             "text": "The clock stopped.",
-            "timeout": "No more ticking."
+            "timeout": "No more ticking.",
+            "triggers-osc": [
+                {
+                    "target" : "unity",
+                    "address": "/stylegan/blend",
+                    "value": 0.0
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/lights",
+                    "value": 0
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/faces",
+                    "value": 0
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/display",
+                    "value": 0
+                },
+                {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "part3_2_option1"
+                }
+            ],
+            "triggers-midi": [
+                {
+                    "note": 109
+                } 
+            ]
         },
         {
             "speaker": "sister",
             "text": "Daddy? Can I ask you something?",
-            "timeout": "Daddy, I have one question.",
-            "triggers-midi": [
-                {
-                   "note": 36
-                } 
-            ]
+            "timeout": "Daddy, I have one question."
         },
         {
             "speaker": "dad",
@@ -1480,12 +1511,17 @@
         {
             "speaker": "sister",
             "text": "What ground do families come from?",
-            "timeout": "From where families comes from?"
+            "timeout": "From where do families come from?"
         },
         {
             "speaker": "mom",
-            "text": "Homes.",
-            "timeout": "Home, like this one."
+            "text": "Home, like this one.",
+            "timeout": "Homes.",
+            "triggers-midi": [
+                {
+                   "note": 36
+                } 
+            ]
         }
     ]
 }
