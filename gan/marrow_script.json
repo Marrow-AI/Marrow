@@ -3,7 +3,7 @@
         {
             "speaker": "dad",
             "text": "Mother, this looks delicious! What are we eating tonight?",
-            "timeout": "I just don't want to let the white plate affect me."
+            "noskip":  true
         },
         {
             "in-ear" : [ 
@@ -40,7 +40,7 @@
          {
             "speaker": "dad",
             "text": "Hmm... What's that saying again? Eating well everyday...",
-            "timeout": "I'm trying to remember..."
+            "timeout": "I have a saying on the tip of my tongue... Eating well..."
          },
          {
             "speaker": "brother",
@@ -62,7 +62,7 @@
          {
             "speaker": "dad",
             "text": "Please don't tell me you don't like what you've cooked, mother.",
-            "timeout": "I really hope you do.",
+            "timeout": "I really hope you can enjoy what you have cooked",
             "triggers-midi": [
                 {
                    "note": 63
@@ -149,7 +149,7 @@
         {
             "speaker": "mom",
             "text": "And you daughter, do you like the food?",
-            "timeout": "Daughter?"
+            "timeout": "Daughter, I want to understand if you like the food."
          },
          {
             "in-ear" : [ 
@@ -175,12 +175,13 @@
          {
             "speaker": "mom",
             "text": "Why are your answers always so flat?",
-            "timeout": "So very flat."
+            "timeout": "Never heard such a flat answer.",
+            "delay": 5
          },
          {
             "speaker": "dad",
             "text": "How can she give other answers if she never tasted anything else?",
-            "timeout": "We all haven't."
+            "timeout": "I would point my finger on someone else."
          },
          {
             "in-ear" : [ 
@@ -197,7 +198,6 @@
          {
             "speaker": "brother",
             "text": "If you try you can see beyond the %answer%",
-            "timeout": "After all, it is all a matter of perspective.",
             "triggers-osc": [
                 {
                     "target" : "stylegan",
@@ -238,7 +238,7 @@
         {
             "speaker": "sister",
             "text": "If I want to I can even see beyond all of you.",
-            "timeout": "And I do want to..."
+            "timeout": "If I want to I would see all of you differently."
         },
         {
             "in-ear" : [ 
@@ -250,17 +250,18 @@
                         }
                     ]
                 }
-             ]
+             ],
+             "delay": 20
          },
         {
             "speaker": "mom",
             "text": "But then you are missing the point.",
-            "timeout": "failing to understand."
+            "noskip": true
         },
         {
             "speaker": "sister",
             "text": "I wasn't thinking.",
-            "timeout": "I think...",
+            "timeout": "I think I wasn't thinking",
             "triggers-midi": [
                 {
                    "note": 66
@@ -295,12 +296,13 @@
         {
             "speaker": "sister",
             "text": "Can you teach me how to see you mother?",
-            "timeout": "Please, mother."
+            "timeout": "Please mother, teach me how to see you.",
+            "delay": 5
         },
         {
             "speaker": "mom",
             "text": "Tell her my son",
-            "timeout": "You know best",
+            "timeout": "You know the best son",
             "triggers-midi": [
                 {
                    "note": 67
@@ -313,11 +315,7 @@
         },
         {
             "speaker": "brother",
-            "text": "that planted a seed of life that burned my first chakra to the third degree-"
-        },
-        {
-            "speaker": "brother",
-            "text": "and made me the young man I have learned to be.",
+            "text": "that planted a seed of life and made me the young man I have learned to be.",
             "triggers-midi": [
                 {
                    "note": 68
@@ -343,13 +341,14 @@
         },
         {
             "speaker": "sister",
-            "text": "I am confused, but okay. Something is starting to take shape in my mind.",
-            "timeout": "I am starting to see something."
+            "text": "I am confused but okay. Something is starting to take shape in my mind.",
+            "timeout": "I am starting to see something.",
+            "delay": 5
         },
         {
             "speaker": "dad",
-            "text": "Well, it means your mother is the dream itself. The dream of us melting in the sun.",
-            "timeout": "Always better than the dream of us freezing on the moon.",
+            "text": "Well, it means your mother is the love of my life.",
+            "timeout": "It means your mother is the dream itself. the dream of us melting in the sun.",
             "triggers-midi": [
                 {
                    "note": 69
@@ -359,7 +358,7 @@
         {
             "speaker": "mom",
             "text": "Yes, anything can happen if you let it.",
-            "timeout": "And I am not an optimistic person."
+            "timeout": "I am not an optimistic person, and even I believe in that"
         },
         {
             "in-ear" : [ 
@@ -372,6 +371,14 @@
                         },
                         {
                             "text": "I wonder if she will finally let me hold her hand for a bit?"
+                        }
+                    ]
+                },
+                { 
+                    "target" : "brother",
+                    "lines": [
+                        {
+                            "text": "I want to hold my mommy’s hand. Would she let me?"
                         }
                     ]
                 },
@@ -392,12 +399,12 @@
         {
             "speaker": "dad",
             "text": "My woman, how was your day?",
-            "timeout": "I tried to call and you didn't answer..."
+            "timeout": "My wife? Did you have a good day? I tried to call and you didn't answer."
         },
         {
             "speaker": "mom",
             "text": "A very lovely day, couldn't be better. And yours?",
-            "timeout": "How was it?",
+            "timeout": "How was your day?",
             "triggers-midi": [
                 {
                    "note": 70
@@ -407,26 +414,28 @@
         {
             "speaker": "dad",
             "text": "I had such a fantastic day, so much rain. Kids, how was school?",
-            "timeout": "Did you learn something?"
+            "timeout": "Children, did you have fun at school?"
         },
         {
             "speaker": "brother",
             "text": "All day I thought to myself what a wonderful world.",
-            "timeout": "I also saw trees of green, red roses too."
+            "timeout": "Yes! I saw trees of green, red roses too."
         },
         {
             "speaker": "sister",
-            "text": "Mother, father, brother you are so beautiful-"
+            "text": "Mother, father, brother you are so beautiful-",
+            "timeout": "Family, you are beautiful!"
         },
         {
             "speaker": "sister",
-            "text": "when you play yourself happy. Beyond the shadow of a dream!",
-            "timeout": "Without a doubt!",
+            "text": "When you play yourself happy. Beyond the shadow of a dream!",
+            "timeout": "When you act happy! Without a doubt!",
             "triggers-midi": [
                 {
                    "note": 71
                 } 
-            ]
+            ],
+            "delay": 5
         },
         {
             "speaker": "dad",
@@ -436,7 +445,7 @@
         {
             "speaker": "mom",
             "text": "Do you think she can tell what is true?",
-            "timeout": "I am just wondering out loud about it",
+            "timeout": "What is true to her?",
             "triggers-osc": [
                 {
                     "target" : "unity",
@@ -458,11 +467,13 @@
                 {
                    "note": 72
                 } 
-            ]
+            ],
+            "delay": 20
         },
         {
             "speaker": "brother",
-            "text": "Any dream is a process of active paranoiac thought-"
+            "text": "Any dream is a process of active paranoiac thought-",
+            "noskip": true
         },
         {
             "speaker": "brother",
@@ -543,6 +554,11 @@
                     "target" : "unity",
                     "address": "/stylegan/scale",
                     "value": 2
+                },
+                {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "Middle_Option_2,Middle_to_Beginning"
                 }
             ]
         },
@@ -560,8 +576,8 @@
         },
         {
             "speaker": "sister",
-            "text": "Time stopped.",
-            "timeout": "Tik Tak, the clock has stopped ticking.",
+            "text": "Time has stopped.",
+            "timeout": "The clock has stopped ticking.",
             "triggers-midi": [
                 {
                    "note": 73
@@ -571,7 +587,7 @@
         {
             "speaker": "dad",
             "text": "Mother, this looks delicious! what are we having tonight?",
-            "timeout": "I have no imagination to answer this question myself."
+            "timeout": "I need you to tell me what are we eating."
         },
         {
             "in-ear" : [ 
@@ -604,7 +620,7 @@
         {
             "speaker": "brother",
             "text": "Mother, that sounds very deep.",
-            "timeout": "So many layers lie in this answer."
+            "timeout": "You are a deep person, mother."
         },
         {
             "speaker": "sister",
@@ -633,7 +649,7 @@
                               "pause": 10
                             },
                             {
-                                "text": "I will get up now and go get it."
+                                "text": "I will get up now and bring it to the table."
                             }
                         ]
                 },
@@ -658,13 +674,12 @@
         },
         {
             "speaker": "sister",
-            "text": "I don't mean the taste of our dinners.",
-            "timeout": "As okay as they might be."
+            "text": "I don't mean the taste of our dinners."
         },
         {
             "speaker": "sister",
             "text": "I mean the memories we are boiling in our soups.",
-            "timeout": "Sometimes it can get pretty hot.",
+            "timeout": "I mean memories that tensing our dinners.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -713,18 +728,24 @@
                         ]
                     }
                 ],
-                "delay": 5
+                "delay": 15
         },
         {
             "speaker": "dad",
             "text": "It is indeed a very nice bowl. Let me look at it.",
-            "timeout": "I like to touch things.",
+            "timeout": "Give it to me, I like to touch things.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
                     "address": "/load-state",
                     "value": "apple",
                     "delay" : 5
+                },
+                {
+                    "target" : "unity",
+                    "address": "/memory/state",
+                    "value": 2,
+                    "delay": 6                   
                 }
             ]
         },
@@ -747,12 +768,12 @@
                         ]
                     }
                 ],
-            "delay": 5
+            "delay": 15
         },
         {
             "speaker": "dad",
             "text": "Here you go son, take it from me.",
-            "timeout": "Don't drop it.",
+            "timeout": "Take it son, but don't drop it.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -785,12 +806,12 @@
                         ]
                     }
                 ],
-            "delay": 5
+            "delay": 15
         },
         {
             "speaker": "brother",
             "text": "Mommy, take it from me.",
-            "timeout": "Quickly, please...",
+            "timeout": "Mommy take it quickly from me, please!",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -819,7 +840,7 @@
                                 "pause":10
                             },
                              {
-                                "text": "It was the first time I felt belong in my life.",
+                                "text": "It was the first time in my life that I felt like I belong.",
                                 "pause":10
                             },
                             {
@@ -828,17 +849,17 @@
                         ]
                     }
                 ],
-            "delay": 5
+            "delay": 15
         },
         {
             "speaker": "mom",
             "text": "It's a nice bowl. But there is only one way to remember it.",
-            "timeout": "No need to complicate things"
+            "timeout": "No need to complicate things, it is clear how you should remember it."
         },
         {
             "speaker": "sister",
             "text": "There is? Can you tell me how?",
-            "timeout": "Tell me, mother."
+            "timeout": "How should I? Tell me, mother."
         },
         {
             "speaker": "mom",
@@ -848,7 +869,7 @@
         {
             "speaker": "sister",
             "text": "oh, I always thought a memory can come from both directions.",
-            "timeout": "Like a front door and back door.",
+            "timeout": "But can't a memory have two sides?",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -871,12 +892,12 @@
         {
             "speaker": "mom",
             "text": "Yes, the right direction and the wrong one.",
-            "timeout": "It is very simple."
+            "timeout": "Yes, memory can be either right or wrong."
         },
         {
             "speaker": "sister",
-            "text": "So from which direction does my anger come from?",
-            "timeout": "There must be a source to it, like you can see."
+            "text": "So from which direction does my anger come?",
+            "timeout": "Tell me! From where does my anger come?"
         },
         {
             "in-ear" : [ 
@@ -915,7 +936,7 @@
         {
             "speaker": "dad",
             "text": "From my left side?",
-            "timeout": "I have heard those things before."
+            "timeout": "I think you meant from my left side."
         },
         {
             "in-ear" : [ 
@@ -932,7 +953,7 @@
         {
             "speaker": "sister",
             "text": "And from the other side - do you see the ocean?",
-            "timeout": "The other side of the left.",
+            "timeout": "The other side of the left - can you see an ocean?",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -1000,13 +1021,11 @@
         },
         {
             "speaker": "sister",
-            "text": "Doesn't have to be. I can see us laughing.",
-            "timeout": "Can you see that as well?"
+            "text": "Doesn't have to be. I can see us laughing."
         },
         {
             "speaker": "sister",
             "text": "Anything can happen if you let it.",
-            "timeout": "Trust me.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -1038,7 +1057,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "When it happens believe me you cannot miss it."
+                            "text": "When it happens believe me, you will not be able to miss it."
                         }
                     ]
                 },
@@ -1063,12 +1082,12 @@
         {
             "speaker": "dad",
             "text": "There were many ships. They looked so distant.",
-            "timeout": "Or were they boats? coming in our direction?"
+            "timeout": "There were small boats. coming in our direction."
         },
         {
             "speaker": "brother",
             "text": "Moving with a constant wind that kept refreshing itself.",
-            "timeout": "These are images that are refreshing themselves.",
+            "timeout": "Not wind moves the boats, but images that kept refreshing themselves.",
             "triggers-midi": [
                 {
                    "note": 86
@@ -1090,7 +1109,7 @@
         {
             "speaker": "brother",
             "text": "Father, can you pass me the bottle?",
-            "timeout": "Can you pour me some of that?"
+            "timeout": "Can you pour me some of what in that bottle?"
         },
         {
             "speaker": "sister",
@@ -1121,8 +1140,8 @@
         },
         {
             "speaker": "sister",
-            "text": "I see a landscape of a toothless smile.",
-            "timeout": "It was happy day.",
+            "text": "I just see a landscape of a toothless smile.",
+            "timeout": "For me this how a family looks like.",
             "triggers-midi": [
                 {
                    "note": 88
@@ -1144,7 +1163,7 @@
         {
             "speaker": "mom",
             "text": "You have such a vivid memory.",
-            "timeout": "such a vision.",
+            "timeout": "Your memory is a parade of pictures.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -1185,17 +1204,17 @@
         {
             "speaker": "sister",
             "text": "I try to keep track of what makes us a family.",
-            "timeout": "Of what keeps us together."
+            "timeout": "I am trying to hold on what keeps us together."
         },
         {
             "speaker": "mom",
             "text": "Dear child, we have never been there.",
-            "timeout": "It seems like this is a mix of several places"
+            "timeout": "Oh, I think you know something is off."
         },
         {
             "speaker": "dad",
             "text": "That's the creepiest thing about stories.",
-            "timeout": "Every time you tell them you change them more.",
+            "timeout": "Every time you tell a story you change it.",
             "triggers-midi": [
                 {
                    "note": 97
@@ -1205,7 +1224,7 @@
         {
             "speaker": "sister",
             "text": "Would you tell differently?",
-            "timeout": "Tell me, mother"
+            "timeout": "Is there a missing part I forgot about?"
         },
         {
             "speaker": "mom",
@@ -1227,7 +1246,7 @@
         {
             "speaker": "brother",
             "text": "If you are trying to reach the bottom of each ocean, all you will find there is sand.",
-            "timeout": "Maybe also rocks.",
+            "timeout": "When you dive deep expect sand and rocks.",
             "triggers-midi": [
                 {
                    "note": 98
@@ -1249,17 +1268,17 @@
         {
             "speaker": "dad",
             "text": "Smoke. Try to add some smell next time.",
-            "timeout": "It can help stimulate more parts in your brain."
+            "timeout": "Adding scent can help stimulate more parts in your brain."
         },
         {
             "speaker": "mom",
             "text": "I am grieving and in your memory, I am smiling.",
-            "timeout": "I find it a bit strange."
+            "timeout": "You still don't see me. You keep picture me smiling, well I am not."
         },
         {
             "speaker": "sister",
-            "text": "Memories can be played. It is just likely that stories will get mixed up in stories.",
-            "timeout": "Does it matter if you have been there or not?",
+            "text": "Memories can be played. It makes sense that stories will get mixed up in stories.",
+            "timeout": "I just mixed all our stories a bit.",
             "triggers-midi": [
                 {
                    "note": 99
@@ -1269,7 +1288,7 @@
         {
             "speaker": "dad",
             "text": "When you close your eyes what do you see?",
-            "timeout": "What do you see?"
+            "timeout": "Try to close your eyes. What do you see?"
         },
         {
             "speaker": "sister",
@@ -1279,7 +1298,7 @@
         {
             "speaker": "mom",
             "text": "So have no fear of perfection - you will never get it.",
-            "timeout": "Trust me.",
+            "timeout": "So expect errors - you will never be perfect.",
             "triggers-midi": [
                 {
                    "note": 100
@@ -1288,13 +1307,12 @@
         },
         {
             "speaker": "sister",
-            "text": "And when your eyes open you see nothing.",
-            "timeout": "You keep pushing me."
+            "text": "And when your eyes open you see nothing."
         },
         {
             "speaker": "sister",
             "text": "I'll just turn on the light.",
-            "timeout": "To overcome this darkness",
+            "timeout": "To overcome your darkness I am turning the light now.",
             "triggers-osc": [
                 {
                     "target" : "stylegan",
@@ -1370,22 +1388,22 @@
         {
             "speaker": "brother",
             "text": "Sister, stop fooling us. We are all hungry and thirsty for concrete images.",
-            "timeout": "I came for dinner and I'm still not full."
+            "timeout": "I came for dinner and I'm still not full, whatt is going on?"
         },
         {
             "speaker": "dad",
             "text": "My love, my girl, what is this all made of?",
-            "timeout": "I am talking to you, my girl."
+            "timeout": "I am talking to you, my girl, what are we having for dinner?"
         },
         {
             "speaker": "sister",
             "text": "Daddy, this dinner is made of apples, worms, and dreams.",
-            "timeout": "Not a dream of worms in an apple."
+            "timeout": "Daddy, This is a dinner made of the best of me - apples, worms, dreams."
         },
         {
             "speaker": "mom",
             "text": "Yes, it is almost time to sleep. The best time of the day.",
-            "timeout": "I am always tired."
+            "timeout": "The best time of the day has arrived."
         },
         {
             "speaker": "brother",
@@ -1402,12 +1420,12 @@
         {
             "speaker": "sister",
             "text": "What even am I?",
-            "timeout": "I keep forgetting."
+            "timeout": "Who am I?"
         },
         {
             "speaker": "mom",
             "text": "This is the play of your own mind. Leave attachments behind.",
-            "timeout": "Then the fake will become real."
+            "timeout": "Your fake becomes real."
         },
         {
             "speaker": "sister",
@@ -1432,7 +1450,7 @@
         {
             "speaker": "sister",
             "text": "Daddy? Can I ask you something?",
-            "timeout": "One question.",
+            "timeout": "Daddy, I have one question.",
             "triggers-midi": [
                 {
                    "note": 36
@@ -1442,12 +1460,12 @@
         {
             "speaker": "dad",
             "text": "Sure you can my little pumpkin.",
-            "timeout": "But of course."
+            "timeout": "You can try to ask me anything."
         },
         {
             "speaker": "sister",
             "text": "Why are there families at all and not nothing?",
-            "timeout": "Why do we need it at all?"
+            "timeout": "Why do we need a family at all?"
         },
         {
             "speaker": "dad",
@@ -1462,12 +1480,12 @@
         {
             "speaker": "sister",
             "text": "What ground do families come from?",
-            "timeout": "From where?"
+            "timeout": "From where families comes from?"
         },
         {
             "speaker": "mom",
             "text": "Homes.",
-            "timeout": "Like this one."
+            "timeout": "Home, like this one."
         }
     ]
 }

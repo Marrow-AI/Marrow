@@ -18,6 +18,7 @@ from script import Script
 parser = argparse.ArgumentParser(description='Marrow line generator using cloned voices')
 parser.add_argument('character', metavar='Character name', help='Character name')
 parser.add_argument('voice_sample', metavar='Voice sample file', help='Voice sample file')
+parser.add_argument('--only-index', metavar='Only specific index' , help='Generate only this index')
 args = parser.parse_args()
 
 
@@ -41,6 +42,11 @@ if __name__ == '__main__':
 
     script = Script(script_file = '../marrow_script.json', load_nlp = False)
 
+    if args.only_index:
+        only_index = int(args.only_index)
+    else:
+        only_index = None
+
     index = 0
     for line in script.data["script-lines"]:
         try:
@@ -54,7 +60,7 @@ if __name__ == '__main__':
                 inears = line["in-ear"]
                 for inear in inears:
                     target = inear["target"]
-                    if target == args.character:
+                    if target == args.character and (only_index is None or index == only_index):
                         utterance = inear["lines"]
                         texts = [part['text'] for part in utterance]
                         embeds = np.stack([embed] * len(texts))

@@ -157,7 +157,7 @@ class Engine:
 
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         self.td_client = udp_client.SimpleUDPClient("127.0.0.1", 7000)
-        self.audio_client = udp_client.SimpleUDPClient("192.168.1.25", 8000)
+        self.audio_client = udp_client.SimpleUDPClient("192.168.1.21", 8000)
         self.stylegan_client = udp_client.SimpleUDPClient("192.168.1.23", 3800)
         self.gaugan_client = udp_client.SimpleUDPClient("192.168.1.23", 3900)
 
@@ -305,7 +305,7 @@ class Engine:
                self.main_loop.create_task(self.play_in_ear())
 
             elif (
-                self.script.awaiting_type == "LINE" and 
+                self.script.awaiting_type == "LINE" and not "noskip" in self.script.awaiting and
                 (
                     time_since_speech > self.script.awaiting_nospeech_timeout  or 
                     time_since_react > self.script.awaiting_global_timeout
@@ -314,11 +314,14 @@ class Engine:
                 print("LINE TIMEOUT!")
                 self.last_react = self.last_speech = now
                 if "timeout" in self.script.awaiting:
+                    print("Showing variation")
                     self.next_variation()
                 else:
+                    print("Showing next line")
                     self.pause_listening()
+                    self.main_loop.call_soon_threadsafe(self.trigger_osc)
                     self.main_loop.call_soon_threadsafe(self.next_line)    
-                                 
+
         if not self.args.stop:
             Timer(0.1, self.time_check).start()
 
@@ -351,8 +354,10 @@ class Engine:
 
     def speech_text(self, text):
         #print("<{}>".format(text))
+        print("Speech, state {}".format(self.state))
+
         self.t2i_client.send_message("/speech", text)
-        if self.script.awaiting_type == "LINE":
+        if self.state == "SCRIPT" and self.script.awaiting_type == "LINE":
             if self.mid_text is not None:
                 #print("Looking up {}".format(text))
                 self.lookup(text)
@@ -377,11 +382,12 @@ class Engine:
             self.t2i_client.send_message("/openline", "clear")
             self.trigger_osc()
             self.pause_listening()
+            print("Going to next line in 3s")
             self.schedule_function(3, self.next_line)
 
     def mid_speech_text(self, text):
         self.last_speech = time.time()
-        #print("MID SPEECH")
+        print("Mid-speech, state {}".format(self.state))
         if self.state == "SCRIPT" and self.script.awaiting_type != "OPEN":
             self.mid_text = text
             #print("({})".format(text))
@@ -506,7 +512,8 @@ class Engine:
             delay = words_ahead / 2.8
 
             self.trigger_osc()
-        
+            self.state = "WAITING"
+            print("Next line in {}s".format(delay))
             self.schedule_function(delay, self.next_line)
 
        # if "triggers-beat" in line:
@@ -555,9 +562,14 @@ class Engine:
                         "/script",
                         [self.script.awaiting["speaker"], ""]
             )
+
+        if "delay" in self.script.awaiting:
+            delay = self.script.awaiting["delay"]
+        else:
+            delay = 0
         if self.script.next_line():
-            self.state = "SCRIPT"
-            self.run_line()
+            print("Calling run_line in {}".format(delay))
+            self.schedule_function(delay, self.run_line)
         else:
             self.end()
 
@@ -617,18 +629,23 @@ class Engine:
                 finally:
                     self.speaker_counter[target] = self.speaker_counter[target] + 1
 
+            print("Waiting for plays to finish")
             await asyncio.gather(*tasks)
             print("Finshed all!")
 
         self.trigger_osc()
 
-        self.state = "SCRIPT"
+        self.last_react = self.last_speech = time.time()
         if self.script.awaiting_type != "OPEN":
+            """
             if "delay" in self.script.awaiting:
                 delay = self.script.awaiting["delay"]
             else:
                 delay = 0
+            print("Calling next line in {}s".format(delay))
             self.schedule_function(delay, self.next_line)
+            """
+            self.next_line()
         else:
             self.show_next_line()
 
@@ -775,8 +792,10 @@ class Engine:
         #self.pix2pix_client.send_message("/control/stop",1)
 
     def send_midi_note(self,note, delay = 0): 
-        self.schedule_osc(delay, self.audio_client, "/midi/note/1", [note,127, 1])
-        self.schedule_osc(delay + 0.5, self.audio_client, "/midi/note/1", [note,127, 0])
+        #self.schedule_osc(delay, self.audio_client, "/midi/note/1", [note,127, 1])
+        #self.schedule_osc(delay + 0.5, self.audio_client, "/midi/note/1", [note,127, 0])
+        self.schedule_osc(delay, self.audio_client, "/noteOn", [note,127])
+        self.schedule_osc(delay + 0.5, self.audio_client, "/noteOff", [note])
 
     def start_intro(self):
         if self.state != "WAITING":
@@ -880,6 +899,7 @@ class Engine:
 
     def show_next_line(self):
         print("SHOW NEXT LINE")
+        self.state = "SCRIPT"
         if self.script.awaiting_text:
             self.t2i_client.send_message(
                     "/script",
@@ -887,7 +907,7 @@ class Engine:
             )
             role = self.script.awaiting["speaker"]
             endpoint = self.in_ear_endpoints[role]
-            self.last_speech = time.time()
+            self.last_react = self.last_speech = time.time()
             print("{} , PLEASE SAY: {}".format(role, self.script.awaiting_text))
             if not self.args.no_speech:
                 self.start_google(endpoint, role)
