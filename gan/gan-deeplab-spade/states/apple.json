@@ -9,7 +9,7 @@
             "from": ["bowl"],
             "to" : "apple",
             "invert": false,
-			"expand": 20
+			"expand": 10 
         }
     ],
     "deeplab": {

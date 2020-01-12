@@ -19,7 +19,7 @@
     "deeplab": {
         "mask": [
             {
-                "items": ["sand", "rock", "flower"],
+                "items": ["sand", "rock", "flower", "person"],
                 "invert": true
             }
         ]
@@ -33,6 +33,7 @@
         ]
     },
     "showRaw": false,
+    "autumn": true,
     "mapDeeplab": true
 }
 

@@ -9,7 +9,7 @@
             "from": ["bowl"],
             "to" : "clock",
             "invert": false,
-			"expand": 20
+			"expand": 15 
         }
     ],
     "deeplab": {
