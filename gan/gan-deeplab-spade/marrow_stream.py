@@ -592,6 +592,8 @@ class Gan(NDIStreamer):
             self.maps.clear()
             self.gaugan_masks.clear()
             self.deeplab_masks.clear()
+            self.autumn = False
+            self.send_bowl = False
         else:
             try:
                 with open('states/{}.json'.format(name)) as json_file:

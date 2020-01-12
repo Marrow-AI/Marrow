@@ -9,13 +9,13 @@
             "from": ["bowl"],
             "to" : "potted plant",
             "invert": false,
-			"expand": 20
+			"expand": 7 
         }
     ],
     "deeplab": {
         "mask": [
             {
-                "items": ["dining table","potted plant", "person"],
+                "items": ["potted plant","dining table", "person"],
                 "invert": true
             }
         ]
