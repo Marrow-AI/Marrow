@@ -75,7 +75,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "His reeactions are 33 percent passive, 67 percent aggressive"
+                            "text": "His reactions are 33 percent passive, 67 percent aggressive"
                         }
                     ]
                 }
@@ -104,11 +104,11 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "My sister needs to learn from the mistakes of yesterday and talk",
+                            "text": "Words are power, I really hope my sister will use them more.",
                             "pause": 10
                         },
                         {
-                            "text": "she must know Silent moments are the noisiest moments in our family"
+                            "text": "She must know Silent moments are the noisiest moments in our family."
                         }
                     ]
                 },
@@ -403,7 +403,7 @@
         },
         {
             "speaker": "mom",
-            "text": "A very lovely day, couldn't be better, actually. And yours?",
+            "text": "A very lovely day, couldn't be better actually. And yours?",
             "timeout": "How was your day?",
             "triggers-midi": [
                 {
@@ -424,7 +424,7 @@
         {
             "speaker": "sister",
             "text": "Mother, father, brother you are so beautiful-",
-            "timeout": "Family, you are beautiful!"
+            "timeout": "Family, you are super beautiful!"
         },
         {
             "speaker": "sister",
@@ -477,7 +477,7 @@
         },
         {
             "speaker": "brother",
-            "text": "that aims to cause the total disappearance-"
+            "text": "leading to the total disappearance-"
         },
         {
             "speaker": "brother",
@@ -485,7 +485,7 @@
         },
         {
             "speaker": "brother",
-            "text": "It ain't her fault mother."
+            "text": "It is not her fault mother."
         },
         {
             "in-ear" : [ 
@@ -505,7 +505,7 @@
                             "pause": 10
                         },
                         {
-                            "text": "or just ragmented thoughts, full of jump cuts and distortion."
+                            "text": "or just fragmented thoughts, full of jump cuts and distortion."
                         }
                     ]
                 },
@@ -517,7 +517,7 @@
                             "pause": 10
                         },
                         {
-                            "text": "or just ragmented thoughts, full of jump cuts and distortion."
+                            "text": "or just fragmented thoughts, full of jump cuts and distortion."
                         }
                     ]
                 },
@@ -529,7 +529,7 @@
                             "pause": 10
                         },
                         {
-                            "text": "or just ragmented thoughts, full of jump cuts and distortion."
+                            "text": "or just fragmented thoughts, full of jump cuts and distortion."
                         }
                     ]
                 }
@@ -618,9 +618,26 @@
             "type": "OPEN"
         },
         {
+            "speaker": "dad",
+            "text": "The way you just said it reminds me of...",
+            "timeout": "The sound of it reminds me of a saying..."
+        },
+        {
             "speaker": "brother",
-            "text": "Mother, that sounds very deep.",
+            "text": "Mother, it just sounds very deep.",
             "timeout": "You are a deep person, mother."
+        },
+        {
+            "in-ear" : [ 
+                { 
+                        "target" : "dad",
+                        "lines": [
+                                {
+                                    "text": "did he just do it to me again?"
+                                }
+                        ]
+                }
+            ]
         },
         {
             "speaker": "sister",
@@ -650,6 +667,14 @@
                             },
                             {
                                 "text": "I will get up now and bring it to the table."
+                            }
+                        ]
+                },
+                { 
+                    "target" : "mom",
+                    "lines": [
+                            {
+                                "text": "Does my food remind her of a bowl of soup?"
                             }
                         ]
                 },
@@ -877,8 +902,12 @@
         },
         {
             "speaker": "sister",
-            "text": "oh, I always thought a memory can come from both directions.",
-            "timeout": "But can't a memory have two sides?",
+            "text": "Oh, I thought you hate when everything is so flat-"
+        },
+        {
+            "speaker": "sister",
+            "text": "that we should always see both sides.",
+            "timeout": "that everything has more to it.",
             "triggers-midi": [
                 {
                    "note": 77
@@ -888,14 +917,41 @@
         },
         {
             "speaker": "mom",
-            "text": "Yes, the right direction and the wrong one.",
-            "timeout": "Yes, memory can be either right or wrong.",
+            "text": "Yes, the right side and the wrong side.",
+            "timeout": "Everything can either be right or wrong.",
             "delay": 5
         },
         {
             "speaker": "sister",
-            "text": "So from which direction does my anger come?",
-            "timeout": "Tell me! From where does my anger come?"
+            "text": "I am trying to improve for you. To get rid of your distorted image.",
+            "timeout": "I want to get better for you, to not see you so distorted."
+        },
+        {
+            "speaker": "dad",
+            "text": "You are overreacting, don't be so emotional.",
+            "timeout": "You are too sensitive."
+        },
+        {
+            "speaker": "dad",
+            "text": "I told you already, you need to see us exactly as we are.",
+            "timeout": "As we said before, you need to see us."
+        },
+        {
+            "in-ear" : [ 
+                { 
+                    "target" : "sister",
+                    "lines": [
+                        {
+                            "text": "It is hard not to be emotional when they all seem so ugly to me"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "speaker": "sister",
+            "text": "So which side does my anger come from?",
+            "timeout": "But from where does my anger come?"
         },
         {
             "in-ear" : [ 
@@ -903,7 +959,7 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "I feel exactly the same, I don't know how to answer this question."
+                            "text": "I feel exactly the same, although I wish I wasn't."
                         }
                     ]
                 }
@@ -925,7 +981,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "It comes from deep, deep inside of you"
+                            "text": "85 percen of the time someone is triggering you."
                         }
                     ]
                 }
@@ -1002,22 +1058,30 @@
                             "text": "I usually do not notice what exists in front of me."
                         }
                     ]
+                },
+                {
+                    "target" : "mom",
+                    "lines": [
+                        {
+                            "text": "It comes from deep, deep inside of you"
+                        }
+                    ]
                 }
             ],
             "delay": 15
         },
         {
             "speaker": "dad",
-            "text": "Very true. Usually I notice it every day.",
-            "timeout": "My goal is to see everything that exists in front of my."
+            "text": "Very true. Usually, I notice it every day.",
+            "timeout": "My goal is to see everything that exists in front of me."
         },
         {
             "in-ear" : [ 
                 { 
-                    "target" : "mom",
+                    "target" : "brother",
                     "lines": [
                         {
-                            "text": "What kind of life exists beyond the ocean? If I could would I start over?"
+                            "text": "What kind of life exists beyond the ocean? If I could would I choose a different family?"
                         }
                     ]
                 }
@@ -1025,16 +1089,25 @@
         },
         {
             "speaker": "brother",
-            "text": "The wind was quiet.",
-            "timeout": "Things were moving but there was no sound."
+            "text": "You simulate your present through images that already passed.",
+            "timeout": "You recreate this based on what has already happened."
         },
         {
             "speaker": "sister",
-            "text": "Doesn't have to be. I can see us laughing."
+            "text": "Not only that - I also keep observing you, craving to learn you."
         },
         {
             "speaker": "sister",
-            "text": "Anything can happen if you let it.",
+            "text": "But your shadows keep coming alive, telling me a different story."
+        },
+        {
+            "speaker": "dad",
+            "text": "And what is the story they are telling you?",
+            "timeout": "Can you share what are they telling you?"
+        },
+        {
+            "speaker": "sister",
+            "text": "A better story than what exists in front of me. Happy moments of what I believe is you.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -1066,7 +1139,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "When it happens believe me, you will not be able to miss it."
+                            "text": "When those moments really happen, believe me, you won't miss it."
                         }
                     ]
                 },
@@ -1090,31 +1163,45 @@
             "delay": 10
         },
         {
-            "speaker": "dad",
-            "text": "There were many ships. They looked so distant.",
-            "timeout": "There were small boats. coming in our direction."
-        },
-        {
-            "speaker": "brother",
-            "text": "Moving with a constant wind that kept refreshing itself.",
-            "timeout": "Not wind moves the boats, but images that kept refreshing themselves.",
-            "triggers-midi": [
-                {
-                   "note": 86
-                } 
-            ]
-        },
-        {
             "in-ear" : [ 
+                { 
+                    "target" : "mom",
+                    "lines": [
+                        {
+                            "text": "What kind of life exists beyond the ocean? If I could would I start over?"
+                        }
+                    ]
+                },
+                { 
+                    "target" : "dad",
+                    "lines": [
+                        {
+                            "text": "I can see there are ships, they look so distant."
+                        }
+                    ]
+                },
+                { 
+                    "target" : "sister",
+                    "lines": [
+                        {
+                            "text": "when their faces are not talking to me they are smiling."
+                        }
+                    ]
+                },
                 { 
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "Moving bowls moving boats, I wish they would take you with them father."
+                            "text": "If I will move glasses boats will sail, I wish they would take you with them father."
                         }
                     ]
                 }
             ]
+        },
+        {
+            "speaker": "mom",
+            "text": "Finally, dining quietly.",
+            "timeout": "I eating in quiet."
         },
         {
             "speaker": "brother",
@@ -1123,8 +1210,7 @@
         },
         {
             "speaker": "sister",
-            "text": "We got wet.",
-            "timeout": "All wet.",
+            "text": "We got wet from the wind, a family on the edge of a cliff screaming from joy.",
             "triggers-midi": [
                 {
                    "note": 87
@@ -1132,12 +1218,16 @@
             ]
         },
         {
+            "speaker": "dad",
+            "text": "It easy to get fooled by the unstable shifts of the wind."
+        },
+        {
             "in-ear" : [ 
                 { 
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "My inside and outside have no borders."
+                            "text": "My inside and outside have no borders between them."
                         }
                     ]
                 }
@@ -1150,8 +1240,7 @@
         },
         {
             "speaker": "sister",
-            "text": "I just see a landscape of a toothless smile.",
-            "timeout": "For me this how a family looks like.",
+            "text": "Have some rose water.",
             "triggers-midi": [
                 {
                    "note": 88
@@ -1159,43 +1248,16 @@
             ]
         },
         {
-            "in-ear" : [ 
-                { 
-                    "target" : "sister",
-                    "lines": [
-                        {
-                            "text": "Shuffling the bowls will also shuffle the sound of their open eyes."
-                        }
-                    ]
-                }
-            ]
-        },
-        {
             "speaker": "mom",
-            "text": "You have such a vivid memory.",
-            "timeout": "Your memory is a parade of pictures."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                    "target" : "mom",
-                    "lines": [
-                        {
-                            "text": "Why the glasses are not in the right place? I have to arrange them back in the right order."
-                        }
-                    ]
-                }
-            ]
+            "text": "I don't see any."
         },
         {
             "speaker": "sister",
-            "text": "I try to keep track of what makes us a family.",
-            "timeout": "I am trying to hold on what keeps us together."
+            "text": "Because there isn't any."
         },
         {
             "speaker": "mom",
-            "text": "Dear child, we have never been there.",
-            "timeout": "Oh, I think you know something is off.",
+            "text": "So it is not very polite of you to offer. Stop with this nonesense.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -1213,6 +1275,11 @@
                     "address": "/stylegan-animation/state",
                     "value": 3 ,
                     "delay": 2
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 2
                 }
             ],
             "triggers-midi": [
@@ -1222,54 +1289,26 @@
             ]
         },
         {
-            "speaker": "dad",
-            "text": "That's the creepiest thing about stories.",
-            "timeout": "Every time you tell a story you change it.",
-            "triggers-midi": [
-                {
-                   "note": 97
-                } 
-            ]
-        },
-        {
-            "speaker": "sister",
-            "text": "Would you tell differently?",
-            "timeout": "Is there a missing part I forgot about?",
-            "triggers-osc": [
-                {
-                    "target" : "td",
-                    "address": "/td/edge",
-                    "value": 2
-                }
-            ]
-        },
-        {
-            "speaker": "mom",
-            "text": "We cannot go anywhere.",
-            "timeout": "Our lives are like a lonely desert, or so I have been told.",
-            "delay": 5         
-        },
-        {
             "in-ear" : [ 
                 { 
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "Especially and most importantly not from here."
+                            "text": "Why are the glasses not in the right place? I have to arrange them back in the right order."
                         }
                     ]
                 }
             ]
         },
         {
-            "speaker": "brother",
-            "text": "If you are trying to reach the bottom of each ocean, all you will find there is sand.",
-            "timeout": "When you dive deep expect sand and rocks.",
-            "triggers-midi": [
-                {
-                   "note": 98
-                } 
-            ]
+            "speaker": "sister",
+            "text": "Isn't it a matter of perspective? I'm just trying to understand what makes us a family.",
+            "timeout": "I am trying to hold on what keeps us together."
+        },
+        {
+            "speaker": "mom",
+            "text": "Dear child, we have never been there.",
+            "timeout": "Oh, I think you know something is off."
         },
         {
             "in-ear" : [ 
@@ -1284,19 +1323,21 @@
             ]
         },
         {
-            "speaker": "dad",
-            "text": "Smoke. Try to add some smell next time.",
-            "timeout": "Adding scent can help stimulate more parts in your brain."
+            "speaker": "brother",
+            "text": "And what if the ocean dries up? And all you are left with is desert?",
+            "triggers-midi": [
+                {
+                   "note": 97
+                } 
+            ]
         },
         {
-            "speaker": "mom",
-            "text": "I am grieving and in your memory, I am smiling.",
-            "timeout": "You still don't see me. You keep picture me smiling, well I am not."
+            "speaker": "dad",
+            "text": "Without your shadows will you leave us behind?"
         },
         {
             "speaker": "sister",
-            "text": "Memories can be played. It makes sense that stories will get mixed up in stories.",
-            "timeout": "I just mixed all our stories a bit.",
+            "text": "No, I need you to set the lowest standard.",
             "triggers-midi": [
                 {
                    "note": 99
@@ -1308,7 +1349,12 @@
                     "address": "/td/face-color",
                     "value": 1
                 }
-            ]
+            ],
+            "delay": 5
+        },
+        {
+            "speaker": "mom",
+            "text": "Next time I will make sure to smile."         
         },
         {
             "speaker": "dad",
@@ -1317,8 +1363,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Usually I see nothing.",
-            "timeout": "Maybe some red spots."
+            "text": "All the faces that went through me."
         },
         {
             "speaker": "mom",
@@ -1332,12 +1377,11 @@
         },
         {
             "speaker": "sister",
-            "text": "And when your eyes open you see nothing."
+            "text": "And you cannot see what makes your own shadow."
         },
         {
             "speaker": "sister",
-            "text": "I'll just turn on the light.",
-            "timeout": "To overcome your darkness I am turning the light now.",
+            "text": "Let me turn on the light.",
             "triggers-osc": [
                 {
                     "target" : "stylegan",
@@ -1423,21 +1467,11 @@
         },
         {
             "speaker": "sister",
-            "text": "What even am I?",
+            "text": "Which one of those am I?",
             "timeout": "Who am I?"
         },
         {
             "speaker": "mom",
-            "text": "This is the play of your own mind. Leave attachments behind.",
-            "timeout": "Your fake becomes real."
-        },
-        {
-            "speaker": "sister",
-            "text": "No solid self.",
-            "timeout": "What even am I?"
-        },
-        {
-            "speaker": "dad",
             "text": "Longing after your own happiness.",
             "timeout": "This is not about us."
         },
