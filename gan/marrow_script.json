@@ -619,7 +619,7 @@
         },
         {
             "speaker": "brother",
-            "text": "Mother, it just sounds very deep.",
+            "text": "Mother, that sounds very deep.",
             "timeout": "You are a deep person, mother."
         },
         {
@@ -1211,7 +1211,7 @@
         {
             "speaker": "mom",
             "text": "Finally, dining quietly.",
-            "timeout": "It is nice to eat quiet."
+            "timeout": "It is nice to eat quietly."
         },
         {
             "speaker": "brother",
