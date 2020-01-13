@@ -296,8 +296,7 @@
         {
             "speaker": "sister",
             "text": "Can you teach me how to see you mother?",
-            "timeout": "Please mother, teach me how to see you.",
-            "delay": 5
+            "timeout": "Please mother, teach me how to see you."
         },
         {
             "speaker": "mom",
@@ -572,17 +571,17 @@
                             }
                         ]
                     }
+                ],
+                "triggers-midi": [
+                    {
+                       "note": 73
+                    } 
                 ]
         },
         {
             "speaker": "sister",
             "text": "Time has stopped.",
-            "noskip": true,
-            "triggers-midi": [
-                {
-                   "note": 73
-                } 
-            ]
+            "noskip": true
         },
         {
             "speaker": "dad",
@@ -804,6 +803,11 @@
                     "target" : "gaugan",
                     "address": "/load-state",
                     "value": "clock"
+                },
+                {
+                    "target" : "unity",
+                    "address": "/memory/state",
+                    "value": 3             
                 }
             ],
             "triggers-midi": [
@@ -846,6 +850,11 @@
                     "target" : "gaugan",
                     "address": "/load-state",
                     "value": "plant"
+                },
+                {
+                    "target" : "unity",
+                    "address": "/memory/state",
+                    "value": 4             
                 }
             ],
             "triggers-midi": [
@@ -896,7 +905,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Oh, I thought you hate when everything is so flat-"
+            "text": "Oh, I thought you hate it when everything is so flat-"
         },
         {
             "speaker": "sister",
@@ -1209,7 +1218,7 @@
         },
         {
             "speaker": "mom",
-            "text": "Finally, dining quietly.",
+            "text": "Finally, we are dining quietly.",
             "timeout": "It is nice to eat quietly."
         },
         {
@@ -1484,13 +1493,18 @@
         },
         {
             "speaker": "mom",
-            "text": "Longing after your own happiness.",
+            "text": "You are longing after your own happiness.",
             "timeout": "This is not about us."
         },
         {
             "speaker": "dad",
             "text": "Trapped in the flow of your own thought.",
-            "timeout": "It is a loop."
+            "timeout": "It is a loop.",
+            "triggers-midi": [
+                {
+                    "note": 109
+                } 
+            ]
         },
         {
             "speaker": "sister",
@@ -1522,11 +1536,6 @@
                     "address": "/start-sequence",
                     "value": "part3_2_option1"
                 }
-            ],
-            "triggers-midi": [
-                {
-                    "note": 109
-                } 
             ]
         },
         {
