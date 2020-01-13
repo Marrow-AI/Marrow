@@ -343,17 +343,17 @@
             "speaker": "sister",
             "text": "I am confused but okay. Something is starting to take shape in my mind.",
             "timeout": "I am starting to see something.",
-            "delay": 5
-        },
-        {
-            "speaker": "dad",
-            "text": "If your mother had asked me, I would have said that she is the love of my life.",
-            "timeout": "Your mother is the dream itself. the dream of us melting in the sun.",
+            "delay": 5,
             "triggers-midi": [
                 {
                    "note": 69
                 } 
             ]
+        },
+        {
+            "speaker": "dad",
+            "text": "If your mother had asked me, I would have said that she is the love of my life.",
+            "timeout": "Your mother is the dream itself. the dream of us melting in the sun."
         },
         {
             "speaker": "mom",
@@ -758,6 +758,11 @@
                     "address": "/memory/state",
                     "value": 2                
                 }
+            ],
+            "triggers-midi": [
+                {
+                   "note": 76
+                } 
             ]
         },
         {
@@ -791,6 +796,11 @@
                     "address": "/load-state",
                     "value": "clock"
                 }
+            ],
+            "triggers-midi": [
+                {
+                   "note": 77
+                } 
             ]
         },
         {
@@ -831,7 +841,7 @@
             ],
             "triggers-midi": [
                 {
-                   "note": 76
+                   "note": 78
                 } 
             ]
         },
