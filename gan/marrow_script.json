@@ -403,7 +403,7 @@
         },
         {
             "speaker": "mom",
-            "text": "A very lovely day, couldn't be better actually. And yours?",
+            "text": "A very lovely day, couldn't be better. And yours?",
             "timeout": "How was your day?",
             "triggers-midi": [
                 {
@@ -619,7 +619,7 @@
         },
         {
             "speaker": "brother",
-            "text": "Mother, that sounds very deep.",
+            "text": "Mother, that fsounds very deep.",
             "timeout": "You are a deep person, mother."
         },
         {
@@ -906,8 +906,7 @@
                 {
                    "note": 77
                 } 
-            ],
-            "delay": 5
+            ]
         },
         {
             "speaker": "mom",
