@@ -220,7 +220,15 @@ namespace Marrow
             Animator[] animators = styleGAN.GetComponentsInChildren<Animator>();
             SpriteRenderer[] renderers = styleGAN.GetComponentsInChildren<SpriteRenderer>();
 
-            if (state == 1) {
+            if (state == 0) {
+                animators[1].enabled = false;
+                renderers[1].enabled = false;
+                animators[2].enabled = false;
+                renderers[2].enabled = false;
+                animators[0].enabled = false;
+                renderers[0].enabled = false;
+            }
+            else if (state == 1) {
                 animators[1].enabled = false;
                 renderers[1].enabled = false;
                 animators[2].enabled = false;

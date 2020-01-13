@@ -711,7 +711,7 @@
                     "target" : "unity",
                     "address": "/memory/state",
                     "value": 1,
-                    "delay": 3                   
+                    "delay": 1                   
                 },
                 {
                     "target" : "td",
@@ -854,7 +854,8 @@
                 {
                     "target" : "unity",
                     "address": "/memory/state",
-                    "value": 4             
+                    "value": 4,
+                    "delay": 2            
                 }
             ],
             "triggers-midi": [
