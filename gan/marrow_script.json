@@ -480,7 +480,7 @@
         },
         {
             "speaker": "brother",
-            "text": "of the world of reality."
+            "text": "of the world of our reality."
         },
         {
             "speaker": "brother",
@@ -541,11 +541,6 @@
                 },
                 {
                     "target" : "td",
-                    "address": "/td/edge",
-                    "value": 1
-                },
-                {
-                    "target" : "td",
                     "address": "/td/lights",
                     "value": 0
                 },
@@ -581,7 +576,14 @@
         {
             "speaker": "sister",
             "text": "Time has stopped.",
-            "noskip": true
+            "noskip": true,
+            "triggers-osc": [
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 1
+             }
+            ]
         },
         {
             "speaker": "dad",
@@ -920,8 +922,7 @@
         {
             "speaker": "mom",
             "text": "Yes, the right side and the wrong side.",
-            "timeout": "Everything can either be right or wrong.",
-            "delay": 5
+            "timeout": "Everything can either be right or wrong."
         },
         {
             "speaker": "sister",
@@ -998,7 +999,7 @@
         },
         {
             "speaker": "dad",
-            "text": "From my left side?",
+            "text": "Did you mean from my left side?",
             "timeout": "I think you meant from my left side."
         },
         {
@@ -1084,7 +1085,7 @@
                     ]
                 }
             ],
-            "delay": 15
+            "delay": 5
         },
         {
             "speaker": "dad",
@@ -1110,11 +1111,11 @@
         },
         {
             "speaker": "sister",
-            "text": "Not only that - I also keep observing you, craving to learn you."
+            "text": "Not only that, I also keep observing you, craving to learn you -"
         },
         {
             "speaker": "sister",
-            "text": "But your shadows keep coming alive, telling me a different story."
+            "text": "but your shadows keep coming alive, telling me a different story."
         },
         {
             "speaker": "dad",
