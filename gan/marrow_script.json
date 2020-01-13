@@ -577,7 +577,7 @@
         {
             "speaker": "sister",
             "text": "Time has stopped.",
-            "timeout": "The clock has stopped ticking.",
+            "noskip": true,
             "triggers-midi": [
                 {
                    "note": 73
