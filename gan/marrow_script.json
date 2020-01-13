@@ -764,7 +764,8 @@
                 {
                     "target" : "unity",
                     "address": "/memory/state",
-                    "value": 2                
+                    "value": 2,
+                    "delay": 2               
                 }
             ],
             "triggers-midi": [
@@ -944,7 +945,14 @@
         {
             "speaker": "sister",
             "text": "So which side does my anger come from?",
-            "timeout": "But from where does my anger come?"
+            "timeout": "But from where does my anger come?",
+            "triggers-osc": [
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 2
+                }
+            ]
         },
         {
             "in-ear" : [ 
@@ -952,7 +960,7 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "I feel exactly the same, although I wish I wasn't."
+                            "text": "I was wondering the same thing, although I wish I wasn't."
                         }
                     ]
                 }
@@ -994,6 +1002,13 @@
                             "text": "I am refusing to be the only one to blame."
                         }
                     ]
+                }
+            ],
+            "triggers-osc": [
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 1
                 }
             ]
         },
@@ -1106,18 +1121,6 @@
                     "target" : "gaugan",
                     "address": "/load-state",
                     "value": "sea-boats"
-                },
-                {
-                    "target" : "stylegan",
-                    "address": "/start-sequence",
-                    "value": "Scene2_Option_3",
-                    "delay": 2
-                },
-                {
-                    "target" : "unity",
-                    "address": "/stylegan-animation/state",
-                    "value": 2 ,
-                    "delay": 2
                 }
             ],
             "triggers-midi": [
@@ -1151,6 +1154,20 @@
                             "text": "Daddy please do not leave me here alone."
                         }
                     ]
+                }
+            ],
+            "triggers-osc": [
+                {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "Scene2_Option_3",
+                    "delay": 2
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 2 ,
+                    "delay": 2
                 }
             ],
             "delay": 10
@@ -1220,11 +1237,26 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "My inside and outside have no borders between them."
+                            "text": "My inside and outside have no border between them."
                         }
                     ]
                 }
-            ]
+            ],
+            "triggers-osc": [
+                {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "scsene3_option5",
+                    "delay": 2
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 3 ,
+                    "delay": 2
+                }
+            ],
+            "delay": 5
         },
         {
             "speaker": "mom",
@@ -1256,18 +1288,6 @@
                     "target" : "gaugan",
                     "address": "/load-state",
                     "value": "sand"
-                },
-                {
-                    "target" : "stylegan",
-                    "address": "/start-sequence",
-                    "value": "scsene3_option5",
-                    "delay": 2
-                },
-                {
-                    "target" : "unity",
-                    "address": "/stylegan-animation/state",
-                    "value": 3 ,
-                    "delay": 2
                 },
                 {
                     "target" : "td",
@@ -1476,7 +1496,7 @@
         {
             "speaker": "sister",
             "text": "The clock has stopped.",
-            "timeout": "No more ticking.",
+            "noskip": true,
             "triggers-osc": [
                 {
                     "target" : "unity",

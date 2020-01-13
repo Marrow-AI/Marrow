@@ -223,6 +223,8 @@ namespace Marrow
             if (state == 1) {
                 animators[1].enabled = false;
                 renderers[1].enabled = false;
+                animators[2].enabled = false;
+                renderers[2].enabled = false;
                 animators[0].enabled = true;
                 renderers[0].enabled = true;
 
@@ -231,9 +233,15 @@ namespace Marrow
                 animators[1].enabled = true;
                 renderers[0].enabled = false;
                 renderers[1].enabled = true;
+                animators[2].enabled = false;
+                renderers[2].enabled = false;
             } else if (state == 3) {
                 renderers[0].enabled = false;
                 renderers[1].enabled = false;
+                animators[0].enabled = false;
+                animators[1].enabled = false;
+                renderers[2].enabled = true;
+                animators[2].enabled = true;
             }
         }
         public void ReceivedDeeplabBowl(OSCMessage message) {
