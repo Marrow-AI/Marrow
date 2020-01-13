@@ -618,26 +618,9 @@
             "type": "OPEN"
         },
         {
-            "speaker": "dad",
-            "text": "The way you just said it reminds me of...",
-            "timeout": "The sound of it reminds me of a saying..."
-        },
-        {
             "speaker": "brother",
             "text": "Mother, it just sounds very deep.",
             "timeout": "You are a deep person, mother."
-        },
-        {
-            "in-ear" : [ 
-                { 
-                        "target" : "dad",
-                        "lines": [
-                                {
-                                    "text": "did he just do it to me again?"
-                                }
-                        ]
-                }
-            ]
         },
         {
             "speaker": "sister",
@@ -991,7 +974,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "85 percen of the time someone is triggering you."
+                            "text": "85 percent of the time someone is triggering you."
                         }
                     ]
                 }
@@ -1211,7 +1194,7 @@
         {
             "speaker": "mom",
             "text": "Finally, dining quietly.",
-            "timeout": "I eating in quiet."
+            "timeout": "It is nice to eat quiet."
         },
         {
             "speaker": "brother",
@@ -1317,7 +1300,7 @@
         },
         {
             "speaker": "mom",
-            "text": "Dear child, we have never been there.",
+            "text": "Dear child, we have never got there.",
             "timeout": "Oh, I think you know something is off."
         },
         {
@@ -1465,11 +1448,11 @@
         },
         {
             "speaker": "brother",
-            "text": "Apples turn into liberation-"
+            "text": "Apples are our liberation-"
         },
         {
             "speaker": "brother",
-            "text": "Worms into desperation-"
+            "text": "Worms turn into desperation-"
         },
         {
             "speaker": "brother",
@@ -1492,7 +1475,7 @@
         },
         {
             "speaker": "sister",
-            "text": "The clock stopped.",
+            "text": "The clock has stopped.",
             "timeout": "No more ticking.",
             "triggers-osc": [
                 {
