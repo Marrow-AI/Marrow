@@ -904,7 +904,7 @@
             "timeout": "that everything has more to it.",
             "triggers-midi": [
                 {
-                   "note": 77
+                   "note": 79
                 } 
             ]
         },
@@ -971,7 +971,7 @@
             "timeout": "Not from your right.",
             "triggers-midi": [
                 {
-                   "note": 78
+                   "note": 80
                 } 
             ]
         },

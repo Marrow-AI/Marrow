@@ -157,7 +157,8 @@ class Engine:
 
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         self.td_client = udp_client.SimpleUDPClient("127.0.0.1", 7000)
-        self.audio_client = udp_client.SimpleUDPClient("192.168.1.21", 8000)
+        #self.audio_client = udp_client.SimpleUDPClient("192.168.1.21", 8000)
+        self.audio_client = udp_client.SimpleUDPClient("192.168.1.25", 8000)
         self.stylegan_client = udp_client.SimpleUDPClient("192.168.1.23", 3800)
         self.gaugan_client = udp_client.SimpleUDPClient("192.168.1.23", 3900)
 
@@ -650,7 +651,7 @@ class Engine:
             self.show_next_line()
 
     def play_file(self, file_name, role, endpoint):
-        print("Sending /play message!")
+        print("Sending /play message! {} {}".format(role, file_name))
         future = self.main_loop.create_future()
         self.play_futures[role] = future
         endpoint.send_message("/play", [role, file_name])
@@ -792,10 +793,10 @@ class Engine:
         #self.pix2pix_client.send_message("/control/stop",1)
 
     def send_midi_note(self,note, delay = 0): 
-        #self.schedule_osc(delay, self.audio_client, "/midi/note/1", [note,127, 1])
-        #self.schedule_osc(delay + 0.5, self.audio_client, "/midi/note/1", [note,127, 0])
-        self.schedule_osc(delay, self.audio_client, "/noteOn", [note,127])
-        self.schedule_osc(delay + 0.5, self.audio_client, "/noteOff", [note])
+        self.schedule_osc(delay, self.audio_client, "/midi/note/1", [note,127, 1])
+        self.schedule_osc(delay + 0.5, self.audio_client, "/midi/note/1", [note,127, 0])
+        #self.schedule_osc(delay, self.audio_client, "/noteOn", [note,127])
+        #self.schedule_osc(delay + 0.5, self.audio_client, "/noteOff", [note])
 
     def start_intro(self):
         if self.state != "WAITING":
