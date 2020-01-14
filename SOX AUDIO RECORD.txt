@@ -1,0 +1,1 @@
+sox -t waveaudio -d new-file.wav trim 0 6
