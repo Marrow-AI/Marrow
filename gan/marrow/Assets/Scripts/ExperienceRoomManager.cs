@@ -137,9 +137,28 @@ namespace Marrow
 			EventBus.TableOpeningEnded.Invoke();
         }
 
-        public void ReceivedOscCameraStyleGAN(int active)
+        public void ReceivedOscCameraStyleGAN(int state)
         {
-            styleGAN.GetComponent<Renderer>().enabled = (active  == 1);
+            if (state == 0) {
+                styleGAN.GetComponent<Renderer>().enabled = false;
+            } else if (state == 1) {
+                styleGAN.GetComponent<Renderer>().enabled = true;
+            } else if (state == 2) {
+                Material styleGANMaterial = styleGAN.GetComponent<Renderer>().material;
+
+                LeanTween.value(
+                        styleGAN,
+                        1.0f, 0.0f, 2.0f
+                    )
+                    .setOnUpdate((float val) => {
+                        styleGANMaterial.SetFloat("_Transparency", val);
+                    })
+                .setOnComplete(() => {
+                    styleGAN.GetComponent<Renderer>().enabled = false;
+                    styleGANMaterial.SetFloat("_Transparency", 1.0f);
+                });
+            }
+       
         }
 
         public void ReceivedOscStyleGANScale(int state)
@@ -151,8 +170,10 @@ namespace Marrow
                 LeanTween.move(styleGAN, new Vector3(-45.11f, -0.55f, styleGAN.transform.position.z), 35.0f);
                 // LeanTween.scale(styleGAN, new Vector3(0.75f, 0.75f, 0.75f), 35.0f);
                 LeanTween.scale(styleGAN, new Vector3(0.6f, 0.6f, 0.6f), 35.0f);
+            } else if (state == 3) {
+                styleGAN.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             }
-        }
+        } 
         public void ReceivedOscStyleGANBlend(float value)
         {
             Debug.Log("Set StyleGAN Blend " + value);
@@ -174,7 +195,7 @@ namespace Marrow
                 gauGAN.transform.position = new Vector3(-43.78f, -0.65f, 15f);
 
                 deepLab.GetComponent<Renderer>().enabled = true;
-                rawImage.GetComponent<Renderer>().enabled = true;
+                //rawImage.GetComponent<Renderer>().enabled = true;
                 Material rawImageMaterial = rawImage.GetComponent<Renderer>().material;
                 Material deeplabMaterial = deepLab.GetComponent<Renderer>().material;
 
@@ -185,14 +206,14 @@ namespace Marrow
                 .setOnUpdate((float val) => {
                     deeplabMaterial.SetFloat("_Transparency", val);
                 });
-
+                /*
                 LeanTween.value(
                     rawImage,
                     0.3f, 0.0f, 7.0f
                 )
                 .setOnUpdate((float val) => {
                        rawImageMaterial.SetFloat("_TransparencyOrig", val);
-                });
+                });*/
             } else if (state == 4) {
                 Material rawImageMaterial = rawImage.GetComponent<Renderer>().material;
                 Material deeplabMaterial = deepLab.GetComponent<Renderer>().material;
@@ -220,9 +241,19 @@ namespace Marrow
             Animator[] animators = styleGAN.GetComponentsInChildren<Animator>();
             SpriteRenderer[] renderers = styleGAN.GetComponentsInChildren<SpriteRenderer>();
 
-            if (state == 1) {
+            if (state == 0) {
                 animators[1].enabled = false;
                 renderers[1].enabled = false;
+                animators[2].enabled = false;
+                renderers[2].enabled = false;
+                animators[0].enabled = false;
+                renderers[0].enabled = false;
+            }
+            else if (state == 1) {
+                animators[1].enabled = false;
+                renderers[1].enabled = false;
+                animators[2].enabled = false;
+                renderers[2].enabled = false;
                 animators[0].enabled = true;
                 renderers[0].enabled = true;
 
@@ -231,9 +262,15 @@ namespace Marrow
                 animators[1].enabled = true;
                 renderers[0].enabled = false;
                 renderers[1].enabled = true;
+                animators[2].enabled = false;
+                renderers[2].enabled = false;
             } else if (state == 3) {
                 renderers[0].enabled = false;
                 renderers[1].enabled = false;
+                animators[0].enabled = false;
+                animators[1].enabled = false;
+                renderers[2].enabled = true;
+                animators[2].enabled = true;
             }
         }
         public void ReceivedDeeplabBowl(OSCMessage message) {

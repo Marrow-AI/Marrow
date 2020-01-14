@@ -158,6 +158,7 @@ class Engine:
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         self.td_client = udp_client.SimpleUDPClient("127.0.0.1", 7000)
         self.audio_client = udp_client.SimpleUDPClient("192.168.1.21", 8000)
+       # self.audio_client = udp_client.SimpleUDPClient("192.168.1.25", 8000)
         self.stylegan_client = udp_client.SimpleUDPClient("192.168.1.23", 3800)
         self.gaugan_client = udp_client.SimpleUDPClient("192.168.1.23", 3900)
 
@@ -650,7 +651,7 @@ class Engine:
             self.show_next_line()
 
     def play_file(self, file_name, role, endpoint):
-        print("Sending /play message!")
+        print("Sending /play message! {} {}".format(role, file_name))
         future = self.main_loop.create_future()
         self.play_futures[role] = future
         endpoint.send_message("/play", [role, file_name])
@@ -782,6 +783,9 @@ class Engine:
         self.td_client.send_message("/td/faces", 0)
         self.td_client.send_message("/td/lights", 0)
         self.t2i_client.send_message("/memory/state", 0)
+        self.t2i_client.send_message("/camera/stylegan", 0)
+        self.t2i_client.send_message("/stylegan-animation/state", 0)
+        self.t2i_client.send_message("/gaugan/state", 1)
         self.send_midi_note(36)
         self.send_noise = False
         self.main_loop.create_task(self.server.control("stop"))
@@ -848,6 +852,10 @@ class Engine:
         self.gaugan_client.send_message("/load-state", "beginning")
         self.t2i_client.send_message("/gaugan/state", 1)
         self.t2i_client.send_message("/memory/state", 0)
+        self.t2i_client.send_message("/camera/stylegan", 0)
+        self.t2i_client.send_message("/stylegan-animation/state", 0)
+
+
         self.send_midi_note(60, 2) # C3 - START
         self.send_midi_note(61, 4.7) 
         self.schedule_function(23, self.start_script)

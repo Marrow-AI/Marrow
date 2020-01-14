@@ -1,0 +1,1279 @@
+fileFormatVersion: 2
+guid: 3333a1d73aa16ff4e94e64a9375ee839
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -794318525189006801
+    second: Marrow_Scene3_Spritesheet_part2_0
+  - first:
+      213: 4492677001981893963
+    second: Marrow_Scene3_Spritesheet_part2_1
+  - first:
+      213: 4479430995784670937
+    second: Marrow_Scene3_Spritesheet_part2_2
+  - first:
+      213: -4401058882591373848
+    second: Marrow_Scene3_Spritesheet_part2_3
+  - first:
+      213: -7793993783874873278
+    second: Marrow_Scene3_Spritesheet_part2_4
+  - first:
+      213: 179349870178373771
+    second: Marrow_Scene3_Spritesheet_part2_5
+  - first:
+      213: 5624774083111816186
+    second: Marrow_Scene3_Spritesheet_part2_6
+  - first:
+      213: -3369611245368749535
+    second: Marrow_Scene3_Spritesheet_part2_7
+  - first:
+      213: -3662118543034009777
+    second: Marrow_Scene3_Spritesheet_part2_8
+  - first:
+      213: 4614212282986561823
+    second: Marrow_Scene3_Spritesheet_part2_9
+  - first:
+      213: -2971616750070571355
+    second: Marrow_Scene3_Spritesheet_part2_10
+  - first:
+      213: -213498180559889823
+    second: Marrow_Scene3_Spritesheet_part2_11
+  - first:
+      213: -1769597655587044415
+    second: Marrow_Scene3_Spritesheet_part2_12
+  - first:
+      213: -746221463372263270
+    second: Marrow_Scene3_Spritesheet_part2_13
+  - first:
+      213: -5201961935274029785
+    second: Marrow_Scene3_Spritesheet_part2_14
+  - first:
+      213: 1836443998059841878
+    second: Marrow_Scene3_Spritesheet_part2_15
+  - first:
+      213: 3573803195877693520
+    second: Marrow_Scene3_Spritesheet_part2_16
+  - first:
+      213: -4270206345031667376
+    second: Marrow_Scene3_Spritesheet_part2_17
+  - first:
+      213: 4261585039734203224
+    second: Marrow_Scene3_Spritesheet_part2_18
+  - first:
+      213: -2545964860128218556
+    second: Marrow_Scene3_Spritesheet_part2_19
+  - first:
+      213: -8126081889391265642
+    second: Marrow_Scene3_Spritesheet_part2_20
+  - first:
+      213: 4427017262529929700
+    second: Marrow_Scene3_Spritesheet_part2_21
+  - first:
+      213: 4501942629447387685
+    second: Marrow_Scene3_Spritesheet_part2_22
+  - first:
+      213: 1434886850037158952
+    second: Marrow_Scene3_Spritesheet_part2_23
+  - first:
+      213: -8791632888348481578
+    second: Marrow_Scene3_Spritesheet_part2_24
+  - first:
+      213: 8339629020147855877
+    second: Marrow_Scene3_Spritesheet_part2_25
+  - first:
+      213: -2435195184901168089
+    second: Marrow_Scene3_Spritesheet_part2_26
+  - first:
+      213: -888469863672197597
+    second: Marrow_Scene3_Spritesheet_part2_27
+  - first:
+      213: 6548730058599038712
+    second: Marrow_Scene3_Spritesheet_part2_28
+  - first:
+      213: -6786986220319825759
+    second: Marrow_Scene3_Spritesheet_part2_29
+  - first:
+      213: 3442341119845250781
+    second: Marrow_Scene3_Spritesheet_part2_30
+  - first:
+      213: -2256052687542611161
+    second: Marrow_Scene3_Spritesheet_part2_31
+  - first:
+      213: -749054846099450479
+    second: Marrow_Scene3_Spritesheet_part2_32
+  - first:
+      213: 2313208049160431622
+    second: Marrow_Scene3_Spritesheet_part2_33
+  - first:
+      213: -872185243444471480
+    second: Marrow_Scene3_Spritesheet_part2_34
+  - first:
+      213: -8549127278519989491
+    second: Marrow_Scene3_Spritesheet_part2_35
+  - first:
+      213: -3413983939074625176
+    second: Marrow_Scene3_Spritesheet_part2_36
+  - first:
+      213: 8048711178919822628
+    second: Marrow_Scene3_Spritesheet_part2_37
+  - first:
+      213: -6619430031650482757
+    second: Marrow_Scene3_Spritesheet_part2_38
+  - first:
+      213: 520944408726351880
+    second: Marrow_Scene3_Spritesheet_part2_39
+  - first:
+      213: -9070044353622005938
+    second: Marrow_Scene3_Spritesheet_part2_40
+  - first:
+      213: 2328943935054875276
+    second: Marrow_Scene3_Spritesheet_part2_41
+  - first:
+      213: -169113669192636960
+    second: Marrow_Scene3_Spritesheet_part2_42
+  - first:
+      213: 7749192319323059605
+    second: Marrow_Scene3_Spritesheet_part2_43
+  - first:
+      213: -7518585380743946405
+    second: Marrow_Scene3_Spritesheet_part2_44
+  - first:
+      213: 1048987831625254824
+    second: Marrow_Scene3_Spritesheet_part2_45
+  - first:
+      213: -8833880153163848023
+    second: Marrow_Scene3_Spritesheet_part2_46
+  - first:
+      213: -4512452332512373192
+    second: Marrow_Scene3_Spritesheet_part2_47
+  - first:
+      213: 6382506081565209482
+    second: Marrow_Scene3_Spritesheet_part2_48
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 12288
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc89bf889a79ff949bd25b89e8ad6b7a
+      internalID: -794318525189006801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_1
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 12288
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a67f839eb2851fe409c18459a99c86c2
+      internalID: 4492677001981893963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_2
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 12288
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a80358e23d25ef44949d6a97cbb5013
+      internalID: 4479430995784670937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_3
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 12288
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d23da5d0f1891c94288c54eb9c803ae5
+      internalID: -4401058882591373848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_4
+      rect:
+        serializedVersion: 2
+        x: 8192
+        y: 12288
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30c21aa67b64e4f4d95993eb40270d0b
+      internalID: -7793993783874873278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_5
+      rect:
+        serializedVersion: 2
+        x: 10240
+        y: 12288
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfc996862e74db745a2efa5f05e20499
+      internalID: 179349870178373771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_6
+      rect:
+        serializedVersion: 2
+        x: 12288
+        y: 12288
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79a4f4c76578da14a9f8d9fbdaa82242
+      internalID: 5624774083111816186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_7
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 10240
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98e567491032c0340b8e72369db531b6
+      internalID: -3369611245368749535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_8
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 10240
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a42ef117e4f1a134e980aad380dfe626
+      internalID: -3662118543034009777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_9
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 10240
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52515849f9e805b4db2f21ba33c4193f
+      internalID: 4614212282986561823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_10
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 10240
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 785975eaf240ad54994ed47d97b6ac4e
+      internalID: -2971616750070571355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_11
+      rect:
+        serializedVersion: 2
+        x: 8192
+        y: 10240
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b9556721ede7b340ac9bd7b90c9a10d
+      internalID: -213498180559889823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_12
+      rect:
+        serializedVersion: 2
+        x: 10240
+        y: 10240
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69d533f61c318dc4da1fe7304a17cc01
+      internalID: -1769597655587044415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_13
+      rect:
+        serializedVersion: 2
+        x: 12288
+        y: 10240
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6ca22d443c7bf344952071e1a6e722b
+      internalID: -746221463372263270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 8192
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b30b9b4d9bd808742b840a95595b6a8f
+      internalID: -5201961935274029785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_15
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 8192
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37adcd23a322b84408676399918728db
+      internalID: 1836443998059841878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_16
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 8192
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e0e5d24120b9cb49a5a65bba18a8e5c
+      internalID: 3573803195877693520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_17
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 8192
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2a69e2f27eb1c340837e5535489fd7a
+      internalID: -4270206345031667376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_18
+      rect:
+        serializedVersion: 2
+        x: 8192
+        y: 8192
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d44b42b3b03c28147aae3a7876fc6680
+      internalID: 4261585039734203224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_19
+      rect:
+        serializedVersion: 2
+        x: 10240
+        y: 8192
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d498672694b38084e970e28ed72bfe68
+      internalID: -2545964860128218556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_20
+      rect:
+        serializedVersion: 2
+        x: 12288
+        y: 8192
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91cd90856813a9942a20ce81f8bca6af
+      internalID: -8126081889391265642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_21
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9074ef258f4b6b445b15b7136456ee17
+      internalID: 4427017262529929700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_22
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08498f52e2115f049a093cb2a0eca51c
+      internalID: 4501942629447387685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_23
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aed4db6e109cbd64fa4bc058635c6e39
+      internalID: 1434886850037158952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_24
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62d267dc8a3249b41916d6b15b76bac5
+      internalID: -8791632888348481578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_25
+      rect:
+        serializedVersion: 2
+        x: 8192
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c5a1d22b047dfb4796861240b588d2d
+      internalID: 8339629020147855877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_26
+      rect:
+        serializedVersion: 2
+        x: 10240
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 513fd108332982040a35b29c7845e332
+      internalID: -2435195184901168089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_27
+      rect:
+        serializedVersion: 2
+        x: 12288
+        y: 6144
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d59f2f508f0091d459b3acdff89d467c
+      internalID: -888469863672197597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd6e03e5d4ccd19429d9ca4eaadf883b
+      internalID: 6548730058599038712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_29
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79095c5d8e85c714db4d509f3fcc84a0
+      internalID: -6786986220319825759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_30
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f8fabc59ca58e149899878eb9210d85
+      internalID: 3442341119845250781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_31
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1042e3be085fa844b894215d81fd16b
+      internalID: -2256052687542611161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_32
+      rect:
+        serializedVersion: 2
+        x: 8192
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31ff804f01525b7489226d4378ea0658
+      internalID: -749054846099450479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_33
+      rect:
+        serializedVersion: 2
+        x: 10240
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9af4c9f36549eb44783c5ae5987bd0a6
+      internalID: 2313208049160431622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_34
+      rect:
+        serializedVersion: 2
+        x: 12288
+        y: 4096
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84be0119923b8e04786d960693586134
+      internalID: -872185243444471480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_35
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f84c90a489d436247974988ebf60c0df
+      internalID: -8549127278519989491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_36
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edb2a568c9252864182cbb0dd6a8a845
+      internalID: -3413983939074625176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_37
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6022b1c3a96a35047b746ec9f286761c
+      internalID: 8048711178919822628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_38
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad99a7513e5836e4cb92b6ef7ae8a027
+      internalID: -6619430031650482757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_39
+      rect:
+        serializedVersion: 2
+        x: 8192
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7851e7ca3c157a14b8c6fd06fc9311d3
+      internalID: 520944408726351880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_40
+      rect:
+        serializedVersion: 2
+        x: 10240
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24e01973df361564bab45fdd529ccd69
+      internalID: -9070044353622005938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_41
+      rect:
+        serializedVersion: 2
+        x: 12288
+        y: 2048
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2021c76c151ae84291e9072cc0090f6
+      internalID: 2328943935054875276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_42
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ddc96c6ddc093740a69d372420a96be
+      internalID: -169113669192636960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_43
+      rect:
+        serializedVersion: 2
+        x: 2048
+        y: 0
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0f7a67d003a0c04c9d2dc07f94463e4
+      internalID: 7749192319323059605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_44
+      rect:
+        serializedVersion: 2
+        x: 4096
+        y: 0
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b7b83e9ec358254bb4646019a846ced
+      internalID: -7518585380743946405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_45
+      rect:
+        serializedVersion: 2
+        x: 6144
+        y: 0
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a43fd6b61a6844f42b5c4a349c59e5ae
+      internalID: 1048987831625254824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_46
+      rect:
+        serializedVersion: 2
+        x: 8192
+        y: 0
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 709075523037f9e4b9b0bc39e60e108e
+      internalID: -8833880153163848023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_47
+      rect:
+        serializedVersion: 2
+        x: 10240
+        y: 0
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a3948721b6210b4d92f76706a9c2b6f
+      internalID: -4512452332512373192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Marrow_Scene3_Spritesheet_part2_48
+      rect:
+        serializedVersion: 2
+        x: 12288
+        y: 0
+        width: 2048
+        height: 2048
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a71b894487ff694b9cce69fac730f29
+      internalID: 6382506081565209482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: ef12a33a8dc099341ab9f78a7ac80399
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
