@@ -30,6 +30,7 @@
     },
     "showRaw": false,
     "autumn": true,
-    "mapDeeplab": true
+    "mapDeeplab": true,
+    "sendBowl": true
 }
 

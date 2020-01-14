@@ -29,6 +29,7 @@
         ]
     },
     "showRaw": false,
-    "mapDeeplab": true
+    "mapDeeplab": true,
+    "sendBowl": true
 }
 
