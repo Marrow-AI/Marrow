@@ -63,12 +63,13 @@ namespace Marrow
 		private void Start()
         {
 			// Image convert related
+            /*
 			attnGanTextureA = new Texture2D(attnGanImageWidth, attnGanImageHeight);
 			plateMaterial.SetTexture("_MainTex", attnGanTextureA);
 			plateTransparentMaterial.SetTexture("_MainTex", attnGanTextureA);
 			attnGanTextureB = new Texture2D(attnGanImageWidth, attnGanImageHeight);
 			plateMaterial.SetTexture("_SecondTex", attnGanTextureB);
-			plateTransparentMaterial.SetTexture("_SecondTex", attnGanTextureB);
+			plateTransparentMaterial.SetTexture("_SecondTex", attnGanTextureB);*/
         }
 
 		/////////////////////////
@@ -189,6 +190,12 @@ namespace Marrow
 			Debug.Log("osc:control/start - 4 people triggered, starting the expereince");
 			EventBus.ExperienceStarted.Invoke();
 			tableOpeningEnded = false;
+            attnGanTextureA = new Texture2D(attnGanImageWidth, attnGanImageHeight);
+            plateMaterial.SetTexture("_MainTex", attnGanTextureA);
+            plateTransparentMaterial.SetTexture("_MainTex", attnGanTextureA);
+            attnGanTextureB = new Texture2D(attnGanImageWidth, attnGanImageHeight);
+            plateMaterial.SetTexture("_SecondTex", attnGanTextureB);
+            plateTransparentMaterial.SetTexture("_SecondTex", attnGanTextureB);
 		}
 
 		public void ReceivedOscTableFadeIn(OSCMessage message)

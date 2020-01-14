@@ -165,7 +165,7 @@ namespace Marrow
 			// Lights
 			mainLight.Restart();
 			spotLight.Restart();
-          platesOnlySpotlight.Restart();
+            platesOnlySpotlight.Restart();
 
             // Plates
             plateNormalMaterial.SetFloat("_Blend", 0);
@@ -422,9 +422,15 @@ namespace Marrow
                 plates[i].SetActive(true);
             }
 
-            LeanTween.value(plates[0], startColor, secondColor, 15f)
+            
+            LeanTween.value(plates[0], startColor, secondColor, 20f)
                 .setEaseOutBack()
-                .setOnUpdate((Color col) => { startColor = col; });
+                .setOnUpdate((Color col) => { 
+                    for (int i = 0; i < plates.Length; i++)
+                        {
+                            plateTransparentMaterial.color = col;
+                        }
+            });
 
             scriptText.GetComponent<Renderer>().enabled = false;
 
@@ -435,6 +441,7 @@ namespace Marrow
                 nameTags[i].SetActive(true);
                 nameTagAnimator = nameTags[i].transform.parent.GetComponent<Animator>();
                 nameTagAnimator.enabled = true;
+                nameTagAnimator.Play("ShowAllPlatesAnimation", -1, 0f);
             }
             //nameTagAnimator.SetTrigger("Show");
             //nameTagAnimator.enabled = true;
@@ -447,7 +454,7 @@ namespace Marrow
                 plates[i].SetActive(true);
             }
 
-            LeanTween.value(plates[0], secondColor, Color.white, 15f).setEaseOutElastic();
+            LeanTween.value(plates[0], secondColor, Color.white, 10f).setEaseOutElastic();
 
              //open text 2 image texture
              for (int i = 0; i < plates.Length; i++)
