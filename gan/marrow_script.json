@@ -238,7 +238,7 @@
         {
             "speaker": "sister",
             "text": "If I want to I can even see beyond all of you.",
-            "timeout": "If I want to I would see all of you differently."
+            "noskip": true
         },
         {
             "in-ear" : [ 
@@ -255,7 +255,7 @@
          },
         {
             "speaker": "mom",
-            "text": "But then you are missing the point.",
+            "text": "But you are missing the point.",
             "noskip": true
         },
         {
@@ -553,7 +553,12 @@
                     "target" : "stylegan",
                     "address": "/start-sequence",
                     "value": "Middle_Option_2,Middle_to_Beginning"
-                }
+                },
+                {
+                    "target" : "td",
+                    "address": "/td/edge",
+                    "value": 1
+                 }
             ]
         },
         {
@@ -576,14 +581,7 @@
         {
             "speaker": "sister",
             "text": "Time has stopped.",
-            "noskip": true,
-            "triggers-osc": [
-                {
-                    "target" : "td",
-                    "address": "/td/edge",
-                    "value": 1
-             }
-            ]
+            "noskip": true
         },
         {
             "speaker": "dad",
@@ -646,7 +644,7 @@
                     "target" : "sister",
                     "lines": [
                             {
-                              "text": "I meant about that bowl that is on the counter.",
+                              "text": "I mean that bowl that is right there on the counter.",
                               "pause": 10
                             },
                             {
@@ -691,7 +689,7 @@
         },
         {
             "speaker": "sister",
-            "text": "I don't mean the taste of our dinners."
+            "text": "I don't care about the taste of our dinners."
         },
         {
             "speaker": "sister",
@@ -750,7 +748,7 @@
                         ]
                     }
                 ],
-                "delay": 5
+                "delay": 7
         },
         {
             "speaker": "dad",
@@ -766,7 +764,7 @@
                     "target" : "unity",
                     "address": "/memory/state",
                     "value": 2,
-                    "delay": 2               
+                    "delay": 4               
                 }
             ],
             "triggers-midi": [
@@ -856,8 +854,7 @@
                 {
                     "target" : "unity",
                     "address": "/memory/state",
-                    "value": 4,
-                    "delay": 2            
+                    "value": 4
                 }
             ],
             "triggers-midi": [
@@ -873,15 +870,15 @@
                     "lines": [
                             {
                                 "text": "We got this bowl to our wedding as a gift from his parents.",
-                                "pause": 10
+                                "pause": 20
                             },
                             {
                                 "text": "I remember how his mom hugged me and kissed me that day.",
-                                "pause":10
+                                "pause": 20
                             },
                              {
                                 "text": "It was the first time in my life that I felt like I belong.",
-                                "pause":10
+                                "pause": 20
                             },
                             {
                                 "text": "I always liked this bowl more than I ever liked my mother."
@@ -889,7 +886,7 @@
                         ]
                     }
                 ],
-            "delay": 5
+            "delay": 9
         },
         {
             "speaker": "mom",
@@ -927,7 +924,7 @@
         },
         {
             "speaker": "sister",
-            "text": "I am trying to improve for you. To get rid of your distorted image.",
+            "text": "I am trying to improve for you. To get rid of the distorted image I have of you.",
             "timeout": "I want to get better for you, to not see you so distorted."
         },
         {
@@ -1000,7 +997,7 @@
         },
         {
             "speaker": "dad",
-            "text": "Did you mean from my left side?",
+            "text": "Did you mean my left side?",
             "timeout": "I think you meant from my left side."
         },
         {
@@ -1012,8 +1009,9 @@
                             "text": "I am refusing to be the only one to blame."
                         }
                     ]
-                }
+                }               
             ],
+            "delay" : 3,
             "triggers-osc": [
                 {
                     "target" : "td",
@@ -1023,9 +1021,9 @@
             ]
         },
         {
-            "speaker": "sister",
-            "text": "And from the other side - do you see the ocean?",
-            "timeout": "The other side of the left - can you see an ocean?",
+            "speaker": "sister", 
+            "text": "And from your other side - do you see the ocean?",
+            "timeout": "On your other left - can you see an ocean?",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -1042,13 +1040,13 @@
                     "target" : "stylegan",
                     "address": "/start-sequence",
                     "value": "Beginning_Option_3",
-                    "delay": 1
+                    "delay": 5
                 },
                 {
                     "target" : "unity",
                     "address": "/stylegan-animation/state",
                     "value": 1 ,
-                    "delay": 1
+                    "delay": 5
                 },
                 {
                     "target" : "td",
@@ -1107,16 +1105,16 @@
         },
         {
             "speaker": "brother",
-            "text": "You simulate your present through images that already passed.",
-            "timeout": "You recreate this based on what has already happened."
+            "text": "I see nothing but a collage of moving images from our past.",
+            "timeout": "This ocean is your creation, sister."
         },
         {
             "speaker": "sister",
-            "text": "Not only that, I also keep observing you, craving to learn you -"
+            "text": "True, but I keep observing you, craving to learn you-"
         },
         {
             "speaker": "sister",
-            "text": "but your shadows keep coming alive, telling me a different story."
+            "text": "Only that your shadows keep coming alive, telling me a different story."
         },
         {
             "speaker": "dad",
@@ -1180,6 +1178,11 @@
                     "delay": 2
                 }
             ],
+            "triggers-midi": [
+                {
+                   "note": 86
+                } 
+            ],
             "delay": 10
         },
         {
@@ -1239,7 +1242,7 @@
         },
         {
             "speaker": "dad",
-            "text": "It easy to get fooled by the unstable shifts of the wind."
+            "text": "It is easy to get fooled by the unstable shifts of the wind."
         },
         {
             "in-ear" : [ 
@@ -1275,7 +1278,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Have some rose water.",
+            "text": "Would you like to have some rose water.",
             "triggers-midi": [
                 {
                    "note": 88
@@ -1326,11 +1329,29 @@
         {
             "speaker": "sister",
             "text": "Isn't it a matter of perspective? I'm just trying to understand what makes us a family.",
-            "timeout": "I am trying to hold on what keeps us together."
+            "timeout": "I am trying to hold on what keeps us together.",
+            "triggers-osc": [
+                {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "Scene4_option5"
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 0
+                },
+                {
+                    "target" : "unity",
+                    "address": "/camera/stylegan",
+                    "value": 2,
+                    "delay" : 12
+                }
+            ]
         },
         {
             "speaker": "mom",
-            "text": "Dear child, we have never got there.",
+            "text": "Dear child, we never got there.",
             "timeout": "Oh, I think you know something is off."
         },
         {
@@ -1363,7 +1384,7 @@
             "text": "No, I need you to set the lowest standard.",
             "triggers-midi": [
                 {
-                   "note": 99
+                   "note": 98
                 } 
             ],
             "triggers-osc": [
@@ -1394,7 +1415,7 @@
             "timeout": "So expect errors - you will never be perfect.",
             "triggers-midi": [
                 {
-                   "note": 100
+                   "note": 99
                 } 
             ]
         },
@@ -1415,6 +1436,11 @@
                     "target" : "unity",
                     "address": "/stylegan/blend",
                     "value": 1.0
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan/scale",
+                    "value": 3
                 },
                 {
                     "target" : "td",
@@ -1473,16 +1499,16 @@
         },
         {
             "speaker": "mom",
-            "text": "Yes, it is almost time to sleep. The best time of the day.",
+            "text": "Oh yes, dreams. I am so tired.",
             "timeout": "The best time of the day has arrived."
         },
         {
             "speaker": "brother",
-            "text": "Apples are our liberation-"
+            "text": "Apples become our liberation-"
         },
         {
             "speaker": "brother",
-            "text": "Worms turn into desperation-"
+            "text": "Worms turn into our desperation-"
         },
         {
             "speaker": "brother",
@@ -1501,12 +1527,7 @@
         {
             "speaker": "dad",
             "text": "Trapped in the flow of your own thought.",
-            "timeout": "It is a loop.",
-            "triggers-midi": [
-                {
-                    "note": 109
-                } 
-            ]
+            "timeout": "It is a loop."
         },
         {
             "speaker": "sister",
@@ -1538,6 +1559,11 @@
                     "address": "/start-sequence",
                     "value": "part3_2_option1"
                 }
+            ],
+            "triggers-midi": [
+                {
+                    "note": 109
+                } 
             ]
         },
         {

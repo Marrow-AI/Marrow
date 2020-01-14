@@ -137,9 +137,28 @@ namespace Marrow
 			EventBus.TableOpeningEnded.Invoke();
         }
 
-        public void ReceivedOscCameraStyleGAN(int active)
+        public void ReceivedOscCameraStyleGAN(int state)
         {
-            styleGAN.GetComponent<Renderer>().enabled = (active  == 1);
+            if (state == 0) {
+                styleGAN.GetComponent<Renderer>().enabled = false;
+            } else if (state == 1) {
+                styleGAN.GetComponent<Renderer>().enabled = true;
+            } else if (state == 2) {
+                Material styleGANMaterial = styleGAN.GetComponent<Renderer>().material;
+
+                LeanTween.value(
+                        styleGAN,
+                        1.0f, 0.0f, 2.0f
+                    )
+                    .setOnUpdate((float val) => {
+                        styleGANMaterial.SetFloat("_Transparency", val);
+                    })
+                .setOnComplete(() => {
+                    styleGAN.GetComponent<Renderer>().enabled = false;
+                    styleGANMaterial.SetFloat("_Transparency", 1.0f);
+                });
+            }
+       
         }
 
         public void ReceivedOscStyleGANScale(int state)
@@ -151,8 +170,10 @@ namespace Marrow
                 LeanTween.move(styleGAN, new Vector3(-45.11f, -0.55f, styleGAN.transform.position.z), 35.0f);
                 // LeanTween.scale(styleGAN, new Vector3(0.75f, 0.75f, 0.75f), 35.0f);
                 LeanTween.scale(styleGAN, new Vector3(0.6f, 0.6f, 0.6f), 35.0f);
+            } else if (state == 3) {
+                styleGAN.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             }
-        }
+        } 
         public void ReceivedOscStyleGANBlend(float value)
         {
             Debug.Log("Set StyleGAN Blend " + value);
