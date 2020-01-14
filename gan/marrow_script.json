@@ -62,7 +62,7 @@
          {
             "speaker": "dad",
             "text": "Please don't tell me you don't like what you've cooked, mother.",
-            "timeout": "I really hope you can enjoy what you have cooked",
+            "timeout": "I really hope you can enjoy what you have cooked.",
             "triggers-midi": [
                 {
                    "note": 63
@@ -1278,7 +1278,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Would you like to have some rose water.",
+            "text": "Would you like to have some rose water?",
             "triggers-midi": [
                 {
                    "note": 88
@@ -1569,7 +1569,7 @@
         {
             "speaker": "sister",
             "text": "Daddy? Can I ask you something?",
-            "timeout": "Daddy, I have one question."
+            "timeout": "Daddy, I promise only one question."
         },
         {
             "speaker": "dad",
