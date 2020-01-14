@@ -276,9 +276,20 @@ class Engine:
         while True:
             item = await self.queue.async_q.get()
             if item["action"] == "play-finished":
-                role = item["role"]
-                print("PLAY FINISHED!! {}".format(role))
-                self.play_futures[role].set_result(1)
+                try:
+                    role = item["role"]
+                    print("PLAY FINISHED!! {}".format(role))
+                    self.play_futures[role].set_result(1)
+                except Exception as e:
+                    print("Exception in play finished! Finishing all {}".format(e))
+                    for future in self.play_futures.values():
+                        try:
+                            if future is not None:
+                                future.set_result(1)
+                        except:
+                            continue
+
+                    
             elif item["action"] == "speech" and "speaker" in self.script.awaiting and item["role"] == self.script.awaiting["speaker"]:
                 self.speech_text(item["text"])
             elif item["action"] == "mid-speech" and "speaker" in self.script.awaiting and item["role"] == self.script.awaiting["speaker"]:

@@ -175,8 +175,7 @@
          {
             "speaker": "mom",
             "text": "Why are your answers always so flat?",
-            "timeout": "Never heard such a flat answer.",
-            "delay": 5
+            "timeout": "Never heard such a flat answer."
          },
          {
             "speaker": "dad",
@@ -1441,6 +1440,11 @@
                     "target" : "unity",
                     "address": "/stylegan/scale",
                     "value": 3
+                },
+                {
+                    "target" : "unity",
+                    "address": "/camera/stylegan",
+                    "value": 1
                 },
                 {
                     "target" : "td",
