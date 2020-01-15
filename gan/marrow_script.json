@@ -1660,7 +1660,7 @@
         },
         {
             "speaker": "mom",
-            "text": "Home, like this one.",
+            "text": "From homes, like this one.",
             "timeout": "Homes.",
             "triggers-midi": [
                 {
