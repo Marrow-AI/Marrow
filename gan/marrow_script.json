@@ -53,7 +53,7 @@
                     "target" : "dad",
                     "lines": [
                         {
-                            "text": "He doesn't always know his place in the family"
+                            "text": "My son doesn't always know his place in the family"
                         }
                     ]
                 }
@@ -196,7 +196,7 @@
          },
          {
             "speaker": "brother",
-            "text": "If you try you can see beyond the %answer%",
+            "text": "Sister, if you try you can see beyond the %answer%",
             "triggers-osc": [
                 {
                     "target" : "stylegan",
@@ -250,7 +250,7 @@
                     ]
                 }
              ],
-             "delay": 20
+             "delay": 8
          },
         {
             "speaker": "mom",
@@ -285,7 +285,8 @@
                         }
                     ]
                 }
-             ]
+             ],
+             "delay": 8
          },
         {
             "speaker": "dad",
@@ -545,33 +546,6 @@
                         }
                     ]
                 }
-            ],
-            "triggers-osc": [
-                {
-                    "target" : "unity",
-                    "address": "/stylegan/blend",
-                    "value": 0.0
-                },
-                {
-                    "target" : "td",
-                    "address": "/td/lights",
-                    "value": 0
-                },
-                {
-                    "target" : "unity",
-                    "address": "/stylegan/scale",
-                    "value": 2
-                },
-                {
-                    "target" : "stylegan",
-                    "address": "/start-sequence",
-                    "value": "Middle_Option_2,Middle_to_Beginning"
-                },
-                {
-                    "target" : "td",
-                    "address": "/td/edge",
-                    "value": 1
-                 }
             ]
         },
         {
@@ -589,6 +563,33 @@
                     {
                        "note": 73
                     } 
+                ],
+                "triggers-osc": [
+                    {
+                        "target" : "unity",
+                        "address": "/stylegan/blend",
+                        "value": 0.0
+                    },
+                    {
+                        "target" : "td",
+                        "address": "/td/lights",
+                        "value": 0
+                    },
+                    {
+                        "target" : "unity",
+                        "address": "/stylegan/scale",
+                        "value": 2
+                    },
+                    {
+                        "target" : "stylegan",
+                        "address": "/start-sequence",
+                        "value": "Middle_Option_2,Middle_to_Beginning"
+                    },
+                    {
+                        "target" : "td",
+                        "address": "/td/edge",
+                        "value": 1
+                     }
                 ]
         },
         {
@@ -1130,7 +1131,7 @@
         },
         {
             "speaker": "dad",
-            "text": "Very true. Usually, I notice it every day.",
+            "text": "The ocean? Usually, I notice it every day.",
             "timeout": "My goal is to see everything that exists in front of me."
         },
         {
@@ -1152,11 +1153,11 @@
         },
         {
             "speaker": "sister",
-            "text": "True, but I keep observing you, craving to learn you-"
+            "text": "True, but I keep observing you, craving to learn who you are-"
         },
         {
             "speaker": "sister",
-            "text": "Only that your shadows keep coming alive, telling me a different story."
+            "text": "Only your shadows keep coming alive, telling me a different story."
         },
         {
             "speaker": "dad",
@@ -1185,7 +1186,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "When those moments really happen, believe me, you won't miss it."
+                            "text": "When those moments really happen, believe me, you will notice them."
                         }
                     ]
                 },
@@ -1315,7 +1316,7 @@
         },
         {
             "speaker": "mom",
-            "text": "You are taking us down to a moonless dark night.",
+            "text": "Sister, you are taking us down to a moonless dark night.",
             "timeout": "I am not a fan of the dark."
         },
         {
@@ -1587,7 +1588,7 @@
         },
         {
             "speaker": "dad",
-            "text": "Trapped in the flow of your own thought.",
+            "text": "Trapped in the flow of your own thoughts.",
             "timeout": "It is a loop."
         },
         {
