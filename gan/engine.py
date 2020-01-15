@@ -776,7 +776,12 @@ class Engine:
                 self.react(self.script.awaiting_text)
         elif command == 'prev':
             self.prev_line()
-
+        elif command == 'hall-callibration':
+            self.hall_callibration()
+        elif command == 'hall-completed':
+            self.hall_completed()
+        elif command == 'hall-start':
+            self.main_loop.create_task(self.hall_start())
 
     def ser_stop(self):
         self.args.stop = True
@@ -784,6 +789,26 @@ class Engine:
     def ser_start(self):
         self.args.stop = False
         self.live_ser.listen(self.args)
+
+    def hall_callibration(self): 
+        print("Play hall calibration sound!")
+        self.send_midi_note(122)
+
+    def hall_completed(self): 
+        print("Play hall completed sound!")
+        self.send_midi_note(123)
+
+    async def hall_start(self): 
+        print("Hall start! Playing character descriptions")
+        tasks = []
+        for target in ["mom", "dad", "brother", "sister"]:
+            file_name = 'in-ear/in_ear_{}_hall.wav'.format(target)
+            output_endpoint = self.in_ear_endpoints[target]
+            tasks.append(self.play_file(file_name, target, output_endpoint))
+
+        await asyncio.gather(*tasks)
+        print("Finshed all character descriptions! Starting")
+        self.start_nfb()
 
     def stop(self):
         print("Stopping experience")

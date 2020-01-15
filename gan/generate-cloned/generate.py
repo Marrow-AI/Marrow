@@ -19,6 +19,7 @@ parser = argparse.ArgumentParser(description='Marrow line generator using cloned
 parser.add_argument('character', metavar='Character name', help='Character name')
 parser.add_argument('voice_sample', metavar='Voice sample file', help='Voice sample file')
 parser.add_argument('--only-index', metavar='Only specific index' , help='Generate only this index')
+parser.add_argument('--hall', action='store_true' , help='Generate for hall')
 args = parser.parse_args()
 
 
@@ -40,7 +41,12 @@ if __name__ == '__main__':
     encoder_wav = encoder.preprocess_wav(Path(args.voice_sample))
     embed, partial_embeds, _ = encoder.embed_utterance(encoder_wav, return_partials=True)
 
-    script = Script(script_file = '../marrow_script.json', load_nlp = False)
+    if args.hall:
+        script_file_name = '../marrow_hall.json'
+    else:
+        script_file_name = '../marrow_script.json'
+
+    script = Script(script_file = script_file_name, load_nlp = False)
 
     if args.only_index:
         only_index = int(args.only_index)
@@ -74,7 +80,13 @@ if __name__ == '__main__':
                         wavs = [wav[start:end] for start, end, in zip(b_starts, b_ends)]
                         breaks = [np.zeros(int(0.15 * Synthesizer.sample_rate * pause_length)) for pause_length in pauses] 
                         final_wav = np.concatenate([i for w, b in zip(wavs, breaks) for i in (w, b)])
-                        scipy.io.wavfile.write("results/in_ear_{}_{}.wav".format(target,index), Synthesizer.sample_rate, final_wav)
+
+                        if args.hall:
+                            output_file = "results/in_ear_{}_hall.wav".format(target)
+                        else:
+                            output_file = "results/in_ear_{}_{}.wav".format(target,index)
+
+                        scipy.io.wavfile.write(output_file, Synthesizer.sample_rate, final_wav)
 
                     #moz_tts.say(utterance, "gan_new/in_ear_{}_{}.wav".format(target,index))
         except Exception as e:

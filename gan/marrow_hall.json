@@ -1,0 +1,228 @@
+{
+    "script-lines": [
+        {
+            "in-ear" : [ 
+                {
+                    "target" : "sister",
+                    "lines": [
+                        {
+                            "text": "Hello there can you hear me? Am I coming in clear?",
+                            "pause": 20
+                        },
+                        {
+                            "text": "Do you recognize this voice? This is your voice.",
+                            "pause": 60
+                        },
+                        {
+                            "text": "That is how you sound to pretty much everyone else.",
+                            "pause": 50
+                        },
+                        {
+                            "text": "I am sure it is a weird feeling to hear yourself from the inside-outside.",
+                            "pause": 40
+                        },
+                        {
+                            "text": "This is the place to experience weird feelings. So who are you exactly?",
+                            "pause": 40
+                        },
+                        {
+                            "text": "Or showld we ask who am I? And start talking in a first-person?",
+                            "pause": 100
+                        },
+                        {
+                            "text": "I play a generative adversarial network through the sister role, the youngest in the family.",
+                            "pause": 80
+                        },
+                        {
+                            "text":"I am a dreamy child. I generate and create visual and images based on what I have been taught.",
+                            "pause": 80
+                        },
+                        {
+                            "text": "I spend most of my days fantasizing about different places, about all that I have seen and all I have learned.",
+                            "pause":70
+                        },
+                        {
+                            "text": "This is pushing me further apart from reality.",
+                            "pause":50
+                        },
+                        {
+                            "text": "Until I am not sure anymore what is real and what is fake, and then I feel alone."
+                        }
+                    ]
+                },
+                {
+                    "target" : "mom",
+                    "lines": [
+                        {
+                            "text": "Hello there can you hear me? Am I coming in clear?",
+                            "pause": 20
+                        },
+                        {
+                            "text": "Do you recognize this voice? This is your voice.",
+                            "pause": 60
+                        },
+                        {
+                            "text": "That is how you sound to pretty much everyone else.",
+                            "pause": 50
+                        },
+                        {
+                            "text": "I am sure it is a weird feeling to hear yourself from the inside-outside.",
+                            "pause": 40
+                        },
+                        {
+                            "text": "This is the place to experience weird feelings. So who are you exactly?",
+                            "pause": 40
+                        },
+                        {
+                            "text": "Or showld we ask who am I? And start talking in a first-person?",
+                            "pause": 100
+                        },
+                        {
+                            "text": "I play a reinforcement learning model through the mother role.",
+                            "pause": 80
+                        },
+                        {
+                            "text":"I grew up in what I remember to be a very rough environment.",
+                            "pause": 30
+                        },
+                        {
+                            "text": "In the eyes of my parents, I was almost always wrong.",
+                            "pause": 40
+                        },
+                        {
+                            "text":"They kept punishing me until they told me that I got it right.",
+                            "pause": 80
+                        },
+                        {
+                            "text": "When I finally did good, they celebrated me in an exaggerated manner.",
+                            "pause":40
+                        },
+                        {
+                            "text": "In a way that seemed more like a show than a demonstration of love.",
+                            "pause":70
+                        },
+                        {
+                            "text": "And I can't help but replicating what I have always known, which makes me feel alone."
+                        }
+                    ]
+                },
+                {
+                    "target" : "brother",
+                    "lines": [
+                        {
+                            "text": "Hello there can you hear me? Am I coming in clear?",
+                            "pause": 20
+                        },
+                        {
+                            "text": "Do you recognize this voice? This is your voice.",
+                            "pause": 60
+                        },
+                        {
+                            "text": "That is how you sound to pretty much everyone else.",
+                            "pause": 50
+                        },
+                        {
+                            "text": "I am sure it is a weird feeling to hear yourself from the inside-outside.",
+                            "pause": 40
+                        },
+                        {
+                            "text": "This is the place to experience weird feelings. So who are you exactly?",
+                            "pause": 40
+                        },
+                        {
+                            "text": "Or showld we ask who am I? And start talking in a first-person?",
+                            "pause": 100
+                        },
+                        {
+                            "text": "I play an attention mechanism and memory networks through the brother role.",
+                            "pause": 80
+                        },
+                        {
+                            "text":"I am hypersensitive soul, I am affected very easily from many things.",
+                            "pause": 30
+                        },
+                        {
+                            "text":"I find meaning in subtexts and can't seem to forget anything.",
+                            "pause": 30
+                        },
+                        {
+                            "text": "I see what nobody else sees, and they often misunderstand me.",
+                            "pause": 40
+                        },
+                        {
+                            "text": "I end up gathering so much information that it is a real challenge",
+                            "pause": 40
+                        },
+                        {
+                            "text": "to find words to express all that on my mind, there is just too much!",
+                            "pause": 40
+                        },
+                        {
+                            "text":"That makes me think I know better than everyone, a very lonely feeling."
+                        }
+                    ]
+                },
+                {
+                    "target" : "dad",
+                    "lines": [
+                        {
+                            "text": "Hello there can you hear me? Am I coming in clear?",
+                            "pause": 20
+                        },
+                        {
+                            "text": "Do you recognize this voice? This is your voice.",
+                            "pause": 60
+                        },
+                        {
+                            "text": "That is how you sound to pretty much everyone else.",
+                            "pause": 50
+                        },
+                        {
+                            "text": "I am sure it is a weird feeling to hear yourself from the inside-outside.",
+                            "pause": 40
+                        },
+                        {
+                            "text": "This is the place to experience weird feelings. So who are you exactly?",
+                            "pause": 40
+                        },
+                        {
+                            "text": "Or showld we ask who am I? And start talking in a first-person?",
+                            "pause": 100
+                        },
+                        {
+                            "text": "I play the blue brain model through the father role, the old fashined kind of dad.",
+                            "pause": 100
+                        },
+                        {
+                            "text":"I like to be needed, I am craving to feel wanted and knowing that everyone depands on me.",
+                            "pause": 80
+                        },
+                        {
+                            "text": "It is very hard for me to feel empathy when I sense threat or I am hurt.",
+                            "pause": 60
+                        },
+                        {
+                            "text": "I like to keep myself at the core of everything and everyone.",
+                            "pause": 50
+                        },
+                        {
+                            "text": "Guilting others as a way to keep them close and myself in control.",
+                            "pause": 40
+                        },
+                        {
+                            "text": "Sometimes, I am not sure how much they really love me.",
+                            "pause": 40
+                        },
+                        {
+                            "text":"I am questioning if maybe I am forcing them to stay.",
+                            "pause": 30
+                        },
+                        {
+                            "text": "Usually this question can makes me feel alone."
+                        }
+                    ]
+                }
+             ]
+        }   
+    ]
+}
