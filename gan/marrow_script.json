@@ -474,6 +474,9 @@
             ],
             "triggers-midi": [
                 {
+                   "note": 121
+                },
+                {
                    "note": 72
                 } 
             ],
@@ -896,6 +899,11 @@
                         ]
                     }
                 ],
+            "triggers-midi": [
+                {
+                   "note": 123 
+                } 
+            ],
             "delay": 9
         },
         {
@@ -1514,6 +1522,9 @@
                 }
             ],
             "triggers-midi": [
+                {
+                   "note": 121 
+                },
                 {
                    "note": 108
                 }

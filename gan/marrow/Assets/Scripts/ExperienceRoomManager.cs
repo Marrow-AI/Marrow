@@ -24,6 +24,8 @@ namespace Marrow
 
         private int bowlTweenId;
 
+        private OSCTransmitter transmitter;
+
 
 
         private void OnEnable()
@@ -60,6 +62,9 @@ namespace Marrow
             rawImage = GameObject.Find("RawImage");
             memory = GameObject.Find("Memory");
             bowlTweenId = 0;
+
+            transmitter = gameObject.GetComponent<OSCTransmitter>();
+            Debug.Log("OSC Transmitter: " + transmitter);
 
 
 
@@ -284,7 +289,16 @@ namespace Marrow
             LeanTween.cancel(bowlTweenId);
             Vector3 worldPos = memory.transform.parent.TransformPoint(memX, memory.transform.localPosition.y, memory.transform.localPosition.z);
             Debug.Log("World pos: " + worldPos.x);
-            bowlTweenId = LeanTween.moveX(memory, worldPos.x, 2.0f).id;
+            bowlTweenId = LeanTween.moveX(memory, worldPos.x, 2.0f)
+            .setOnUpdate((float val) => {
+                int ccValue = (int)(((memory.transform.localPosition.x + 7.0f) / 14.0f) * 127.0f);
+                // Debug.Log("Sending OSC pos, CC: " + ccValue);
+                OSCMessage ccMsg = new OSCMessage("/cc");
+                ccMsg.AddValue(OSCValue.Int(1));
+                ccMsg.AddValue(OSCValue.Int(ccValue));
+                transmitter.Send(ccMsg);
+            })
+            .id;
         }
         public void ReceivedMemoryState(int state) {
             Debug.Log("Set Memory Animation state " + state);
