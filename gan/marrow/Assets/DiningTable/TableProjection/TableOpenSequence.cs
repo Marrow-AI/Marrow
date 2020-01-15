@@ -253,7 +253,10 @@ namespace Marrow
     			FadeOutTMPTexts(3f);
 			else
 				FadeOutTMPTexts();
-		}
+
+            enableOpenline(false);
+
+        }
 
 		//////////////////////////////
         ///       OSC related       //

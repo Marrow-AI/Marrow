@@ -157,6 +157,7 @@ class Engine:
 
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
         self.td_client = udp_client.SimpleUDPClient("127.0.0.1", 7000)
+        self.td_sister_client = udp_client.SimpleUDPClient("127.0.0.1", 7001)
         self.audio_client = udp_client.SimpleUDPClient("192.168.1.21", 8000)
        # self.audio_client = udp_client.SimpleUDPClient("192.168.1.25", 8000)
         self.stylegan_client = udp_client.SimpleUDPClient("192.168.1.23", 3800)
@@ -166,6 +167,7 @@ class Engine:
         self.osc_clients = {
             "unity": self.t2i_client,
             "td": self.td_client,
+            "td-sister": self.td_sister_client,
             "stylegan": self.stylegan_client,
             "gaugan": self.gaugan_client,
             "audio": self.audio_client

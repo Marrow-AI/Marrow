@@ -3,7 +3,31 @@
         {
             "speaker": "dad",
             "text": "Mother, this looks delicious! What are we eating tonight?",
-            "noskip":  true
+            "noskip":  true,
+            "triggers-osc": [
+                {
+                    "target" : "td-sister",
+                    "address": "/td/glitch",
+                    "value": 1
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan/blend",
+                    "value": 1.0
+                },
+                {
+                    "target" : "td-sister",
+                    "address": "/td/glitch",
+                    "value": 0,
+                    "delay": 1
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan/blend",
+                    "value": 0.0,
+                    "delay": 1
+                }
+            ]
         },
         {
             "in-ear" : [ 
