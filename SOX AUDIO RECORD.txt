@@ -1,1 +1,4 @@
 sox -t waveaudio -d new-file.wav trim 0 6
+
+sox -c 1 -r 44100 --norm=-4 -t waveaudio -d test2.wav trim 0 6
+
