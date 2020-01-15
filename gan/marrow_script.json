@@ -25,7 +25,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "oh, he is waiting for me to answer"
+                            "text": "oh, he is waiting for an answer"
                         }
                     ]
                 }
@@ -384,11 +384,11 @@
                     "target" : "mom",
                     "lines": [
                        {
-                            "text": "It's been a while since I felt something for him.",
+                            "text": "It is been a while since I felt something toward him.",
                             "pause": 15
                         },
                         {
-                            "text": "What he just said got me emotional, I feel I want to hold his hand."
+                            "text": "What he just said got me very emotional, I feel I want to hold his hand."
                         }
                     ]
                 }
@@ -1031,7 +1031,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "85 percent of the time someone is triggering you."
+                            "text": "85 percent of the time there is someone who is triggering you."
                         }
                     ]
                 }
@@ -1121,7 +1121,7 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "Most likely it comes from deep, deep inside of you"
+                            "text": "Most likely it comes from deep, deep inside of you."
                         }
                     ]
                 }
@@ -1362,7 +1362,11 @@
                     "target" : "mom",
                     "lines": [
                         {
-                            "text": "Why are the glasses not in the right place? I have to arrange them back in the right order."
+                            "text": "Why are the glasses not in the right place?",
+                            "pause": 10
+                        },
+                        {
+                            "text": "I have to arrange them back in the right order."
                         }
                     ]
                 }
