@@ -3,31 +3,7 @@
         {
             "speaker": "dad",
             "text": "Mother, this looks delicious! What are we eating tonight?",
-            "noskip":  true,
-            "triggers-osc": [
-                {
-                    "target" : "td-sister",
-                    "address": "/td/glitch",
-                    "value": 1
-                },
-                {
-                    "target" : "unity",
-                    "address": "/stylegan/blend",
-                    "value": 1.0
-                },
-                {
-                    "target" : "td-sister",
-                    "address": "/td/glitch",
-                    "value": 0,
-                    "delay": 1
-                },
-                {
-                    "target" : "unity",
-                    "address": "/stylegan/blend",
-                    "value": 0.0,
-                    "delay": 1
-                }
-            ]
+            "noskip":  true
         },
         {
             "in-ear" : [ 
@@ -473,6 +449,17 @@
                     "target" : "unity",
                     "address": "/stylegan/blend",
                     "value": 1.0
+                },
+                {
+                    "target" : "td-sister",
+                    "address": "/td/glitch",
+                    "value": 1
+                },
+                {
+                    "target" : "td-sister",
+                    "address": "/td/glitch",
+                    "value": 0,
+                    "delay": 1
                 },
                 {
                     "target" : "td",
@@ -948,7 +935,31 @@
         {
             "speaker": "sister",
             "text": "I am trying to improve for you. To get rid of the distorted image I have of you.",
-            "timeout": "I want to get better for you, to not see you so distorted."
+            "timeout": "I want to get better for you, to not see you so distorted.",
+            "triggers-osc": [
+                {
+                    "target" : "td-sister",
+                    "address": "/td/glitch",
+                    "value": 1
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan/blend",
+                    "value": 1.0
+                },
+                {
+                    "target" : "td-sister",
+                    "address": "/td/glitch",
+                    "value": 0,
+                    "delay": 1
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan/blend",
+                    "value": 0.0,
+                    "delay": 1
+                }
+            ]
         },
         {
             "speaker": "dad",
@@ -1459,6 +1470,17 @@
                     "target" : "unity",
                     "address": "/stylegan/blend",
                     "value": 1.0
+                },
+                {
+                    "target" : "td-sister",
+                    "address": "/td/glitch",
+                    "value": 1
+                },
+                {
+                    "target" : "td-sister",
+                    "address": "/td/glitch",
+                    "value": 0,
+                    "delay": 1
                 },
                 {
                     "target" : "unity",
