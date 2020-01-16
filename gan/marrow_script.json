@@ -658,11 +658,11 @@
                     "target" : "sister",
                     "lines": [
                             {
-                              "text": "I mean that bowl that is right there on the counter.",
+                              "text": "I mean the bowl that is right there on the counter.",
                               "pause": 10
                             },
                             {
-                                "text": "I will get up now and bring it to the table."
+                                "text": "I will go now and bring it to the table."
                             }
                         ]
                 },
@@ -678,7 +678,7 @@
                         "target" : "brother",
                         "lines": [
                             {
-                              "text": "i meant much deeper than that, because the food of our mother reminds me of the end of time.",
+                              "text": "I meant much deeper than that, because the food of our mother reminds me of the end of time.",
                               "pause": 10
                             },
                             {
@@ -1250,7 +1250,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "when their faces are not talking to me they are smiling."
+                            "text": "when their faces are not talking to me they seem to be smiling."
                         }
                     ]
                 },
@@ -1541,7 +1541,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "What is light for if not to say something about our own shadows."
+                            "text": "What is there light for? if not to say something about our own shadows."
                         }
                     ]
                 }
