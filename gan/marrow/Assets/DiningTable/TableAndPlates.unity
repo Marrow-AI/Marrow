@@ -1007,10 +1007,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 981d27b886365884b85b9b22a8cf5383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mother: {fileID: 0}
+  mother: {fileID: 32900000, guid: 7b077b189b4c56446aca146d1a4163c6, type: 3}
   father: {fileID: 32900000, guid: f6abedf771dae7a4cbdc3bb4c350f848, type: 3}
   sister: {fileID: 32900000, guid: cbff3a3015da7be468d029ac09f2eaf8, type: 3}
-  brother: {fileID: 0}
+  brother: {fileID: 32900000, guid: 595c486c2c6299c49ab37586bc0cc81c, type: 3}
 --- !u!1 &438660129
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,7 +1106,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 505984767}
   m_LocalRotation: {x: 0, y: -0.034899585, z: 0, w: 0.99939084}
-  m_LocalPosition: {x: 0.5, y: 0.34, z: -3.1}
+  m_LocalPosition: {x: 0.5, y: 0.34, z: 3.68}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1594717398}

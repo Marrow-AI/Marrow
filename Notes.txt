@@ -74,6 +74,21 @@ NewPlateA: X = -7.87
 
 New GauGAN projection:
 
-Scale X: 1.5
-Pos X: 1.21 Y: 1.77
+Scale X: 1.495
+Pos X: 1.11 Y: 1.82
+
+
+Second table calibration
+-------------------------
+NewPlateD Z: -3.7
+NewPlateB Z: 3.7
+NewPlate A/C X: 8.28
+
+
+
+
+Measurement:
+-------------
+
+6 15/16
 

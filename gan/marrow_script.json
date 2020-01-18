@@ -1397,7 +1397,8 @@
                 {
                     "target" : "unity",
                     "address": "/stylegan-animation/state",
-                    "value": 0
+                    "value": 0,
+                    "delay" : 12
                 }
             ]
         },
@@ -1628,12 +1629,26 @@
                 {
                     "target" : "stylegan",
                     "address": "/start-sequence",
-                    "value": "part3_2_option1"
+                    "value": "part3_2_option1",
+                    "delay": 3
                 },
                 {
                     "target" : "unity",
                     "address": "/stylegan-animation/state",
-                    "value": 5 
+                    "value": 5,
+                    "delay": 3
+                },
+                {
+                    "target" : "unity",
+                    "address": "/camera/stylegan",
+                    "value": 0,
+                    "delay": 15 
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 0,
+                    "delay": 15 
                 }
             ],
             "triggers-midi": [
