@@ -253,6 +253,10 @@ namespace Marrow
                 renderers[2].enabled = false;
                 animators[0].enabled = false;
                 renderers[0].enabled = false;
+                animators[3].enabled = false;
+                renderers[3].enabled = false;
+                animators[4].enabled = false;
+                renderers[4].enabled = false;
             }
             else if (state == 1) {
                 animators[1].enabled = false;
@@ -276,6 +280,20 @@ namespace Marrow
                 animators[1].enabled = false;
                 renderers[2].enabled = true;
                 animators[2].enabled = true;
+            } else if (state == 4) {
+                renderers[1].enabled = false;
+                renderers[1].enabled = false;
+                renderers[2].enabled = false;
+                renderers[2].enabled = false;
+                renderers[3].enabled = true;
+                animators[3].enabled = true;
+            } else if (state == 5) {
+                renderers[2].enabled = false;
+                renderers[2].enabled = false;
+                renderers[3].enabled = false;
+                renderers[3].enabled = false;
+                renderers[4].enabled = true;
+                animators[4].enabled = true;
             }
         }
         public void ReceivedDeeplabBowl(OSCMessage message) {
