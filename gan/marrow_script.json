@@ -1386,13 +1386,18 @@
                 {
                     "target" : "unity",
                     "address": "/stylegan-animation/state",
-                    "value": 0
+                    "value": 4 
                 },
                 {
                     "target" : "unity",
                     "address": "/camera/stylegan",
                     "value": 2,
                     "delay" : 12
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 0
                 }
             ]
         },
@@ -1624,6 +1629,11 @@
                     "target" : "stylegan",
                     "address": "/start-sequence",
                     "value": "part3_2_option1"
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 5 
                 }
             ],
             "triggers-midi": [
