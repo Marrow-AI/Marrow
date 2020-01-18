@@ -1,4 +1,7 @@
 <root>
+  <message info="Receiver: 3838. From: 127.0.0.1:53842" type="Received">
+    <packet>L3N0eWxlZ2FuL3NjYWxlACxpAAAAAAAD</packet>
+  </message>
   <message info="Receiver: 3838. From: 127.0.0.1:52853" type="Received">
     <packet>L21lbW9yeS9zdGF0ZQAAACxpAAAAAAAA</packet>
   </message>

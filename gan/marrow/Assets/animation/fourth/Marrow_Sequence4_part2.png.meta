@@ -1,154 +1,115 @@
 fileFormatVersion: 2
-guid: 4f36c0d0390bc1a4d8308dd665b55a48
+guid: 4df677cef77133142ba818e92c3a1493
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1143271417177036843
-    second: Intro_Spritesheet_part3_0
+      213: 3163209925506138442
+    second: Marrow_Sequence4_part2_0
   - first:
-      213: 6792044981215302885
-    second: Intro_Spritesheet_part3_1
+      213: 5059634532872425440
+    second: Marrow_Sequence4_part2_1
   - first:
-      213: 2274528928866088136
-    second: Intro_Spritesheet_part3_2
+      213: -3503619709356181464
+    second: Marrow_Sequence4_part2_2
   - first:
-      213: 6992349008042960912
-    second: Intro_Spritesheet_part3_3
+      213: 5847193412176949227
+    second: Marrow_Sequence4_part2_3
   - first:
-      213: 3586661981652691125
-    second: Intro_Spritesheet_part3_4
+      213: -922470974554633375
+    second: Marrow_Sequence4_part2_4
   - first:
-      213: 8288900044143465108
-    second: Intro_Spritesheet_part3_5
+      213: -2132583141599843147
+    second: Marrow_Sequence4_part2_5
   - first:
-      213: 4379407099752198543
-    second: Intro_Spritesheet_part3_6
+      213: -5403211483614559185
+    second: Marrow_Sequence4_part2_6
   - first:
-      213: -8154691783535778633
-    second: Intro_Spritesheet_part3_7
+      213: 6684711361111387538
+    second: Marrow_Sequence4_part2_7
   - first:
-      213: -960736265863241015
-    second: Intro_Spritesheet_part3_8
+      213: -7334561880550496815
+    second: Marrow_Sequence4_part2_8
   - first:
-      213: 4464619472053955922
-    second: Intro_Spritesheet_part3_9
+      213: -2371273447665417339
+    second: Marrow_Sequence4_part2_9
   - first:
-      213: 1099487490437159312
-    second: Intro_Spritesheet_part3_10
+      213: -5653933308388904025
+    second: Marrow_Sequence4_part2_10
   - first:
-      213: -3920249269384791663
-    second: Intro_Spritesheet_part3_11
+      213: -2738735797741075843
+    second: Marrow_Sequence4_part2_11
   - first:
-      213: -9017219010230539829
-    second: Intro_Spritesheet_part3_12
+      213: 1719463603215183495
+    second: Marrow_Sequence4_part2_12
   - first:
-      213: 8174373602167631477
-    second: Intro_Spritesheet_part3_13
+      213: -1702895837635572609
+    second: Marrow_Sequence4_part2_13
   - first:
-      213: 491438138012852138
-    second: Intro_Spritesheet_part3_14
+      213: 8580516521594390429
+    second: Marrow_Sequence4_part2_14
   - first:
-      213: -8289727329314699716
-    second: Intro_Spritesheet_part3_15
+      213: -8634162301369033569
+    second: Marrow_Sequence4_part2_15
   - first:
-      213: 6296310627412028777
-    second: Intro_Spritesheet_part3_16
+      213: 6751120679921409893
+    second: Marrow_Sequence4_part2_16
   - first:
-      213: -2306698928635391477
-    second: Intro_Spritesheet_part3_17
+      213: 5826997991506227564
+    second: Marrow_Sequence4_part2_17
   - first:
-      213: -4215866784585899130
-    second: Intro_Spritesheet_part3_18
+      213: -8232581963189619970
+    second: Marrow_Sequence4_part2_18
   - first:
-      213: 5926307969870581538
-    second: Intro_Spritesheet_part3_19
+      213: -4754020788988460738
+    second: Marrow_Sequence4_part2_19
   - first:
-      213: 2198175672141325964
-    second: Intro_Spritesheet_part3_20
+      213: -9140209163150277815
+    second: Marrow_Sequence4_part2_20
   - first:
-      213: 8203309579780318803
-    second: Intro_Spritesheet_part3_21
+      213: 16472865439662945
+    second: Marrow_Sequence4_part2_21
   - first:
-      213: 9044016276834539383
-    second: Intro_Spritesheet_part3_22
+      213: 7050495857906502239
+    second: Marrow_Sequence4_part2_22
   - first:
-      213: -8511158440219309111
-    second: Intro_Spritesheet_part3_23
+      213: -8583457042038352209
+    second: Marrow_Sequence4_part2_23
   - first:
-      213: -7677653339339970677
-    second: Intro_Spritesheet_part3_24
+      213: 7981487046629913611
+    second: Marrow_Sequence4_part2_24
   - first:
-      213: -5461215552908011329
-    second: Intro_Spritesheet_part3_25
+      213: -4235530685283182275
+    second: Marrow_Sequence4_part2_25
   - first:
-      213: 8631456267042875885
-    second: Intro_Spritesheet_part3_26
+      213: 6780495320442388473
+    second: Marrow_Sequence4_part2_26
   - first:
-      213: 316325833318103221
-    second: Intro_Spritesheet_part3_27
+      213: -6077202712142974797
+    second: Marrow_Sequence4_part2_27
   - first:
-      213: 558867855663833953
-    second: Intro_Spritesheet_part3_28
+      213: 258428866425885963
+    second: Marrow_Sequence4_part2_28
   - first:
-      213: -6890646984352405345
-    second: Intro_Spritesheet_part3_29
+      213: 4144014849463685550
+    second: Marrow_Sequence4_part2_29
   - first:
-      213: 2433721958156599541
-    second: Intro_Spritesheet_part3_30
+      213: 6018620101851690492
+    second: Marrow_Sequence4_part2_30
   - first:
-      213: -1440468046451103774
-    second: Intro_Spritesheet_part3_31
+      213: -5543492436458676743
+    second: Marrow_Sequence4_part2_31
   - first:
-      213: 5958152649111463756
-    second: Intro_Spritesheet_part3_32
+      213: -2249488828737858644
+    second: Marrow_Sequence4_part2_32
   - first:
-      213: 8296073072533394300
-    second: Intro_Spritesheet_part3_33
+      213: 7531092649054650338
+    second: Marrow_Sequence4_part2_33
   - first:
-      213: 5838344113691288996
-    second: Intro_Spritesheet_part3_34
+      213: 519547275028549064
+    second: Marrow_Sequence4_part2_34
   - first:
-      213: 8355929674167421526
-    second: Intro_Spritesheet_part3_35
-  - first:
-      213: -3552423256897860023
-    second: Intro_Spritesheet_part3_36
-  - first:
-      213: 7712128910967770856
-    second: Intro_Spritesheet_part3_37
-  - first:
-      213: 8580970831828749732
-    second: Intro_Spritesheet_part3_38
-  - first:
-      213: 6006146764983007627
-    second: Intro_Spritesheet_part3_39
-  - first:
-      213: -1178244890741710593
-    second: Intro_Spritesheet_part3_40
-  - first:
-      213: -1373516870373368219
-    second: Intro_Spritesheet_part3_41
-  - first:
-      213: -8273351253949024202
-    second: Intro_Spritesheet_part3_42
-  - first:
-      213: 2730256672888681503
-    second: Intro_Spritesheet_part3_43
-  - first:
-      213: -2859604549571187845
-    second: Intro_Spritesheet_part3_44
-  - first:
-      213: -2391129990506742318
-    second: Intro_Spritesheet_part3_45
-  - first:
-      213: -4898842494033623424
-    second: Intro_Spritesheet_part3_46
-  - first:
-      213: -8251004463579035202
-    second: Intro_Spritesheet_part3_47
-  - first:
-      213: -6702659891219776889
-    second: Intro_Spritesheet_part3_48
+      213: -4555558626639965990
+    second: Marrow_Sequence4_part2_35
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -178,7 +139,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -233,154 +194,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 12288
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 80f73eec612becc40baff2b8aa06fbd9
-      internalID: -1143271417177036843
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Intro_Spritesheet_part3_1
-      rect:
-        serializedVersion: 2
-        x: 2048
-        y: 12288
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 01be7b1bb6817cc4ab942d2c2523f2c4
-      internalID: 6792044981215302885
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Intro_Spritesheet_part3_2
-      rect:
-        serializedVersion: 2
-        x: 4096
-        y: 12288
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4536f5bcd69156641a45e5c2a36d4be0
-      internalID: 2274528928866088136
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Intro_Spritesheet_part3_3
-      rect:
-        serializedVersion: 2
-        x: 6144
-        y: 12288
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 91ec80675f3b35f4eb7a4c24d9d0c478
-      internalID: 6992349008042960912
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Intro_Spritesheet_part3_4
-      rect:
-        serializedVersion: 2
-        x: 8192
-        y: 12288
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 07176c8480614184cbc769d850f435d2
-      internalID: 3586661981652691125
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Intro_Spritesheet_part3_5
-      rect:
-        serializedVersion: 2
-        x: 10240
-        y: 12288
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 001eeb5dcfc2507458053d3d68175407
-      internalID: 8288900044143465108
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Intro_Spritesheet_part3_6
-      rect:
-        serializedVersion: 2
-        x: 12288
-        y: 12288
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f6136ed21e68e4e42a48e6fc5a45b4b2
-      internalID: 4379407099752198543
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Intro_Spritesheet_part3_7
+      name: Marrow_Sequence4_part2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -394,14 +208,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd75ec7b24cd0df42a2f7eab30c0ecd8
-      internalID: -8154691783535778633
+      spriteID: 12a2bffb49af60b438720bd2a35b448c
+      internalID: 3163209925506138442
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_8
+      name: Marrow_Sequence4_part2_1
       rect:
         serializedVersion: 2
         x: 2048
@@ -415,14 +229,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0659f9542b310ed4e9211ab6d9cb0b79
-      internalID: -960736265863241015
+      spriteID: 5220b90443a22d0458216871a9c98dd4
+      internalID: 5059634532872425440
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_9
+      name: Marrow_Sequence4_part2_2
       rect:
         serializedVersion: 2
         x: 4096
@@ -436,14 +250,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe380b1071b54634295d768e368c4a52
-      internalID: 4464619472053955922
+      spriteID: c508a9dcde36a8c47b314d16f9274f41
+      internalID: -3503619709356181464
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_10
+      name: Marrow_Sequence4_part2_3
       rect:
         serializedVersion: 2
         x: 6144
@@ -457,14 +271,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e92b6c6a428bc734eb6d94939f5ac16a
-      internalID: 1099487490437159312
+      spriteID: bbf84beb219425f44b4758d22cad7705
+      internalID: 5847193412176949227
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_11
+      name: Marrow_Sequence4_part2_4
       rect:
         serializedVersion: 2
         x: 8192
@@ -478,14 +292,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 87998a367a24d5c48a12379ad4ff6c5d
-      internalID: -3920249269384791663
+      spriteID: 2c42574a07b21604cafc6013cd665d23
+      internalID: -922470974554633375
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_12
+      name: Marrow_Sequence4_part2_5
       rect:
         serializedVersion: 2
         x: 10240
@@ -499,14 +313,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ed80ba1b8b5908442a78eb7090180149
-      internalID: -9017219010230539829
+      spriteID: 949305a134be70044a48701a99a8b43b
+      internalID: -2132583141599843147
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_13
+      name: Marrow_Sequence4_part2_6
       rect:
         serializedVersion: 2
         x: 12288
@@ -520,14 +334,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bcc14e82e7623849bb41f15df2b39ce
-      internalID: 8174373602167631477
+      spriteID: cf585a2b18f5c264ab3d02e6c826a236
+      internalID: -5403211483614559185
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_14
+      name: Marrow_Sequence4_part2_7
       rect:
         serializedVersion: 2
         x: 0
@@ -541,14 +355,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d0784ee31a000a346a00064081607b35
-      internalID: 491438138012852138
+      spriteID: 69aa7d7c09f1db942abc08e2e2f2653d
+      internalID: 6684711361111387538
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_15
+      name: Marrow_Sequence4_part2_8
       rect:
         serializedVersion: 2
         x: 2048
@@ -562,14 +376,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f99e822fc593bbc46ad619eac25bb1fc
-      internalID: -8289727329314699716
+      spriteID: 45902f887f0c54845b1949993766b555
+      internalID: -7334561880550496815
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_16
+      name: Marrow_Sequence4_part2_9
       rect:
         serializedVersion: 2
         x: 4096
@@ -583,14 +397,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 435c3b53a77fd80428163c68395d86d0
-      internalID: 6296310627412028777
+      spriteID: 32c20f42e9c35ac46b3b1fccd8a697e5
+      internalID: -2371273447665417339
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_17
+      name: Marrow_Sequence4_part2_10
       rect:
         serializedVersion: 2
         x: 6144
@@ -604,14 +418,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d6c8e57264162204187f20e8c05cb55f
-      internalID: -2306698928635391477
+      spriteID: 943cf7e5c44fa064591f2cab2f99ac6d
+      internalID: -5653933308388904025
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_18
+      name: Marrow_Sequence4_part2_11
       rect:
         serializedVersion: 2
         x: 8192
@@ -625,14 +439,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2eefe50a8a1043f4cacb2e05f3804f8f
-      internalID: -4215866784585899130
+      spriteID: 9b89a80d744ebd342b28517aab544b2d
+      internalID: -2738735797741075843
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_19
+      name: Marrow_Sequence4_part2_12
       rect:
         serializedVersion: 2
         x: 10240
@@ -646,14 +460,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cd3727fd0b3baa94dbd08d8d886327c2
-      internalID: 5926307969870581538
+      spriteID: 0f8dcb02318ef154d856f5b73c431e97
+      internalID: 1719463603215183495
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_20
+      name: Marrow_Sequence4_part2_13
       rect:
         serializedVersion: 2
         x: 12288
@@ -667,14 +481,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 34cdfe7006b8881458049925ca2406c0
-      internalID: 2198175672141325964
+      spriteID: 25e5f64f3c9bc0d4b828674e53b29e60
+      internalID: -1702895837635572609
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_21
+      name: Marrow_Sequence4_part2_14
       rect:
         serializedVersion: 2
         x: 0
@@ -688,14 +502,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa5bb731a35df5f4ba13cd6158c7bc76
-      internalID: 8203309579780318803
+      spriteID: 2bd04f27a4180be449c74610b8909d3b
+      internalID: 8580516521594390429
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_22
+      name: Marrow_Sequence4_part2_15
       rect:
         serializedVersion: 2
         x: 2048
@@ -709,14 +523,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e25be60439b6984c8389b0dc2d8d539
-      internalID: 9044016276834539383
+      spriteID: 2877bbee9bac7b1489871a718ca5b2a6
+      internalID: -8634162301369033569
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_23
+      name: Marrow_Sequence4_part2_16
       rect:
         serializedVersion: 2
         x: 4096
@@ -730,14 +544,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b54fd0181cfd83f46bbbe884e2b61194
-      internalID: -8511158440219309111
+      spriteID: edc51f28b7a144247a77ab6add160d7b
+      internalID: 6751120679921409893
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_24
+      name: Marrow_Sequence4_part2_17
       rect:
         serializedVersion: 2
         x: 6144
@@ -751,14 +565,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5a73d364d6f93e041957ca96eb4224ff
-      internalID: -7677653339339970677
+      spriteID: 77d66c6e23c1dfa4bb7ccccc547585f6
+      internalID: 5826997991506227564
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_25
+      name: Marrow_Sequence4_part2_18
       rect:
         serializedVersion: 2
         x: 8192
@@ -772,14 +586,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f8c309bd52b98c74a880e8d7c3e1c6b4
-      internalID: -5461215552908011329
+      spriteID: c78b14fed28b8684f88a5454f220383e
+      internalID: -8232581963189619970
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_26
+      name: Marrow_Sequence4_part2_19
       rect:
         serializedVersion: 2
         x: 10240
@@ -793,14 +607,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0b956a682ae826045a85aca2e0053a96
-      internalID: 8631456267042875885
+      spriteID: c78648658e2841e4e8a0869264e6a1c3
+      internalID: -4754020788988460738
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_27
+      name: Marrow_Sequence4_part2_20
       rect:
         serializedVersion: 2
         x: 12288
@@ -814,14 +628,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6b90196ad551ad44594b4dd71e089461
-      internalID: 316325833318103221
+      spriteID: 135db47d4d09ff04f9041f064e3a8a8a
+      internalID: -9140209163150277815
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_28
+      name: Marrow_Sequence4_part2_21
       rect:
         serializedVersion: 2
         x: 0
@@ -835,14 +649,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b54a4b70103350c42af3044c301cb071
-      internalID: 558867855663833953
+      spriteID: 23c9da97c245d474f866647140bff028
+      internalID: 16472865439662945
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_29
+      name: Marrow_Sequence4_part2_22
       rect:
         serializedVersion: 2
         x: 2048
@@ -856,14 +670,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c7b46dd1f1981643bc0c6c9d90e64aa
-      internalID: -6890646984352405345
+      spriteID: 5576378bc0d74d841bba7e636c82ae18
+      internalID: 7050495857906502239
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_30
+      name: Marrow_Sequence4_part2_23
       rect:
         serializedVersion: 2
         x: 4096
@@ -877,14 +691,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4cffadbb5d53ad446bc62f501c78ff98
-      internalID: 2433721958156599541
+      spriteID: 5a2235d94bfc6f94187d049f1f68f98e
+      internalID: -8583457042038352209
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_31
+      name: Marrow_Sequence4_part2_24
       rect:
         serializedVersion: 2
         x: 6144
@@ -898,14 +712,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 977ef04ee8bc8c64f95593f2fae68f51
-      internalID: -1440468046451103774
+      spriteID: 93df8a0d8f4d5044682cac8db349bcf7
+      internalID: 7981487046629913611
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_32
+      name: Marrow_Sequence4_part2_25
       rect:
         serializedVersion: 2
         x: 8192
@@ -919,14 +733,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4f3fe89573546f4797858e49918e397
-      internalID: 5958152649111463756
+      spriteID: 10a5dda773005114c96c4c87b86d9a21
+      internalID: -4235530685283182275
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_33
+      name: Marrow_Sequence4_part2_26
       rect:
         serializedVersion: 2
         x: 10240
@@ -940,14 +754,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5e7cd1ca2fb35f347a99b2eaf8b36940
-      internalID: 8296073072533394300
+      spriteID: 3e0b949387a52a84280cd830ffb93d6f
+      internalID: 6780495320442388473
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_34
+      name: Marrow_Sequence4_part2_27
       rect:
         serializedVersion: 2
         x: 12288
@@ -961,14 +775,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 832ec9322e505c346b0eadc5b6b70b10
-      internalID: 5838344113691288996
+      spriteID: b33605b0fdf159c4d88504aeed44b42f
+      internalID: -6077202712142974797
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_35
+      name: Marrow_Sequence4_part2_28
       rect:
         serializedVersion: 2
         x: 0
@@ -982,14 +796,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32637150450083346991783543ec4e06
-      internalID: 8355929674167421526
+      spriteID: f966456a72d28df41953d2880b4b5466
+      internalID: 258428866425885963
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_36
+      name: Marrow_Sequence4_part2_29
       rect:
         serializedVersion: 2
         x: 2048
@@ -1003,14 +817,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5f23d1167e43494a83d7e57e888aaf9
-      internalID: -3552423256897860023
+      spriteID: 5e1034963b3c1b6488a0474547a4c320
+      internalID: 4144014849463685550
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_37
+      name: Marrow_Sequence4_part2_30
       rect:
         serializedVersion: 2
         x: 4096
@@ -1024,14 +838,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1c4b279524364784db73ad11a2bd6eac
-      internalID: 7712128910967770856
+      spriteID: 1510cd01a1c03b049b6d531d76978ae4
+      internalID: 6018620101851690492
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_38
+      name: Marrow_Sequence4_part2_31
       rect:
         serializedVersion: 2
         x: 6144
@@ -1045,14 +859,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a2bb6e82eb35508419137061b628d2c8
-      internalID: 8580970831828749732
+      spriteID: 6e7466ab8e779af43ab49268115a762d
+      internalID: -5543492436458676743
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_39
+      name: Marrow_Sequence4_part2_32
       rect:
         serializedVersion: 2
         x: 8192
@@ -1066,14 +880,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 607555e03113d004c974e08e699acbd4
-      internalID: 6006146764983007627
+      spriteID: 13cb093fed236f043b458a95fb39ff94
+      internalID: -2249488828737858644
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_40
+      name: Marrow_Sequence4_part2_33
       rect:
         serializedVersion: 2
         x: 10240
@@ -1087,14 +901,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a24fc75fe0543b9419e1af6cdf23ba65
-      internalID: -1178244890741710593
+      spriteID: c01b200ee1939e04589279fea41227c7
+      internalID: 7531092649054650338
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_41
+      name: Marrow_Sequence4_part2_34
       rect:
         serializedVersion: 2
         x: 12288
@@ -1108,14 +922,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 16d71a24c6f3c24468a9581992cb8a19
-      internalID: -1373516870373368219
+      spriteID: be6c25b174ec4594292015b6fc873f22
+      internalID: 519547275028549064
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Intro_Spritesheet_part3_42
+      name: Marrow_Sequence4_part2_35
       rect:
         serializedVersion: 2
         x: 0
@@ -1129,134 +943,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ffc4e585fc0cd2459d7fc427915fd30
-      internalID: -8273351253949024202
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Intro_Spritesheet_part3_43
-      rect:
-        serializedVersion: 2
-        x: 2048
-        y: 0
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 51d06f9a006eff44eb2c4a44bcc9fe7b
-      internalID: 2730256672888681503
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Intro_Spritesheet_part3_44
-      rect:
-        serializedVersion: 2
-        x: 4096
-        y: 0
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8285a3c9295617a4cbe053aff0744823
-      internalID: -2859604549571187845
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Intro_Spritesheet_part3_45
-      rect:
-        serializedVersion: 2
-        x: 6144
-        y: 0
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 59f4844e9b333a54c8771ddb0cc30a9f
-      internalID: -2391129990506742318
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Intro_Spritesheet_part3_46
-      rect:
-        serializedVersion: 2
-        x: 8192
-        y: 0
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 348adeff374f89c49b1b32c77bc77dee
-      internalID: -4898842494033623424
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Intro_Spritesheet_part3_47
-      rect:
-        serializedVersion: 2
-        x: 10240
-        y: 0
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e7520699af9de6f40b97ecee050c7bff
-      internalID: -8251004463579035202
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Intro_Spritesheet_part3_48
-      rect:
-        serializedVersion: 2
-        x: 12288
-        y: 0
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1a9b5d9e090a75f47a6e14fe136e0fa0
-      internalID: -6702659891219776889
+      spriteID: 3a75ea7fe00366e47b7f6346b247213e
+      internalID: -4555558626639965990
       vertices: []
       indices: 
       edges: []
@@ -1264,7 +952,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 58dde26188fac86419f195ee24994848
+    spriteID: 6a3b7b77daba8d946be53069322572cc
     internalID: 0
     vertices: []
     indices: 

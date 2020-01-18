@@ -156,7 +156,7 @@ class Engine:
         #self.audio_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
 
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
-        self.td_client = udp_client.SimpleUDPClient("127.0.0.1", 7000)
+        self.td_client = udp_client.SimpleUDPClient("127.0.0.1", 7002)
         self.td_sister_client = udp_client.SimpleUDPClient("127.0.0.1", 7001)
         self.audio_client = udp_client.SimpleUDPClient("192.168.1.21", 8000)
        # self.audio_client = udp_client.SimpleUDPClient("192.168.1.25", 8000)

@@ -1,55 +1,37 @@
 fileFormatVersion: 2
-guid: 90bdb6631bef6994ca616ed478b34dc8
+guid: 543525fe37498014087e6ac01695f0a7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2821048528231371714
-    second: Marrow_SpriteSheet_scene2_boil_0
+      213: -2854279255384691701
+    second: Marrow_Scene5_Spritesheet_fadeout_0
   - first:
-      213: -1607816352839205006
-    second: Marrow_SpriteSheet_scene2_boil_1
+      213: 9179389614814243315
+    second: Marrow_Scene5_Spritesheet_fadeout_1
   - first:
-      213: 8316432157247532320
-    second: Marrow_SpriteSheet_scene2_boil_2
+      213: 335327846192933349
+    second: Marrow_Scene5_Spritesheet_fadeout_2
   - first:
-      213: 54613168009701122
-    second: Marrow_SpriteSheet_scene2_boil_3
+      213: -526576458394081745
+    second: Marrow_Scene5_Spritesheet_fadeout_3
   - first:
-      213: 6639042415677135488
-    second: Marrow_SpriteSheet_scene2_boil_4
+      213: 7160734844532454869
+    second: Marrow_Scene5_Spritesheet_fadeout_4
   - first:
-      213: 1841553064141996613
-    second: Marrow_SpriteSheet_scene2_boil_5
+      213: 5296691265684112303
+    second: Marrow_Scene5_Spritesheet_fadeout_5
   - first:
-      213: -8796437027308784613
-    second: Marrow_SpriteSheet_scene2_boil_6
+      213: -6476593309140579162
+    second: Marrow_Scene5_Spritesheet_fadeout_6
   - first:
-      213: 3140597500548990865
-    second: Marrow_SpriteSheet_scene2_boil_7
+      213: -6314390375378126989
+    second: Marrow_Scene5_Spritesheet_fadeout_7
   - first:
-      213: 2589620808572474006
-    second: Marrow_SpriteSheet_scene2_boil_8
+      213: 3240891842984243476
+    second: Marrow_Scene5_Spritesheet_fadeout_8
   - first:
-      213: 1616158883846586629
-    second: Marrow_SpriteSheet_scene2_boil_9
-  - first:
-      213: 460774468662292689
-    second: Marrow_SpriteSheet_scene2_boil_10
-  - first:
-      213: -7641303473416601352
-    second: Marrow_SpriteSheet_scene2_boil_11
-  - first:
-      213: 8448415230233392311
-    second: Marrow_SpriteSheet_scene2_boil_12
-  - first:
-      213: -8750731874811491090
-    second: Marrow_SpriteSheet_scene2_boil_13
-  - first:
-      213: 6756177447703107244
-    second: Marrow_SpriteSheet_scene2_boil_14
-  - first:
-      213: 3312085291546671683
-    second: Marrow_SpriteSheet_scene2_boil_15
+      213: 4263380174607779153
+    second: Marrow_Scene5_Spritesheet_fadeout_9
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -79,7 +61,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: -1
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -134,7 +116,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_0
+      name: Marrow_Scene5_Spritesheet_fadeout_0
       rect:
         serializedVersion: 2
         x: 0
@@ -148,14 +130,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 377ccae186bd7024b8ebe3ff7a254fca
-      internalID: -2821048528231371714
+      spriteID: d25158eb183867347b90a7eb115b4d8d
+      internalID: -2854279255384691701
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_1
+      name: Marrow_Scene5_Spritesheet_fadeout_1
       rect:
         serializedVersion: 2
         x: 2048
@@ -169,14 +151,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37e7042993377f54f867984b8127dfea
-      internalID: -1607816352839205006
+      spriteID: 2f691cc015cc2944b8e7924faf4a2b1e
+      internalID: 9179389614814243315
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_2
+      name: Marrow_Scene5_Spritesheet_fadeout_2
       rect:
         serializedVersion: 2
         x: 4096
@@ -190,35 +172,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bb4a30d9e80df544be7e38773ce7d13
-      internalID: 8316432157247532320
+      spriteID: 0f2f0d2da52ef144195d6d31f465cb03
+      internalID: 335327846192933349
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_3
-      rect:
-        serializedVersion: 2
-        x: 6144
-        y: 6144
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5c2b420e1a3f15b448e0f096f5bff22b
-      internalID: 54613168009701122
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_4
+      name: Marrow_Scene5_Spritesheet_fadeout_3
       rect:
         serializedVersion: 2
         x: 0
@@ -232,14 +193,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b63dc9096d026fb47a9a683335dbd6b1
-      internalID: 6639042415677135488
+      spriteID: 01ddca887f8614340804b42d84d41710
+      internalID: -526576458394081745
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_5
+      name: Marrow_Scene5_Spritesheet_fadeout_4
       rect:
         serializedVersion: 2
         x: 2048
@@ -253,14 +214,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c31511c1f924ed4c8fb0e6f47a6b7bd
-      internalID: 1841553064141996613
+      spriteID: 974ab49cad4c5094da8f2d9d1cf5d57c
+      internalID: 7160734844532454869
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_6
+      name: Marrow_Scene5_Spritesheet_fadeout_5
       rect:
         serializedVersion: 2
         x: 4096
@@ -274,35 +235,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bfc3eb5a93e7c7a43a6b51172d35cf35
-      internalID: -8796437027308784613
+      spriteID: 1fe8cc2a4eef6ff43b670669b8287c49
+      internalID: 5296691265684112303
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_7
-      rect:
-        serializedVersion: 2
-        x: 6144
-        y: 4096
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 810ee3af662d21d4a9fcbb4e2389dddc
-      internalID: 3140597500548990865
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_8
+      name: Marrow_Scene5_Spritesheet_fadeout_6
       rect:
         serializedVersion: 2
         x: 0
@@ -316,14 +256,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ef3172e534dc82489891b9b44e5aa23
-      internalID: 2589620808572474006
+      spriteID: 8e0c230bb8bde3f47aed60d5094ab9dc
+      internalID: -6476593309140579162
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_9
+      name: Marrow_Scene5_Spritesheet_fadeout_7
       rect:
         serializedVersion: 2
         x: 2048
@@ -337,14 +277,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12d69f2a4c28108438087fcacd2c0d90
-      internalID: 1616158883846586629
+      spriteID: e4eafa4143bbc204d863a8347a7bffb0
+      internalID: -6314390375378126989
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_10
+      name: Marrow_Scene5_Spritesheet_fadeout_8
       rect:
         serializedVersion: 2
         x: 4096
@@ -358,35 +298,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8a0dc3efe39eab44bd0e4813540a046
-      internalID: 460774468662292689
+      spriteID: 3d4fcbb830f85f6469fab1e3847fa46e
+      internalID: 3240891842984243476
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_11
-      rect:
-        serializedVersion: 2
-        x: 6144
-        y: 2048
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 61d61149efe9dd641b6c6dba3bddbbf5
-      internalID: -7641303473416601352
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_12
+      name: Marrow_Scene5_Spritesheet_fadeout_9
       rect:
         serializedVersion: 2
         x: 0
@@ -400,71 +319,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 22098dccbca9ef64da4b607922f65b49
-      internalID: 8448415230233392311
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_13
-      rect:
-        serializedVersion: 2
-        x: 2048
-        y: 0
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 97ca4ab97413b944897a84ae0ce60dac
-      internalID: -8750731874811491090
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_14
-      rect:
-        serializedVersion: 2
-        x: 4096
-        y: 0
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ab1a28f0348c4bc4585a7375ebeb3f09
-      internalID: 6756177447703107244
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Marrow_SpriteSheet_scene2_boil_15
-      rect:
-        serializedVersion: 2
-        x: 6144
-        y: 0
-        width: 2048
-        height: 2048
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e486e952c910ac8438195cd16ec36e18
-      internalID: 3312085291546671683
+      spriteID: 1f792c080f77c5f48b11c2dd7e527a46
+      internalID: 4263380174607779153
       vertices: []
       indices: 
       edges: []
@@ -472,7 +328,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 4247ae612ecbddf4c9064ded1ecba990
+    spriteID: 14b88ce1d6dd6e343be32461b0476c83
     internalID: 0
     vertices: []
     indices: 
