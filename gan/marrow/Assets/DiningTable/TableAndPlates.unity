@@ -478,6 +478,7 @@ GameObject:
   - component: {fileID: 183069824}
   - component: {fileID: 183069823}
   - component: {fileID: 183069827}
+  - component: {fileID: 183069828}
   m_Layer: 0
   m_Name: Deeplab
   m_TagString: Untagged
@@ -506,7 +507,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183069822}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -553,7 +554,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 183069822}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0.7071068, w: 0}
-  m_LocalPosition: {x: -44.03, y: -0.7, z: 16.68}
+  m_LocalPosition: {x: -78.82, y: -0.87, z: 11.7}
   m_LocalScale: {x: 1.644871, y: 0, z: 0.8224356}
   m_Children: []
   m_Father: {fileID: 0}
@@ -573,6 +574,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sourceTexture: {fileID: 8400000, guid: 07ce8bfd43da67a409afe0bf77b9ae46, type: 2}
   _alphaSupport: 0
+--- !u!114 &183069828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 183069822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1496ad54eaa3ee944be0b3c7b6f28144, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sourceName: INTERACT-R8 (python3)
+  _targetTextureOne: {fileID: 8400000, guid: d178053f82b919d409bc21a7fd066fae, type: 2}
+  _targetTextureTwo: {fileID: 8400000, guid: 07ce8bfd43da67a409afe0bf77b9ae46, type: 2}
+  _targetTextureThree: {fileID: 8400000, guid: 1c2af2a08be5b6d489f6f1b216bc52b8, type: 2}
+  _FPS: 1
+  _FPS2: 3
+  _targetRenderer: {fileID: 0}
+  _targetMaterialProperty: 
 --- !u!1 &252150315
 GameObject:
   m_ObjectHideFlags: 0
@@ -2340,7 +2361,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
+  m_TargetDisplay: 3
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
@@ -3125,8 +3146,8 @@ GameObject:
   - component: {fileID: 1163833842}
   - component: {fileID: 1163833841}
   - component: {fileID: 1163833840}
-  - component: {fileID: 1163833839}
   - component: {fileID: 1163833843}
+  - component: {fileID: 1163833839}
   m_Layer: 0
   m_Name: Deeplab Camera
   m_TagString: Untagged
@@ -3143,17 +3164,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1163833838}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1496ad54eaa3ee944be0b3c7b6f28144, type: 3}
+  m_Script: {fileID: 11500000, guid: f1b4214ce724782788203825ef4491bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sourceName: INTERACT-R8 (python3)
-  _targetTextureOne: {fileID: 8400000, guid: d178053f82b919d409bc21a7fd066fae, type: 2}
-  _targetTextureTwo: {fileID: 8400000, guid: 07ce8bfd43da67a409afe0bf77b9ae46, type: 2}
-  _targetTextureThree: {fileID: 8400000, guid: 1c2af2a08be5b6d489f6f1b216bc52b8, type: 2}
-  _FPS: 1
-  _FPS2: 3
-  _targetRenderer: {fileID: 0}
-  _targetMaterialProperty: 
+  _sourceTexture: {fileID: 0}
+  _alphaSupport: 0
 --- !u!81 &1163833840
 AudioListener:
   m_ObjectHideFlags: 0
@@ -3189,14 +3204,14 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6.6
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 2
+  m_TargetDisplay: 3
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
@@ -3213,7 +3228,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1163833838}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -65.55, y: 0, z: 0.67}
+  m_LocalPosition: {x: -78.86, y: 1.56, z: 0.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
