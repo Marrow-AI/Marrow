@@ -293,13 +293,13 @@ namespace Marrow
                     openLineAnima.transform.position = new Vector3(
                             openLineAnima.transform.position.x,
                             openLineAnima.transform.position.y,
-                            2.36f
+                            3.68f
                     );
                 } else if (role == "sister") {
                     openLineAnima.transform.position = new Vector3(
                             openLineAnima.transform.position.x,
                             openLineAnima.transform.position.y,
-                            -3.1f                           
+                            -3.7f                           
                     );
                 }
                 enableOpenline(true);

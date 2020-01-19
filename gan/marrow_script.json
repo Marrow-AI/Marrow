@@ -658,11 +658,11 @@
                     "target" : "sister",
                     "lines": [
                             {
-                              "text": "I mean that bowl that is right there on the counter.",
+                              "text": "I mean the bowl that is right there on the counter.",
                               "pause": 10
                             },
                             {
-                                "text": "I will get up now and bring it to the table."
+                                "text": "I will go now and bring it to the table."
                             }
                         ]
                 },
@@ -678,7 +678,7 @@
                         "target" : "brother",
                         "lines": [
                             {
-                              "text": "i meant much deeper than that, because the food of our mother reminds me of the end of time.",
+                              "text": "I meant much deeper than that, because the food of our mother reminds me of the end of time.",
                               "pause": 10
                             },
                             {
@@ -1250,7 +1250,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "when their faces are not talking to me they are smiling."
+                            "text": "when their faces are not talking to me they seem to be smiling."
                         }
                     ]
                 },
@@ -1386,12 +1386,18 @@
                 {
                     "target" : "unity",
                     "address": "/stylegan-animation/state",
-                    "value": 0
+                    "value": 4 
                 },
                 {
                     "target" : "unity",
                     "address": "/camera/stylegan",
                     "value": 2,
+                    "delay" : 12
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 0,
                     "delay" : 12
                 }
             ]
@@ -1541,7 +1547,7 @@
                     "target" : "sister",
                     "lines": [
                         {
-                            "text": "What is light for if not to say something about our own shadows."
+                            "text": "What is there light for? if not to say something about our own shadows."
                         }
                     ]
                 }
@@ -1623,7 +1629,26 @@
                 {
                     "target" : "stylegan",
                     "address": "/start-sequence",
-                    "value": "part3_2_option1"
+                    "value": "part3_2_option1",
+                    "delay": 3
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 5,
+                    "delay": 3
+                },
+                {
+                    "target" : "unity",
+                    "address": "/camera/stylegan",
+                    "value": 0,
+                    "delay": 15 
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 0,
+                    "delay": 15 
                 }
             ],
             "triggers-midi": [
