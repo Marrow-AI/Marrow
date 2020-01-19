@@ -6,10 +6,15 @@
             "invert": false
         },
         {
+            "from": ["light"],
+            "to" : "sky-other",
+            "invert": false
+        },
+        {
             "from": ["bowl"],
             "to" : "potted plant",
             "invert": false,
-			"expand": 7 
+            "expand": 2
         }
     ],
     "deeplab": {
@@ -21,11 +26,10 @@
         ]
     },
     "gaugan": {
-        "mask": [
-			{
-				"items": ["potted plant"],
-				"invert": true
-			}
+        "mask": [ {
+            "items": ["potted plant"],
+            "invert": true
+            }
         ]
     },
     "showRaw": false,
