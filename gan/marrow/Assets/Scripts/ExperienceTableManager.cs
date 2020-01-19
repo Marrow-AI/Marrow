@@ -256,5 +256,10 @@ namespace Marrow
             tableSceneStarted = false;
 			EventBus.TableEnded.Invoke();			        
         }
+        public void ReceivedOscEnableT2I(int enable) {
+            Debug.Log("Received Osc - Enable T2I: " + enable);
+
+            startText2Image = (enable == 1);
+        }
     }
 }

@@ -170,7 +170,7 @@ namespace Marrow
         {
             if (state == 1) {
                 LeanTween.moveX(styleGAN, -44.0f, 60.0f);
-                LeanTween.scale(styleGAN, new Vector3(0.68f, 0.68f, 0.68f), 60.0f);
+                LeanTween.scale(styleGAN, new Vector3(0.55f, 0.55f, 0.55f), 60.0f);
             } else if (state == 2) {
                 LeanTween.move(styleGAN, new Vector3(-45.11f, -0.55f, styleGAN.transform.position.z), 35.0f);
                 // LeanTween.scale(styleGAN, new Vector3(0.75f, 0.75f, 0.75f), 35.0f);

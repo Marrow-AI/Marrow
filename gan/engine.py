@@ -881,6 +881,7 @@ class Engine:
         asyncio.ensure_future(self.server.control("start"))
         self.t2i_client.send_message("/table/showplates", 0)
         self.t2i_client.send_message("/table/fadein", 1)
+        self.t2i_client.send_message("/enable-t2i", 1)
         self.t2i_client.send_message("/spotlight", "mom")
         self.td_client.send_message("/td/edge", 0)
         self.td_client.send_message("/td/display", 0)

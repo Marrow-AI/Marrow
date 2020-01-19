@@ -299,7 +299,7 @@ namespace Marrow
                     openLineAnima.transform.position = new Vector3(
                             openLineAnima.transform.position.x,
                             openLineAnima.transform.position.y,
-                            -3.7f                           
+                            -3.68f                           
                     );
                 }
                 enableOpenline(true);
