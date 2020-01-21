@@ -175,7 +175,7 @@ namespace Marrow
                 LeanTween.moveX(styleGAN, -44.0f, 60.0f);
                 LeanTween.scale(styleGAN, new Vector3(0.55f, 0.55f, 0.55f), 60.0f);
             } else if (state == 2) {
-                LeanTween.move(styleGAN, new Vector3(-45.11f, -0.3f, styleGAN.transform.position.z), 35.0f);
+                LeanTween.move(styleGAN, new Vector3(-46.5f, -0.68f, styleGAN.transform.position.z), 35.0f);
                 // LeanTween.scale(styleGAN, new Vector3(0.75f, 0.75f, 0.75f), 35.0f);
                 LeanTween.scale(styleGAN, new Vector3(0.55f, 0.55f, 0.55f), 35.0f);
             } else if (state == 3) {
@@ -196,7 +196,7 @@ namespace Marrow
                 rawImage.GetComponent<Renderer>().enabled = false;
             } else if (state == 2) {
                 gauGAN.GetComponent<Renderer>().enabled = true;
-                gauGAN.transform.localPosition = new Vector3(0.7f, 1.4f, -7.142639f);
+                gauGAN.transform.localPosition = new Vector3(0.78f, 1.5f, -7.142639f);
 
             } else if (state == 3) {
                 /*
@@ -254,35 +254,67 @@ namespace Marrow
                 renderers[1].enabled = false;
                 animators[2].enabled = false;
                 renderers[2].enabled = false;
+                renderers[3].enabled = false;
+                animators[3].enabled = false;
+                renderers[4].enabled = false;
+                animators[4].enabled = false;
+
+
                 animators[0].enabled = true;
                 renderers[0].enabled = true;
 
             } else if (state == 2) {
                 animators[0].enabled = false;
-                animators[1].enabled = true;
                 renderers[0].enabled = false;
-                renderers[1].enabled = true;
+                renderers[3].enabled = false;
+                animators[3].enabled = false;
                 animators[2].enabled = false;
                 renderers[2].enabled = false;
+                renderers[4].enabled = false;
+                animators[4].enabled = false;
+
+
+                animators[1].enabled = true;
+                renderers[1].enabled = true;
             } else if (state == 3) {
-                renderers[0].enabled = false;
+
                 renderers[1].enabled = false;
-                animators[0].enabled = false;
                 animators[1].enabled = false;
+                renderers[3].enabled = false;
+                animators[3].enabled = false;
+                renderers[4].enabled = false;
+                animators[4].enabled = false;
+                animators[0].enabled = false;
+                renderers[0].enabled = false;
+
+
                 renderers[2].enabled = true;
                 animators[2].enabled = true;
             } else if (state == 4) {
+
+                renderers[0].enabled = false;
+                animators[0].enabled = false;
                 renderers[1].enabled = false;
-                renderers[1].enabled = false;
+                animators[1].enabled = false;
                 renderers[2].enabled = false;
-                renderers[2].enabled = false;
+                animators[2].enabled = false;
+                renderers[4].enabled = false;
+                animators[4].enabled = false;
+
+
                 renderers[3].enabled = true;
                 animators[3].enabled = true;
+
             } else if (state == 5) {
+                renderers[0].enabled = false;
+                animators[0].enabled = false;
+                renderers[1].enabled = false;
+                animators[1].enabled = false;
                 renderers[2].enabled = false;
                 renderers[2].enabled = false;
                 renderers[3].enabled = false;
                 renderers[3].enabled = false;
+
                 renderers[4].enabled = true;
                 animators[4].enabled = true;
             }

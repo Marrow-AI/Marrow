@@ -286,7 +286,7 @@
                     ]
                 }
              ],
-             "delay": 8
+             "delay": 3
          },
         {
             "speaker": "dad",
@@ -433,8 +433,7 @@
                 {
                    "note": 71
                 } 
-            ],
-            "delay": 5
+            ]
         },
         {
             "speaker": "dad",
@@ -559,7 +558,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Time has stopped.",
+            "text": "Time is standing still.",
             "noskip": true,
             "triggers-midi": [
                 {
@@ -646,7 +645,7 @@
                 {
                     "target" : "unity",
                     "address": "/speech",
-                    "value": "white",
+                    "value": "green",
                     "delay": 2
                 },
                 {
@@ -1062,7 +1061,6 @@
                     ]
                 }               
             ],
-            "delay" : 3,
             "triggers-osc": [
                 {
                     "target" : "td",
@@ -1134,8 +1132,7 @@
                         }
                     ]
                 }
-            ],
-            "delay": 5
+            ]
         },
         {
             "speaker": "dad",
@@ -1246,7 +1243,7 @@
                    "note": 86
                 } 
             ],
-            "delay": 10
+            "delay": 3
         },
         {
             "in-ear" : [ 
@@ -1340,11 +1337,11 @@
                     "delay": 2
                 }
             ],
-            "delay": 5
+            "delay": 3
         },
         {
             "speaker": "mom",
-            "text": "Sister, you are taking us down to a moonless dark night.",
+            "text": "Daughter, you are taking us down to a moonless dark night.",
             "timeout": "I am not a fan of the dark."
         },
         {
@@ -1628,7 +1625,7 @@
         },
         {
             "speaker": "sister",
-            "text": "The clock has stopped.",
+            "text": "The clock has stopped moving.",
             "noskip": true,
             "triggers-osc": [
                 {
@@ -1714,17 +1711,31 @@
         {
             "speaker": "sister",
             "text": "What ground do families come from?",
-            "timeout": "From where do families come from?"
+            "timeout": "From where do families come from?",
+            "triggers-osc": [
+                {
+                    "target" : "unity",
+                    "address": "/enable-t2i",
+                    "value": 0,
+                    "delay": 4   
+                },
+                {
+                    "target" : "unity",
+                    "address": "/speech",
+                    "value": "night",
+                    "delay": 3
+                }
+            ]
         },
         {
             "speaker": "mom",
-            "text": "From homes, like this one.",
-            "timeout": "Homes.",
+            "text": "They come from homes, like this one.",
+            "noskip": true,
             "triggers-midi": [
                 {
                    "note": 110
                 } 
-            ]
+            ]           
         }
     ]
 }
