@@ -8,17 +8,21 @@ public class ActivateDisplays : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        /*
-        OutputStream = new StreamWriter("log.txt", true);
+        
         Debug.Log("displays connected: " + Display.displays.Length);
-        OutputStream.WriteLine("displays connected: " + Display.displays.Length);
-        OutputStream.Flush();*/
-        if (Display.displays.Length > 1)
+        
+        if (Display.displays.Length > 1) {
+            Debug.Log("Activating display 2");
             Display.displays[1].Activate();
-        if (Display.displays.Length > 2)
+        }
+        if (Display.displays.Length > 2) {
+            Debug.Log("Activating display 3");
             Display.displays[2].Activate();
-        if (Display.displays.Length > 3)
+        }
+        if (Display.displays.Length > 3) {
+            Debug.Log("Activating display 4");
             Display.displays[3].Activate();
+        }
 
     }
 
