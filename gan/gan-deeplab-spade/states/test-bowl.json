@@ -9,7 +9,7 @@
     "deeplab": {
         "mask": [
             {
-                "items": ["paper", "plastic", "frisbee", "mouse" ],
+                "items": ["cup"],
                 "invert": true
             }
         ]
@@ -17,7 +17,7 @@
     "gaugan": {
         "mask": [
             {
-                "items": ["dining table","frisbee"],
+                "items": ["dining table","cup"],
                 "invert": true
             }
         ]

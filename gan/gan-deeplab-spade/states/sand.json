@@ -6,12 +6,7 @@
             "invert": false
         },
         {
-            "from": ["frisbee", "plastic", "paper", "metal", "mouse", "rock"],
-            "to" : "rock",
-            "invert": false
-        },
-        {
-            "from": ["bowl","wine glass", "bottle"],
+            "from": ["bowl","wine glass", "bottle", "cup", "vase", "plastic"],
             "to" : "flower",
             "invert": false
         }
