@@ -2,7 +2,7 @@
     "map": [
         {
             "from": ["dining table","table", "desk-stuff", "cup", "wine glass", "plastic", "floor-other", "mouse", "bed", "car"],
-            "to" : "dining table",
+            "to" : "grass",
             "invert": false
         },
         {
@@ -12,28 +12,31 @@
         },
         {
             "from": ["bowl"],
-            "to" : "potted plant",
+            "to" : "flower",
             "invert": false,
-            "expand": 2
+            "expand": 8 
         }
     ],
     "deeplab": {
         "mask": [
             {
-                "items": ["potted plant","dining table", "person"],
+                "items": ["flower","grass", "person"],
                 "invert": true
             }
         ]
     },
     "gaugan": {
-        "mask": [ {
-            "items": ["potted plant"],
+        "mask": [
+
+            {
+            "items": ["flower"],
             "invert": true
             }
         ]
     },
     "showRaw": false,
     "mapDeeplab": true,
-    "sendBowl": true
+    "sendBowl": true,
+    "autumn": true
 }
 

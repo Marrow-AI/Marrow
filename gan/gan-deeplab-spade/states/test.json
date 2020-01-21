@@ -4,7 +4,7 @@
     "deeplab": {
         "mask": [
             {
-                "items": ["light"],
+                "items": ["cell phone", "book"],
                 "invert": true
             }
         ]
@@ -12,7 +12,7 @@
     "gaugan": {
         "mask": [
 			{
-                "items": ["light"],
+                "items": ["cell phone", "book"],
 				"invert": true
 			}
         ]
