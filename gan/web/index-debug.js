@@ -19,7 +19,7 @@ $(document).ready(() => {
     //
     // Connecting to server
     //const listener = new WatsonListener();
-    const socket = new ReconnectingWebSocket("ws://localhost:9540/");
+    const socket = new ReconnectingWebSocket("ws://192.168.1.22:9540/");
 
     /*
     const listener = new MSListener();

@@ -92,3 +92,21 @@ Measurement:
 
 6 15/16
 
+
+Lifted the bowl
+GauGan Y: 2.3
+
+
+After second projection change:
+===============================
+
+Gaugan sea/sand:
+Scale : 1.515, 0, 0.822
+Pos: 0.7, 1.8, -7.142 
+-------------------
+
+StyleGAN
+--------
+Pos y: -0.3
+
+

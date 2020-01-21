@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: memoryMaterial
-  m_Shader: {fileID: 10750, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: 4800000, guid: 5cfd862c545294680825f5ebc6e12d12, type: 3}
   m_ShaderKeywords: _ALPHATEST_ON _GLOSSYREFLECTIONS_OFF _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -57,7 +57,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - PixelSnap: 0
-    - _Blend: 0.922
+    - _Blend: 1
     - _BumpScale: 1
     - _ClusterOne: 0
     - _ClusterTwo: 0
@@ -75,8 +75,8 @@ Material:
     - _SpecularHighlights: 0
     - _SrcBlend: 1
     - _Threshold: 0.53
-    - _Transparency: 0.705
-    - _TransparencyOrig: 0.729
+    - _Transparency: 1
+    - _TransparencyOrig: 0.15
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
