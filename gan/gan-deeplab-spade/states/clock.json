@@ -1,6 +1,11 @@
 {
     "map": [
         {
+            "from": ["wall-concrete"],
+            "to" : "wall-other",
+            "invert": false
+        },
+        {
             "from": ["dining table","table", "desk-stuff", "cup", "wine glass", "plastic", "floor-other", "mouse", "bed", "car"],
             "to" : "wall-concrete",
             "invert": false
@@ -15,7 +20,7 @@
     "deeplab": {
         "mask": [
             {
-                "items": ["dining table","clock", "wall-concrete", "person"],
+                "items": ["clock", "wall-concrete", "person"],
                 "invert": true
             }
         ]

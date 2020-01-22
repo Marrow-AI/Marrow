@@ -286,7 +286,7 @@
                     ]
                 }
              ],
-             "delay": 8
+             "delay": 3
          },
         {
             "speaker": "dad",
@@ -433,8 +433,7 @@
                 {
                    "note": 71
                 } 
-            ],
-            "delay": 5
+            ]
         },
         {
             "speaker": "dad",
@@ -460,7 +459,7 @@
                     "target" : "td-sister",
                     "address": "/td/glitch",
                     "value": 0,
-                    "delay": 1
+                    "delay": 0.5
                 },
                 {
                     "target" : "td",
@@ -474,9 +473,6 @@
                 }
             ],
             "triggers-midi": [
-                {
-                   "note": 121
-                },
                 {
                    "note": 72
                 } 
@@ -562,7 +558,7 @@
         },
         {
             "speaker": "sister",
-            "text": "Time has stopped.",
+            "text": "Time is standing still.",
             "noskip": true,
             "triggers-midi": [
                 {
@@ -643,14 +639,27 @@
                 {
                     "target" : "gaugan",
                     "address": "/load-state",
-                    "value": "test-bowl"
+                    "value": "test-bowl",
+                    "delay": 4
+                },
+                {
+                    "target" : "unity",
+                    "address": "/speech",
+                    "value": "green",
+                    "delay": 2
+                },
+                {
+                    "target" : "unity",
+                    "address": "/enable-t2i",
+                    "value": 0,
+                    "delay": 3   
                 }
             ],
             "triggers-midi": [
                 {
                    "note": 74
                 } 
-            ]
+            ]            
         },
         {
             "in-ear" : [ 
@@ -708,7 +717,7 @@
         {
             "speaker": "sister",
             "text": "I mean the memories we are boiling in our soups.",
-            "timeout": "I mean memories that tensing our dinners.",
+            "timeout": "I care about memories that are harder to digest.",
             "triggers-osc": [
                 {
                     "target" : "gaugan",
@@ -731,17 +740,6 @@
                     "target" : "td",
                     "address": "/td/edge",
                     "value": 1
-                },
-                {
-                    "target" : "unity",
-                    "address": "/speech",
-                    "value": "white"  
-                },
-                {
-                    "target" : "unity",
-                    "address": "/enable-t2i",
-                    "value": 0,
-                    "delay": 1   
                 }
             ],
             "triggers-midi": [
@@ -791,11 +789,6 @@
                     "value": 2,
                     "delay": 4               
                 }
-            ],
-            "triggers-midi": [
-                {
-                   "note": 76
-                } 
             ]
         },
         {
@@ -837,9 +830,9 @@
             ],
             "triggers-midi": [
                 {
-                   "note": 77
+                   "note": 76
                 } 
-            ]
+            ]  
         },
         {
             "in-ear" : [ 
@@ -881,11 +874,6 @@
                     "address": "/memory/state",
                     "value": 4
                 }
-            ],
-            "triggers-midi": [
-                {
-                   "note": 78
-                } 
             ]
         },
         {
@@ -909,12 +897,7 @@
                                 "text": "I always liked this bowl more than I ever liked my mother."
                             }
                         ]
-                    }
-                ],
-            "triggers-midi": [
-                {
-                   "note": 123 
-                } 
+                }
             ],
             "triggers-osc": [
                 {
@@ -929,7 +912,12 @@
         {
             "speaker": "mom",
             "text": "It's a nice bowl. But there is only one way to remember it.",
-            "timeout": "No need to complicate things, it is clear how you should remember it."
+            "timeout": "No need to complicate things, it is clear how you should remember it.",
+            "triggers-midi": [
+                {
+                   "note": 77
+                } 
+            ]    
         },
         {
             "speaker": "sister",
@@ -951,7 +939,7 @@
             "timeout": "that everything has more to it.",
             "triggers-midi": [
                 {
-                   "note": 79
+                   "note": 78
                 } 
             ]
         },
@@ -979,13 +967,13 @@
                     "target" : "td-sister",
                     "address": "/td/glitch",
                     "value": 0,
-                    "delay": 1
+                    "delay": 0.2
                 },
                 {
                     "target" : "unity",
                     "address": "/stylegan/blend",
                     "value": 0.0,
-                    "delay": 1
+                    "delay": 0.2
                 }
             ]
         },
@@ -997,7 +985,12 @@
         {
             "speaker": "dad",
             "text": "I told you already, you need to see us exactly as we are.",
-            "timeout": "As we said before, you need to see us."
+            "timeout": "As we said before, you need to see us.",
+            "triggers-midi": [
+                {
+                   "note": 79
+                } 
+            ]
         },
         {
             "in-ear" : [ 
@@ -1038,12 +1031,7 @@
         {
             "speaker": "brother",
             "text": "From your left side.",
-            "timeout": "Not from your right.",
-            "triggers-midi": [
-                {
-                   "note": 80
-                } 
-            ]
+            "timeout": "Not from your right."
         },
         {
             "in-ear" : [ 
@@ -1073,7 +1061,6 @@
                     ]
                 }               
             ],
-            "delay" : 3,
             "triggers-osc": [
                 {
                     "target" : "td",
@@ -1145,8 +1132,7 @@
                         }
                     ]
                 }
-            ],
-            "delay": 5
+            ]
         },
         {
             "speaker": "dad",
@@ -1191,6 +1177,18 @@
                     "target" : "gaugan",
                     "address": "/load-state",
                     "value": "sea-boats"
+                },
+                {
+                    "target" : "unity",
+                    "address": "/speech",
+                    "value": "night",
+                    "delay": 2
+                },
+                {
+                    "target" : "unity",
+                    "address": "/enable-t2i",
+                    "value": 0,
+                    "delay": 3   
                 }
             ],
             "triggers-midi": [
@@ -1245,7 +1243,7 @@
                    "note": 86
                 } 
             ],
-            "delay": 10
+            "delay": 3
         },
         {
             "in-ear" : [ 
@@ -1304,7 +1302,15 @@
         },
         {
             "speaker": "dad",
-            "text": "It is easy to get fooled by the unstable shifts of the wind."
+            "text": "It is easy to get fooled by the unstable shifts of the wind.",
+            "triggers-osc": [
+                {
+                    "target" : "unity",
+                    "address": "/enable-t2i",
+                    "value": 1  
+                }
+            ]
+            
         },
         {
             "in-ear" : [ 
@@ -1331,11 +1337,11 @@
                     "delay": 2
                 }
             ],
-            "delay": 5
+            "delay": 3
         },
         {
             "speaker": "mom",
-            "text": "Sister, you are taking us down to a moonless dark night.",
+            "text": "Daughter, you are taking us down to a moonless dark night.",
             "timeout": "I am not a fan of the dark."
         },
         {
@@ -1518,7 +1524,7 @@
                     "target" : "td-sister",
                     "address": "/td/glitch",
                     "value": 0,
-                    "delay": 1
+                    "delay": 0.5
                 },
                 {
                     "target" : "unity",
@@ -1552,9 +1558,6 @@
                 }
             ],
             "triggers-midi": [
-                {
-                   "note": 121 
-                },
                 {
                    "note": 108
                 }
@@ -1595,11 +1598,11 @@
         },
         {
             "speaker": "brother",
-            "text": "Apples become our liberation-"
+            "text": "The apples become our liberation-"
         },
         {
             "speaker": "brother",
-            "text": "Worms turn into our desperation-"
+            "text": "The worms turn into our desperation-"
         },
         {
             "speaker": "brother",
@@ -1622,7 +1625,7 @@
         },
         {
             "speaker": "sister",
-            "text": "The clock has stopped.",
+            "text": "The clock has stopped moving.",
             "noskip": true,
             "triggers-osc": [
                 {
@@ -1644,31 +1647,8 @@
                     "target" : "td",
                     "address": "/td/display",
                     "value": 0
-                },
-                {
-                    "target" : "stylegan",
-                    "address": "/start-sequence",
-                    "value": "part3_2_option1",
-                    "delay": 3
-                },
-                {
-                    "target" : "unity",
-                    "address": "/stylegan-animation/state",
-                    "value": 5,
-                    "delay": 3
-                },
-                {
-                    "target" : "unity",
-                    "address": "/camera/stylegan",
-                    "value": 0,
-                    "delay": 15 
-                },
-                {
-                    "target" : "unity",
-                    "address": "/stylegan-animation/state",
-                    "value": 0,
-                    "delay": 15 
                 }
+               
             ],
             "triggers-midi": [
                 {
@@ -1679,7 +1659,34 @@
         {
             "speaker": "sister",
             "text": "Daddy? Can I ask you something?",
-            "timeout": "Daddy, I promise only one question."
+            "timeout": "Daddy, I promise only one question.",
+            "triggers-osc": [
+                {
+                    "target" : "stylegan",
+                    "address": "/start-sequence",
+                    "value": "part3_1,part3_2_option1",
+                    "delay": 1
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 5,
+                    "delay": 17
+                },
+                {
+                    "target" : "unity",
+                    "address": "/camera/stylegan",
+                    "value": 2,
+                    "delay" : 31
+                },
+                {
+                    "target" : "unity",
+                    "address": "/stylegan-animation/state",
+                    "value": 0,
+                    "delay": 33 
+                }
+            ],
+            "delay": 2
         },
         {
             "speaker": "dad",
@@ -1704,17 +1711,31 @@
         {
             "speaker": "sister",
             "text": "What ground do families come from?",
-            "timeout": "From where do families come from?"
+            "timeout": "From where do families come from?",
+            "triggers-osc": [
+                {
+                    "target" : "unity",
+                    "address": "/enable-t2i",
+                    "value": 0,
+                    "delay": 4   
+                },
+                {
+                    "target" : "unity",
+                    "address": "/speech",
+                    "value": "night",
+                    "delay": 3
+                }
+            ]
         },
         {
             "speaker": "mom",
-            "text": "From homes, like this one.",
-            "timeout": "Homes.",
+            "text": "They come from homes, like this one.",
+            "noskip": true,
             "triggers-midi": [
                 {
-                   "note": 36
+                   "note": 110
                 } 
-            ]
+            ]           
         }
     ]
 }
