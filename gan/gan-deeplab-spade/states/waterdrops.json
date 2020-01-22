@@ -8,8 +8,7 @@
         {
             "from": ["bowl"],
             "to" : "clouds",
-            "invert": false,
-			"expand": 5
+            "invert": false
         }
     ],
     "deeplab": {

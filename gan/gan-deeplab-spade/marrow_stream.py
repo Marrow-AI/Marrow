@@ -365,7 +365,7 @@ class NDIStreamer(Thread):
 
 class Camera(NDIStreamer):
     def __init__(self, queue):
-        super().__init__(1024,512, "marrow-theta")
+        super().__init__(1920,960, "marrow-theta")
         self.queue = queue
 
     def run(self):
@@ -397,6 +397,7 @@ class Gan(NDIStreamer):
         self.send_bowl = False
 
         self.t2i_client = udp_client.SimpleUDPClient("192.168.1.22", 3838)
+        self.audio_client = udp_client.SimpleUDPClient("192.168.1.25", 8000)
 
 
     def run(self):
@@ -522,7 +523,14 @@ class Gan(NDIStreamer):
                 final = np.concatenate((generated_np, colormap, raw_image), axis=1)
                 #final = np.concatenate((generated_np, colormap), axis=1)
 
+                self.send_midi_note(120)
                 self.push_frame(final)
+
+    def send_midi_note(self,note, delay = 0): 
+        self.audio_client.send_message("/midi/note/1", [note,127, 1])
+        self.audio_client.send_message("/midi/note/1", [note,127, 0])
+        #self.audio_client.send_message("/noteOn", [note,127])
+        #self.audio_client.send_message("/noteOff", [note,127])
 
     def put_text_in_center(self, data, box, text):
         fontFace = cv2.FONT_HERSHEY_SIMPLEX
@@ -751,6 +759,22 @@ def live(config_path, model_path, cuda, crf, camera_id, image_path):
     osc_server.start()
 
     url = THETA_URL + 'commands/execute'
+
+    print("Setting preview options")
+
+    payload = {
+        "name": "camera.setOptions",
+        "parameters": {
+            "options": {
+                "previewFormat": {
+                    "width": 1920, "height": 960, "framerate": 8
+                }
+            }
+        }
+    }
+    res = requests.post(url, json = payload, auth = (HTTPDigestAuth(THETA_ID, THETA_PASSWORD)))
+    print(res.text)
+
     payload = {"name": "camera.getLivePreview"}
     buffer = bytes()
 

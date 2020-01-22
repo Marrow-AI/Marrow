@@ -156,10 +156,10 @@ class Engine:
         #self.audio_client = udp_client.SimpleUDPClient("127.0.0.1", 57120)
 
         self.t2i_client = udp_client.SimpleUDPClient("127.0.0.1", 3838)
-        self.td_client = udp_client.SimpleUDPClient("127.0.0.1", 7000)
+        self.td_client = udp_client.SimpleUDPClient("127.0.0.1", 7002)
         self.td_sister_client = udp_client.SimpleUDPClient("127.0.0.1", 7001)
         self.audio_client = udp_client.SimpleUDPClient("192.168.1.21", 8000)
-       # self.audio_client = udp_client.SimpleUDPClient("192.168.1.25", 8000)
+        #self.audio_client = udp_client.SimpleUDPClient("192.168.1.25", 8000)
         self.stylegan_client = udp_client.SimpleUDPClient("192.168.1.23", 3800)
         self.gaugan_client = udp_client.SimpleUDPClient("192.168.1.23", 3900)
 
@@ -776,6 +776,8 @@ class Engine:
                 self.react(self.script.awaiting_text)
         elif command == 'prev':
             self.prev_line()
+        elif command == 'hall-music':
+            self.hall_music()
         elif command == 'hall-callibration':
             self.hall_callibration()
         elif command == 'hall-completed':
@@ -790,13 +792,17 @@ class Engine:
         self.args.stop = False
         self.live_ser.listen(self.args)
 
+    def hall_music(self): 
+        print("Play hall music!")
+        self.send_midi_note(122)       
+
     def hall_callibration(self): 
         print("Play hall calibration sound!")
-        self.send_midi_note(122)
+        self.send_midi_note(123)
 
     def hall_completed(self): 
         print("Play hall completed sound!")
-        self.send_midi_note(123)
+        self.send_midi_note(124)
 
     async def hall_start(self): 
         print("Hall start! Playing character descriptions")
@@ -808,7 +814,7 @@ class Engine:
 
         await asyncio.gather(*tasks)
         print("Finshed all character descriptions! Starting")
-        self.start_nfb()
+        self.send_midi_note(125)
 
     def stop(self):
         print("Stopping experience")
@@ -881,6 +887,7 @@ class Engine:
         asyncio.ensure_future(self.server.control("start"))
         self.t2i_client.send_message("/table/showplates", 0)
         self.t2i_client.send_message("/table/fadein", 1)
+        self.t2i_client.send_message("/enable-t2i", 0)
         self.t2i_client.send_message("/spotlight", "mom")
         self.td_client.send_message("/td/edge", 0)
         self.td_client.send_message("/td/display", 0)
@@ -891,6 +898,7 @@ class Engine:
         self.t2i_client.send_message("/gaugan/state", 1)
         self.t2i_client.send_message("/memory/state", 0)
         self.t2i_client.send_message("/camera/stylegan", 0)
+        self.t2i_client.send_message("/stylegan/scale", 0)
         self.t2i_client.send_message("/stylegan-animation/state", 0)
 
 

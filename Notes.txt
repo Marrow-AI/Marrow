@@ -53,16 +53,60 @@ GauGAN after
 Pos = (-43.78, -0.65, 17.49)
 Scale = (1.628004, 0.8140017, 0.8140017)
 
-
-
 Gray scene
 ------------
 Deeplab/Raw scale: 1.644871, 8224356
 Deeplab pos: -44.03, -0.7 16.68
-Raw pos: -44.03, -0.7 16.68, 18
+Raw pos: -44.03, -0.7 18
 
 Deeplab Threshold: 0.37
 Transparency from 0.8 to 1
 
 Raw transparency from 1 to 0
+
+
+==========================================
+Plate resize
+Camera size for 10inch:  5.83
+NewPlateD: Z = -3.05
+NewPlateA: X = 7.87
+NewPlateA: X = -7.87
+
+New GauGAN projection:
+
+Scale X: 1.495
+Pos X: 1.11 Y: 1.82
+
+
+Second table calibration
+-------------------------
+NewPlateD Z: -3.7
+NewPlateB Z: 3.7
+NewPlate A/C X: 8.28
+
+
+
+
+Measurement:
+-------------
+
+6 15/16
+
+
+Lifted the bowl
+GauGan Y: 2.3
+
+
+After second projection change:
+===============================
+
+Gaugan sea/sand:
+Scale : 1.515, 0, 0.822
+Pos: 0.7, 1.8, -7.142 
+-------------------
+
+StyleGAN
+--------
+Pos y: -0.3
+
 

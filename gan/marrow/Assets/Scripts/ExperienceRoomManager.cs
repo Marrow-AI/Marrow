@@ -168,13 +168,16 @@ namespace Marrow
 
         public void ReceivedOscStyleGANScale(int state)
         {
-            if (state == 1) {
+            if (state == 0) {
+                styleGAN.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                styleGAN.transform.position = new Vector3(-43.92f, 0.65f, 18.31f);
+            } else if (state == 1) {
                 LeanTween.moveX(styleGAN, -44.0f, 60.0f);
-                LeanTween.scale(styleGAN, new Vector3(0.68f, 0.68f, 0.68f), 60.0f);
+                LeanTween.scale(styleGAN, new Vector3(0.55f, 0.55f, 0.55f), 60.0f);
             } else if (state == 2) {
-                LeanTween.move(styleGAN, new Vector3(-45.11f, -0.55f, styleGAN.transform.position.z), 35.0f);
+                LeanTween.move(styleGAN, new Vector3(-46.5f, -0.68f, styleGAN.transform.position.z), 35.0f);
                 // LeanTween.scale(styleGAN, new Vector3(0.75f, 0.75f, 0.75f), 35.0f);
-                LeanTween.scale(styleGAN, new Vector3(0.6f, 0.6f, 0.6f), 35.0f);
+                LeanTween.scale(styleGAN, new Vector3(0.55f, 0.55f, 0.55f), 35.0f);
             } else if (state == 3) {
                 styleGAN.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
             }
@@ -193,8 +196,10 @@ namespace Marrow
                 rawImage.GetComponent<Renderer>().enabled = false;
             } else if (state == 2) {
                 gauGAN.GetComponent<Renderer>().enabled = true;
-            }  else if (state == 3) {
+                gauGAN.transform.localPosition = new Vector3(0.78f, 1.5f, -7.142639f);
 
+            } else if (state == 3) {
+                /*
                 gauGAN.GetComponent<Renderer>().enabled = true;
 
                 gauGAN.transform.position = new Vector3(-43.78f, -0.65f, 15f);
@@ -224,20 +229,6 @@ namespace Marrow
                 Material deeplabMaterial = deepLab.GetComponent<Renderer>().material;
 
                 rawImage.GetComponent<Renderer>().enabled = false;
-
-
-                    LeanTween.value(
-                        deepLab,
-                        1.0f, 0.0f, 3.0f
-                    )
-                    .setOnUpdate((float val) => {
-                        deeplabMaterial.SetFloat("_Transparency", val);
-                    })
-                .setOnComplete(() => {
-                    deepLab.GetComponent<Renderer>().enabled = false;
-                });
-
-
                 deepLab.GetComponent<Renderer>().enabled = false;
             }
         }
@@ -253,29 +244,79 @@ namespace Marrow
                 renderers[2].enabled = false;
                 animators[0].enabled = false;
                 renderers[0].enabled = false;
+                animators[3].enabled = false;
+                renderers[3].enabled = false;
+                animators[4].enabled = false;
+                renderers[4].enabled = false;
             }
             else if (state == 1) {
                 animators[1].enabled = false;
                 renderers[1].enabled = false;
                 animators[2].enabled = false;
                 renderers[2].enabled = false;
+                renderers[3].enabled = false;
+                animators[3].enabled = false;
+                renderers[4].enabled = false;
+                animators[4].enabled = false;
+
+
                 animators[0].enabled = true;
                 renderers[0].enabled = true;
 
             } else if (state == 2) {
                 animators[0].enabled = false;
-                animators[1].enabled = true;
                 renderers[0].enabled = false;
-                renderers[1].enabled = true;
+                renderers[3].enabled = false;
+                animators[3].enabled = false;
                 animators[2].enabled = false;
                 renderers[2].enabled = false;
+                renderers[4].enabled = false;
+                animators[4].enabled = false;
+
+
+                animators[1].enabled = true;
+                renderers[1].enabled = true;
             } else if (state == 3) {
-                renderers[0].enabled = false;
+
                 renderers[1].enabled = false;
-                animators[0].enabled = false;
                 animators[1].enabled = false;
+                renderers[3].enabled = false;
+                animators[3].enabled = false;
+                renderers[4].enabled = false;
+                animators[4].enabled = false;
+                animators[0].enabled = false;
+                renderers[0].enabled = false;
+
+
                 renderers[2].enabled = true;
                 animators[2].enabled = true;
+            } else if (state == 4) {
+
+                renderers[0].enabled = false;
+                animators[0].enabled = false;
+                renderers[1].enabled = false;
+                animators[1].enabled = false;
+                renderers[2].enabled = false;
+                animators[2].enabled = false;
+                renderers[4].enabled = false;
+                animators[4].enabled = false;
+
+
+                renderers[3].enabled = true;
+                animators[3].enabled = true;
+
+            } else if (state == 5) {
+                renderers[0].enabled = false;
+                animators[0].enabled = false;
+                renderers[1].enabled = false;
+                animators[1].enabled = false;
+                renderers[2].enabled = false;
+                renderers[2].enabled = false;
+                renderers[3].enabled = false;
+                renderers[3].enabled = false;
+
+                renderers[4].enabled = true;
+                animators[4].enabled = true;
             }
         }
         public void ReceivedDeeplabBowl(OSCMessage message) {
@@ -289,7 +330,7 @@ namespace Marrow
             LeanTween.cancel(bowlTweenId);
             Vector3 worldPos = memory.transform.parent.TransformPoint(memX, memory.transform.localPosition.y, memory.transform.localPosition.z);
             Debug.Log("World pos: " + worldPos.x);
-            bowlTweenId = LeanTween.moveX(memory, worldPos.x, 2.0f)
+            bowlTweenId = LeanTween.moveX(memory, worldPos.x, 10.0f)
             .setOnUpdate((float val) => {
                 int ccValue = (int)(((memory.transform.localPosition.x + 7.0f) / 14.0f) * 127.0f);
                 // Debug.Log("Sending OSC pos, CC: " + ccValue);
