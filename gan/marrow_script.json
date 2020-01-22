@@ -1025,16 +1025,7 @@
                             "text": "I was wondering the same thing, although I wish I wasn't."
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "speaker": "brother",
-            "text": "From your left side.",
-            "timeout": "Not from your right."
-        },
-        {
-            "in-ear" : [ 
+                },
                 { 
                     "target" : "mom",
                     "lines": [
@@ -1044,6 +1035,12 @@
                     ]
                 }
             ]
+        },
+        {
+            "speaker": "brother",
+            "text": "From your left side.",
+            "timeout": "Not from your right.",
+            "delay": 1
         },
         {
             "speaker": "dad",
@@ -1283,7 +1280,7 @@
         },
         {
             "speaker": "mom",
-            "text": "Finally, we are dining quietly.",
+            "text": "Finally we are dining quietly.",
             "timeout": "It is nice to eat quietly."
         },
         {
