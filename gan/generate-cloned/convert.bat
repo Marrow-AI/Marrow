@@ -1,0 +1,1 @@
+for %%a in ("results\*.wav") do ffmpeg -y -i "%%a" "C:\in-ear\%%~na.wav"
