@@ -34,7 +34,6 @@ import detectron.core.test_engine as infer_engine
 import detectron.datasets.dummy_datasets as dummy_datasets
 import detectron.utils.c2 as c2_utils
 
-sys.path.append('./server')
 from itertools import permutations
 
 c2_utils.import_detectron_ops()
@@ -90,7 +89,7 @@ def run():
             print("{} ({})".format(file_counter, counter))
             result = process_image(args.input + image_file, '{}{}|{}'.format(args.output,file_counter + 1,file_no_ext))
             if result:
-                counter = counter + 4
+                counter = counter + 4 # 4 new images every cycle
         except Exception as e:
             print(e)
             print("Error, next")
@@ -101,27 +100,18 @@ def run():
 
 
 def process_image(input_file, output_file):
-  #image = stringToImage(input_img[input_img.find(",")+1:])
-  #img = cv2.imread('stylegan/narrow/13.test.jpg')
-  #img = cv2.imread('stylegan/curated/231.jpg')
   img = cv2.imread(input_file)
-  #img = toRGB(image)
-  #logger.info(input_file)
-  timers = defaultdict(Timer)
-  t = time.time()
   size = img.shape[:2]
   with c2_utils.NamedCudaScope(0):
     cls_boxes, cls_segms, cls_keyps, cls_bodys = infer_engine.im_detect_all(
       model, img, None, timers=timers
     )
 
-  t2 = time.time()
-
-  #logger.info('Inference time: {:.3f}s'.format(t2 - t))
   if cls_bodys is not None:
     (finals,num_people) = process_bodies(img, cls_boxes, cls_bodys)
     if len(finals) > 0:
       for i,final in enumerate(finals):
+        # Write all files, name the file with X if the picture had more than 4 persons
         if num_people > 4:
           file_name = "{}_{}_X.jpg".format(output_file,(i + 1))
         else:
@@ -129,18 +119,9 @@ def process_image(input_file, output_file):
         cv2.imwrite(file_name, final)
       return True
     else:
-      #print('Skipping')
       return False
   else:
-    #print('Skipping')
     return False
-
-
-  #cv2.imwrite(os.path.join(output_dir, '{}'.format('opencv.png')), r )
-
-  #file_content=base64.b64decode(r)
-  #with open("stylegan/pose.jpg","wb") as f:
-	#f.write(file_content)
 
 
 def process_bodies(im, boxes, body_uv):
@@ -152,69 +133,49 @@ def process_bodies(im, boxes, body_uv):
             boxes = None
 
     IUV_fields = body_uv[1]
-    #print("Shape of image {}".format(im.shape))
     K = 26
 
     inds = np.argsort(boxes[:,0])
-    good_inds = inds[boxes[inds[:],4] >= 0.95]
-    #print("Indexes {}".format(good_inds))
-
+    good_inds = inds[boxes[inds[:],4] >= 0.95] # This is the certainty threshold for label identification
 
     good_size = np.full(good_inds.shape, True, dtype=bool)
+
+    # After filtering the certainty we are also filtering for a minimum figure height
     for i, ind in enumerate(good_inds):
         shape = IUV_fields[ind].shape
-        #print("Shape {}".format(shape))
         good_size[i] = shape[2] >= 115
 
-    #print("Shapes filter {}".format(good_size))
     real_good_inds = good_inds[good_size]
     num_people = len(real_good_inds)
-    #print("Indexes {}".format(good_inds))
-        
-    #print('Found {} people'.format(len(good_inds)))
+
     finals = []
     if len(real_good_inds) >= 4:
+
+        # Create all permutations of 4 people, shuffle them, and process the first 4.
         perms = list(set(permutations(real_good_inds, 4)))
         np.random.shuffle(perms)
         for i in range(4):
             good_inds = perms[i]
-            print("Indexes {}".format(good_inds))
-
-    #print("Chose random 4 {}".format(good_inds))
 
             Final = np.zeros([512,512, 3])
             current_offset = 0
 
-            #np.random.shuffle(good_inds)
-            #print("Good index {}".format(good_inds))
-
             for i, ind in enumerate(good_inds):
+                # Extract the figure mask
                 entry = boxes[ind,:]
-                #print("Box position: {}, score: {}".format(entry[0],entry[4]))
                 entry=entry[0:4].astype(int)
-                ####
                 output = IUV_fields[ind]
-                ####
-                ###
                 CurrentMask = (output[0,:,:]>0).astype(np.float32)
                 BlackMask = (output[0,:,:]==0)
-                #print("Shape of mask {}".format(CurrentMask.shape))
-                #print("Shape of output {}".format(output.shape))
-                #All_Coords = np.zeros([output.shape[1],output.shape[2], 3])
-                #All_Coords_Old = All_Coords[:output.shape[1],:output.shape[2],:]
-                #All_Coords_Old[All_Coords_Old==0]= im[entry[1]:output.shape[1]+entry[1],entry[0]:output.shape[2]+entry[0],:][All_Coords_Old==0]
-                #All_Coords[ 0 : output.shape[1], 0 : output.shape[2],:]= All_Coords_Old
 
+                # Paint black anywhere outside the label's mask
                 All_Coords = np.array(im[entry[1]:output.shape[1]+entry[1],entry[0]:output.shape[2]+entry[0],:])
-                #cv2.imwrite(os.path.join(output_dir, 'coords{}.png'.format(ind)), All_Coords)
-                #cv2.imwrite(os.path.join(output_dir, 'img{}.png'.format(ind)), im)
                 All_Coords[BlackMask] = 0
                 All_Coords = All_Coords.astype(np.uint8)
-                resize_ratio = 128 / output.shape[2]
-                #print("Resize ratio {} ({})".format(resize_ratio, output.shape[2]))
-                img = cv2.resize(All_Coords, (128,int(output.shape[1] * resize_ratio)))
 
-                #cv2.imwrite(os.path.join(output_dir, 'person{}.png'.format(ind)), img)
+                # Resize and locate the figure in a moving offset
+                resize_ratio = 128 / output.shape[2]
+                img = cv2.resize(All_Coords, (128,int(output.shape[1] * resize_ratio)))
 
                 Final[128:img.shape[0]+128,current_offset:img.shape[1] + current_offset,:] = img[:384,:,:]
 
@@ -223,69 +184,5 @@ def process_bodies(im, boxes, body_uv):
             finals.append(Final)
 
     return (finals, num_people)
-
-def vis_one_image(
-        im, im_name, output_dir, boxes, segms=None, keypoints=None, body_uv=None, thresh=0.9,
-        kp_thresh=2, dpi=200, box_alpha=0.0, dataset=None, show_class=False,
-        ext='pdf'):
-    """Visual debugging of detections."""
-    #if not os.path.exists(output_dir):
-    #    os.makedirs(output_dir)
-
-    t0 = time.time() 
-
-    if isinstance(boxes, list):
-        boxes, segms, keypoints, classes = convert_from_cls_format(
-            boxes, segms, keypoints)
-
-    #print(time.time() - t0)
-
-    if boxes is None or boxes.shape[0] == 0 or max(boxes[:, 4]) < thresh:
-        return
-    IUV_fields = body_uv[1]
-    #
-    All_Coords = np.zeros(im.shape)
-    All_inds = np.zeros([im.shape[0],im.shape[1]])
-    K = 26
-    ##
-    inds = np.argsort(boxes[:,4])
-    ##
-    t1 = time.time()
-    for i, ind in enumerate(inds):
-        entry = boxes[ind,:]
-        if entry[4] > 0.85:
-	    #print('ENTRY {}'.format(entry[4]))
-            entry=entry[0:4].astype(int)
-            ####
-            output = IUV_fields[ind]
-            ####
-            All_Coords_Old = All_Coords[ entry[1] : entry[1]+output.shape[1],entry[0]:entry[0]+output.shape[2],:]
-            All_Coords_Old[All_Coords_Old==0]=output.transpose([1,2,0])[All_Coords_Old==0]
-            All_Coords[ entry[1] : entry[1]+output.shape[1],entry[0]:entry[0]+output.shape[2],:]= All_Coords_Old
-            ###
-            CurrentMask = (output[0,:,:]>0).astype(np.float32)
-            All_inds_old = All_inds[ entry[1] : entry[1]+output.shape[1],entry[0]:entry[0]+output.shape[2]]
-            #All_inds_old[All_inds_old==0] = CurrentMask[All_inds_old==0]*i
-            All_inds_old[All_inds_old==0] = CurrentMask[All_inds_old==0]*255
-            All_inds[ entry[1] : entry[1]+output.shape[1],entry[0]:entry[0]+output.shape[2]] = All_inds_old
-
-    #print(time.time() - t1)
-    All_Coords[:,:,1:3] = 255. * All_Coords[:,:,1:3]
-    All_Coords[All_Coords>255] = 255.
-    All_Coords = All_Coords.astype(np.uint8)
-    All_inds = All_inds.astype(np.uint8)
-    cv2.imwrite(os.path.join(output_dir, '{}'.format('inds.png')), All_inds )
-    #print('IUV written to: ' , os.path.join(output_dir, '{}'.format('inds.png')) )
-    img = All_Coords
-    img = imresize(img,  (512, 1080), interp='bilinear')
-    retval, buffer = cv2.imencode('.jpg', img)
-    cv2.imwrite(os.path.join(output_dir, '{}'.format('coords.jpg')), img )
-    t = time.time()
-    jpg_as_text = base64.b64encode(buffer)
-    #print('Encoding time: %f' % (time.time() - t))
-    return jpg_as_text
-
-  
-
 
 run()
