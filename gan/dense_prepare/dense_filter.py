@@ -74,33 +74,35 @@ def toRGB(image):
 
 
 def run():
-    parser = argparse.ArgumentParser(description='Family dataset preparation')
+    parser = argparse.ArgumentParser(description='Family dataset filteration')
     parser.add_argument('input', metavar='input folder', help='Input folder with images')
-    parser.add_argument('output', metavar='output folder', help='Output folder to write images to')
 
     args = parser.parse_args()
 
     counter = 0 
-    file_counter = 0 
+    file_counter = 1 
     print('Processing {}'.format(args.input))
     image_files = os.listdir(args.input)
     for image_file in image_files:
         try:
             file_no_ext = os.path.splitext(image_file)[0]
-            print("{} ({})".format(file_counter, counter))
-            result = process_image(args.input + image_file, '{}{}|{}'.format(args.output,file_counter + 1,file_no_ext))
+            #print("{} ({})".format(file_counter, counter))
+            (result, num_people) = process_image(args.input + image_file)
             if result:
-                counter = counter + 4
+                counter = counter + 1
+                print("{} PASS ({}) ({}/{})".format(image_file, num_people,counter, file_counter))
+            else:
+                print("{} FAIL ({})".format(image_file, num_people))
+
         except Exception as e:
-            print(e)
-            print("Error, next")
+            print("{} FAIL ({})".format(image_file, 'ERR'))
             continue
         finally:
             file_counter = file_counter + 1
 
 
 
-def process_image(input_file, output_file):
+def process_image(input_file):
   #image = stringToImage(input_img[input_img.find(",")+1:])
   #img = cv2.imread('stylegan/narrow/13.test.jpg')
   #img = cv2.imread('stylegan/curated/231.jpg')
@@ -119,21 +121,14 @@ def process_image(input_file, output_file):
 
   #logger.info('Inference time: {:.3f}s'.format(t2 - t))
   if cls_bodys is not None:
-    (finals,num_people) = process_bodies(img, cls_boxes, cls_bodys)
-    if len(finals) > 0:
-      for i,final in enumerate(finals):
-        if num_people > 4:
-          file_name = "{}_{}_X.jpg".format(output_file,(i + 1))
-        else:
-          file_name = "{}_{}.jpg".format(output_file,(i + 1))
-        cv2.imwrite(file_name, final)
-      return True
+    num_people = process_bodies(img, cls_boxes, cls_bodys)
+    if num_people == 4:
+      return (True, num_people)
     else:
-      #print('Skipping')
-      return False
+      return (False, num_people)
   else:
     #print('Skipping')
-    return False
+    return (False, 0)
 
 
   #cv2.imwrite(os.path.join(output_dir, '{}'.format('opencv.png')), r )
@@ -159,70 +154,9 @@ def process_bodies(im, boxes, body_uv):
     good_inds = inds[boxes[inds[:],4] >= 0.95]
     #print("Indexes {}".format(good_inds))
 
+    num_people = len(good_inds)
 
-    good_size = np.full(good_inds.shape, True, dtype=bool)
-    for i, ind in enumerate(good_inds):
-        shape = IUV_fields[ind].shape
-        #print("Shape {}".format(shape))
-        good_size[i] = shape[2] >= 115
-
-    #print("Shapes filter {}".format(good_size))
-    real_good_inds = good_inds[good_size]
-    num_people = len(real_good_inds)
-    #print("Indexes {}".format(good_inds))
-        
-    #print('Found {} people'.format(len(good_inds)))
-    finals = []
-    if len(real_good_inds) >= 4:
-        perms = list(set(permutations(real_good_inds, 4)))
-        np.random.shuffle(perms)
-        for i in range(4):
-            good_inds = perms[i]
-            print("Indexes {}".format(good_inds))
-
-    #print("Chose random 4 {}".format(good_inds))
-
-            Final = np.zeros([512,512, 3])
-            current_offset = 0
-
-            #np.random.shuffle(good_inds)
-            #print("Good index {}".format(good_inds))
-
-            for i, ind in enumerate(good_inds):
-                entry = boxes[ind,:]
-                #print("Box position: {}, score: {}".format(entry[0],entry[4]))
-                entry=entry[0:4].astype(int)
-                ####
-                output = IUV_fields[ind]
-                ####
-                ###
-                CurrentMask = (output[0,:,:]>0).astype(np.float32)
-                BlackMask = (output[0,:,:]==0)
-                #print("Shape of mask {}".format(CurrentMask.shape))
-                #print("Shape of output {}".format(output.shape))
-                #All_Coords = np.zeros([output.shape[1],output.shape[2], 3])
-                #All_Coords_Old = All_Coords[:output.shape[1],:output.shape[2],:]
-                #All_Coords_Old[All_Coords_Old==0]= im[entry[1]:output.shape[1]+entry[1],entry[0]:output.shape[2]+entry[0],:][All_Coords_Old==0]
-                #All_Coords[ 0 : output.shape[1], 0 : output.shape[2],:]= All_Coords_Old
-
-                All_Coords = np.array(im[entry[1]:output.shape[1]+entry[1],entry[0]:output.shape[2]+entry[0],:])
-                #cv2.imwrite(os.path.join(output_dir, 'coords{}.png'.format(ind)), All_Coords)
-                #cv2.imwrite(os.path.join(output_dir, 'img{}.png'.format(ind)), im)
-                All_Coords[BlackMask] = 0
-                All_Coords = All_Coords.astype(np.uint8)
-                resize_ratio = 128 / output.shape[2]
-                #print("Resize ratio {} ({})".format(resize_ratio, output.shape[2]))
-                img = cv2.resize(All_Coords, (128,int(output.shape[1] * resize_ratio)))
-
-                #cv2.imwrite(os.path.join(output_dir, 'person{}.png'.format(ind)), img)
-
-                Final[128:img.shape[0]+128,current_offset:img.shape[1] + current_offset,:] = img[:384,:,:]
-
-                current_offset = current_offset + 128
-
-            finals.append(Final)
-
-    return (finals, num_people)
+    return num_people
 
 def vis_one_image(
         im, im_name, output_dir, boxes, segms=None, keypoints=None, body_uv=None, thresh=0.9,
