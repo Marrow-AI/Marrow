@@ -28,7 +28,6 @@ import argparse
 import json
 
 parser = argparse.ArgumentParser(description='Marrow StyleGAN Latent space explorer')
-parser.add_argument('--shadows', action='store_true' , help='Stream shadows instead of colors')
     
 args = parser.parse_args()
 
