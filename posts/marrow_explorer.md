@@ -98,7 +98,59 @@ image = images[0]
 ```
 Note the _randomize_noise=False_ argument. If we were to set it to true, we would still have some random noise added to every image. While this may work well to simulate a more organic output, it doesn't suit our purpose of matching with a pre-baked animation.
 
-### Communicating between Flask web server and a TensorFlow session thread
+Saving and loading Z-vectors is also very easy with Numpy:
+```
+with open('animations/{}/source.npy'.format(args['name']), 'wb+') as source_file:
+    np.save(source_file, self.latent_source)
+... 
+# Loading
+self.latent_source = np.load('animations/{}/source.npy'.format(args['animation']))
+```
+
+### Communicating between a Flask web server and a TensorFlow session thread
+
+A TensorFlow session has to run in its own thread, independently of the web server. However, insofar as the web functions have to wait for GAN's output before returning to the browser, I needed a mechanism for synchronization. I opted to use threadsafe [queue](https://docs.python.org/3/library/queue.html) to send requests from Flask's web function to the GAN host, and [asyncio futures](https://docs.python.org/3/library/asyncio-future.html) as a low-level signaling mechanism between GAN and the web functions.
+
+The GAN thread loops indefinitely while waiting for queue requests, and it is aware of the main asyncio loop that is running. When Flask gets a _generate_ request, it puts a new message in GAN's queue, along with a new _future_ object that is used as the _done_ callback:
+```
+@app.route('/generate')
+def generate():
+    future = loop.create_future()
+    q.put((future, "generate", request.args))
+    data = loop.run_until_complete(future)
+    return jsonify(result=data)
+```
+The GAN thread picks up the message, generates the image and sets the _future_ as _done_ when it is ready:
+```
+(future,request,args) = self.queue.get()
+if request == "generate":
+    ...  # Generate the image into a b64text
+    self.loop.call_soon_threadsafe(
+        future.set_result, b64text
+    )
+```
+One special handling is needed when a new snapshot is selected. I found that I had to close the TensorFlow session, join the thread, and restart it with the new snapshot:
+```
+# At the GAN thread
+if args['snapshot'] != self.current_snapshot:
+    self.current_snapshot = args['snapshot']
+    tf.get_default_session().close()
+    tf.reset_default_graph()
+    break
+
+# At the web server
+global gan
+gan.join()
+args.snapshot = params['snapshot']
+gan = Gan(q, loop, args)
+gan.start()
+```
+
+## Conclusion
+
+Custom web-based tools allow artists and developers (let us assume there are really such definitions for the purpose of this text) to work seamlessly in a machine learning context. In a manner not unlike the process of level design in games, these tools are focused on creation at the frontend, but speak the language of modularity and recreation at the backend. We had a lot of fun sitting together, viewing and choosing sequences during the creation of _Marrow_. But while we were witnessing the intense visuals in front of us, the data that was saved on the server was a simple series of numbers that trigger a vast computational network with unforeseen, yet consistent consequences. Likewise, we didn't always know why we liked a particular sequence, but the decision was often anonymous. Perhaps it was our common intuition.
+
+
 
 
 

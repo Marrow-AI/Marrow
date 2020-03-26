@@ -51,10 +51,6 @@ class Gan(Thread):
         self.forward = True
         self.push_frames()
 
-    def load_latent_source_file(self,f):
-        self.latent_source = np.load(f).reshape((1, 16, 512))
-        self.original_source = np.copy(self.latent_source)
-
     def load_latent_source(self):
         self.latent_source = self.rnd.randn(512)[None, :]
         print("Loaded latent source {}".format(self.latent_source.shape))
@@ -99,7 +95,6 @@ class Gan(Thread):
                 self.loop.call_soon_threadsafe(
                     future.set_result, b64text
                 )
-                #self.last_push = now
                 self.number_frames += 1
 
             elif request == "shuffle":
