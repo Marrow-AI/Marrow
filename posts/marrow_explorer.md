@@ -34,7 +34,7 @@ Since the _Marrow_ experience happens within a social narrative, We wanted to br
 
 ## The Marrow GAN Explorer
 
->The Marrow GAN Explorer is an interactive web-based tool that lets users explore the latent space of GAN and create chains of key-framed animations between different points on the space.
+>The Marrow GAN Explorer is an interactive web-based tool that lets users explore the latent space of [StyleGAN V1](https://github.com/NVlabs/stylegan) and create chains of key-framed animations between different points on the space.
 
 ![Explorer](./explorer_screenshot.png)
 
@@ -68,18 +68,38 @@ Once all of the animations are ready, our GAN streaming engine is ready to load 
 
 ## The code
 
+The code for the latent space explorer is freely available [here](https://github.com/Raycasters/Marrow/tree/master/gan/gan-explore). It will need adjustments for other projects, but they should be quite simple if the model is based on StyleGAN. 
+
 
 ## Under the hood
 
 This section is dedicated to machine learning enthusiasts, listing some of the more interesting features under the hood of the Marrow GAN Explorer. 
 
+### Generating transitions with StyleGAN and Numpy
+Images are generated from a one-dimensional Z vectors of 512 numbers. Initializing random Z vectors is easy with Numpy:
+```        
+self.rnd = np.random.RandomState()
+self.latent_source = self.rnd.randn(512)[None, :]
+self.latent_dest = self.rnd.randn(512)[None, :]
+``` 
+Once we have a source and destination of the transitions, interpolations is done using Numpy's linespace function:
 
+```
+self.steps = int(args['steps'])
+self.linespaces = np.linspace(0, 1, self.steps)
+self.linespace_i = 0
+```
+To generate the image using StyleGAN, we simply apply the linespace with our source and dest vectors:
+```
+self.latents = (self.linespaces[self.linespace_i] * self.latent_dest + (1-self.linespaces[self.linespace_i]) * self.latent_source)
 
+images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=False, output_transform=self.fmt)
+image = images[0]
+```
+Note the _randomize_noise=False_ argument. If we were to set it to true, we would still have some random noise added to every image. While this may work well to simulate a more organic output, it doesn't suit our purpose of matching with a pre-baked animation.
 
+### Communicating between Flask web server and a TensorFlow session thread
 
-
-
- 
 
 
 
