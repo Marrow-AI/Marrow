@@ -2,7 +2,6 @@
 # -*- coding: utf-8
 
 import sys
-sys.path.insert(0,'../stylegan-encoder')
 
 import os, time, re
 import cv2
@@ -42,7 +41,6 @@ class Gan(Thread):
 
     def run(self):
         self.load_snapshot(self.current_snapshot)
-        #self.load_latent_source_file('9086.npy')
         self.load_latent_source()
         self.load_latent_dest()
         self.linespaces = np.linspace(0, 1, self.steps)
@@ -69,23 +67,12 @@ class Gan(Thread):
         qlatent1 = self.rnd.randn(512)[None, :]
         self.latent_dest = self.Gs.components.mapping.run(qlatent1, None)
 
-    def load_latent_dest_from_source(self,source):
-        pass
-        
-
     def load_snapshot(self, snapshot):
         tflib.init_tf()
         self.rnd = np.random.RandomState()
 
         print("Loading snapshot {}".format(snapshot))
-        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-final.pkl")
-        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-009247.pkl")
-        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-008044.pkl")
-        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-024287.pkl")
         url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-{}.pkl".format(snapshot))
-        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-010450.pkl")
-        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-015263.pkl")
-        #url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-011653.pkl")
         with open(url, 'rb') as f:
             self._G, self._D, self.Gs = pickle.load(f)
             self.generator = Generator(self.Gs, batch_size=1, randomize_noise=False)
@@ -236,22 +223,18 @@ class Gan(Thread):
 
     def get_buf(self, shadows):
             # Generate image.
-            #noise = np.random.normal(0, 0.01, self.latent_dest.shape)
             self.latents = (self.linespaces[self.linespace_i] * self.latent_dest + (1-self.linespaces[self.linespace_i])*self.latent_source)
 
-            #self.generator.set_dlatents(self.latents)
-            #images = self.Gs.components.synthesis.run(self.latents, randomize_noise=False, output_transform=self.fmt)
-            #images = self.Gs.run(self.latents, None, truncation_psi=0.5, randomize_noise=True, output_transform=self.fmt)
             images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=False, output_transform=self.fmt)
-
             image = images[0]
+
             if int(shadows):
                 gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
                 ret,black_white = cv2.threshold(gray,50,255,cv2.THRESH_BINARY_INV)
                 data = cv2.cvtColor(black_white, cv2.COLOR_GRAY2BGR)
             else:
-                #data = cv2.cvtColor(image, cv2.COLOR_RGB2YUV)
                 data = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
             print("Got image! {}".format(data.shape))
             assert data is not None
             return data
