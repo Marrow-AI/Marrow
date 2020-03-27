@@ -82,14 +82,14 @@ self.rnd = np.random.RandomState()
 self.latent_source = self.rnd.randn(512)[None, :]
 self.latent_dest = self.rnd.randn(512)[None, :]
 ``` 
-Once we have a source and destination of the transitions, interpolations is done using Numpy's linespace function:
+Once we have a source and destination for the transition, interpolations are done using Numpy's _linespace_ function:
 
 ```
 self.steps = int(args['steps'])
 self.linespaces = np.linspace(0, 1, self.steps)
 self.linespace_i = 0
 ```
-To generate the image using StyleGAN, we simply apply the linespace with our source and dest vectors:
+To generate the image using StyleGAN, we simply apply the linespace with our source and dest vectors in the following manner:
 ```
 self.latents = (self.linespaces[self.linespace_i] * self.latent_dest + (1-self.linespaces[self.linespace_i]) * self.latent_source)
 
