@@ -34,7 +34,8 @@ Since the _Marrow_ experience happens within a social narrative, We wanted to br
 
 ## The Marrow GAN Explorer
 
->The Marrow GAN Explorer is an interactive web-based tool that lets users explore the latent space of [StyleGAN V1](https://github.com/NVlabs/stylegan) and create chains of key-framed animations between different points on the space.
+**The Marrow GAN Explorer is an interactive web-based tool that lets users explore the latent space of [StyleGAN V1](https://github.com/NVlabs/stylegan) and create chains of key-framed animations between different points on the space.**
+
 
 ![Explorer](./explorer_screenshot.png)
 
@@ -109,7 +110,7 @@ self.latent_source = np.load('animations/{}/source.npy'.format(args['animation']
 
 ### Communicating between a Flask web server and a TensorFlow session thread
 
-A TensorFlow session has to run in its own thread, independently of the web server. However, insofar as the web functions have to wait for GAN's output before returning to the browser, I needed a mechanism for synchronization. I opted to use threadsafe [queue](https://docs.python.org/3/library/queue.html) to send requests from Flask's web function to the GAN host, and [asyncio futures](https://docs.python.org/3/library/asyncio-future.html) as a low-level signaling mechanism between GAN and the web functions.
+A TensorFlow session has to run in its own thread, independently of the web server. However, insofar as the web functions have to wait for GAN's output before returning to the browser, I needed a mechanism for synchronization. I opted to use a threadsafe [queue](https://docs.python.org/3/library/queue.html) to send requests from Flask's web function to the GAN host, and [asyncio futures](https://docs.python.org/3/library/asyncio-future.html) as a low-level signaling mechanism between GAN and the web functions.
 
 The GAN thread loops indefinitely while waiting for queue requests, and it is aware of the main asyncio loop that is running. When Flask gets a _generate_ request, it puts a new message in GAN's queue, along with a new _future_ object that is used as the _done_ callback:
 ```
