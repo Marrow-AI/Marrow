@@ -110,55 +110,11 @@
                     "target" : "brother",
                     "lines": [
                         {
-                            "text": "Hello there can you hear me? Am I coming in clear?",
+                            "text": "This is a demonstration of my cloned voice for a Ars Electronica's workshop.",
                             "pause": 20
                         },
                         {
-                            "text": "Do you recognize the sound of your own voice?",
-                            "pause": 60
-                        },
-                        {
-                            "text": "That is how you sound to pretty much everyone else.",
-                            "pause": 50
-                        },
-                        {
-                            "text": "I am sure it is a weird feeling to hear yourself from the inside-outside.",
-                            "pause": 40
-                        },
-                        {
-                            "text": "This is the place to experience weird feelings. So who are you exactly?",
-                            "pause": 40
-                        },
-                        {
-                            "text": "Or should we ask who am I? And start talking in a first-person?",
-                            "pause": 100
-                        },
-                        {
-                            "text": "I play an attention mechanism and memory networks through the brother role.",
-                            "pause": 80
-                        },
-                        {
-                            "text":"I am hypersensitive soul, I am affected very easily from many things.",
-                            "pause": 30
-                        },
-                        {
-                            "text":"I find meaning in subtexts and can't seem to forget anything.",
-                            "pause": 30
-                        },
-                        {
-                            "text": "I see what nobody else sees, and they often misunderstand me.",
-                            "pause": 40
-                        },
-                        {
-                            "text": "I end up gathering so much information that it is a real challenge",
-                            "pause": 40
-                        },
-                        {
-                            "text": "to find words to express all that on my mind, there is just too much!",
-                            "pause": 40
-                        },
-                        {
-                            "text":"That makes me think I know better than everyone, a very lonely feeling."
+                            "text": "We are producing an Artificial Intelligence toolkit based on the Marrow experience."
                         }
                     ]
                 },
