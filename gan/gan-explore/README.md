@@ -10,8 +10,15 @@ const SNAPSHOTS = [
     ..
 ]
 ```
-# Code walkthroughs
-## Generating transitions with StyleGAN and Numpy
+## Command line arguments
+### Dummy mode
+If you just want to test the interface without running an actual GAN:
+```
+python marrow_explore.py --dummy
+``` 
+
+## Code walkthroughs
+### Generating transitions with StyleGAN and Numpy
 Images are generated from one-dimensional Z-vectors (‘noise’ vectors) of 512 numbers. Initializing random Z-vectors is easy with Numpy:
 ```
 self.rnd = np.random.RandomState()
@@ -25,7 +32,7 @@ self.linespace_i = 0
 To generate the image using StyleGAN, we simply apply the linspace to our source and destination vectors in the following manner:
 ```
 self.latents = (self.linespaces[self.linespace_i] * self.latent_dest + (1-self.linespaces[self.linespace_i]) * self.latent_source)
- images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=False, output_transform=self.fmt)
+images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=False, output_transform=self.fmt)
 image = images[0]
 Note the randomize_noise=False argument. If we were to set it to true, we would still have some random noise added to every image. While this may work well to simulate a more organic output, it doesn’t suit our purpose of matching with a pre-baked animation.
 Saving and loading Z-vectors is also very easy with Numpy:
@@ -35,7 +42,7 @@ with open('animations/{}/source.npy'.format(args['name']), 'wb+') as source_file
 # Loading
 self.latent_source = np.load('animations/{}/source.npy'.format(args['animation']))
 ```
-## Communicating between a Flask web server and a TensorFlow session thread
+### Communicating between a Flask web server and a TensorFlow session thread
 A TensorFlow session has to run in its own thread, independently of the web server. However, insofar as the web functions have to wait for GAN’s output before returning to the browser, I needed a mechanism for synchronization. I opted to use a thread-safe queue to send requests from Flask’s web function to the GAN host, and asyncio futures as a low-level signaling mechanism between GAN and the web functions.
 The GAN thread loops indefinitely while waiting for queue requests, and it is aware of the main asyncio loop that is running in the background. When Flask gets a generate request, it puts a new message in GAN’s queue, along with a new future object that is used as the done callback:
 ```
@@ -63,7 +70,7 @@ if args['snapshot'] != self.current_snapshot:
     tf.get_default_session().close()
     tf.reset_default_graph()
     break
- # At the web server
+# At the web server
 global gan
 gan.join()
 args.snapshot = params['snapshot']
