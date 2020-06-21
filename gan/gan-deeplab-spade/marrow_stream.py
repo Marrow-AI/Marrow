@@ -429,6 +429,7 @@ class Gan(NDIStreamer):
         spade_model.eval()
         spade_model.to(device)
         print("Spade!")
+        print("Use GPU? {}",spade_model.use_gpu())
         print(spade_model)
 
         coco_dataset = CocoDataset()
@@ -442,7 +443,7 @@ class Gan(NDIStreamer):
 
             if len(self.queue) > 0:
                 frame = self.queue.pop()
-                #print("Original Image shape {}".format(frame.shape))
+                print("Original Image shape {}".format(frame.shape))
                 image, raw_image = preprocessing(frame, device, CONFIG)
                 raw_image  = cv2.cvtColor(raw_image,cv2.COLOR_BGR2RGB)
                 #print("Image shape {}".format(raw_image.shape))
@@ -749,6 +750,7 @@ def live(config_path, model_path, cuda, crf, camera_id, image_path):
     print(spade_opt)
     spade_opt.use_vae = False
 
+    print ("Starting GAN")
     gan = Gan(q, osc_queue, deeplab_opt, spade_opt)
     gan.start()
 
@@ -758,24 +760,6 @@ def live(config_path, model_path, cuda, crf, camera_id, image_path):
     osc_server = OSCServer(osc_queue)
     osc_server.start()
 
-    url = THETA_URL + 'commands/execute'
-
-    print("Setting preview options")
-
-    payload = {
-        "name": "camera.setOptions",
-        "parameters": {
-            "options": {
-                "previewFormat": {
-                    "width": 1920, "height": 960, "framerate": 8
-                }
-            }
-        }
-    }
-    res = requests.post(url, json = payload, auth = (HTTPDigestAuth(THETA_ID, THETA_PASSWORD)))
-    print(res.text)
-
-    payload = {"name": "camera.getLivePreview"}
     buffer = bytes()
 
 
@@ -786,10 +770,31 @@ def live(config_path, model_path, cuda, crf, camera_id, image_path):
             if len(q) > 1:
                 continue
             else:
+                print("Append")
                 q.append(frame)
                 time.sleep(1.0 / 12.0)
 
     else:
+        print("Reading from Theta Z1")
+
+        url = THETA_URL + 'commands/execute'
+
+        print("Setting preview options")
+
+        payload = {
+            "name": "camera.setOptions",
+            "parameters": {
+                "options": {
+                    "previewFormat": {
+                        "width": 1920, "height": 960, "framerate": 8
+                    }
+                }
+            }
+        }
+        res = requests.post(url, json = payload, auth = (HTTPDigestAuth(THETA_ID, THETA_PASSWORD)))
+        print(res.text)
+
+        payload = {"name": "camera.getLivePreview"}
         with requests.post(url,
             json=payload,
             auth=(HTTPDigestAuth(THETA_ID, THETA_PASSWORD)),

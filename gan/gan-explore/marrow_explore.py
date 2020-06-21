@@ -21,14 +21,15 @@ import tensorflow as tf
 from flask import Flask, jsonify, request, render_template, send_file
 from flask_compress import Compress
 
-from encoder.generator_model import Generator
-
 import argparse
 import json
 
 parser = argparse.ArgumentParser(description='Marrow StyleGAN Latent space explorer')
+
+parser.add_argument('--dummy', action='store_true' , help='Use a Dummy GAN')
     
 args = parser.parse_args()
+print(args)
 
 class Gan(Thread):
     def __init__(self, queue, loop, args):
@@ -71,7 +72,6 @@ class Gan(Thread):
         url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-{}.pkl".format(snapshot))
         with open(url, 'rb') as f:
             self._G, self._D, self.Gs = pickle.load(f)
-            self.generator = Generator(self.Gs, batch_size=1, randomize_noise=False)
         print(self.Gs)
 
     def push_frames(self):
@@ -234,10 +234,55 @@ class Gan(Thread):
             assert data is not None
             return data
 
+class DummyGan(Thread):
+    def __init__(self, queue, loop, args):
+        self.queue = queue
+        self.loop = loop
+        self.args = args
+        Thread.__init__(self)
+
+    def run(self):
+        print("Running dummy GAN")
+        self.push_frames()
+
+    def push_frames(self):
+        while True:
+            (future,request,args) = self.queue.get()
+            if request == "generate":
+                image = self.get_sample()
+                ret, buf = cv2.imencode('.jpg', image)
+                b64 = base64.b64encode(buf)
+                b64text = b64.decode('utf-8')
+                self.loop.call_soon_threadsafe(
+                    future.set_result, b64text
+                )
+
+            elif request == "load":
+                self.loop.call_soon_threadsafe(
+                    future.set_result, {'status' : 'OK', 'steps': 666}
+                )
+            else:
+                self.loop.call_soon_threadsafe(
+                    future.set_result, "OK"
+                )
+
+    def get_sample(self):
+        blank_image = np.zeros((512,512,3), np.uint8)
+        blank_image[:,0:random.randint(1,512)//2] = (255,0,0)
+        blank_image[:,random.randint(1,512)//2:512] = (0,255,0)
+        data = cv2.cvtColor(blank_image, cv2.COLOR_BGR2RGB)
+        #data = blank_image
+        return data
+
 loop = asyncio.get_event_loop()
 q = queue.Queue()
 args.snapshot = "007743"
-gan = Gan(q, loop, args)
+
+if not args.dummy:
+    gan = Gan(q, loop, args)
+else:
+    gan = DummyGan(q,loop,args)
+
 app = Flask(__name__)
 Compress(app)
 app.jinja_env.auto_reload = True
