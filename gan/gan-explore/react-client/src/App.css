@@ -1,0 +1,38 @@
+/*
+colors:
+yellow: #E7FC52
+red: #EB3223
+purple: #8629DC
+dark grey: #707070
+light grey: #CBCDCE
+light pink: #EDE6E5
+*/
+
+#controls-container {
+  margin-top: 15px;
+}
+
+input[name=steps] {  
+  width: 70px;
+}
+
+form#shuffle {
+  display:flex;
+  align-items: center;
+  height: 64px;
+}
+
+.lds-gears {
+  margin-left: 15px;
+  position: relative;
+  bottom: 5px;
+}
+
+input,select {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+form#save {
+  margin-bottom: 10px;
+}

@@ -20,7 +20,7 @@ import base64
 
 from flask import Flask, jsonify, request, render_template, send_file
 from flask_compress import Compress
-
+from flask_cors import CORS
 import argparse
 import json
 
@@ -285,6 +285,7 @@ else:
 
 app = Flask(__name__)
 Compress(app)
+CORS(app)
 app.jinja_env.auto_reload = True
 gan.start()
 
@@ -303,7 +304,9 @@ def generate():
 def shuffle():
     future = loop.create_future()
     params = request.get_json()
+    print(params)
     q.put((future, "shuffle", params))
+    print("placing on q")
     if params['snapshot'] == args.snapshot:
         data = loop.run_until_complete(future)
         return jsonify(result=data)
