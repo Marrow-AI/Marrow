@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 export default function Generate() {
   const [ view, setView ] = useState();
-  const { register, errors, handleSubmit, } = useForm();
+  const { register, errors, handleSubmit } = useForm();
   const snapFamily = [
     "final", "000140", "001283", "002364", "003285", "004085", "004705", "005306", "005726", "006127", "006528",
     "006840", "007141", "007442", "007743", "008044", "008344", "008645", "008946", "009247", "009548", "009848",
@@ -36,23 +36,24 @@ export default function Generate() {
       }
   })
 };
-
-  
+ 
   const getImage = async (direction, steps) => {
     await fetch('http://localhost:8080/generate?direction=' + direction + '&steps=' + steps + '&shadows=0')
       .then(response => response.json())
       .then(data => {
         // loading.style.display = "none";
-        setView("data:image/jpeg;base64," + data.result);
-        console.log(data.data)
+        setView("data:image/jpeg;base64," + data.result)
       }).catch(err => {
         console.log("Error Reading data " + err);
       })
   }
 
-  useEffect(() => {
-
-  })
+  const handleDirection = (e) => {
+    e.preventDefault()
+      getImage(
+        e.currentTarget.dataset.direction,
+        e.currentTarget.dataset.steps)
+      }
 
   return (
     <>
@@ -91,12 +92,12 @@ export default function Generate() {
       </div>
 
       <div id="controls-container">
-        <button className="generate" data-direction="back" data-steps="1">&lt;</button>
-        <button className="generate" data-direction="forward" data-steps="1">&gt;</button>
-        <button className="generate" data-direction="back" data-steps="10">&lt;10</button>
-        <button className="generate" data-direction="forward" data-steps="10">10&gt;</button>
-        <button className="generate" data-direction="back" data-steps="100">&lt;100</button>
-        <button className="generate" data-direction="forward" data-steps="100">100&gt;</button>
+        <button onClick={handleDirection} className="generate" data-direction="back" data-steps="1">&lt;</button>
+        <button  onClick={handleDirection} className="generate" data-direction="forward" data-steps="1">&gt;</button>
+        <button  onClick={handleDirection} className="generate" data-direction="back" data-steps="10">&lt;10</button>
+        <button  onClick={handleDirection} className="generate" data-direction="forward" data-steps="10">10&gt;</button>
+        <button  onClick={handleDirection} className="generate" data-direction="back" data-steps="100">&lt;100</button>
+        <button  onClick={handleDirection} className="generate" data-direction="forward" data-steps="100">100&gt;</button>
       </div>
     </>
   );
