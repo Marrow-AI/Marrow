@@ -8,18 +8,135 @@ light grey: #CBCDCE
 light pink: #EDE6E5
 */
 
-#controls-container {
-  margin-top: 15px;
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font: 14px "Lucida Grande", Helvetica, "Helvetica Neue", Lato, sans-serif;
 }
 
-input[name=steps] {  
-  width: 70px;
+.main {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-form#shuffle {
-  display:flex;
-  align-items: center;
-  height: 64px;
+.mainSection {
+  display: flex;
+}
+
+.leftForm {
+  /* display: flex; */
+  /* margin-left: auto;
+  margin-right: auto; */
+}
+
+.shuffleForm {
+  margin-top: 25%;
+  width: 350px;
+}
+
+.dataSnapshot {
+  display: flex;
+}
+
+.snapshotDiv {
+  display: flex;
+  flex-wrap: wrap;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+label {
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+label.snapshot {
+  margin-left: 20%;
+  padding-bottom: 5%;
+}
+
+.stepsDiv {
+  margin-top: 10%;
+  margin-bottom: 10%;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+select.snapshot {
+  margin-top: 20%;
+  margin-left: -42%;
+}
+
+select.dataset {
+  padding-right: 15%  !important;
+}
+
+body select { 
+  display: inline-block;
+  font-size: 14px;
+  padding: 4% !important; 
+  padding-right: 15% !important;
+  padding-left: 5% !important;
+  max-width: 100%; 
+  height: auto !important; 
+  border: 1px solid #e3e3e3; 
+  border-radius: 5px; 
+  background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat; 
+  background-color: #fff; 
+  color: #444444; 
+  line-height: 16px !important; 
+  appearance: none; 
+  -moz-appearance: none; 
+  outline:none;
+  margin-top: 10%;
+} 
+
+body select option { 
+  padding: 0 10px; 
+} 
+
+input.steps {
+  border: none;
+  outline:none;
+  border-bottom: 2px solid black;
+  position:absolute;
+  margin-left: 1%;
+  width: 100px;
+  text-align: center;
+  font-size: 14px !important; 
+}
+
+.btn {
+  display: inline-block;
+  border: none;
+  outline:none;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  border-radius: 5px;
+  width: 200px;
+  margin-top: 5%;
+  padding: 16px;
+  /* margin-left: auto;
+  margin-right: auto; */
+  text-align: center;
+  font-size: 14px;
+  background-color: white;
+  box-shadow: 2px 1px #8888880e;
+}
+
+.btn:hover {
+  color: white;
+  background-color: black;
+}
+
+.imgAnimation {
+  margin-top: 5%;
+  border-radius: 5px;
+  border: 1px solid black;
 }
 
 .lds-gears {

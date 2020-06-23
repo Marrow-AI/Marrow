@@ -129,38 +129,50 @@ export default function Generate() {
   }, [])
 
   return (
-    <>
-      <div className="leftForm">
-        <form key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)}>
+    <div className="main">
+      <div className="mainSection">
+        
+        <div className="leftForm">
+         <form key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)}>
           {errors.singleErrorInput && "Your input is required"}
-          <select className="select dataset" name="type" autoComplete="off" ref={register}>
-            <option value="person" defaultValue="selected" >Person</option>
-            <option value="happy" >Happy families</option>
-            <option value="cats" >cats</option>
-          </select>
+        
+          <div className="dataSnapshot">
+            <select className="select dataset" name="type" autoComplete="off" ref={register}>
+              <option value="person" defaultValue="selected" >Person</option>
+              <option value="happy" >Happy families</option>
+              <option value="cats" >cats</option>
+            </select>
 
-          <label className="label snapshot">Snapshot:</label>
-          <select name="select snapshot" ref={register} >
-            {snapshots.snapshots.snapFamily.map(value => (
-              <option key={value} value={value}>{value} </option>
-            ))}
-          </select>
+            <div className="snapshotDiv">
+              <label className="label snapshot">Snapshot:</label>
+              <select className="select snapshot" ref={register} >
+                {snapshots.snapshots.snapFamily.map(value => (
+                  <option className="snapshot"  key={value} value={value}>{value} </option>
+                ))}
+              </select>
+            </div>
+        </div>
 
-          <select className="select shuffle" name="shffle" autoComplete="off" ref={register}>
-            <option value="both" defaultValue="selected" >Shuffle both source and destination</option>
-            <option value="keep_source" >Keep source and shuffle destination</option>
-            <option value="use_dest">Use destination as the next source</option>
-          </select>
+            <select className="select shuffle" name="shffle" autoComplete="off" ref={register}>
+              <option value="both" defaultValue="selected" >Shuffle both source and destination</option>
+              <option value="keep_source" >Keep source and shuffle destination</option>
+              <option value="use_dest">Use destination as the next source</option>
+            </select>
+          
+          <div className="stepsDiv">
+            <label className="label steps"> Number of steps:</label>
+            <input className="input steps" autoComplete="off" name="steps" placeholder="144" min="1" type="number" ref={register} />
+          </div>
 
-          <label className="label steps"> Number of steps:</label>
-          <input autoComplete="off" name="steps" placeholder="144" min="1" type="number" ref={register} />
           <button className="btn generate" type="onSubmit" ref={register}>Generate animation</button>
+       
         </form>
       </div>
 
       <div className="output-container">
         <img className="imgAnimation" src={view} width="512" height="512" alt="" />
       </div>
+    </div>
 
       <div className="controls-container">
         <button onClick={handleDirection} className="generate" data-direction="back" data-steps="1">&lt;</button>
@@ -189,6 +201,6 @@ export default function Generate() {
           <button className="btn load" type="submit" ref={register3}>Load</button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
