@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import snapshots from './snapshots.json';
 
 export default function Generate() {
   const [ view, setView ] = useState();
-  const { register, errors, handleSubmit } = useForm();
-  const snapFamily = [
-    "final", "000140", "001283", "002364", "003285", "004085", "004705", "005306", "005726", "006127", "006528",
-    "006840", "007141", "007442", "007743", "008044", "008344", "008645", "008946", "009247", "009548", "009848",
-    "010149", "010450", "010751", "011052", "011352", "011653", "011954", "012255", "012556", "012856", "013157",
-    "013458", "013759", "014060", "014360", "014661", "014962", "015263", "015564", "015864", "016165", "016466",
-    "016767", "017068", "017368", "017669", "017970", "018271", "018572", "018872", "019173", "019474", "019775",
-    "020076", "020376", "020677", "020978", "021279", "021580", "021880", "022181", "022482", "022783", "023084",
-    "023384", "023685", "023986", "024287", "024588", "024888", "025000"
-  ];
- 
+  const [ animation, setAnimation ] = useState ([]);
+  const { register, errors, handleSubmit } = useForm({ mode: "onBlur" });
+  const { register: register2, errors: errors2, handleSubmit: handleSubmit2 } = useForm({ mode: "onBlur" });
+  const { register: register3, errors: errors3, handleSubmit: handleSubmit3 } = useForm({ mode: "onBlur" });
+
   const onSubmit = (values, ev) => {
     const form = ev.target;
     const data = {
@@ -48,19 +43,88 @@ export default function Generate() {
       })
   }
 
+  const listAnimations = async (animationSelect) => {
+    await  fetch('http://localhost:8080/list')
+    .then(response => response.json())
+    .then(data => {
+        data.animations.forEach((text) => {
+            setAnimation([...animation, ...data.animations]);
+        })
+    });
+}
+
   const handleDirection = (e) => {
     e.preventDefault()
       getImage(
         e.currentTarget.dataset.direction,
-        e.currentTarget.dataset.steps)
-      }
+        e.currentTarget.dataset.steps
+  )}
 
+  const handleSave = (values, e) => {
+    e.preventDefault();
+      const form = e.target;
+      const data = {
+          name: form.name.value
+      }
+      fetch('http://localhost:8080/save', {
+          method: 'POST', 
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(data)
+      })
+      .then(res => res.json())
+      .then((data) => {
+          console.log("Result", data);
+          if (data.result != "OK") {
+              alert(data.result);
+          } else {
+              alert("↪Your file is saved 🖥🔥");
+          }
+   })}
+
+  const handleLoad = (values, e) => {
+    e.preventDefault();
+    e.preventDefault();
+    const form = e.target;
+    const params = {
+        animation: form.animation.value
+    }
+    fetch('http://localhost:/load', {
+        method: 'POST', 
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(params)
+    })
+    .then(res => res.json())
+    .then((data) => {
+        if (data.result.status == "new_snapshot"){
+            snapshots.value = data.result.snapshot;
+            return fetch('/load', {
+                method: 'POST', 
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify(params)
+            })
+            .then(res => res.json())
+        } else {
+            return data
+        }
+    })
+    .then((data) => {
+        if (data.result.status == "OK") {
+            console.log("Loading done", data);
+            form.steps.value = parseInt(data.result.steps);
+            return getImage("forward", "1")
+        } else {
+            alert(data.result.status);
+        }
+    });   
+}
+useEffect(() => {
+  listAnimations(animation);
+})
   return (
     <>
       <div>
-        <form id="shuffle" onSubmit={handleSubmit(onSubmit)}>
+        <form key={1} id="shuffle" onSubmit={handleSubmit(onSubmit)}>
           {errors.singleErrorInput && "Your input is required"}
-
           <select name="type" autoComplete="off" ref={register}>
             <option value="person" defaultValue="selected" >Person</option>
             <option value="happy" >Happy families</option>
@@ -69,7 +133,7 @@ export default function Generate() {
 
           <label >Snapshot:</label>
             <select name="snapshot" ref={register} >
-            {snapFamily.map(value => (
+            {snapshots.snapshots.snapFamily.map(value => (
             <option key={value} value={value} >{value}</option>
           ))}
           </select>
@@ -84,6 +148,7 @@ export default function Generate() {
           <input autoComplete="off" name="steps" placeholder="144" min="1" type="number" ref={register} />
 
           <button type="onSubmit" ref={register}>Generate animation</button>
+
         </form>
       </div>
 
@@ -98,7 +163,29 @@ export default function Generate() {
         <button  onClick={handleDirection} className="generate" data-direction="forward" data-steps="10">10&gt;</button>
         <button  onClick={handleDirection} className="generate" data-direction="back" data-steps="100">&lt;100</button>
         <button  onClick={handleDirection} className="generate" data-direction="forward" data-steps="100">100&gt;</button>
-      </div>
+    </div>
+
+    <div className="saveLoad">    
+      <form key={2} id="save" onSubmit={handleSubmit2(handleSave)}>
+        <label>Save animation as:</label>
+        <input autoComplete="off" name="name" type="text" ref={register2} />
+        <button type="submit" ref={register2}>Save</button>
+      </form>
+
+      <button id="download-video">Download video</button>
+
+      <form key={3} id="load" onSubmit={handleSubmit3(handleLoad)}>
+        <label>Load animation:</label>
+        <select autoComplete="off" name="animation" ref={register3}>
+            {animation.map(value => (
+            <option key={value} value={value} >{value}</option>
+          ))}
+          </select>
+        <button type="submit" ref={register3}>Load</button>
+     </form>
+
+    </div> 
+
     </>
   );
 }
