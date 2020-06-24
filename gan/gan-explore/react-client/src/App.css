@@ -25,7 +25,7 @@ body {
   z-index: -10000;
   padding: 0;
   margin-top: 0;
-  margin-left: -30%;
+  margin-left: -25%;
   font-size: 62px;
   color: #E7FC52;
   font-family: Lato;
@@ -35,15 +35,15 @@ body {
 .mainSection {
   display: flex;
   margin-top: -48%;
-  margin-left: -28%;
-  width: 400px;
+  margin-left: -25%;
 }
 
 .shuffleForm {
- padding-right: 15%;
+ padding-right: 5%;
  text-align: center;
  margin-left: auto;
  margin-right: auto;
+ width: 400px
 }
 
 .dataSnap {
@@ -70,6 +70,7 @@ body select {
   -moz-appearance: none; 
   outline:none;
   margin-top: 10%;  
+  /* margin-left: 2%; */
 } 
 
 select.dataset {
@@ -219,7 +220,6 @@ input.save {
   font-family: 'MuseoModerno', cursive;
   padding: 5px;
   color: #8629DC !important;
-
 }
 
 .btn.save {

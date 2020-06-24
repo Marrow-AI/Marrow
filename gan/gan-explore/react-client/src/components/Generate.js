@@ -5,9 +5,9 @@ import snapshots from './snapshots.json';
 export default function Generate() {
   const [view, setView] = useState();
   const [animation, setAnimation] = useState([]);
-  const { register, errors, handleSubmit } = useForm({ mode: "onBlur" });
-  const { register: register2, errors: errors2, handleSubmit: handleSubmit2 } = useForm({ mode: "onBlur" });
-  const { register: register3, errors: errors3, handleSubmit: handleSubmit3 } = useForm({ mode: "onBlur" });
+  const { register, handleSubmit } = useForm({ mode: "onBlur" });
+  const { register: register2, handleSubmit: handleSubmit2 } = useForm({ mode: "onBlur" });
+  const { register: register3, handleSubmit: handleSubmit3 } = useForm({ mode: "onBlur" });
 
   const onSubmit = (values, ev) => {
     const form = ev.target;
@@ -135,7 +135,6 @@ export default function Generate() {
       <div className="mainSection">
 
         <form key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)}>
-          {errors.singleErrorInput && "Your input is required"}
 
           <div className="dataSnap">
             <select className="select dataset" name="type" autoComplete="off">
@@ -201,6 +200,7 @@ export default function Generate() {
             </form>
           </div>
         </div>
+        
       </div>
     </div>
   );
