@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import snapshots from './snapshots.json';
+import Footer from './Footer.js';
 
 export default function Generate() {
   const [view, setView] = useState();
@@ -129,6 +130,7 @@ export default function Generate() {
   }, [])
 
   return (
+    <>
     <div className="main">
       <h1 className="logo">LAT<br />ENT<br />SPA<br />CE<br />EXP<br />LOR<br />ER</h1>
 
@@ -203,5 +205,8 @@ export default function Generate() {
         
       </div>
     </div>
+
+    <Footer />
+    </>
   );
 }

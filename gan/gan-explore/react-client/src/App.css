@@ -1,7 +1,7 @@
 /*
 colors:
 yellow: #E7FC52
-red: #EB3223
+red: #f9311f
 purple: #8629DC
 dark grey: #707070
 light grey: #CBCDCE
@@ -146,7 +146,7 @@ input.steps {
   border: 3px solid #f0d9d5;
   width: 250px;
   color: #f0d9d5;
-  background-color: #EB3223;
+  background-color: #f9311f;
   box-shadow: 1px 1px #cbc1bf;
   margin-top: 5%;
   text-transform: uppercase;
@@ -154,7 +154,7 @@ input.steps {
 }
 
 .btn.generate:hover {
-  color: #EB3223;
+  color: #f9311f;
   background-color: white;
   box-shadow: none;
 }
@@ -167,7 +167,7 @@ input.steps {
 }
 
 .output-container {
-  margin-top: -10%;
+  margin-top: -15%;
 }
 
 .imgAnimation {
@@ -202,7 +202,7 @@ input.steps {
 
 .saveLoad {
   width: 580px;
-  margin-top: 6%;
+  margin-top: 5%;
   margin-left: -1%;
 }
 
@@ -256,7 +256,7 @@ input.save {
 }
 
 .loadForm {
-  padding-bottom: 8%;
+  padding-bottom: 6%;
   padding-top: 0;
   margin-top: -1%;
 }
@@ -275,4 +275,77 @@ input.save {
   border-bottom: 1px solid  #8529dc49;
   color: #444444;
   box-shadow: none;
+}
+
+.footer {
+  width: 100%;
+  background-color: #f9311f;
+  padding: 15px;
+  text-align: center;
+  margin-top: 1%;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  padding-right: 15px;
+  padding-left: 15px;
+  font-weight: 700;
+  font-size: 12px;
+} 
+
+a:hover {
+  color: black;
+} 
+
+.aboutSection {
+  background-color: #8a8a8a;
+  width: 100%;
+  height: 100%;
+ 
+}
+
+.aboutDiv {
+  /* padding-top: 4%;  */
+  padding-bottom: 2%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about {
+  font-family: Lato;
+  font-size: 24px;
+  line-height: 2rem;
+  text-transform: uppercase;
+}
+
+.aboutTitle {
+  font-family: Lato;
+  font-size: 48px;
+  color: #E7FC52;
+  margin-top: -1%;
+}
+
+.hl {
+  background-color: white;
+  /* display: inline-block; */
+}
+
+.exit {
+  background: #8a8a8a;
+  margin-top: 4%;
+  margin-left: 90%;
+  border: none;
+  border-radius: 0px;
+  font-size: 28px;
+  font-weight: 700;
+  padding: 10px;
+  color: #E7FC52;
+  outline:none;
+}
+
+.exit:hover {
+  cursor: pointer;
+  color: white;
 }
