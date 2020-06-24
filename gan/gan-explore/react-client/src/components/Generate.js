@@ -130,42 +130,47 @@ export default function Generate() {
 
   return (
     <div className="main">
+        <h1 className="logo">LAT<br/>ENT<br/>SPA<br/>CE<br/>EXP<br/>LOR<br/>ER</h1>
+ 
+
       <div className="mainSection">
         
         <div className="leftForm">
+
          <form key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)}>
           {errors.singleErrorInput && "Your input is required"}
         
-          <div className="dataSnapshot">
-            <select className="select dataset" name="type" autoComplete="off" ref={register}>
-              <option value="person" defaultValue="selected" >Person</option>
-              <option value="happy" >Happy families</option>
-              <option value="cats" >cats</option>
+          <div className="dataSnap">
+            <select className="select dataset" name="type" autoComplete="off">
+              <option value="" defaultValue="selected"  >Choose dataset</option>
+              <option value="person" ref={register}>Person</option>
+              <option value="happy"  ref={register}>Happy families</option>
+              <option value="cats"  ref={register}>cats</option>
             </select>
 
-            <div className="snapshotDiv">
-              <label className="label snapshot">Snapshot:</label>
-              <select className="select snapshot" ref={register} >
+            <select className="select snapshot"  >
+              <option value="" defaultValue="selected"  >Choose snapshot number</option>
                 {snapshots.snapshots.snapFamily.map(value => (
-                  <option className="snapshot"  key={value} value={value}>{value} </option>
-                ))}
-              </select>
-            </div>
-        </div>
+              <option className="snapshot"  key={value} value={value} ref={register}>{value} </option>
+              ))}
+            </select>
+          </div>
 
-            <select className="select shuffle" name="shffle" autoComplete="off" ref={register}>
-              <option value="both" defaultValue="selected" >Shuffle both source and destination</option>
-              <option value="keep_source" >Keep source and shuffle destination</option>
-              <option value="use_dest">Use destination as the next source</option>
+            <select className="select shuffle" name="shffle" autoComplete="off" >
+              <option value="" defaultValue="selected"  >Choose generating options</option>
+              <option value="both" ref={register}>Shuffle both source and destination</option>
+              <option value="keep_source" ref={register}>Keep source and shuffle destination</option>
+              <option value="use_dest" ref={register}>Use destination as the next source</option>
             </select>
           
           <div className="stepsDiv">
             <label className="label steps"> Number of steps:</label>
-            <input className="input steps" autoComplete="off" name="steps" placeholder="144" min="1" type="number" ref={register} />
+            <input className="input steps" autoComplete="off" name="steps" placeholder="type a number..." min="1" type="number" ref={register} />
           </div>
 
-          <button className="btn generate" type="onSubmit" ref={register}>Generate animation</button>
-       
+          <div className="divBtnGnr">
+           <button className="btn generate" type="onSubmit" ref={register}>Generate animation</button>
+          </div>
         </form>
       </div>
 
@@ -192,10 +197,10 @@ export default function Generate() {
         </form>
 
         <form className="loadForm" key={3} id="load" onSubmit={handleSubmit3(handleLoad)}>
-          <label className="label load">Load animation:</label>
-          <select className="select load" autoComplete="off" name="animation" ref={register3}>
+          <select className="select load" autoComplete="off" name="animation" >
+          <option value="" defaultValue="selected" >Choose a clip</option>
             {animation.map(value => (
-              <option key={value} value={value} >{value}</option>
+              <option key={value} value={value} ref={register3}>{value}</option>
             ))}
           </select>
           <button className="btn load" type="submit" ref={register3}>Load</button>
