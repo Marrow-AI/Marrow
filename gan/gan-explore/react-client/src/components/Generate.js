@@ -130,31 +130,28 @@ export default function Generate() {
 
   return (
     <div className="main">
-        <h1 className="logo">LAT<br/>ENT<br/>SPA<br/>CE<br/>EXP<br/>LOR<br/>ER</h1>
- 
+      <h1 className="logo">LAT<br />ENT<br />SPA<br />CE<br />EXP<br />LOR<br />ER</h1>
 
       <div className="mainSection">
-        
-        <div className="leftForm">
 
-         <form key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)}>
-          {errors.singleErrorInput && "Your input is required"}
-        
-          <div className="dataSnap">
-            <select className="select dataset" name="type" autoComplete="off">
-              <option value="" defaultValue="selected"  >Choose dataset</option>
-              <option value="person" ref={register}>Person</option>
-              <option value="happy"  ref={register}>Happy families</option>
-              <option value="cats"  ref={register}>cats</option>
-            </select>
+          <form key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)}>
+            {errors.singleErrorInput && "Your input is required"}
 
-            <select className="select snapshot"  >
-              <option value="" defaultValue="selected"  >Choose snapshot number</option>
+            <div className="dataSnap">
+              <select className="select dataset" name="type" autoComplete="off">
+                <option value="" defaultValue="selected"  >Choose dataset</option>
+                <option value="person" ref={register}>Person</option>
+                <option value="happy" ref={register}>Happy families</option>
+                <option value="cats" ref={register}>cats</option>
+              </select>
+
+              <select className="select snapshot"  >
+                <option value="" defaultValue="selected"  >Choose a snapshot</option>
                 {snapshots.snapshots.snapFamily.map(value => (
-              <option className="snapshot"  key={value} value={value} ref={register}>{value} </option>
-              ))}
-            </select>
-          </div>
+                  <option className="snapshot" key={value} value={value} ref={register}>{value} </option>
+                ))}
+              </select>
+            </div>
 
             <select className="select shuffle" name="shffle" autoComplete="off" >
               <option value="" defaultValue="selected"  >Choose generating options</option>
@@ -162,43 +159,45 @@ export default function Generate() {
               <option value="keep_source" ref={register}>Keep source and shuffle destination</option>
               <option value="use_dest" ref={register}>Use destination as the next source</option>
             </select>
-          
-          <div className="stepsDiv">
-            <label className="label steps"> Number of steps:</label>
-            <input className="input steps" autoComplete="off" name="steps" placeholder="type a number..." min="1" type="number" ref={register} />
+
+            <div className="stepsDiv">
+              <label className="label steps"> Number of steps:</label>
+              <input className="input steps" autoComplete="off" name="steps" placeholder="type a number..." min="1" type="number" ref={register} />
+            </div>
+
+            <div className="divBtnGnr">
+              <button className="btn generate" type="onSubmit" ref={register}>Generate animation</button>
+            </div>
+          </form>
+
+        <div className="imgControler">
+          <div className="output-container">
+            <img className="imgAnimation" src={view} width="512" height="512" alt="" />
           </div>
-
-          <div className="divBtnGnr">
-           <button className="btn generate" type="onSubmit" ref={register}>Generate animation</button>
+          <div className="controls-container">
+            <button onClick={handleDirection} className="direction" data-direction="back" data-steps="1">&lt;</button>
+            <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="1">&gt;</button>
+            <button onClick={handleDirection} className="direction" data-direction="back" data-steps="10">&lt;&lt; -10</button>
+            <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="10">10 &gt;&gt;</button>
+            <button onClick={handleDirection} className="direction" data-direction="back" data-steps="100">&lt;&lt;&lt; -100</button>
+            <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="100">100 &gt;&gt;&gt;</button>
           </div>
-        </form>
+        </div>
       </div>
 
-      <div className="output-container">
-        <img className="imgAnimation" src={view} width="512" height="512" alt="" />
-      </div>
-    </div>
-
-      <div className="controls-container">
-        <button onClick={handleDirection} className="generate" data-direction="back" data-steps="1">&lt;</button>
-        <button onClick={handleDirection} className="generate" data-direction="forward" data-steps="1">&gt;</button>
-        <button onClick={handleDirection} className="generate" data-direction="back" data-steps="10">&lt;10</button>
-        <button onClick={handleDirection} className="generate" data-direction="forward" data-steps="10">10&gt;</button>
-        <button onClick={handleDirection} className="generate" data-direction="back" data-steps="100">&lt;100</button>
-        <button onClick={handleDirection} className="generate" data-direction="forward" data-steps="100">100&gt;</button>
-      </div>
-
+    <div className="test">
       <div className="saveLoad">
         <form className="saveForm" key={2} id="save" onSubmit={handleSubmit2(handleSave)}>
           <label className="label save">Save animation as:</label>
-          <input className="input save" autoComplete="off" name="name" type="text" ref={register2} />
+          <input className="input save" autoComplete="off" name="name" type="text" placeholder="type a name..." ref={register2} />
           <button className="btn save" type="submit" ref={register2}>Save</button>
-          <button className="btn download" id="download-video" onClick={handleDownload}>Download video</button>
+          <button className="btn download" id="download-video" onClick={handleDownload}>Download</button>
         </form>
+      </div>
 
         <form className="loadForm" key={3} id="load" onSubmit={handleSubmit3(handleLoad)}>
           <select className="select load" autoComplete="off" name="animation" >
-          <option value="" defaultValue="selected" >Choose a clip</option>
+            <option value="" defaultValue="selected" >Choose a clip</option>
             {animation.map(value => (
               <option key={value} value={value} ref={register3}>{value}</option>
             ))}

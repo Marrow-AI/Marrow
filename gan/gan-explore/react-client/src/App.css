@@ -21,8 +21,6 @@ body {
   margin-right: auto;
 }
 
-
-
 .logo {
   z-index: -10000;
   padding: 0;
@@ -37,11 +35,8 @@ body {
 .mainSection {
   display: flex;
   margin-top: -50%;
-}
-
-.leftForm {
-  display: flex; 
   margin-left: -30%;
+  width: 400px;
 }
 
 .shuffleForm {
@@ -63,8 +58,8 @@ body select {
   font-size: 12px;
   padding: 2% !important; 
   padding-right: 12% !important;
-  padding-left: 6% !important;
-  max-width: 100%; 
+  padding-left: 8% !important;
+  /* max-width: 100%;  */
   height: auto !important; 
   border: 1px solid #e3e3e3; 
   border-radius: 20px; 
@@ -74,16 +69,25 @@ body select {
   appearance: none; 
   -moz-appearance: none; 
   outline:none;
-  margin-top: 10%;
+  margin-top: 10%;  
 } 
 
+select.dataset {
+  width: 180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 select.snapshot {
-  margin-left: 6%;
-  margin-right: 8%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px; 
 }
 
 select.shuffle {
-  padding-right: 45% !important; 
+  width: 380px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 label {
@@ -111,6 +115,7 @@ input.steps {
   margin-left: 1%;
   width: 180px;
   text-align: center;
+  font-family: 'MuseoModerno', cursive;
 }
 
 .btn {
@@ -123,6 +128,10 @@ input.steps {
   border-radius: 18px;
 }
 
+.btn:hover {
+  cursor: pointer;
+}
+
 .divBtnGnr {
   width: 400px;
   margin-right: auto;
@@ -132,11 +141,13 @@ input.steps {
 
 .btn.generate {
   border: 3px solid #f0d9d5;
-  width: 220px;
+  width: 250px;
   color: #f0d9d5;
   background-color: #EB3223;
   box-shadow: 1px 1px #cbc1bf;
   margin-top: 5%;
+  text-transform: uppercase;
+  font-size: 12px;
 }
 
 .btn.generate:hover {
@@ -145,23 +156,130 @@ input.steps {
   box-shadow: none;
 }
 
-.output-container {
-  width: 650px;
+.imgControler {
+  width: 550px;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
+}
+
+.output-container {
   margin-top: -10%;
 }
 
 .imgAnimation {
   border-radius: 20px;
   border: 3px solid #CBCDCE;
+}
+
+.controls-container {
+  width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: space-evenly;
+}
+
+.direction {
+ background-color: white;
+ color: #8629DC;
+ border: none;
+ text-decoration: none;
+ /* margin-left: 3%; */
+ margin-top: 5px;
+ padding: 10px;
+ outline:none;
+ padding-left: 4%;
+ padding-right: 4%;
+}
+
+.direction:hover {
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.test {
+  width: 600px;
+  margin-left: 22%;
+  text-align: center;
+}
+
+.saveLoad {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 8%;
+}
+
+label.save {
+  padding: -10px;
+  padding-bottom: 0;
+  color: #8629DC !important;
+}
+
+input.save {
+  border: none;
+  outline:none;
+  border-bottom: 1px solid #8629DC;
+  margin-left: 2%;
+  width: 180px;
+  text-align: center;
+  font-family: 'MuseoModerno', cursive;
+  padding: 5px;
+  color: #8629DC !important;
 
 }
 
-.lds-gears {
-  margin-left: 15px;
-  position: relative;
-  bottom: 5px;
+.btn.save {
+  background: white;
+  border:none;
+  border-radius: 0px;
+  font-size: 12px;
+  padding: 10px;
+  margin-left: 5%;
+  color: #CBCDCE;
+}
+
+.btn.save:hover {
+  border-bottom: 1px solid  #8529dc49;
+  color: #444444;
+  box-shadow: none;
+}
+
+.btn.download {
+  background-color: #8629DC;
+  color: white;
+  text-transform: uppercase;
+  font-size: 12px;
+  border: 2px solid white;
+  box-shadow: 1px 1px #CBCDCE;
+  margin-left: 4%;
+  padding:14px;
+}
+
+.btn.download:hover {
+  background-color: white;
+  color: #8629DC;
+  border: 2px solid #8529dc93;
+}
+
+.loadForm {
+  padding-bottom: 8%;
+}
+
+.btn.load {
+  background: white;
+  border:none;
+  border-radius: 0px;
+  font-size: 12px;
+  padding: 10px;
+  margin-left: 5%;
+  color: #CBCDCE;
+}
+
+.btn.load:hover {
+  border-bottom: 1px solid  #8529dc49;
+  color: #444444;
+  box-shadow: none;
 }
 
 
