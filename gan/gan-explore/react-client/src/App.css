@@ -16,7 +16,7 @@ body {
 }
 
 .main {
-  max-width: 800px;
+  max-width: 850px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -34,8 +34,8 @@ body {
 
 .mainSection {
   display: flex;
-  margin-top: -50%;
-  margin-left: -30%;
+  margin-top: -48%;
+  margin-left: -28%;
   width: 400px;
 }
 
@@ -93,6 +93,8 @@ select.shuffle {
 label {
   display: inline-block;
   color: #444444; 
+  padding: -10px;
+  padding-bottom: 0;
 }
 
 .stepsDiv {
@@ -184,7 +186,6 @@ input.steps {
  color: #8629DC;
  border: none;
  text-decoration: none;
- /* margin-left: 3%; */
  margin-top: 5px;
  padding: 10px;
  outline:none;
@@ -198,21 +199,13 @@ input.steps {
   letter-spacing: 2px;
 }
 
-.test {
-  width: 600px;
-  margin-left: 22%;
-  text-align: center;
-}
-
 .saveLoad {
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 8%;
+  width: 580px;
+  margin-top: 6%;
+  margin-left: -1%;
 }
 
 label.save {
-  padding: -10px;
-  padding-bottom: 0;
   color: #8629DC !important;
 }
 
@@ -264,6 +257,8 @@ input.save {
 
 .loadForm {
   padding-bottom: 8%;
+  padding-top: 0;
+  margin-top: -1%;
 }
 
 .btn.load {
@@ -281,6 +276,3 @@ input.save {
   color: #444444;
   box-shadow: none;
 }
-
-
-
