@@ -1,27 +1,22 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
+import {NavLink} from "react-router-dom";
+import Title from './Title.js'
 export default function Home() { 
-  let history = useHistory();
-
-  function handleClick() {
-    history.push("/explore");
-  }
 
   return (
-    <div>
-      <h1 className="homeLogo">
-        GAN<br/>
-        LAT<br/>
-        ENT<br/>
-        SPA<br/>
-        CE<br/>
-        EXP<br/>
-        LOR<br/>
-        ER</h1>
-    
-      <button type="button" onClick={handleClick}>Explore</button>
-   </div>
-    );
+    <>
+      <Title 
+          lineContent1 ='GAN' 
+          lineContent2 ='LAT'
+          lineContent3 ='ENT'
+          lineContent4 ='SPA'
+          lineContent5 ='CE'
+          lineContent6 ='EXP'
+          lineContent7 ='LOR'
+          lineContent8 ='ER'/>
+      
+      <NavLink to="/explore" activeStyle={{color:'red'}}>EXPLORE TOOL</NavLink>
+
+   </>
+  );
 }

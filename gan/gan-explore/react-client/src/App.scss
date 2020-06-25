@@ -12,7 +12,8 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  font: 14px "Lucida Grande", Helvetica, "Helvetica Neue", Lato, sans-serif;
+  font-family: 14px Helvetica, "Helvetica Neue", 'Lato', sans-serif;
+  background-color: #707070;
 }
 
 .main {
@@ -21,21 +22,10 @@ body {
   margin-right: auto;
 }
 
-.logo {
-  z-index: -10000;
-  padding: 0;
-  margin-top: 0;
-  margin-left: -25%;
-  font-size: 62px;
-  color: #E7FC52;
-  font-family: Lato;
-  font-weight: 700;
-}
-
 .mainSection {
   display: flex;
-  margin-top: -48%;
-  margin-left: -25%;
+  margin-top: -65%;
+  margin-left: -30%;
 }
 
 .shuffleForm {
@@ -43,7 +33,8 @@ body {
  text-align: center;
  margin-left: auto;
  margin-right: auto;
- width: 400px
+ width: 400px;
+ z-index: 1000;
 }
 
 .dataSnap {
@@ -287,7 +278,7 @@ input.save {
 
 a {
   text-decoration: none;
-  color: white;
+  color: black;
   padding-right: 15px;
   padding-left: 15px;
   font-weight: 700;
@@ -314,14 +305,14 @@ a:hover {
 }
 
 .about {
-  font-family: Lato;
+  font-family: 'Lato';
   font-size: 24px;
   line-height: 2rem;
   text-transform: uppercase;
 }
 
 .aboutTitle {
-  font-family: Lato;
+  font-family: 'Lato';
   font-size: 48px;
   color: #E7FC52;
   margin-top: -1%;
@@ -349,3 +340,56 @@ a:hover {
   cursor: pointer;
   color: white;
 }
+
+
+.page-title {
+  font-family: 'Bebas Neue', 'Lato', 'Roboto';  
+  font-size: 88px;
+  letter-spacing: 0.7rem; 
+  z-index: -100;
+  color: #E7FC52;
+  margin-left: 16%;
+  display: inline-block;
+  margin-top: 2%;
+}
+
+.line-wrap {
+  overflow: hidden;
+  height: 80px;
+  z-index: -10000;
+}
+
+.lineBig {
+  font-size: 98px;
+  letter-spacing: 0.1rem;
+}
+
+.line-wrap.big {
+  height: 88px;
+}
+
+.logoPage {
+
+}
+
+
+
+.page-enter {
+  opacity: 0;
+}
+
+.page-enter-active {
+  opacity: 1;
+  transition: opacity;
+  /* transition-delay: 600ms; */
+}
+
+.page-exit {
+  opacity: 1;
+}
+
+.page-exit-active {
+  opacity: 0;
+  transition: opacity 400ms;
+}
+

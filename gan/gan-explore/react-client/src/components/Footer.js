@@ -1,6 +1,5 @@
 import React from 'react';
-import { useHistory } from "react-router-dom";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import About from './About.js';
 
 export default function Footer() { 

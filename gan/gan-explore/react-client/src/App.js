@@ -1,26 +1,35 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { useHistory } from "react-router";
-import './App.css';
+import { Route, Link } from "react-router-dom";
+import './App.scss';
 import Generate from './components/Generate.js';
 import Home from './components/Home.js';
 import About from './components/About.js';
+import {CSSTransition} from 'react-transition-group';
+import {gsap} from 'gsap';
 
+
+const routes = [
+  {path: "/", name: "Home", Component: Home},
+  {path: "/explore", name: "Generate", Component: Generate},
+  {path: "/about", name: "About", Component: About}
+]
 
 function App() {
 
   return (
-    <div className="App">
-      <Router>
-        <div>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/explore" component={Generate} />
-            <Route path='/about' component={About} />
-          </Switch>
-        </div>
-      </Router>
-    </div>
+   <>
+    <div className="container">
+      {routes.map(({ path, Component }) => (
+        <Route key="name" path={path} exact>
+         
+            <div className="page">
+              <Component />
+            </div>
+           
+        </Route>
+      ))}
+     </div>
+    </>
   );
 }
 
