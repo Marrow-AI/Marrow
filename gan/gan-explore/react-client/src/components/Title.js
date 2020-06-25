@@ -15,16 +15,17 @@ export default function Title({
   let line9 = useRef(null);
 
   useEffect(() => {
-    gsap.from([line2, line3, line4, line5, line6, line7, line8, line9], 0.8, {
-      delay: .8,
+    gsap.from([line2, line3, line4, line5, line6, line7, line8, line9], 4, {
+      delay: .9,
+      opacity:0,
       ease: "power3.out",
-      y: 64,
+      y: 88,
       stagger: {
         amount: 0.1
       }
     })
 
-  }, [line1, line2, line3, line4, line5, line6, line7, line8])
+  }, [line2, line3, line4, line5, line6, line7, line8])
 
   useEffect(() => {
     gsap.fromTo(line9, { opacity: 0 }, { opacity: 1, delay: 1.2, duration: 2 });

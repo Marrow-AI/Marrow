@@ -13,7 +13,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: 14px Helvetica, 'Helvetica Neue', 'Lato', 'Roboto' sans-serif;
-  background-color: #707070;
+  background-color: white;
 }
 
 .main {
@@ -58,7 +58,7 @@ body {
 
 .mainSection {
   display: flex;
-  margin-top: -55%;
+  margin-top: -70%;
   margin-left: -30%;
 }
 
@@ -88,8 +88,8 @@ body select {
   border: 1px solid #f9311f; 
   border-radius: 20px; 
   background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat; 
-  background-color: #525252; 
-  color: white; 
+  background-color: white; 
+  color: #525252; 
   appearance: none; 
   -moz-appearance: none; 
   outline:none;
@@ -117,17 +117,16 @@ select.shuffle {
 label {
   font-family: "Poppins";
   display: inline-block;
-  color: white; 
+  color: #f9311f; 
   margin-right: -10px;
   padding-bottom: 0;
-  background: #707070; 
+  background: white; 
   width: 150px;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 label.steps {
-  border-bottom: 1px solid  #f9311f; 
-  padding-left: 30px;
+  padding-left: 10px;
 }
 
 .stepsDiv {
@@ -139,7 +138,7 @@ label.steps {
 input {
   display: inline-block;
   font-size: 12px !important;
-  background: #707070; 
+  background: white; 
   border: none;
   outline:none;
   border-bottom: 1px solid  #f9311f; 
@@ -156,11 +155,11 @@ input.steps {
 }
 
 .btn {
-  font-family: 'Bebas Neue', 'Lato', 'Roboto'; 
+  font-family: 'Roboto', 'Lato'; 
   text-align: center;
-  font-size: 16px;
+  font-size: 12px;
   padding: 15px;
-  letter-spacing: 0.25rem;
+  letter-spacing: 0.1rem;
   display: inline-block;
   outline:none;
   border-radius: 18px;
@@ -179,8 +178,8 @@ input.steps {
 
 .btn.generate {
   border: 2px solid #f0d9d5;
-  width: 250px;
-  color: #f0d9d5;
+  width: 200px;
+  color: white;
   background-color: #f9311f;
   box-shadow: 1px 1px #cbc1bf;
   margin-top: 5%;
@@ -188,8 +187,8 @@ input.steps {
 }
 
 .btn.generate:hover {
-  color: #E7FC52;
-  background-color: #525252;
+  color: black;
+  background-color: white;
   box-shadow: none;
   border: 2px solid #E7FC52;
 }
@@ -209,7 +208,7 @@ input.steps {
 
 .imgAnimation {
   border-radius: 20px;
-  border: 3px solid #CBCDCE;
+  border: 4px solid #E7FC52;
   box-shadow: none;
   display: inline-block;
 }
@@ -218,14 +217,17 @@ input.steps {
   margin-left: auto;
   margin-right: auto;
   justify-content: space-evenly;
+  font-family: "Lato";
+  font-size: 12px;
+  color:  #f9311f;
 }
 
 .direction {
- font-family: "Poppins";
- font-size: 14px;
- background-color: #707070;
- color:  #E7FC52;
- font-weight: 500;
+ font-family: "Lato";
+ font-size: 12px;
+ background-color: white;
+ color:  #f9311f;
+ font-weight: 700;
  border: none;
  text-decoration: none;
  margin-top: 4px;
@@ -239,7 +241,7 @@ input.steps {
 
 .direction:hover {
   cursor: pointer;
-  font-weight: 700;
+  font-weight: 900;
   letter-spacing: 2px;
 }
 
@@ -250,8 +252,7 @@ input.steps {
 }
 
 label.save {
-  color: white;
-  border-bottom: 1px solid #8629DC;
+  color: #f9311f;
   padding-left: 15px;
   padding-right:1px;
 }
@@ -259,19 +260,19 @@ label.save {
 input.save {
   border: none;
   outline:none;
-  border-bottom: 1px solid #8629DC;
+  border-bottom: 1px solid #f9311f;
   width: 180px;
   text-align: center;
   font-family: 'MuseoModerno', cursive;
-  color: white !important;
+ 
 }
 
 select.load {
-  border: 1px solid #8629DC; 
+  border: 1px solid #f9311f; 
 }
 
 .btn.save {
-  background: #707070;
+  background: white;
   border: none;
   border-radius: 0px;
   font-size: 14px;
@@ -287,22 +288,22 @@ select.load {
 }
 
 .btn.download {
-  background-color: #8629DC;
+  background-color: #f9311f;
   color: white;
   text-transform: uppercase;
-  font-size: 14px;
-  letter-spacing: 0.3rem;
-  border: 1px solid white;
+  font-size: 12px;
+  letter-spacing: 0.2rem;
+  border: 2px solid white;
   box-shadow: 1px 1px #CBCDCE;
   margin-left: 4%;
   padding: 14px;
 }
 
 .btn.download:hover {
-  background-color: #525252;
+  background-color: white;
   box-shadow: none;
-  color: white;
-  border: 1px solid white;
+  color: #444444;
+  border: 2px solid #E7FC52;
 }
 
 .loadForm {
@@ -312,7 +313,7 @@ select.load {
 }
 
 .btn.load {
-  background: #707070;
+  background: white;
   border: none;
   border-radius: 0px;
   font-size: 14px;
@@ -323,16 +324,15 @@ select.load {
 }
 
 .btn.load:hover {
-  border-bottom: 1px solid  #8529dc49;
   color: #444444;
   box-shadow: none;
 }
 
 .footer {
-  background-color: #f9311f;
+  background-color: #707070;
   padding: 15px;
   text-align: center;
-  margin-top: 1%;
+  margin-top: 15px;
   margin-bottom: 0;
   margin-left: 0;
   margin-right: 0;
@@ -353,10 +353,9 @@ a:hover {
 } 
 
 .aboutSection {
-  background-color: #707070;
-  width: 100%;
-  height: 100%;
-  margin-top: 5%;
+  // width: 100%;
+  // height: 100%;
+  margin-top: 2%;
 }
 
 .aboutDiv {
@@ -376,27 +375,29 @@ a:hover {
 .aboutTitle {
   font-family: 'Bebas Neue', 'Lato', 'Roboto';
   font-size: 84px;
-  color: #E7FC52;
+  color: #8629DC;
   margin-top: -1%;
   letter-spacing: 0.5rem;
   padding-bottom: 0;
   margin-bottom: 0;
+  // -webkit-text-stroke: 1px black;
 }
 
 .hl {
-  background-color: white;
+  background-color: black;
+  color: white;
 }
 
 .exit {
   font-family: "Poppins";
-  background: #707070;
+  background: white;
   margin-left: 85%;
   border: none;
   font-size: 32px;
   font-weight: 300;
   padding-left: 14px;
   padding-right: 14px;
-  color: #E7FC52;
+  color: black;
   outline:none;
 }
 
@@ -409,67 +410,67 @@ a:hover {
 
 .page-title {
   font-family: 'Bebas Neue', 'Lato', 'Roboto';  
-  font-size: 88px;
+  font-size: 100px;
   letter-spacing: 0.7rem; 
   z-index: -100;
-  color: #E7FC52;
+  color: black;
   padding-left: 16%;
   display: inline-block;
-  margin-top: 2%;
+
 }
 
 .infoDiv {
-  margin-left: 240px;
+  padding-left: 240px;
   margin-top: -300px;
 }
 
 .info {
   font-family: "Poppins", "Roboto";
-  color: black;
+  color: #707070;
   width:340px;
   font-weight: 300;
   line-height: 44px;
   font-size: 38px;
-
 }
 
 .line-wrap {
   overflow: hidden;
-  height: 80px;
+  height: 90px;
 }
 
 .lineBig {
-  font-size: 98px;
+  font-size: 110px;
   letter-spacing: 0.1rem;
 }
 
 .line-wrap.big {
-  height: 88px;
+  height: 100px;
 }
 
 .logoPage {
+  padding-left: 10%;
   display: inline-block;
-  opacity: logo-transition 3s;
+  opacity: logo-transition 6s;
 }
 
 @-webkit-keyframes logo-transition{
   0%   { opacity: 0;}
-  20% { opacity: 0;}
+  40% { opacity: 0;}
   100% { opacity: 1; }
 }
 @-moz-keyframes logo-transition {
   0%   { opacity: 0; }
-  20% { opacity: 0;}
+  40% { opacity: 0;}
   100% { opacity: 1; }
 }
 @-o-keyframes logo-transition {
   0%   { opacity: 0;}
-  20% { opacity: 0;}
+  40% { opacity: 0;}
   100% { opacity: 1; }
 }
 @keyframes logo-transition {
   0%   { opacity: 0;}
-  20% { opacity: 0;}
+  40% { opacity: 0;}
   100% { opacity: 1;}
 }
 

@@ -177,12 +177,12 @@ export default function Generate() {
               <img className="imgAnimation" src={view} width="512" height="512" alt="" />
             </div>
             <div className="controls-container">
-              <button onClick={handleDirection} className="direction" data-direction="back" data-steps="1">&lt;</button>
+              <button onClick={handleDirection} className="direction" data-direction="back" data-steps="1">&lt;</button>1
               <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="1">&gt;</button>
-              <button onClick={handleDirection} className="direction" data-direction="back" data-steps="10">&lt;&lt; -10</button>
-              <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="10">10 &gt;&gt;</button>
-              <button onClick={handleDirection} className="direction" data-direction="back" data-steps="100">&lt;&lt;&lt; -100</button>
-              <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="100">100 &gt;&gt;&gt;</button>
+              <button onClick={handleDirection} className="direction" data-direction="back" data-steps="10">&lt;&lt;</button>10
+              <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="10">&gt;&gt;</button>
+              <button onClick={handleDirection} className="direction" data-direction="back" data-steps="100">&lt;&lt;&lt;</button>100 
+              <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="100">&gt;&gt;&gt;</button>
             </div>
 
             <div className="saveLoad">
