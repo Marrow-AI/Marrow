@@ -147,7 +147,7 @@ export default function Generate() {
               </select>
 
               <select className="select snapshot"  >
-                <option value="" defaultValue="selected"  >Choose a snapshot</option>
+                <option value="" defaultValue="selected" >Choose a snapshot</option>
                 {snapshots.snapshots.snapFamily.map(value => (
                   <option className="snapshot" key={value} value={value} ref={register}>{value} </option>
                 ))}
@@ -172,6 +172,7 @@ export default function Generate() {
           </form>
 
           <div className="imgControler">
+
             <div className="output-container">
               <img className="imgAnimation" src={view} width="512" height="512" alt="" />
             </div>
@@ -202,10 +203,8 @@ export default function Generate() {
               </form>
             </div>
           </div>
-
         </div>
       </div>
-
       <Footer />
     </>
   );

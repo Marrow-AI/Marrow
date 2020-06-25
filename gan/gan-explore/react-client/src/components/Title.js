@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
 export default function Title({
-  lineContent1, lineContent2, lineContent3, lineContent4, lineContent5, lineContent6, lineContent7, lineContent8
+  lineContent1, lineContent2, lineContent3, lineContent4, lineContent5, lineContent6, lineContent7, lineContent8, lineContent9
 }) {
   let line1 = useRef(null);
   let line2 = useRef(null);
@@ -12,10 +12,11 @@ export default function Title({
   let line6 = useRef(null);
   let line7 = useRef(null);
   let line8 = useRef(null);
+  let line9 = useRef(null);
 
   useEffect(() => {
-    gsap.from([ line2, line3, line4, line5, line6, line7, line8], 0.8, {
-      delay:.8,
+    gsap.from([line2, line3, line4, line5, line6, line7, line8, line9], 0.8, {
+      delay: .8,
       ease: "power3.out",
       y: 64,
       stagger: {
@@ -24,6 +25,10 @@ export default function Title({
     })
 
   }, [line1, line2, line3, line4, line5, line6, line7, line8])
+
+  useEffect(() => {
+    gsap.fromTo(line9, { opacity: 0 }, { opacity: 1, delay: 1.2, duration: 2 });
+  }, [line9])
 
   return (
     <h1 className="page-title">
@@ -65,6 +70,11 @@ export default function Title({
       <div className="line-wrap">
         <div ref={el => (line8 = el)} className="line">
           {lineContent8}
+        </div>
+      </div>
+      <div className="infoDiv">
+        <div ref={el => (line9 = el)} className="info">
+          {lineContent9}
         </div>
       </div>
     </h1>

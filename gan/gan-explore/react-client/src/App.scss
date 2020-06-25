@@ -12,7 +12,7 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  font-family: 14px Helvetica, "Helvetica Neue", 'Lato', sans-serif;
+  font-family: 14px Helvetica, 'Helvetica Neue', 'Lato', 'Roboto' sans-serif;
   background-color: #707070;
 }
 
@@ -20,16 +20,49 @@ body {
   max-width: 850px;
   margin-left: auto;
   margin-right: auto;
+  -webkit-animation: page-transition 1.8s;
+  -moz-animation: page-transition 1.8s;
+  -o-animation: page-transition 1.8s;
+  animation: page-transition 1.8s;
+}
+
+@-webkit-keyframes page-transition {
+  0%   { opacity: 0;}
+  40%  { opacity: 0;
+        transition: opacity;
+        transition-delay: 600ms;}
+  100% { opacity: 1;}
+}
+@-moz-keyframes page-transition {
+  0%   { opacity: 0;}
+  40%  { opacity: 0;
+        transition: opacity;
+        transition-delay: 600ms;}
+  100% { opacity: 1;}
+}
+@-o-keyframes page-transition {
+  0%   { opacity: 0;}
+  40%  { opacity: 0;
+        transition: opacity;
+        transition-delay: 600ms;}
+  100% { opacity: 1;}
+}
+
+@keyframes page-transition {
+  0%   { opacity: 0;}
+  40%  { opacity: 0;
+        transition: opacity;
+        transition-delay: 600ms;}
+  100% { opacity: 1;}
 }
 
 .mainSection {
   display: flex;
-  margin-top: -65%;
+  margin-top: -55%;
   margin-left: -30%;
 }
 
 .shuffleForm {
- padding-right: 5%;
  text-align: center;
  margin-left: auto;
  margin-right: auto;
@@ -46,22 +79,21 @@ body {
 
 body select { 
   display: inline-block;
+  font-family: "Poppins";
   font-size: 12px;
   padding: 2% !important; 
   padding-right: 12% !important;
   padding-left: 8% !important;
-  /* max-width: 100%;  */
   height: auto !important; 
-  border: 1px solid #e3e3e3; 
+  border: 1px solid #f9311f; 
   border-radius: 20px; 
   background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat; 
-  background-color: #fff; 
-  color: #444444; 
+  background-color: #525252; 
+  color: white; 
   appearance: none; 
   -moz-appearance: none; 
   outline:none;
   margin-top: 10%;  
-  /* margin-left: 2%; */
 } 
 
 select.dataset {
@@ -83,40 +115,52 @@ select.shuffle {
 }
 
 label {
+  font-family: "Poppins";
   display: inline-block;
-  color: #444444; 
-  padding: -10px;
+  color: white; 
+  margin-right: -10px;
   padding-bottom: 0;
+  background: #707070; 
+  width: 150px;
+  font-size: 14px;
+}
+
+label.steps {
+  border-bottom: 1px solid  #f9311f; 
+  padding-left: 30px;
 }
 
 .stepsDiv {
   margin-top: 15%;
   margin-bottom: 10%;
-  width: 220px;
+  width: 220px; 
 }
 
 input {
   display: inline-block;
   font-size: 12px !important;
-  color: #444444; 
+  background: #707070; 
+  border: none;
+  outline:none;
+  border-bottom: 1px solid  #f9311f; 
 }
 
 input.steps {
-  border: none;
-  outline:none;
-  border-bottom: 1px solid #d3d3d3;
   position:absolute;
-  margin-left: 1%;
-  width: 180px;
+  margin-left: -1px;
+  width: 120px;
   text-align: center;
   font-family: 'MuseoModerno', cursive;
+  color: white !important; 
+  font-size: 14px;
 }
 
 .btn {
+  font-family: 'Bebas Neue', 'Lato', 'Roboto'; 
   text-align: center;
-  font-size: 14px;
+  font-size: 16px;
   padding: 15px;
-  letter-spacing: 2px;
+  letter-spacing: 0.25rem;
   display: inline-block;
   outline:none;
   border-radius: 18px;
@@ -134,55 +178,63 @@ input.steps {
 }
 
 .btn.generate {
-  border: 3px solid #f0d9d5;
+  border: 2px solid #f0d9d5;
   width: 250px;
   color: #f0d9d5;
   background-color: #f9311f;
   box-shadow: 1px 1px #cbc1bf;
   margin-top: 5%;
   text-transform: uppercase;
-  font-size: 12px;
 }
 
 .btn.generate:hover {
-  color: #f9311f;
-  background-color: white;
+  color: #E7FC52;
+  background-color: #525252;
   box-shadow: none;
+  border: 2px solid #E7FC52;
 }
 
 .imgControler {
-  width: 550px;
+  width: 600px;
+  margin-top: -13%;
+  text-align: center;
   margin-left: auto;
   margin-right: auto;
-  text-align: center;
 }
 
 .output-container {
-  margin-top: -15%;
+  margin-left:auto;
+  margin-right: auto;
 }
 
 .imgAnimation {
   border-radius: 20px;
   border: 3px solid #CBCDCE;
+  box-shadow: none;
+  display: inline-block;
 }
 
 .controls-container {
-  width: 500px;
   margin-left: auto;
   margin-right: auto;
   justify-content: space-evenly;
 }
 
 .direction {
- background-color: white;
- color: #8629DC;
+ font-family: "Poppins";
+ font-size: 14px;
+ background-color: #707070;
+ color:  #E7FC52;
+ font-weight: 500;
  border: none;
  text-decoration: none;
- margin-top: 5px;
- padding: 10px;
+ margin-top: 4px;
+ padding: 16px;
  outline:none;
  padding-left: 4%;
  padding-right: 4%;
+ letter-spacing: 0.1rem;
+ display: inline-block;
 }
 
 .direction:hover {
@@ -194,37 +246,42 @@ input.steps {
 .saveLoad {
   width: 580px;
   margin-top: 5%;
-  margin-left: -1%;
+  margin-left: 1%;
 }
 
 label.save {
-  color: #8629DC !important;
+  color: white;
+  border-bottom: 1px solid #8629DC;
+  padding-left: 15px;
+  padding-right:1px;
 }
 
 input.save {
   border: none;
   outline:none;
   border-bottom: 1px solid #8629DC;
-  margin-left: 2%;
   width: 180px;
   text-align: center;
   font-family: 'MuseoModerno', cursive;
-  padding: 5px;
-  color: #8629DC !important;
+  color: white !important;
+}
+
+select.load {
+  border: 1px solid #8629DC; 
 }
 
 .btn.save {
-  background: white;
-  border:none;
+  background: #707070;
+  border: none;
   border-radius: 0px;
-  font-size: 12px;
+  font-size: 14px;
+  letter-spacing: 0.18rem;
   padding: 10px;
   margin-left: 5%;
   color: #CBCDCE;
 }
 
 .btn.save:hover {
-  border-bottom: 1px solid  #8529dc49;
   color: #444444;
   box-shadow: none;
 }
@@ -233,17 +290,19 @@ input.save {
   background-color: #8629DC;
   color: white;
   text-transform: uppercase;
-  font-size: 12px;
-  border: 2px solid white;
+  font-size: 14px;
+  letter-spacing: 0.3rem;
+  border: 1px solid white;
   box-shadow: 1px 1px #CBCDCE;
   margin-left: 4%;
-  padding:14px;
+  padding: 14px;
 }
 
 .btn.download:hover {
-  background-color: white;
-  color: #8629DC;
-  border: 2px solid #8529dc93;
+  background-color: #525252;
+  box-shadow: none;
+  color: white;
+  border: 1px solid white;
 }
 
 .loadForm {
@@ -253,10 +312,11 @@ input.save {
 }
 
 .btn.load {
-  background: white;
-  border:none;
+  background: #707070;
+  border: none;
   border-radius: 0px;
-  font-size: 12px;
+  font-size: 14px;
+  letter-spacing: 0.18rem;
   padding: 10px;
   margin-left: 5%;
   color: #CBCDCE;
@@ -269,20 +329,23 @@ input.save {
 }
 
 .footer {
-  width: 100%;
   background-color: #f9311f;
   padding: 15px;
   text-align: center;
   margin-top: 1%;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 a {
   text-decoration: none;
-  color: black;
+  color: white;
   padding-right: 15px;
   padding-left: 15px;
   font-weight: 700;
   font-size: 12px;
+  font-family: "Poppins";
 } 
 
 a:hover {
@@ -290,14 +353,13 @@ a:hover {
 } 
 
 .aboutSection {
-  background-color: #8a8a8a;
+  background-color: #707070;
   width: 100%;
   height: 100%;
- 
+  margin-top: 5%;
 }
 
 .aboutDiv {
-  /* padding-top: 4%;  */
   padding-bottom: 2%;
   max-width: 900px;
   margin-left: auto;
@@ -305,42 +367,45 @@ a:hover {
 }
 
 .about {
-  font-family: 'Lato';
+  font-family: 'Roboto', 'Lato';
   font-size: 24px;
   line-height: 2rem;
   text-transform: uppercase;
 }
 
 .aboutTitle {
-  font-family: 'Lato';
-  font-size: 48px;
+  font-family: 'Bebas Neue', 'Lato', 'Roboto';
+  font-size: 84px;
   color: #E7FC52;
   margin-top: -1%;
+  letter-spacing: 0.5rem;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .hl {
   background-color: white;
-  /* display: inline-block; */
 }
 
 .exit {
-  background: #8a8a8a;
-  margin-top: 4%;
-  margin-left: 90%;
+  font-family: "Poppins";
+  background: #707070;
+  margin-left: 85%;
   border: none;
-  border-radius: 0px;
-  font-size: 28px;
-  font-weight: 700;
-  padding: 10px;
+  font-size: 32px;
+  font-weight: 300;
+  padding-left: 14px;
+  padding-right: 14px;
   color: #E7FC52;
   outline:none;
 }
 
 .exit:hover {
   cursor: pointer;
-  color: white;
+  color: #f9311f;
+  border-radius: 15px;
+  border: 1px solid white;
 }
-
 
 .page-title {
   font-family: 'Bebas Neue', 'Lato', 'Roboto';  
@@ -348,15 +413,29 @@ a:hover {
   letter-spacing: 0.7rem; 
   z-index: -100;
   color: #E7FC52;
-  margin-left: 16%;
+  padding-left: 16%;
   display: inline-block;
   margin-top: 2%;
+}
+
+.infoDiv {
+  margin-left: 240px;
+  margin-top: -300px;
+}
+
+.info {
+  font-family: "Poppins", "Roboto";
+  color: black;
+  width:340px;
+  font-weight: 300;
+  line-height: 44px;
+  font-size: 38px;
+
 }
 
 .line-wrap {
   overflow: hidden;
   height: 80px;
-  z-index: -10000;
 }
 
 .lineBig {
@@ -369,27 +448,25 @@ a:hover {
 }
 
 .logoPage {
-
+  display: inline-block;
+  opacity: logo-transition 3s;
 }
 
-
-
-.page-enter {
-  opacity: 0;
+@-webkit-keyframes logo-transition{
+  0%   { opacity: 0;}
+  100% { opacity: 1; }
 }
-
-.page-enter-active {
-  opacity: 1;
-  transition: opacity;
-  /* transition-delay: 600ms; */
+@-moz-keyframes logo-transition {
+  0%   { opacity: 0; }
+  100% { opacity: 1; }
 }
-
-.page-exit {
-  opacity: 1;
+@-o-keyframes logo-transition {
+  0%   { opacity: 0;}
+  100% { opacity: 1; }
 }
-
-.page-exit-active {
-  opacity: 0;
-  transition: opacity 400ms;
+@keyframes logo-transition {
+  0%   { opacity: 0;}
+  20% { opacity: 0;}
+  100% { opacity: 1;}
 }
 
