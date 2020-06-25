@@ -454,14 +454,17 @@ a:hover {
 
 @-webkit-keyframes logo-transition{
   0%   { opacity: 0;}
+  20% { opacity: 0;}
   100% { opacity: 1; }
 }
 @-moz-keyframes logo-transition {
   0%   { opacity: 0; }
+  20% { opacity: 0;}
   100% { opacity: 1; }
 }
 @-o-keyframes logo-transition {
   0%   { opacity: 0;}
+  20% { opacity: 0;}
   100% { opacity: 1; }
 }
 @keyframes logo-transition {
