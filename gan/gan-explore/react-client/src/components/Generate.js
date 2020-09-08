@@ -2,7 +2,44 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import snapshots from './snapshots.json';
 import Footer from './Footer.js';
-import Logo from './Logo.js';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {     
+    background: "black",
+    border: "white",     
+    backgroundColor: "black",
+    color: "white",
+      
+    },
+   selectRoot: {     
+     color: "yellow"   
+    },
+    formControl: {
+          margin: theme.spacing(1),
+          minWidth: 120,
+        },
+        selectEmpty: {
+          marginTop: theme.spacing(2),
+        }
+  })) 
+
+
+// const useStyles = makeStyles((theme) => ({
+//   formControl: {
+//     margin: theme.spacing(1),
+//     minWidth: 120,
+//   },
+//   selectEmpty: {
+//     marginTop: theme.spacing(2),
+//   },
+// }));
 
 export default function Generate() {
   const [view, setView] = useState();
@@ -10,6 +47,13 @@ export default function Generate() {
   const { register, handleSubmit } = useForm({ mode: "onBlur" });
   const { register: register2, handleSubmit: handleSubmit2 } = useForm({ mode: "onBlur" });
   const { register: register3, handleSubmit: handleSubmit3 } = useForm({ mode: "onBlur" });
+
+  const classes = useStyles();
+  const [dataset, setDataset] = React.useState('');
+
+  const handleChange = (event) => {
+    setDataset(event.target.value);
+  };
 
   const onSubmit = (values, ev) => {
     const form = ev.target;
@@ -132,19 +176,34 @@ export default function Generate() {
 
   return (
     <>
-      <Logo />
+    {/* <ThemeProvider theme={theme}> */}
+      
       <div className="main">
         <div className="mainSection">
 
           <form key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)}>
-
-            <div className="dataSnap">
-              <select className="select dataset" name="type" autoComplete="off">
+          <div >
+          <div className={classes.root}>
+          <FormControl className={classes.formControl}>
+           <InputLabel classNamee="inputNew" id="demo-simple-select-helper-label">Choose a dataset</InputLabel>
+           <Select className="select dataset" name="type" autoComplete="off"
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            value={dataset}
+            onChange={handleChange}
+           >
+          <MenuItem value={"person"}>This Person Does Not Exist</MenuItem>
+          <MenuItem value={"happy"}>Happy Families Dinner</MenuItem>
+         </Select>
+         <FormHelperText>Load a dataset of your intreset</FormHelperText>
+        </FormControl>
+        </div>
+          
+              {/* <select className="select dataset" name="type" autoComplete="off">
                 <option value="" defaultValue="selected"  >Choose dataset</option>
                 <option value="person" ref={register}>Person</option>
                 <option value="happy" ref={register}>Happy families</option>
-                <option value="cats" ref={register}>cats</option>
-              </select>
+              </select> */}
 
               <select className="select snapshot"  >
                 <option value="" defaultValue="selected" >Choose a snapshot</option>
@@ -152,7 +211,7 @@ export default function Generate() {
                   <option className="snapshot" key={value} value={value} ref={register}>{value} </option>
                 ))}
               </select>
-            </div>
+         
 
             <select className="select shuffle" name="shffle" autoComplete="off" >
               <option value="" defaultValue="selected"  >Choose generating options</option>
@@ -169,13 +228,18 @@ export default function Generate() {
             <div className="divBtnGnr">
               <button className="btn generate" type="onSubmit" ref={register}>Generate animation</button>
             </div>
+            </div>
           </form>
 
-          <div className="imgControler">
 
+
+
+          <div className="imgControler">
             <div className="output-container">
               <img className="imgAnimation" src={view} width="512" height="512" alt="" />
             </div>
+
+
             <div className="controls-container">
               <button onClick={handleDirection} className="direction" data-direction="back" data-steps="1">&lt;</button>1
               <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="1">&gt;</button>
@@ -206,6 +270,8 @@ export default function Generate() {
         </div>
       </div>
       <Footer />
+    
+    {/* </ThemeProvider> */}
     </>
   );
 }

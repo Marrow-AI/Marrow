@@ -8,12 +8,127 @@ light grey: #CBCDCE
 light pink: #EDE6E5
 */
 
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+::-moz-selection { /* Code for Firefox */
+  color: black;
+  background: white;
+}
+
+::selection {
+  color: black;
+  background: white;
+}
+
 body {
-  width: 100%;
   margin: 0;
   padding: 0;
-  font-family: 14px Helvetica, 'Helvetica Neue', 'Lato', 'Roboto' sans-serif;
-  background-color: white;
+  font-family: 'Yanone Kaffeesatz','Lato', sans-serif;
+  background-color: black;
+}
+
+a {
+  text-decoration: none;
+  font-family: 'Yanone Kaffeesatz';
+  color: black;
+}
+
+h1 {
+  font-family: 'Yanone Kaffeesatz';
+  margin-top: 5%;
+  letter-spacing: 4px;
+  color: white;
+}
+
+.page-title {
+  font-family: 'Yanone Kaffeesatz', 'Lato', 'Roboto';  
+  font-size: 100px;
+  letter-spacing: 0.7rem; 
+  z-index: -100;
+  color: #EEBBF9;
+  padding-left: 16%;
+  display: inline-block;
+}
+
+
+.infoDiv {
+  padding-left: 220px;
+  margin-top: -270px;
+}
+
+.info {
+  font-family: "Roboto";
+  color: white;
+  width: 380px;
+  font-weight: 400;
+  line-height: 44px;
+  font-size: 38px;
+}
+
+.line-wrap {
+  overflow: hidden;
+  height: 90px;
+}
+
+.lineBig {
+  font-size: 110px;
+  letter-spacing: 0.1rem;
+  margin-left: -2px;
+}
+
+.line-wrap.big {
+  height: 100px;
+}
+
+.logoPage {
+  padding-left: 10%;
+  display: inline-block;
+  opacity: logo-transition 6s;
+}
+
+@-webkit-keyframes logo-transition{
+  0%   { opacity: 0;}
+  40% { opacity: 0;}
+  100% { opacity: 1; }
+}
+@-moz-keyframes logo-transition {
+  0%   { opacity: 0; }
+  40% { opacity: 0;}
+  100% { opacity: 1; }
+}
+@-o-keyframes logo-transition {
+  0%   { opacity: 0;}
+  40% { opacity: 0;}
+  100% { opacity: 1; }
+}
+@keyframes logo-transition {
+  0%   { opacity: 0;}
+  40% { opacity: 0;}
+  100% { opacity: 1;}
+}
+
+
+button {
+  background:transparent;
+  cursor: pointer;
+  transition: all .15s ease-in;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  border: 1px solid white;
+  border-radius: 70px;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, .75);
+  text-transform: uppercase;
+  padding: 16px 70px;
+}
+
+button:hover {
+  border-radius: 10px;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, .75);
+  padding: 15px 50px;
 }
 
 .main {
@@ -40,6 +155,7 @@ body {
         transition-delay: 600ms;}
   100% { opacity: 1;}
 }
+
 @-o-keyframes page-transition {
   0%   { opacity: 0;}
   40%  { opacity: 0;
@@ -58,7 +174,7 @@ body {
 
 .mainSection {
   display: flex;
-  margin-top: -70%;
+  margin-top: 21%;
   margin-left: -30%;
 }
 
@@ -79,17 +195,17 @@ body {
 
 body select { 
   display: inline-block;
-  font-family: "Poppins";
+  font-family: "Lato";
   font-size: 12px;
   padding: 2% !important; 
   padding-right: 12% !important;
   padding-left: 8% !important;
   height: auto !important; 
-  border: 1px solid #f9311f; 
+  // border: 1px solid #f9311f; 
   border-radius: 20px; 
   background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat; 
   background-color: white; 
-  color: #525252; 
+  color: white; 
   appearance: none; 
   -moz-appearance: none; 
   outline:none;
@@ -100,6 +216,30 @@ select.dataset {
   width: 180px;
   margin-left: auto;
   margin-right: auto;
+  color: white !important;
+}
+
+.MuiFormHelperText-root {
+  color: white
+}
+
+.MuiInputBase-root.MuiInput-root.MuiInput-underline.select.dataset{
+  color: white
+}
+
+#demo-simple-select-helper-label {
+  background-color: black;
+  color: white;
+  padding-bottom: 0.1rem;
+  font-family: 'Lato';
+}
+
+#demo-simple-select-helper {
+  padding-top: .5rem;
+  padding-bottom: 1rem;
+  color: #EEBBF9;
+  font-family: 'Lato';
+  letter-spacing: .15rem;
 }
 
 select.snapshot {
@@ -135,10 +275,22 @@ label.steps {
   width: 220px; 
 }
 
+.MuiInputBase-root{
+  color: white !important;
+}
+
+.MuiSelect-nativeInput {
+  color: white !important;
+}
+
+.MuiFormHelperText-root {
+  color:white !important;
+}
+
 input {
   display: inline-block;
   font-size: 12px !important;
-  background: white; 
+  color: white; 
   border: none;
   outline:none;
   border-bottom: 1px solid  #f9311f; 
@@ -328,33 +480,38 @@ select.load {
   box-shadow: none;
 }
 
-.footer {
-  background-color: #707070;
-  padding: 15px;
-  text-align: center;
-  margin-top: 15px;
-  margin-bottom: 0;
-  margin-left: 0;
-  margin-right: 0;
+.footerCointainer {
+  display: block;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 
-a {
-  text-decoration: none;
-  color: white;
-  padding-right: 15px;
-  padding-left: 15px;
-  font-weight: 700;
-  font-size: 12px;
-  font-family: "Poppins";
-} 
+.mainFooter {
+  width: 100%;
+  bottom: 0;
+  height: 3rem;
+  background-color:black;
+}
 
-a:hover {
-  color: black;
+.footer {
+  display: flex;
+  justify-content: space-around;
+}
+
+a.footer {
+  color: rgba(255, 255, 255, 0.5);
+  display: inline-block;
+  font-size: 16px;
+  letter-spacing: 2px;
+  padding: 15px 15px;
+}
+
+a.footer:hover {
+  color: rgba(255, 255, 255, 0.8);
 } 
 
 .aboutSection {
-  // width: 100%;
-  // height: 100%;
   margin-top: 2%;
 }
 
@@ -365,112 +522,42 @@ a:hover {
   margin-right: auto;
 }
 
-.about {
+.aboutText {
   font-family: 'Roboto', 'Lato';
   font-size: 24px;
   line-height: 2rem;
   text-transform: uppercase;
+  color: white;
 }
 
 .aboutTitle {
   font-family: 'Bebas Neue', 'Lato', 'Roboto';
   font-size: 84px;
-  color: #8629DC;
+  color: #ED965F;
   margin-top: -1%;
   letter-spacing: 0.5rem;
   padding-bottom: 0;
   margin-bottom: 0;
-  // -webkit-text-stroke: 1px black;
 }
 
 .hl {
-  background-color: black;
-  color: white;
+  background-color: white;
+  color: black;
 }
 
 .exit {
-  font-family: "Poppins";
-  background: white;
-  margin-left: 85%;
+  font-family: "Lato";
+  color:#EEBBF9;
+  margin-left: 80%;
   border: none;
-  font-size: 32px;
-  font-weight: 300;
-  padding-left: 14px;
-  padding-right: 14px;
-  color: black;
+  font-size: 36px;
+  font-weight: 500;
   outline:none;
 }
 
 .exit:hover {
   cursor: pointer;
-  color: #f9311f;
+  color: #ED965F;
   border-radius: 15px;
-  border: 1px solid white;
-}
-
-.page-title {
-  font-family: 'Bebas Neue', 'Lato', 'Roboto';  
-  font-size: 100px;
-  letter-spacing: 0.7rem; 
-  z-index: -100;
-  color: black;
-  padding-left: 16%;
-  display: inline-block;
-
-}
-
-.infoDiv {
-  padding-left: 240px;
-  margin-top: -300px;
-}
-
-.info {
-  font-family: "Poppins", "Roboto";
-  color: #707070;
-  width:340px;
-  font-weight: 300;
-  line-height: 44px;
-  font-size: 38px;
-}
-
-.line-wrap {
-  overflow: hidden;
-  height: 90px;
-}
-
-.lineBig {
-  font-size: 110px;
-  letter-spacing: 0.1rem;
-}
-
-.line-wrap.big {
-  height: 100px;
-}
-
-.logoPage {
-  padding-left: 10%;
-  display: inline-block;
-  opacity: logo-transition 6s;
-}
-
-@-webkit-keyframes logo-transition{
-  0%   { opacity: 0;}
-  40% { opacity: 0;}
-  100% { opacity: 1; }
-}
-@-moz-keyframes logo-transition {
-  0%   { opacity: 0; }
-  40% { opacity: 0;}
-  100% { opacity: 1; }
-}
-@-o-keyframes logo-transition {
-  0%   { opacity: 0;}
-  40% { opacity: 0;}
-  100% { opacity: 1; }
-}
-@keyframes logo-transition {
-  0%   { opacity: 0;}
-  40% { opacity: 0;}
-  100% { opacity: 1;}
 }
 
