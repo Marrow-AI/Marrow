@@ -1,13 +1,3 @@
-/*
-colors:
-yellow: #E7FC52
-red: #f9311f
-purple: #8629DC
-dark grey: #707070
-light grey: #CBCDCE
-light pink: #EDE6E5
-*/
-
 * {
   box-sizing: border-box;
   outline: none;
@@ -43,6 +33,16 @@ h1 {
   color: white;
 }
 
+.secondTitle {
+  font-family: 'Yanone Kaffeesatz';
+  text-align: left;
+  padding: 0;
+  margin-top: 60px;
+  margin-left: 5%;
+  letter-spacing: .5rem;
+  font-size: 48px;
+}
+
 .page-title {
   font-family: 'Yanone Kaffeesatz', 'Lato', 'Roboto';  
   font-size: 100px;
@@ -52,7 +52,6 @@ h1 {
   padding-left: 16%;
   display: inline-block;
 }
-
 
 .infoDiv {
   padding-left: 220px;
@@ -110,7 +109,6 @@ h1 {
   100% { opacity: 1;}
 }
 
-
 button {
   background:transparent;
   cursor: pointer;
@@ -119,16 +117,16 @@ button {
   font-weight: 600;
   color: white;
   border: 1px solid white;
-  border-radius: 70px;
+  border-radius: 10px;
   box-shadow: 2px 3px 5px rgba(0, 0, 0, .75);
   text-transform: uppercase;
-  padding: 16px 70px;
+  padding: 18px 40px;
 }
 
 button:hover {
-  border-radius: 10px;
+  border-radius: 30px;
   box-shadow: 2px 3px 5px rgba(0, 0, 0, .75);
-  padding: 15px 50px;
+  padding: 18px 35px;
 }
 
 .main {
@@ -139,6 +137,7 @@ button:hover {
   -moz-animation: page-transition 1.8s;
   -o-animation: page-transition 1.8s;
   animation: page-transition 1.8s;
+  text-align: center;
 }
 
 @-webkit-keyframes page-transition {
@@ -174,16 +173,16 @@ button:hover {
 
 .mainSection {
   display: flex;
-  margin-top: 21%;
-  margin-left: -30%;
+  margin-top: 25%;
+  margin-left: -20%;
 }
 
 .shuffleForm {
- text-align: center;
  margin-left: auto;
  margin-right: auto;
  width: 400px;
- z-index: 1000;
+ margin-top: -12%;
+ text-align: left;
 }
 
 .dataSnap {
@@ -193,38 +192,10 @@ button:hover {
   text-align: center;
 }
 
-body select { 
-  display: inline-block;
-  font-family: "Lato";
-  font-size: 12px;
-  padding: 2% !important; 
-  padding-right: 12% !important;
-  padding-left: 8% !important;
-  height: auto !important; 
-  // border: 1px solid #f9311f; 
-  border-radius: 20px; 
-  background: url("https://i.ibb.co/b7xjLrB/selectbox-arrow.png") right center no-repeat; 
-  background-color: white; 
-  color: white; 
-  appearance: none; 
-  -moz-appearance: none; 
-  outline:none;
-  margin-top: 10%;  
-} 
-
-select.dataset {
-  width: 180px;
-  margin-left: auto;
-  margin-right: auto;
-  color: white !important;
-}
-
 .MuiFormHelperText-root {
-  color: white
-}
-
-.MuiInputBase-root.MuiInput-root.MuiInput-underline.select.dataset{
-  color: white
+  color: rgb(200, 200, 200) !important;
+  margin-bottom: 20px !important;
+  font-size: 12px !important;
 }
 
 #demo-simple-select-helper-label {
@@ -235,119 +206,67 @@ select.dataset {
 }
 
 #demo-simple-select-helper {
-  padding-top: .5rem;
-  padding-bottom: 1rem;
+  padding-top: -.5rem;
   color: #EEBBF9;
   font-family: 'Lato';
   letter-spacing: .15rem;
 }
 
-select.snapshot {
-  margin-left: auto;
-  margin-right: auto;
-  width: 200px; 
-}
-
-select.shuffle {
-  width: 380px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 label {
-  font-family: "Poppins";
+  font-family: "Lato";
   display: inline-block;
-  color: #f9311f; 
-  margin-right: -10px;
+  color: white; 
   padding-bottom: 0;
-  background: white; 
-  width: 150px;
-  font-size: 12px;
-}
-
-label.steps {
-  padding-left: 10px;
+  background: black; 
+  width: 180px;
+  font-size: 16px;
+  letter-spacing: 0.1rem;
+  margin: 0;
+  padding: 0 ;
 }
 
 .stepsDiv {
-  margin-top: 15%;
+  margin-top: 5%;
   margin-bottom: 10%;
-  width: 220px; 
-}
-
-.MuiInputBase-root{
-  color: white !important;
-}
-
-.MuiSelect-nativeInput {
-  color: white !important;
-}
-
-.MuiFormHelperText-root {
-  color:white !important;
+  width: 400px; 
 }
 
 input {
   display: inline-block;
-  font-size: 12px !important;
-  color: white; 
+  font-size: 14px !important;
+  background-color:black;
+  color: white;
   border: none;
   outline:none;
-  border-bottom: 1px solid  #f9311f; 
+  font-family: "Lato";
 }
 
 input.steps {
   position:absolute;
-  margin-left: -1px;
-  width: 120px;
+  margin-left: -10px;
+  width: 140px;
   text-align: center;
-  font-family: 'MuseoModerno', cursive;
-  color: white !important; 
-  font-size: 14px;
-}
-
-.btn {
-  font-family: 'Roboto', 'Lato'; 
-  text-align: center;
-  font-size: 12px;
-  padding: 15px;
-  letter-spacing: 0.1rem;
-  display: inline-block;
-  outline:none;
-  border-radius: 18px;
-}
-
-.btn:hover {
-  cursor: pointer;
-}
-
-.divBtnGnr {
-  width: 400px;
-  margin-right: auto;
-  margin-left: auto;
-  text-align: center;
+  border-bottom: 1px solid #3F51B5;
+  color: #EEBBF9 !important; 
+  font-size: 14px !important;
 }
 
 .btn.generate {
-  border: 2px solid #f0d9d5;
-  width: 200px;
-  color: white;
-  background-color: #f9311f;
-  box-shadow: 1px 1px #cbc1bf;
-  margin-top: 5%;
-  text-transform: uppercase;
+  margin-left: 8%;
+  margin-top: 10%;
+  transition: all .20s ease-in;
 }
 
 .btn.generate:hover {
+  background-image: linear-gradient(to right, #eebbf9, #e497f5,#e882ff);
   color: black;
-  background-color: white;
   box-shadow: none;
-  border: 2px solid #E7FC52;
+  border: 2px solid #EEBBF9;
 }
 
 .imgControler {
   width: 600px;
-  margin-top: -13%;
+  margin-top: -5%;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -356,11 +275,13 @@ input.steps {
 .output-container {
   margin-left:auto;
   margin-right: auto;
+  margin-top: -18%;
+  margin-left: 20%;
 }
 
 .imgAnimation {
   border-radius: 20px;
-  border: 4px solid #E7FC52;
+  border: 2px solid #ED965F;
   box-shadow: none;
   display: inline-block;
 }
@@ -371,18 +292,19 @@ input.steps {
   justify-content: space-evenly;
   font-family: "Lato";
   font-size: 12px;
-  color:  #f9311f;
+  color: #ED965F;
+  text-align: center;
+  margin-left: 25%;
 }
 
 .direction {
  font-family: "Lato";
  font-size: 12px;
- background-color: white;
- color:  #f9311f;
+ background-color: black;
+ color:  #ED965F;
  font-weight: 700;
  border: none;
  text-decoration: none;
- margin-top: 4px;
  padding: 16px;
  outline:none;
  padding-left: 4%;
@@ -393,38 +315,44 @@ input.steps {
 
 .direction:hover {
   cursor: pointer;
-  font-weight: 900;
+  font-weight: 700;
   letter-spacing: 2px;
 }
 
 .saveLoad {
-  width: 580px;
-  margin-top: 5%;
-  margin-left: 1%;
+  margin-left: auto;
+  margin-right: auto;
+  width: 780px;
+  margin-top: 70px;
+  text-align: center;
+}
+
+.saveForm {
+ margin-left: -20%;
+ margin-bottom: 5%;
 }
 
 label.save {
-  color: #f9311f;
+  color: white;
   padding-left: 15px;
   padding-right:1px;
+  letter-spacing: 0.1rem;
+  width: 300px;
 }
 
 input.save {
   border: none;
   outline:none;
-  border-bottom: 1px solid #f9311f;
+  border-bottom: 1px solid #3F51B5;
   width: 180px;
   text-align: center;
-  font-family: 'MuseoModerno', cursive;
- 
-}
-
-select.load {
-  border: 1px solid #f9311f; 
+  font-family: 'Lato'; 
+  margin-left: -40px;
+  text-transform: uppercase;
 }
 
 .btn.save {
-  background: white;
+  background: black;
   border: none;
   border-radius: 0px;
   font-size: 14px;
@@ -437,35 +365,11 @@ select.load {
 .btn.save:hover {
   color: #444444;
   box-shadow: none;
+  border: none;
 }
 
 .btn.download {
-  background-color: #f9311f;
-  color: white;
-  text-transform: uppercase;
-  font-size: 12px;
-  letter-spacing: 0.2rem;
-  border: 2px solid white;
-  box-shadow: 1px 1px #CBCDCE;
-  margin-left: 4%;
-  padding: 14px;
-}
-
-.btn.download:hover {
-  background-color: white;
-  box-shadow: none;
-  color: #444444;
-  border: 2px solid #E7FC52;
-}
-
-.loadForm {
-  padding-bottom: 6%;
-  padding-top: 0;
-  margin-top: -1%;
-}
-
-.btn.load {
-  background: white;
+  background: black;
   border: none;
   border-radius: 0px;
   font-size: 14px;
@@ -475,9 +379,35 @@ select.load {
   color: #CBCDCE;
 }
 
+.btn.download:hover {
+  color: #444444;
+  box-shadow: none;
+  border: none;
+}
+
+.loadForm {
+  padding-top: 0;
+  margin-top: 5%;
+  padding-bottom: 12%;
+  text-align: left;
+  margin-left: 22px;
+}
+
+.btn.load {
+  background: black;
+  border: none;
+  border-radius: 0px;
+  font-size: 14px;
+  letter-spacing: 0.18rem;
+  margin-left: 5%;
+  margin-top: 4%;
+  color: #CBCDCE;
+}
+
 .btn.load:hover {
   color: #444444;
   box-shadow: none;
+  border: none;
 }
 
 .footerCointainer {

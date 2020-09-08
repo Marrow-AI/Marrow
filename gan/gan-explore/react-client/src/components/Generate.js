@@ -14,12 +14,7 @@ const useStyles = makeStyles((theme) => ({
   root: {     
     background: "black",
     border: "white",     
-    backgroundColor: "black",
-    color: "white",
-      
-    },
-   selectRoot: {     
-     color: "yellow"   
+    backgroundColor: "black"
     },
     formControl: {
           margin: theme.spacing(1),
@@ -30,17 +25,6 @@ const useStyles = makeStyles((theme) => ({
         }
   })) 
 
-
-// const useStyles = makeStyles((theme) => ({
-//   formControl: {
-//     margin: theme.spacing(1),
-//     minWidth: 120,
-//   },
-//   selectEmpty: {
-//     marginTop: theme.spacing(2),
-//   },
-// }));
-
 export default function Generate() {
   const [view, setView] = useState();
   const [animation, setAnimation] = useState([]);
@@ -50,10 +34,25 @@ export default function Generate() {
 
   const classes = useStyles();
   const [dataset, setDataset] = React.useState('');
+  const [snapshot, setSnapshot] = React.useState('');
+  const [generating, setGenerating] = React.useState('');
+  // const [animationClip, setanimationlip] = React.useState('');
 
   const handleChange = (event) => {
     setDataset(event.target.value);
   };
+
+  const handleSnapshot = (event) => {
+    setSnapshot(event.target.value);
+  }
+
+  const handleGenerating = (event) => {
+    setGenerating(event.target.value);
+  }
+
+  // const handleAnimation = (event) => {
+  //   setanimationlip(event.target.value);
+  // }
 
   const onSubmit = (values, ev) => {
     const form = ev.target;
@@ -88,12 +87,14 @@ export default function Generate() {
       })
   }
 
-  const listAnimations = async (animationSelect) => {
+  const listAnimations = async (event, animationSelect) => {
+   
     await fetch('http://localhost:8080/list')
       .then(response => response.json())
       .then(data => {
         data.animations.forEach((text) => {
-          setAnimation([...animation, ...data.animations]);
+          setAnimation([event.target.value, ...data.animations]);
+          // setAnimation([...animation, ...data.animations]);
         })
       });
   }
@@ -129,7 +130,6 @@ export default function Generate() {
   }
 
   const handleLoad = (values, e) => {
-    e.preventDefault();
     e.preventDefault();
     const form = e.target;
     const params = {
@@ -176,14 +176,13 @@ export default function Generate() {
 
   return (
     <>
-    {/* <ThemeProvider theme={theme}> */}
-      
+    <ThemeProvider>
+    <h1 className="secondTitle">EXPLORER TOOL</h1>
       <div className="main">
         <div className="mainSection">
-
-          <form key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)}>
-          <div >
-          <div className={classes.root}>
+       
+          <form className="formLeft" key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)}>
+    
           <FormControl className={classes.formControl}>
            <InputLabel classNamee="inputNew" id="demo-simple-select-helper-label">Choose a dataset</InputLabel>
            <Select className="select dataset" name="type" autoComplete="off"
@@ -197,29 +196,37 @@ export default function Generate() {
          </Select>
          <FormHelperText>Load a dataset of your intreset</FormHelperText>
         </FormControl>
-        </div>
-          
-              {/* <select className="select dataset" name="type" autoComplete="off">
-                <option value="" defaultValue="selected"  >Choose dataset</option>
-                <option value="person" ref={register}>Person</option>
-                <option value="happy" ref={register}>Happy families</option>
-              </select> */}
 
-              <select className="select snapshot"  >
-                <option value="" defaultValue="selected" >Choose a snapshot</option>
-                {snapshots.snapshots.snapFamily.map(value => (
-                  <option className="snapshot" key={value} value={value} ref={register}>{value} </option>
-                ))}
-              </select>
-         
+        <FormControl className={classes.formControl}>
+           <InputLabel classNamee="inputNew" id="demo-simple-select-helper-label">Choose a Snapshot</InputLabel>
+           <Select className="select snapshot" autoComplete="off"
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            value={snapshot}
+            onChange={handleSnapshot}
+           >
+             {snapshots.snapshots.snapFamily.map(value => (
+          <MenuItem className="snapshot" value={value} key={value} ref={register}>{value}</MenuItem>
+          ))}
+         </Select>
+         <FormHelperText>Load a number of Snapshot from the choosen Dataset</FormHelperText>
+        </FormControl>
 
-            <select className="select shuffle" name="shffle" autoComplete="off" >
-              <option value="" defaultValue="selected"  >Choose generating options</option>
-              <option value="both" ref={register}>Shuffle both source and destination</option>
-              <option value="keep_source" ref={register}>Keep source and shuffle destination</option>
-              <option value="use_dest" ref={register}>Use destination as the next source</option>
-            </select>
-
+        <FormControl className={classes.formControl}>
+           <InputLabel classNamee="inputNew" id="demo-simple-select-helper-label">Generating Options</InputLabel>
+           <Select className="select shuffle" name="shffle" autoComplete="off"
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            value={generating}
+            onChange={handleGenerating}
+           >
+          <MenuItem value={"both"} >Shuffle both source and destination</MenuItem>
+          <MenuItem value={"keep_source"} >Keep source and shuffle destination</MenuItem>
+          <MenuItem value={"use_dest"} >Use destination as the next source</MenuItem>
+         </Select>
+         <FormHelperText>Choose how to generate your animations</FormHelperText>
+        </FormControl>
+                       
             <div className="stepsDiv">
               <label className="label steps"> Number of steps:</label>
               <input className="input steps" autoComplete="off" name="steps" placeholder="type a number..." min="1" type="number" ref={register} />
@@ -228,11 +235,7 @@ export default function Generate() {
             <div className="divBtnGnr">
               <button className="btn generate" type="onSubmit" ref={register}>Generate animation</button>
             </div>
-            </div>
           </form>
-
-
-
 
           <div className="imgControler">
             <div className="output-container">
@@ -256,13 +259,24 @@ export default function Generate() {
                 <button className="btn save" type="submit" ref={register2}>Save</button>
                 <button className="btn download" id="download-video" onClick={handleDownload}>Download</button>
               </form>
+
               <form className="loadForm" key={3} id="load" onSubmit={handleSubmit3(handleLoad)}>
-                <select className="select load" autoComplete="off" name="animation" >
-                  <option value="" defaultValue="selected" >Choose a clip</option>
-                  {animation.map(value => (
-                    <option key={value} value={value} ref={register3}>{value}</option>
-                  ))}
-                </select>
+
+              <FormControl className={classes.formControl}>
+                <InputLabel classNamee="inputNew" id="demo-simple-select-helper-label">Choose a Clip</InputLabel>
+                <Select className="select load" autoComplete="off" name="animation"
+                  labelId="demo-simple-select-helper-label"
+                  id="demo-simple-select-helper"
+                  value={animation}
+                  onChange={listAnimations}
+                >
+                    {animation.map(value => (
+                <MenuItem key={value} value={value} ref={register3}>{value}</MenuItem>
+                ))}
+              </Select>
+              <FormHelperText>Load your saved animation</FormHelperText>
+            </FormControl>
+
                 <button className="btn load" type="submit" ref={register3}>Load</button>
               </form>
             </div>
@@ -270,8 +284,7 @@ export default function Generate() {
         </div>
       </div>
       <Footer />
-    
-    {/* </ThemeProvider> */}
+    </ThemeProvider>
     </>
   );
 }
