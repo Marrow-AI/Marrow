@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Generate() {
   const domRef = React.useRef();
-
   const [view, setView] = useState();
   const [animation, setAnimation] = useState([]);
   const { register, handleSubmit } = useForm({ mode: "onBlur" });
@@ -242,8 +241,6 @@ export default function Generate() {
             <div className="output-container">
               <img className="imgAnimation" src={view} width="512" height="512" alt="" />
             </div>
-
-
             <div className="controls-container">
               <button onClick={handleDirection} className="direction" data-direction="back" data-steps="1">&lt;</button>1
               <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="1">&gt;</button>
@@ -262,7 +259,6 @@ export default function Generate() {
               </form>
 
               <form className="loadForm" key={3} id="load" onSubmit={handleSubmit3(handleLoad)}>
-
                 <FormControl className={classes.formControl}>
                   <InputLabel className="inputNew" id="demo-simple-select-helper-label">Choose a Clip</InputLabel>
                   <Select className="select load" autoComplete="off" name="animation"
@@ -285,7 +281,6 @@ export default function Generate() {
         </div>
       </div>
       <Footer />
-
     </>
   );
 }
