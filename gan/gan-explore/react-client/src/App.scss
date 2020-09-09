@@ -391,6 +391,8 @@ input.save {
   padding-bottom: 12%;
   text-align: left;
   margin-left: 22px;
+  justify-content: space-between;
+  position: relative;
 }
 
 .btn.load {
@@ -399,9 +401,11 @@ input.save {
   border-radius: 0px;
   font-size: 14px;
   letter-spacing: 0.18rem;
-  margin-left: 5%;
+  margin-left: 320px;
   margin-top: 4%;
   color: #CBCDCE;
+  text-align: right;
+  position: sticky;
 }
 
 .btn.load:hover {

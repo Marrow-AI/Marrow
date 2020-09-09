@@ -2,41 +2,42 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import snapshots from './snapshots.json';
 import Footer from './Footer.js';
-import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import { createMuiTheme } from '@material-ui/core/styles';
+import RootRef from '@material-ui/core/RootRef';
 
 const useStyles = makeStyles((theme) => ({
-  root: {     
+  root: {
     background: "black",
-    border: "white",     
+    border: "white",
     backgroundColor: "black"
-    },
-    formControl: {
-          margin: theme.spacing(1),
-          minWidth: 120,
-        },
-        selectEmpty: {
-          marginTop: theme.spacing(2),
-        }
-  })) 
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  }
+}))
 
 export default function Generate() {
+  const domRef = React.useRef();
+
   const [view, setView] = useState();
   const [animation, setAnimation] = useState([]);
   const { register, handleSubmit } = useForm({ mode: "onBlur" });
   const { register: register2, handleSubmit: handleSubmit2 } = useForm({ mode: "onBlur" });
   const { register: register3, handleSubmit: handleSubmit3 } = useForm({ mode: "onBlur" });
-
   const classes = useStyles();
   const [dataset, setDataset] = React.useState('');
   const [snapshot, setSnapshot] = React.useState('');
   const [generating, setGenerating] = React.useState('');
-  // const [animationClip, setanimationlip] = React.useState('');
+  const [animationClip, setanimationlip] = React.useState('');
 
   const handleChange = (event) => {
     setDataset(event.target.value);
@@ -50,9 +51,9 @@ export default function Generate() {
     setGenerating(event.target.value);
   }
 
-  // const handleAnimation = (event) => {
-  //   setanimationlip(event.target.value);
-  // }
+  const handleAnimation = (event) => {
+    setanimationlip(event.target.value);
+  }
 
   const onSubmit = (values, ev) => {
     const form = ev.target;
@@ -87,14 +88,13 @@ export default function Generate() {
       })
   }
 
-  const listAnimations = async (event, animationSelect) => {
-   
+  const listAnimations = async (animationSelect) => {
+
     await fetch('http://localhost:8080/list')
       .then(response => response.json())
       .then(data => {
         data.animations.forEach((text) => {
-          setAnimation([event.target.value, ...data.animations]);
-          // setAnimation([...animation, ...data.animations]);
+          setAnimation([...animation, ...data.animations]);
         })
       });
   }
@@ -174,62 +174,63 @@ export default function Generate() {
     listAnimations(animation);
   }, [])
 
+  // useEffect(() => {
+  //   console.log(domRef.current); // DOM node
+  // }, []);
+
   return (
     <>
-    <ThemeProvider>
-    <h1 className="secondTitle">EXPLORER TOOL</h1>
+      <h1 className="secondTitle">EXPLORER TOOL</h1>
       <div className="main">
         <div className="mainSection">
-       
-          <form className="formLeft" key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)}>
-    
-          <FormControl className={classes.formControl}>
-           <InputLabel classNamee="inputNew" id="demo-simple-select-helper-label">Choose a dataset</InputLabel>
-           <Select className="select dataset" name="type" autoComplete="off"
-            labelId="demo-simple-select-helper-label"
-            id="demo-simple-select-helper"
-            value={dataset}
-            onChange={handleChange}
-           >
-          <MenuItem value={"person"}>This Person Does Not Exist</MenuItem>
-          <MenuItem value={"happy"}>Happy Families Dinner</MenuItem>
-         </Select>
-         <FormHelperText>Load a dataset of your intreset</FormHelperText>
-        </FormControl>
+          <form className="formLeft" key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)} >
+            <FormControl className={classes.formControl} >
+              <InputLabel className="inputNew" id="demo-simple-select-helper-label">Choose a dataset</InputLabel>
+              <Select className="select dataset" name="type" autoComplete="off"
+                labelId="demo-simple-select-helper-label"
+                id="demo-simple-select-helper"
+                value={dataset}
+                onChange={handleChange}
+              >
+                <MenuItem value={"person"}>This Person Does Not Exist</MenuItem>
+                <MenuItem value={"happy"} >Happy Families Dinner</MenuItem>
+              </Select>
+              <FormHelperText>Load a dataset of your intreset</FormHelperText>
+            </FormControl>
 
-        <FormControl className={classes.formControl}>
-           <InputLabel classNamee="inputNew" id="demo-simple-select-helper-label">Choose a Snapshot</InputLabel>
-           <Select className="select snapshot" autoComplete="off"
-            labelId="demo-simple-select-helper-label"
-            id="demo-simple-select-helper"
-            value={snapshot}
-            onChange={handleSnapshot}
-           >
-             {snapshots.snapshots.snapFamily.map(value => (
-          <MenuItem className="snapshot" value={value} key={value} ref={register}>{value}</MenuItem>
-          ))}
-         </Select>
-         <FormHelperText>Load a number of Snapshot from the choosen Dataset</FormHelperText>
-        </FormControl>
+            <FormControl className={classes.formControl}>
+              <InputLabel className="inputNew" id="demo-simple-select-helper-label" >Choose a Snapshot</InputLabel>
+              <Select className="select snapshot" autoComplete="off"
+                labelId="demo-simple-select-helper-label"
+                id="demo-simple-select-helper"
+                value={snapshot}
+                onChange={handleSnapshot}
+              >
+                {snapshots.snapshots.snapFamily.map(value => (
+                  <MenuItem className="snapshot" value={value} key={value} >{value}</MenuItem>
+                ))}
+              </Select>
+              <FormHelperText>Load a number of Snapshot from the choosen Dataset</FormHelperText>
+            </FormControl>
 
-        <FormControl className={classes.formControl}>
-           <InputLabel classNamee="inputNew" id="demo-simple-select-helper-label">Generating Options</InputLabel>
-           <Select className="select shuffle" name="shffle" autoComplete="off"
-            labelId="demo-simple-select-helper-label"
-            id="demo-simple-select-helper"
-            value={generating}
-            onChange={handleGenerating}
-           >
-          <MenuItem value={"both"} >Shuffle both source and destination</MenuItem>
-          <MenuItem value={"keep_source"} >Keep source and shuffle destination</MenuItem>
-          <MenuItem value={"use_dest"} >Use destination as the next source</MenuItem>
-         </Select>
-         <FormHelperText>Choose how to generate your animations</FormHelperText>
-        </FormControl>
-                       
+            <FormControl className={classes.formControl}>
+              <InputLabel className="inputNew" id="demo-simple-select-helper-label">Generating Options</InputLabel>
+              <Select className="select shuffle" name="shffle" autoComplete="off"
+                labelId="demo-simple-select-helper-label"
+                id="demo-simple-select-helper"
+                value={generating}
+                onChange={handleGenerating}
+              >
+                <MenuItem value={"both"} >Shuffle both source and destination</MenuItem>
+                <MenuItem value={"keep_source"} >Keep source and shuffle destination</MenuItem>
+                <MenuItem value={"use_dest"} >Use destination as the next source</MenuItem>
+              </Select>
+              <FormHelperText>Choose how to generate your animations</FormHelperText>
+            </FormControl>
+
             <div className="stepsDiv">
               <label className="label steps"> Number of steps:</label>
-              <input className="input steps" autoComplete="off" name="steps" placeholder="type a number..." min="1" type="number" ref={register} />
+              <input className="input steps" autoComplete="off" name="steps" placeholder="type a number..." min="1" type="number" />
             </div>
 
             <div className="divBtnGnr">
@@ -248,7 +249,7 @@ export default function Generate() {
               <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="1">&gt;</button>
               <button onClick={handleDirection} className="direction" data-direction="back" data-steps="10">&lt;&lt;</button>10
               <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="10">&gt;&gt;</button>
-              <button onClick={handleDirection} className="direction" data-direction="back" data-steps="100">&lt;&lt;&lt;</button>100 
+              <button onClick={handleDirection} className="direction" data-direction="back" data-steps="100">&lt;&lt;&lt;</button>100
               <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="100">&gt;&gt;&gt;</button>
             </div>
 
@@ -262,20 +263,20 @@ export default function Generate() {
 
               <form className="loadForm" key={3} id="load" onSubmit={handleSubmit3(handleLoad)}>
 
-              <FormControl className={classes.formControl}>
-                <InputLabel classNamee="inputNew" id="demo-simple-select-helper-label">Choose a Clip</InputLabel>
-                <Select className="select load" autoComplete="off" name="animation"
-                  labelId="demo-simple-select-helper-label"
-                  id="demo-simple-select-helper"
-                  value={animation}
-                  onChange={listAnimations}
-                >
+                <FormControl className={classes.formControl}>
+                  <InputLabel className="inputNew" id="demo-simple-select-helper-label">Choose a Clip</InputLabel>
+                  <Select className="select load" autoComplete="off" name="animation"
+                    labelId="demo-simple-select-helper-label"
+                    id="demo-simple-select-helper"
+                    value={animationClip}
+                    onChange={handleAnimation}
+                  >
                     {animation.map(value => (
-                <MenuItem key={value} value={value} ref={register3}>{value}</MenuItem>
-                ))}
-              </Select>
-              <FormHelperText>Load your saved animation</FormHelperText>
-            </FormControl>
+                      <MenuItem key={value} value={value} ref={register3}>{value}</MenuItem>
+                    ))}
+                  </Select>
+                  <FormHelperText>Load your saved animation</FormHelperText>
+                </FormControl>
 
                 <button className="btn load" type="submit" ref={register3}>Load</button>
               </form>
@@ -284,7 +285,7 @@ export default function Generate() {
         </div>
       </div>
       <Footer />
-    </ThemeProvider>
+
     </>
   );
 }
