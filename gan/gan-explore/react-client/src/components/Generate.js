@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createRef, useRef } from "react";
 import { useForm } from "react-hook-form";
 import snapshots from './snapshots.json';
 import Footer from './Footer.js';
@@ -26,17 +26,17 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default function Generate() {
-  const domRef = React.useRef();
+  const domRef = createRef();
   const [view, setView] = useState();
   const [animation, setAnimation] = useState([]);
   const { register, handleSubmit } = useForm({ mode: "onBlur" });
   const { register: register2, handleSubmit: handleSubmit2 } = useForm({ mode: "onBlur" });
   const { register: register3, handleSubmit: handleSubmit3 } = useForm({ mode: "onBlur" });
   const classes = useStyles();
-  const [dataset, setDataset] = React.useState('');
-  const [snapshot, setSnapshot] = React.useState('');
-  const [generating, setGenerating] = React.useState('');
-  const [animationClip, setanimationlip] = React.useState('');
+  const [dataset, setDataset] = useState('');
+  const [snapshot, setSnapshot] = useState('');
+  const [generating, setGenerating] = useState('');
+  const [animationClip, setanimationlip] = useState('');
 
   const handleChange = (event) => {
     setDataset(event.target.value);
@@ -88,7 +88,6 @@ export default function Generate() {
   }
 
   const listAnimations = async (animationSelect) => {
-
     await fetch('http://localhost:8080/list')
       .then(response => response.json())
       .then(data => {
@@ -173,16 +172,19 @@ export default function Generate() {
     listAnimations(animation);
   }, [])
 
-  // useEffect(() => {
-  //   console.log(domRef.current); // DOM node
-  // }, []);
+  useEffect(() => {
+    console.log(domRef.current); // DOM node
+  })
 
   return (
     <>
       <h1 className="secondTitle">EXPLORER TOOL</h1>
+      <React.StrictMode>
+      <RootRef rootRef={domRef}>
       <div className="main">
-        <div className="mainSection">
+        <div className="mainSection" >
           <form className="formLeft" key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)} >
+        
             <FormControl className={classes.formControl} >
               <InputLabel className="inputNew" id="demo-simple-select-helper-label">Choose a dataset</InputLabel>
               <Select className="select dataset" name="type" autoComplete="off"
@@ -190,13 +192,14 @@ export default function Generate() {
                 id="demo-simple-select-helper"
                 value={dataset}
                 onChange={handleChange}
+                ref={register}
               >
                 <MenuItem value={"person"}>This Person Does Not Exist</MenuItem>
                 <MenuItem value={"happy"} >Happy Families Dinner</MenuItem>
               </Select>
               <FormHelperText>Load a dataset of your intreset</FormHelperText>
             </FormControl>
-
+      
             <FormControl className={classes.formControl}>
               <InputLabel className="inputNew" id="demo-simple-select-helper-label" >Choose a Snapshot</InputLabel>
               <Select className="select snapshot" autoComplete="off"
@@ -204,6 +207,7 @@ export default function Generate() {
                 id="demo-simple-select-helper"
                 value={snapshot}
                 onChange={handleSnapshot}
+                ref={register}
               >
                 {snapshots.snapshots.snapFamily.map(value => (
                   <MenuItem className="snapshot" value={value} key={value} >{value}</MenuItem>
@@ -219,6 +223,7 @@ export default function Generate() {
                 id="demo-simple-select-helper"
                 value={generating}
                 onChange={handleGenerating}
+                ref={register}
               >
                 <MenuItem value={"both"} >Shuffle both source and destination</MenuItem>
                 <MenuItem value={"keep_source"} >Keep source and shuffle destination</MenuItem>
@@ -229,14 +234,13 @@ export default function Generate() {
 
             <div className="stepsDiv">
               <label className="label steps"> Number of steps:</label>
-              <input className="input steps" autoComplete="off" name="steps" placeholder="type a number..." min="1" type="number" />
+              <input className="input steps" autoComplete="off" name="steps" placeholder="type a number..." min="1" type="number" ref={register}/>
             </div>
 
             <div className="divBtnGnr">
               <button className="btn generate" type="onSubmit" ref={register}>Generate animation</button>
             </div>
           </form>
-
           <div className="imgControler">
             <div className="output-container">
               <img className="imgAnimation" src={view} width="512" height="512" alt="" />
@@ -273,13 +277,14 @@ export default function Generate() {
                   </Select>
                   <FormHelperText>Load your saved animation</FormHelperText>
                 </FormControl>
-
                 <button className="btn load" type="submit" ref={register3}>Load</button>
               </form>
             </div>
           </div>
         </div>
       </div>
+      </RootRef>
+      </React.StrictMode>
       <Footer />
     </>
   );
