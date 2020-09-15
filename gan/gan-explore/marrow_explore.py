@@ -8,8 +8,8 @@ import cv2
 import numpy as np
 import pickle
 import PIL.Image
-# import dnnlib
-# import dnnlib.tflib as tflib
+import dnnlib
+import dnnlib.tflib as tflib
 from threading import Thread
 import queue
 import time
@@ -285,7 +285,7 @@ else:
 
 app = Flask(__name__)
 Compress(app)
-CORS(app)
+#CORS(app)
 app.jinja_env.auto_reload = True
 gan.start()
 
@@ -367,6 +367,6 @@ if __name__ == '__main__':
 	#print("Generating samples")
 	#for t in np.arange(0, 300, 0.000001):
 	#	s.gen(t)
-        app.run (host = "0.0.0.0", port = 8080)
+        app.run (host = "0.0.0.0", port = 8540)
 
 
