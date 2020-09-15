@@ -16,7 +16,7 @@ import time
 import random
 import asyncio
 import base64
-# import tensorflow as tf
+import tensorflow as tf
 
 from flask import Flask, jsonify, request, render_template, send_file
 from flask_compress import Compress
