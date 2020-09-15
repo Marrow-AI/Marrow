@@ -25,6 +25,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
+const ENDPOINT = 'http://52.206.213.41:8080';
+
 export default function Generate() {
   const domRef = createRef();
   const [view, setView] = useState();
@@ -34,8 +36,8 @@ export default function Generate() {
   const { register: register3, handleSubmit: handleSubmit3 } = useForm({ mode: "onBlur" });
   const classes = useStyles();
   const [dataset, setDataset] = useState('');
-  const [snapshot, setSnapshot] = useState('');
-  const [generating, setGenerating] = useState('');
+  const [snapshot, setSnapshot] = useState('007743');
+  const [generating, setGenerating] = useState('both');
   const [animationClip, setanimationlip] = useState('');
 
   const handleChange = (event) => {
@@ -58,11 +60,11 @@ export default function Generate() {
     const form = ev.target;
     const data = {
       steps: form.steps.value,
-      snapshot: "007743",
-      type: form.type.value
+      snapshot: form.snapshot.value,
+      type: form.shuffle.value
     }
     console.log(data)
-    fetch('http://localhost:8080/shuffle', {
+    fetch(ENDPOINT + '/shuffle', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -78,7 +80,7 @@ export default function Generate() {
   };
 
   const getImage = async (direction, steps) => {
-    await fetch('http://localhost:8080/generate?direction=' + direction + '&steps=' + steps + '&shadows=0')
+    await fetch(ENDPOINT + '/generate?direction=' + direction + '&steps=' + steps + '&shadows=0')
       .then(response => response.json())
       .then(data => {
         setView("data:image/jpeg;base64," + data.result)
@@ -88,7 +90,7 @@ export default function Generate() {
   }
 
   const listAnimations = async (animationSelect) => {
-    await fetch('http://localhost:8080/list')
+    await fetch(ENDPOINT + '/list')
       .then(response => response.json())
       .then(data => {
         data.animations.forEach((text) => {
@@ -111,7 +113,7 @@ export default function Generate() {
     const data = {
       name: form.name.value
     }
-    fetch('http://localhost:8080/save', {
+    fetch(ENDPOINT + '/save', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
@@ -133,7 +135,7 @@ export default function Generate() {
     const params = {
       animation: form.animation.value
     }
-    fetch('http://localhost:/load', {
+    fetch(ENDPOINT + '/load', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params)
@@ -172,10 +174,6 @@ export default function Generate() {
     listAnimations(animation);
   }, [])
 
-  useEffect(() => {
-    console.log(domRef.current); // DOM node
-  })
-
   return (
     <>
       <h1 className="secondTitle">EXPLORER TOOL</h1>
@@ -202,7 +200,7 @@ export default function Generate() {
       
             <FormControl className={classes.formControl}>
               <InputLabel className="inputNew" id="demo-simple-select-helper-label" >Choose a Snapshot</InputLabel>
-              <Select className="select snapshot" autoComplete="off"
+              <Select className="select snapshot" name="snapshot" autoComplete="off"
                 labelId="demo-simple-select-helper-label"
                 id="demo-simple-select-helper"
                 value={snapshot}
@@ -218,7 +216,7 @@ export default function Generate() {
 
             <FormControl className={classes.formControl}>
               <InputLabel className="inputNew" id="demo-simple-select-helper-label">Generating Options</InputLabel>
-              <Select className="select shuffle" name="shffle" autoComplete="off"
+              <Select className="select shuffle" name="shuffle" autoComplete="off"
                 labelId="demo-simple-select-helper-label"
                 id="demo-simple-select-helper"
                 value={generating}
@@ -234,7 +232,7 @@ export default function Generate() {
 
             <div className="stepsDiv">
               <label className="label steps"> Number of steps:</label>
-              <input className="input steps" autoComplete="off" name="steps" placeholder="type a number..." min="1" type="number" ref={register}/>
+              <input className="input steps" autoComplete="off" value="144" name="steps" placeholder="type a number..." min="1" type="number" ref={register}/>
             </div>
 
             <div className="divBtnGnr">
