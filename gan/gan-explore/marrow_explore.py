@@ -8,15 +8,12 @@ import cv2
 import numpy as np
 import pickle
 import PIL.Image
-import dnnlib
-import dnnlib.tflib as tflib
 from threading import Thread
 import queue
 import time
 import random
 import asyncio
 import base64
-import tensorflow as tf
 
 from flask import Flask, jsonify, request, render_template, send_file
 from flask_compress import Compress
@@ -29,7 +26,11 @@ parser = argparse.ArgumentParser(description='Marrow StyleGAN Latent space explo
 parser.add_argument('--dummy', action='store_true' , help='Use a Dummy GAN')
     
 args = parser.parse_args()
-print(args)
+
+if not args.dummy:
+    import dnnlib
+    import dnnlib.tflib as tflib
+    import tensorflow as tf
 
 class Gan(Thread):
     def __init__(self, queue, loop, args):

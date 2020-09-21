@@ -46,7 +46,9 @@
     "webpack-dev-server": "^3.1.10"
   },
   "scripts": {
-    "start": "webpack-dev-server & env FLASK_ENV=development python marrow_explore.py",
+    "start": "python marrow_explore.py",
+    "start-dummy": "webpack-dev-server & env FLASK_ENV=development python marrow_explore.py --dummy",
+    "start-dev": "webpack-dev-server & env FLASK_ENV=development python marrow_explore.py --dummy",
     "build": "webpack",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
