@@ -7,8 +7,13 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   devServer: {
+<<<<<<< HEAD
     contentBase: './react-client/public',
+=======
+    host: '0.0.0.0',
+>>>>>>> 4f78b92c94c474109392cab389d5966270952b60
     hot: true,
+    contentBase: './react-client/public',
     disableHostCheck: true,
     historyApiFallback: true,
     headers: {
@@ -26,7 +31,6 @@ module.exports = {
     filename: "bundle.js"
   },
  plugins: [
-     new webpack.HotModuleReplacementPlugin(),
      isDevelopment && new ReactRefreshWebpackPlugin()
   ].filter(Boolean),
   module: {
