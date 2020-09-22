@@ -290,10 +290,6 @@ Compress(app)
 app.jinja_env.auto_reload = True
 gan.start()
 
-@app.route('/')
-def index():
-    return render_template('index.html')
-
 @app.route('/generate')
 def generate():
     future = loop.create_future()
@@ -362,6 +358,11 @@ def load():
         return jsonify(result=data)
     else:
         return jsonify(result=data)
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def catch_all(path):
+    return render_template('index.html')
 
 if __name__ == '__main__':
 
