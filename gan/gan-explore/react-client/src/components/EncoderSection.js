@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ImageUploading from 'react-images-uploading';
+import store from '../state';
 
 export default function EncoderSection(props) { 
-  const [images, setImages] = React.useState([]);
+  const [images, setImages] = useState([]);
   const maxNumber = 6;
 
   const onChange = (imageList, addUpdateIndex) => {
     // data for submit
     console.log(imageList, addUpdateIndex);
+    store.dispatch({
+      type: 'SAVE_FILE_NAME',
+      file_name: images
+    })
     setImages(imageList);
   };
 
- 
   return (
     <div className="fileUploader">
       <ImageUploading
@@ -37,7 +41,7 @@ export default function EncoderSection(props) {
               onClick={onImageUpload}
               {...dragProps}
             >
-              Click or Drop here
+              Click or Drop here to add an Image 
             </button>
             &nbsp;
             <button className="btn load-images remove" onClick={onImageRemoveAll}>Remove all images</button>

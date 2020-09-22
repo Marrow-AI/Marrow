@@ -421,14 +421,14 @@ input.save {
   font-size: 12px;
   letter-spacing: 0.15rem;
   color: #CBCDCE;
-  text-align: right;
+  text-align: center;
+  line-height: 1.5rem;
   width: 200px;
-  margin-left: -35%;
   padding: 0;
 }
 
 .btn.load-images:hover {
-  color: #EEBBF9;
+  color: #3F51B5;
   box-shadow: none;
   border: none;
   text-decoration: underline;

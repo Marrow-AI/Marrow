@@ -4,7 +4,8 @@ const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const reducer = (state = {
   socket: null,
   snapshot: '',
-  Get_Image: ''
+  Get_Image: '',
+  file_name: '',
 }, action) => {
   switch (action.type) {  
     case 'SET_SOCKET': {
@@ -21,6 +22,12 @@ const reducer = (state = {
     return {
       ...state,
       Get_Image: action.getImage
+    }
+  }
+    case 'SAVE_FILE_NAME': {
+      return {
+        ...state,
+        file_name: action.images
     }
   }
   default:
