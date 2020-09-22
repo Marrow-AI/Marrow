@@ -8,7 +8,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { useSelector } from 'react-redux';
 
-
 //const ENDPOINT = 'http://52.206.213.41:8080';
 const ENDPOINT = '';
 
@@ -27,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-
 export default function SaveForm() {
   const [animation, setAnimation] = useState([]);
   const { register: register2, handleSubmit: handleSubmit2 } = useForm({ mode: "onBlur" });
@@ -36,7 +34,6 @@ export default function SaveForm() {
   const [animationClip, setanimationlip] = useState('');
   const snapshots = useSelector(state => state.snapshot);
   const getImage = useSelector(state => state.getImage);
-
 
   const handleSave = (values, e) => {
     e.preventDefault();
@@ -101,7 +98,6 @@ export default function SaveForm() {
     window.open("/video?shadows=0" + "&dt=" + (new Date()).getTime(), "_blank")
   }
 
-
   const handleAnimation = (event) => {
     setanimationlip(event.target.value);
   }
@@ -115,7 +111,6 @@ export default function SaveForm() {
         })
       });
   }
-
 
   useEffect(() => {
     listAnimations(animation);

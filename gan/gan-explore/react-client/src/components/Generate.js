@@ -10,6 +10,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import store from '../state';
 import SaveForm from "./SaveForm";
+import EncoderSection from "./EncoderSection";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -86,7 +87,6 @@ export default function Generate() {
       })
   }
 
-
   const handleDirection = (e) => {
     e.preventDefault()
     getImage(
@@ -98,7 +98,6 @@ export default function Generate() {
       get_Image: getImage
     })
   }
-
 
   return (
     <>
@@ -177,11 +176,9 @@ export default function Generate() {
             </div>
             <SaveForm />
           </div>
-
-
+            <EncoderSection />
         </div>
       </div>
-   
       <Footer />
     </>
   );

@@ -414,6 +414,30 @@ input.save {
   border: none;
 }
 
+.btn.load-images {
+  background: transparent;
+  border: none;
+  border-radius: 0px;
+  font-size: 12px;
+  letter-spacing: 0.15rem;
+  color: #CBCDCE;
+  text-align: right;
+  width: 200px;
+  margin-left: -35%;
+  padding: 0;
+}
+
+.btn.load-images:hover {
+  color: #EEBBF9;
+  box-shadow: none;
+  border: none;
+  text-decoration: underline;
+}
+
+.btn.load-images.remove {
+  margin-top: 20%;
+}
+
 .footerCointainer {
   display: block;
   position: fixed;
@@ -493,5 +517,18 @@ a.footer:hover {
   cursor: pointer;
   color: #ED965F;
   border-radius: 15px;
+}
+
+.fileUploader {
+  color: white !important;
+  font-family: "Lato";
+  letter-spacing: 0.15rem;
+  margin-left: 8%;
+  margin-top: -10%;
+}
+
+
+.fileContainer {
+  background-color: black !important;
 }
 

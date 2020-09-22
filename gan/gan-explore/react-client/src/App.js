@@ -23,9 +23,9 @@ function App() {
     <>
     <div className='app-container'>
       <Router>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/explore" component={Generate} />
-          <Route exact path="/about" component={About} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/explore" component={Generate} />
+        <Route exact path="/about" component={About} />
       </Router>
     </div>
     </>
