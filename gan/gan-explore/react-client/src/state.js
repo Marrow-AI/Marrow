@@ -3,12 +3,26 @@ const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 
 const reducer = (state = {
-  socket: null
+  socket: null,
+  snapshot: '',
+  Get_Image: ''
 }, action) => {
   switch (action.type) {  
     case 'SET_SOCKET': {
       console.log("Setting socket", action.socket);
       return {...state, socket: action.socket}
+  }
+  case 'SAVE_SNAPSHOT': {
+    return {
+      ...state,
+      snapshot: action.snapshot
+    }
+  }
+  case 'GET_IMAGE': {
+    return {
+      ...state,
+      Get_Image: action.getImage
+    }
   }
   default:
       return state;
