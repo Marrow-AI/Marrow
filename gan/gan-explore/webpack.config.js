@@ -8,8 +8,8 @@ module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   devServer: {
     host: '0.0.0.0',
-    contentBase: './react-client/public',
     hot: true,
+    contentBase: './react-client/public',
     disableHostCheck: true,
     historyApiFallback: true,
     headers: {
@@ -27,7 +27,6 @@ module.exports = {
     filename: "bundle.js"
   },
  plugins: [
-     new webpack.HotModuleReplacementPlugin(),
      isDevelopment && new ReactRefreshWebpackPlugin()
   ].filter(Boolean),
   module: {

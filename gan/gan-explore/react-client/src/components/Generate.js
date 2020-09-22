@@ -8,7 +8,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import RootRef from '@material-ui/core/RootRef';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -179,7 +178,6 @@ export default function Generate() {
     <>
       <h1 className="secondTitle">EXPLORER TOOL</h1>
       <React.StrictMode>
-      <RootRef rootRef={domRef}>
       <div className="main">
         <div className="mainSection" >
           <form className="formLeft" key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)} >
@@ -233,11 +231,11 @@ export default function Generate() {
 
             <div className="stepsDiv">
               <label className="label steps"> Number of steps:</label>
-              <input className="input steps" autoComplete="off" value="144" name="steps" placeholder="type a number..." min="1" type="number" ref={register}/>
+              <input className="input steps" autoComplete="off" value="144" onChange={() => {}} name="steps" placeholder="type a number..." min="1" type="number" ref={register}/>
             </div>
 
             <div className="divBtnGnr">
-              <button className="btn generate" type="onSubmit" ref={register}>Generate animation</button>
+              <button className="btn generate" name="generate" type="onSubmit" ref={register}>Generate animation</button>
             </div>
           </form>
           <div className="imgControler">
@@ -257,7 +255,7 @@ export default function Generate() {
               <form className="saveForm" key={2} id="save" onSubmit={handleSubmit2(handleSave)}>
                 <label className="label save">Save animation as:</label>
                 <input className="input save" autoComplete="off" name="name" type="text" placeholder="type a name..." ref={register2} />
-                <button className="btn save" type="submit" ref={register2}>Save</button>
+                <button className="btn save" name="save" type="submit" ref={register2}>Save</button>
                 <button className="btn download" id="download-video" onClick={handleDownload}>Download</button>
               </form>
 
@@ -276,13 +274,12 @@ export default function Generate() {
                   </Select>
                   <FormHelperText>Load your saved animation</FormHelperText>
                 </FormControl>
-                <button className="btn load" type="submit" ref={register3}>Load</button>
+                <button className="btn load" name="load" type="submit" ref={register3}>Load</button>
               </form>
             </div>
           </div>
         </div>
       </div>
-      </RootRef>
       </React.StrictMode>
       <Footer />
     </>

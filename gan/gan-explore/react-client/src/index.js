@@ -1,3 +1,5 @@
+__webpack_public_path__ = 'http://localhost:8080/'
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
