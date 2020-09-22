@@ -8,7 +8,7 @@ module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   devServer: {
     host: '0.0.0.0',
-    contentBase: './public',
+    contentBase: './react-client/public',
     hot: true,
     disableHostCheck: true,
     headers: {
