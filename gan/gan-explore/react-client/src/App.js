@@ -4,6 +4,19 @@ import './App.scss';
 import Generate from './components/Generate.js';
 import Home from './components/Home.js';
 import About from './components/About.js';
+import socketIOClient from "socket.io-client";
+import store, { setSocket } from './state'
+
+const ENDPOINT = "http://localhost:8540";
+
+const socket = socketIOClient(ENDPOINT);
+
+console.log("Connecting to socket");
+socket.on('connect', () => {
+  console.log("Socket connected!", socket.id);
+  store.dispatch(setSocket(socket));
+});
+
 
 function App() {
   return (

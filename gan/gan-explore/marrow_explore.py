@@ -21,6 +21,10 @@ from flask_cors import CORS
 import argparse
 import json
 
+from flask_compress import Compress
+from flask_cors import CORS, cross_origin
+from flask_socketio import SocketIO,send,emit,join_room
+
 parser = argparse.ArgumentParser(description='Marrow StyleGAN Latent space explorer')
 
 parser.add_argument('--dummy', action='store_true' , help='Use a Dummy GAN')
@@ -289,6 +293,15 @@ Compress(app)
 #CORS(app)
 app.jinja_env.auto_reload = True
 gan.start()
+
+app.config['SECRET_KEY'] = 'mysecret'
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+@socketio.on('connect')
+def on_connect():
+    print("Client connected {}".format(request.sid))
+    join_room(request.sid)
+    
 
 @app.route('/generate')
 def generate():
