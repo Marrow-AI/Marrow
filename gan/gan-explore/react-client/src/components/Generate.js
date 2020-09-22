@@ -175,11 +175,11 @@ export default function Generate() {
               <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="100">&gt;&gt;&gt;</button>
             </div>
             <SaveForm />
-          </div>
-            <EncoderSection />
+           </div>
+         <EncoderSection />
         </div>
-      </div>
-      <Footer />
+       </div>
+     <Footer />
     </>
   );
 }
