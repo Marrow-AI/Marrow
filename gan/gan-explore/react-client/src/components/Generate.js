@@ -35,7 +35,7 @@ export default function Generate() {
   const { register, handleSubmit } = useForm({ mode: "onBlur" });
   const classes = useStyles();
   const [dataset, setDataset] = useState('');
-  const [snapshot, setSnapshot] = useState('007743');
+  const [snapshot, setSnapshot] = useState('ffhq');
   const [generating, setGenerating] = useState('both');
 
   const handleChange = (event) => {

@@ -32,6 +32,7 @@ parser.add_argument('--dummy', action='store_true' , help='Use a Dummy GAN')
 args = parser.parse_args()
 
 if not args.dummy:
+    sys.path.append("./stylegan-encoder")
     import dnnlib
     import dnnlib.tflib as tflib
     import tensorflow as tf
@@ -281,7 +282,8 @@ class DummyGan(Thread):
 
 loop = asyncio.get_event_loop()
 q = queue.Queue()
-args.snapshot = "007743"
+#args.snapshot = "007743"
+args.snapshot = "ffhq"
 
 if not args.dummy:
     gan = Gan(q, loop, args)

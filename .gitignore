@@ -112,6 +112,7 @@ gan/gan-stream/snapshots
 gan/generate-cloned/results
 gan/generate-cloned/results_wav
 gan/in-ear
+gan/gan-explore/marrow
 Marrow-4714d4784417.json
 
 .vscode/*
