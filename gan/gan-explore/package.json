@@ -52,7 +52,7 @@
   "scripts": {
     "start": "python marrow_explore.py",
     "start-dummy": "webpack-dev-server & env FLASK_ENV=development python marrow_explore.py --dummy",
-    "start-dev": "webpack-dev-server & env FLASK_ENV=development python marrow_explore.py --dummy",
+    "start-dev": "FLASK_ENV=development python marrow_explore.py",
     "build": "webpack",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

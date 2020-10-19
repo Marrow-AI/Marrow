@@ -7,7 +7,7 @@ import os, time, re
 import cv2
 import numpy as np
 import pickle
-import PIL.Image
+from PIL import Image
 from threading import Thread
 import queue
 import time
@@ -20,6 +20,9 @@ from flask_compress import Compress
 from flask_cors import CORS
 import argparse
 import json
+import io
+import tempfile
+from tqdm import tqdm
 
 from flask_compress import Compress
 from flask_cors import CORS, cross_origin
@@ -31,11 +34,18 @@ parser.add_argument('--dummy', action='store_true' , help='Use a Dummy GAN')
     
 args = parser.parse_args()
 
+landmarks_detector = None
+
 if not args.dummy:
     sys.path.append("./stylegan-encoder")
     import dnnlib
     import dnnlib.tflib as tflib
     import tensorflow as tf
+    from ffhq_dataset.face_alignment import image_align
+    from ffhq_dataset.landmarks_detector import LandmarksDetector
+    from encoder.generator_model import Generator
+    from encoder.perceptual_model import PerceptualModel
+    landmarks_detector = LandmarksDetector('marrow/shape_predictor_68_face_landmarks.dat')
 
 class Gan(Thread):
     def __init__(self, queue, loop, args):
@@ -47,9 +57,10 @@ class Gan(Thread):
         Thread.__init__(self)
 
     def run(self):
+        print("GAN Running")
         self.load_snapshot(self.current_snapshot)
-        self.load_latent_source()
-        self.load_latent_dest()
+        self.load_latent_source_dlatents()
+        self.load_latent_dest_dlatents()
         self.linespaces = np.linspace(0, 1, self.steps)
         print("Loaded linespaces {}".format(self.linespaces.shape))
         self.linespace_i = -1;
@@ -66,9 +77,15 @@ class Gan(Thread):
         self.latent_dest = self.rnd.randn(512)[None, :]
         print("Loaded latent dest {}".format(self.latent_dest.shape))
 
+    def load_latent_source_dlatents(self):
+        qlatent1 = self.rnd.randn(512)[None, :]
+        self.latent_source = self.Gs.components.mapping.run(qlatent1, None)[0]
+        print("Loaded latent source {}".format(self.latent_source.shape))
+
     def load_latent_dest_dlatents(self):
         qlatent1 = self.rnd.randn(512)[None, :]
-        self.latent_dest = self.Gs.components.mapping.run(qlatent1, None)
+        self.latent_dest = self.Gs.components.mapping.run(qlatent1, None)[0]
+        print("Loaded latent dest {}".format(self.latent_dest.shape))
 
     def load_snapshot(self, snapshot):
         tflib.init_tf()
@@ -78,6 +95,10 @@ class Gan(Thread):
         url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-{}.pkl".format(snapshot))
         with open(url, 'rb') as f:
             self._G, self._D, self.Gs = pickle.load(f)
+            self.encoder_generator = Generator(self.Gs, 1, randomize_noise=False)
+            self.perceptual_model = PerceptualModel(256, layer=9, batch_size=1)
+            print("Building encoder perceptual model")
+            self.perceptual_model.build_perceptual_model(self.encoder_generator.generated_image)
         print(self.Gs)
 
     def push_frames(self):
@@ -116,14 +137,14 @@ class Gan(Thread):
                 else:
                     try:
                         if args['type'] == 'both':
-                            self.load_latent_source()
-                            self.load_latent_dest()
+                            self.load_latent_source_dlatents()
+                            self.load_latent_dest_dlatents()
                         elif args['type'] == 'keep_source':
-                            self.load_latent_dest()
+                            self.load_latent_dest_dlatents()
 
                         elif args['type'] == 'use_dest':
                             self.latent_source = self.latent_dest
-                            self.load_latent_dest()
+                            self.load_latent_dest_dlatents()
                         else:
                             raise Exception('Invalid generation type')
 
@@ -219,6 +240,63 @@ class Gan(Thread):
                     self.loop.call_soon_threadsafe(
                         future.set_result, str(e)
                     )
+            elif request == "encode":
+                print("Encode uploaded image!")
+                try:
+                    image = Image.open(
+                            io.BytesIO(base64.b64decode(
+                                args["data"][args["data"].find(",") + 1:]
+                            )
+                        )
+                    )
+                    f_src = tempfile.NamedTemporaryFile(suffix='.jpg').name
+                    f_aligned = tempfile.NamedTemporaryFile(suffix='.png').name
+                    f_gen = tempfile.NamedTemporaryFile(suffix='.png').name
+
+                    cv2.imwrite(
+                        f_src,
+                        cv2.cvtColor(
+                            np.array(image),
+                            cv2.COLOR_BGR2RGB
+                        )
+                    )
+                    print("Wrote image to {}".format(f_src))
+                    landmarks_iter = enumerate(landmarks_detector.get_landmarks(f_src),start=1)
+                    face_landmarks = next(landmarks_iter)[1]
+                    print("Face Landmarks {}".format(face_landmarks))
+                    image_align(f_src, f_aligned, face_landmarks)
+                    print("Wrote face to {}".format(f_aligned))
+
+                    iterations = 10 
+                    self.perceptual_model.set_reference_images([f_aligned])
+                    op = self.perceptual_model.optimize(self.encoder_generator.dlatent_variable, iterations=iterations, learning_rate=1)
+                    pbar = tqdm(op, leave=False, total=iterations)
+                    for loss in pbar:
+                        pbar.set_description('Loss: %.2f' % loss)
+
+                    generated_images = self.encoder_generator.generate_images()
+                    generated_dlatents = self.encoder_generator.get_dlatents()
+
+                    gen_img = Image.fromarray(generated_images[0], 'RGB')
+                    gen_img.save(f_gen, 'PNG')
+
+                    print("Wrote generated image to {}".format(f_gen))
+
+                    print("Set latent dest to {}".format(self.latent_dest.shape))
+                    self.linespaces = np.linspace(0, 1, self.steps)
+                    self.linespace_i = -1;
+
+
+                    
+                    self.loop.call_soon_threadsafe(
+                        future.set_result, "OK"
+                    )
+
+                except Exception as e:
+                    print("EXCEPTION {}".format(e))
+                    self.loop.call_soon_threadsafe(
+                        future.set_result, str(e)
+                    )
 
 
 
@@ -287,13 +365,13 @@ args.snapshot = "ffhq"
 
 if not args.dummy:
     gan = Gan(q, loop, args)
+    gan.daemon = True
 else:
     gan = DummyGan(q,loop,args)
 
 app = Flask(__name__)
 Compress(app)
 #CORS(app)
-app.jinja_env.auto_reload = True
 gan.start()
 
 app.config['SECRET_KEY'] = 'mysecret'
@@ -328,6 +406,7 @@ def shuffle():
         gan.join()
         args.snapshot = params['snapshot']
         gan = Gan(q, loop, args)
+        gan.daemon = True
         gan.start()
         return jsonify(result="OK")
 
@@ -374,16 +453,32 @@ def load():
     else:
         return jsonify(result=data)
 
+@app.route('/encode',  methods = ['POST'])
+def encode():
+    future = loop.create_future()
+    params = request.get_json()
+    q.put((future, "encode", params))
+    data = loop.run_until_complete(future)
+    if data == 'OK':
+        return jsonify(result=data)
+    else:
+        return jsonify(result=data)
+
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def catch_all(path):
     return render_template('index.html')
 
-if __name__ == '__main__':
+try:
+    if __name__ == '__main__':
 
-	#print("Generating samples")
-	#for t in np.arange(0, 300, 0.000001):
-	#	s.gen(t)
-  app.run (host = "0.0.0.0", port = 8540)
+            #print("Generating samples")
+            #for t in np.arange(0, 300, 0.000001):
+            #	s.gen(t)
+      app.run (host = "0.0.0.0", port = 8540, use_reloader=False)
+
+except KeyboardInterrupt:
+    print("Shutting down")
+    gan.join()
 
 

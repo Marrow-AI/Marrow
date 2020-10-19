@@ -16,6 +16,24 @@ export default function EncoderSection(props) {
     setImages(imageList);
   };
 
+  const onSubmit = () => {
+    // data for submit
+    console.log("Submitting image for encoding!", images)
+    fetch('/encode', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({data:images[0].data_url})
+    })
+    .then(res => res.json())
+    .then((data) => {
+      if (data.result === "OK") {
+        console.log("Result!",data)
+      } else {
+        alert(data.result);
+      }
+    })
+  };
+
   return (
     <div className="fileUploader">
       <ImageUploading
@@ -57,6 +75,9 @@ export default function EncoderSection(props) {
           </div>
         )}
       </ImageUploading>
+      <div className="divBtnGnr">
+        <button className="btn encode" name="encode" onClick={onSubmit} >Encode</button>
+      </div>
     </div>
   );
 }

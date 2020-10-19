@@ -113,6 +113,7 @@ gan/generate-cloned/results
 gan/generate-cloned/results_wav
 gan/in-ear
 gan/gan-explore/marrow
+gan/gan-explore/stylegan-encoder
 Marrow-4714d4784417.json
 
 .vscode/*
