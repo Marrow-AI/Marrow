@@ -79,12 +79,12 @@ class Gan(Thread):
 
     def load_latent_source_dlatents(self):
         qlatent1 = self.rnd.randn(512)[None, :]
-        self.latent_source = self.Gs.components.mapping.run(qlatent1, None)[0]
+        self.latent_source = self.Gs.components.mapping.run(qlatent1, None)
         print("Loaded latent source {}".format(self.latent_source.shape))
 
     def load_latent_dest_dlatents(self):
         qlatent1 = self.rnd.randn(512)[None, :]
-        self.latent_dest = self.Gs.components.mapping.run(qlatent1, None)[0]
+        self.latent_dest = self.Gs.components.mapping.run(qlatent1, None)
         print("Loaded latent dest {}".format(self.latent_dest.shape))
 
     def load_snapshot(self, snapshot):
@@ -221,7 +221,7 @@ class Gan(Thread):
             elif request == "video":
                 print("Download animation video. Shadows:  {}".format(args.get('shadows')))
                 try:
-                    writer = cv2.VideoWriter("output.avi",cv2.VideoWriter_fourcc(*"MJPG"), 30,(512,512))
+                    writer = cv2.VideoWriter("output.avi",cv2.VideoWriter_fourcc(*"MJPG"), 30,(1024,1024))
                     shadows = int(args.get('shadows'))
                     for i in range(self.steps):
                         self.linespace_i = i
@@ -267,7 +267,7 @@ class Gan(Thread):
                     image_align(f_src, f_aligned, face_landmarks)
                     print("Wrote face to {}".format(f_aligned))
 
-                    iterations = 10 
+                    iterations = 1500 
                     self.perceptual_model.set_reference_images([f_aligned])
                     op = self.perceptual_model.optimize(self.encoder_generator.dlatent_variable, iterations=iterations, learning_rate=1)
                     pbar = tqdm(op, leave=False, total=iterations)
@@ -282,6 +282,7 @@ class Gan(Thread):
 
                     print("Wrote generated image to {}".format(f_gen))
 
+                    self.latent_dest = generated_dlatents
                     print("Set latent dest to {}".format(self.latent_dest.shape))
                     self.linespaces = np.linspace(0, 1, self.steps)
                     self.linespace_i = -1;
@@ -304,7 +305,8 @@ class Gan(Thread):
             # Generate image.
             self.latents = (self.linespaces[self.linespace_i] * self.latent_dest + (1-self.linespaces[self.linespace_i])*self.latent_source)
 
-            images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=False, output_transform=self.fmt)
+            #images = self.Gs.run(self.latents, None, truncation_psi=0.7, randomize_noise=False, output_transform=self.fmt)
+            images = self.encoder_generator.generate_images(self.latents)
             image = images[0]
 
             if int(shadows):
