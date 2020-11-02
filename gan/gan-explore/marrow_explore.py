@@ -48,8 +48,9 @@ if not args.dummy:
     landmarks_detector = LandmarksDetector('marrow/shape_predictor_68_face_landmarks.dat')
 
 class Gan(Thread):
-    def __init__(self, queue, loop, args):
+    def __init__(self, queue, app, loop, args):
         self.queue = queue
+        self.app = app
         self.loop = loop
         self.args = args
         self.steps = 100
@@ -124,6 +125,28 @@ class Gan(Thread):
                 )
                 self.number_frames += 1
 
+            elif request == "publish":
+                print(
+                    "Publishing {} step to sockets".
+                    format(self.steps)
+                )
+                self.loop.call_soon_threadsafe(
+                    future.set_result, "OK"
+                )
+                with self.app.app_context():
+                    for i in range(self.steps):
+                        self.linespace_i = i
+                        print(self.linespace_i)
+                        img = self.get_buf(False)
+                        ret, buf = cv2.imencode('.jpg', img)
+                        b64 = base64.b64encode(buf)
+                        b64text = b64.decode('utf-8')
+                        emit('animationStep',{'step':i, 'image': b64text},namespace='/',broadcast=True)
+
+                    self.linespace_i = 0
+
+
+
             elif request == "shuffle":
                 print("Shuffling to {} steps {} snapshot {} type {}".format(future, args['steps'],args['snapshot'], args['type']))
                 self.steps = int(args['steps'])
@@ -144,6 +167,11 @@ class Gan(Thread):
 
                         elif args['type'] == 'use_dest':
                             self.latent_source = self.latent_dest
+                            self.load_latent_dest_dlatents()
+                        elif args['type'] == 'use_step':
+                            source_step = int(args['currentStep'])
+                            print("Use step {} as source".format(source_step))
+                            self.latent_source = (self.linespaces[source_step] * self.latent_dest + (1-self.linespaces[source_step])*self.latent_source)
                             self.load_latent_dest_dlatents()
                         else:
                             raise Exception('Invalid generation type')
@@ -362,17 +390,18 @@ class DummyGan(Thread):
 
 loop = asyncio.get_event_loop()
 q = queue.Queue()
+app = Flask(__name__)
+Compress(app)
+
 #args.snapshot = "007743"
 args.snapshot = "ffhq"
 
 if not args.dummy:
-    gan = Gan(q, loop, args)
+    gan = Gan(q, app, loop, args)
     gan.daemon = True
 else:
     gan = DummyGan(q,loop,args)
 
-app = Flask(__name__)
-Compress(app)
 #CORS(app)
 gan.start()
 
@@ -392,6 +421,13 @@ def generate():
     data = loop.run_until_complete(future)
     return jsonify(result=data)
 
+@app.route('/publish', methods=['POST'])
+def publish():
+    future = loop.create_future()
+    q.put((future, "publish", request.args))
+    data = loop.run_until_complete(future)
+    return jsonify(result=data)
+
 @app.route('/shuffle',  methods = ['POST'])
 def shuffle():
     future = loop.create_future()
@@ -407,7 +443,7 @@ def shuffle():
         global gan
         gan.join()
         args.snapshot = params['snapshot']
-        gan = Gan(q, loop, args)
+        gan = Gan(q, app, loop, args)
         gan.daemon = True
         gan.start()
         return jsonify(result="OK")
@@ -449,7 +485,7 @@ def load():
         global gan
         gan.join()
         args.snapshot = data['snapshot']
-        gan = Gan(q, loop, args)
+        gan = Gan(q, app, loop, args)
         gan.start()
         return jsonify(result=data)
     else:
