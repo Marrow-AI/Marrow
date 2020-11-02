@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import store from '../state';
+import store, {clearAnimationSteps, moveSteps} from '../state';
 import SaveForm from "./SaveForm";
 import EncoderSection from "./EncoderSection";
 
@@ -40,6 +40,7 @@ export default function Generate() {
   const [generating, setGenerating] = useState('both');
   const [steps, setSteps] = useState(144);
   const animationSteps = useSelector(state => state.animationSteps);
+  const currentStep = useSelector(state => state.currentStep);
 
   const handleChange = (event) => {
     setDataset(event.target.value);
@@ -62,9 +63,10 @@ export default function Generate() {
     const data = {
       steps: form.steps.value,
       snapshot: form.snapshot.value,
-      type: form.shuffle.value
+      type: form.shuffle.value,
+      currentStep: currentStep
     }
-    console.log(data)
+    store.dispatch(clearAnimationSteps());
     fetch(ENDPOINT + '/shuffle', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -106,14 +108,15 @@ export default function Generate() {
 
   const handleDirection = (e) => {
     e.preventDefault()
+      /*
     getImage(
       e.currentTarget.dataset.direction,
       e.currentTarget.dataset.steps
-    )
-    store.dispatch({
-      type: 'GET_IMAGE',
-      get_Image: getImage
-    })
+    )*/
+    store.dispatch(moveSteps(
+      e.currentTarget.dataset.direction,
+      e.currentTarget.dataset.steps
+    ))
   }
 
   return (
@@ -165,6 +168,7 @@ export default function Generate() {
                 <MenuItem value={"both"} >Shuffle both source and destination</MenuItem>
                 <MenuItem value={"keep_source"} >Keep source and shuffle destination</MenuItem>
                 <MenuItem value={"use_dest"} >Use destination as the next source</MenuItem>
+                <MenuItem value={"use_step"} >Use current step as source</MenuItem>
               </Select>
               <FormHelperText>Choose how to generate your animations</FormHelperText>
             </FormControl>
@@ -181,7 +185,7 @@ export default function Generate() {
           
           <div className="imgControler">
             <div className="output-container">
-            <img className="imgAnimation" src={animationSteps.length > 0 ? animationSteps[animationSteps.length-1] : ''} width="512" height="512" alt="" />
+            <img className="imgAnimation" src={animationSteps.length > 0 ? animationSteps[currentStep] : ''} width="512" height="512" alt="" />
             </div>
             <div className="controls-container">
               <button onClick={handleDirection} className="direction" data-direction="back" data-steps="1">&lt;</button>1

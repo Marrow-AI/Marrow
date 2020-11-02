@@ -2,8 +2,7 @@ import {createStore, compose, applyMiddleware } from 'redux';
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const animationStepHandler = (data) => {
-  console.log("Received animation step!",data);
-  store.dispatch(addAnimationStep(data.image));
+  store.dispatch(addAnimationStep(data.image, data.step));
 }
 
 const reducer = (state = {
@@ -11,7 +10,8 @@ const reducer = (state = {
   snapshot: '',
   Get_Image: '',
   file_name: '',
-  animationSteps: []
+  animationSteps: [],
+  currentStep: 0
 }, action) => {
   switch (action.type) {  
     case 'SET_SOCKET': {
@@ -31,7 +31,21 @@ const reducer = (state = {
   case 'ADD_ANIMATION_STEP': {
     return {
       ...state,
-      animationSteps: [...state.animationSteps,"data:image/jpeg;base64," + action.image]
+      animationSteps: [...state.animationSteps,"data:image/jpeg;base64," + action.image],
+      currentStep: action.step
+    }
+  }
+  case 'CLEAR_ANIMATION_STEPS': {
+    return {
+      ...state,
+      animationSteps: []
+    }
+  }
+  case 'MOVE_STEPS': {
+    const steps = action.direction == 'back' ? action.steps * -1 : Number(action.steps)
+    return {
+      ...state,
+      currentStep: Math.min(Math.max(state.currentStep + steps, 0),state.animationSteps.length - 1)
     }
   }
   case 'GET_IMAGE': {
@@ -56,9 +70,20 @@ export const setSocket = (socket) => ({
   socket
 })
 
-export const addAnimationStep = (image) => ({
+export const addAnimationStep = (image, step) => ({
   type: 'ADD_ANIMATION_STEP',
-  image
+  image,
+  step
+})
+
+export const clearAnimationSteps  = () => ({
+  type: 'CLEAR_ANIMATION_STEPS'
+})
+
+export const moveSteps  = (direction, steps) => ({
+  type: 'MOVE_STEPS',
+  direction,
+  steps
 })
 
 const store = createStore(

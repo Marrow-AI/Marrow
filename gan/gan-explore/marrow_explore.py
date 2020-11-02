@@ -168,6 +168,11 @@ class Gan(Thread):
                         elif args['type'] == 'use_dest':
                             self.latent_source = self.latent_dest
                             self.load_latent_dest_dlatents()
+                        elif args['type'] == 'use_step':
+                            source_step = int(args['currentStep'])
+                            print("Use step {} as source".format(source_step))
+                            self.latent_source = (self.linespaces[source_step] * self.latent_dest + (1-self.linespaces[source_step])*self.latent_source)
+                            self.load_latent_dest_dlatents()
                         else:
                             raise Exception('Invalid generation type')
 

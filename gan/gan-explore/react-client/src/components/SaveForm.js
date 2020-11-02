@@ -7,8 +7,8 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { useSelector } from 'react-redux';
+import store, {clearAnimationSteps} from '../state';
 
-//const ENDPOINT = 'http://52.206.213.41:8080';
 const ENDPOINT = '';
 
 const useStyles = makeStyles((theme) => ({
@@ -85,8 +85,12 @@ export default function SaveForm() {
       .then((data) => {
         if (data.result.status === "OK") {
           console.log("Loading done", data);
-          form.steps.value = parseInt(data.result.steps);
-          return getImage("forward", "1")
+          store.dispatch(clearAnimationSteps());
+          return fetch(ENDPOINT + '/publish', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          })
         } else {
           alert(data.result.status);
         }
