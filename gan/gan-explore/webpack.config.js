@@ -24,7 +24,7 @@ module.exports = {
     app: ["./react-client/src/index.js"]
   },
   output: {
-    path: path.resolve(__dirname, "server/static"),
+    path: path.resolve(__dirname, "static"),
     filename: "bundle.js"
   },
  plugins: [

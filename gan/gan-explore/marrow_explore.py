@@ -267,7 +267,7 @@ class Gan(Thread):
                     image_align(f_src, f_aligned, face_landmarks)
                     print("Wrote face to {}".format(f_aligned))
 
-                    iterations = 1500 
+                    iterations = 2000
                     self.perceptual_model.set_reference_images([f_aligned])
                     op = self.perceptual_model.optimize(self.encoder_generator.dlatent_variable, iterations=iterations, learning_rate=1)
                     pbar = tqdm(op, leave=False, total=iterations)

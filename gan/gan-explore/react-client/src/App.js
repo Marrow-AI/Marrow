@@ -7,9 +7,7 @@ import About from './components/About.js';
 import socketIOClient from "socket.io-client";
 import store, { setSocket } from './state'
 
-const ENDPOINT = "http://localhost:8540";
-
-const socket = socketIOClient(ENDPOINT);
+const socket = socketIOClient();
 
 console.log("Connecting to socket");
 socket.on('connect', () => {
