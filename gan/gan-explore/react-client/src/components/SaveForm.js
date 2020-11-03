@@ -7,7 +7,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { useSelector } from 'react-redux';
-import store, {clearAnimationSteps} from '../state';
+import store, {clearAnimationSteps, setMaxSteps} from '../state';
 
 const ENDPOINT = '';
 
@@ -86,13 +86,14 @@ export default function SaveForm() {
         if (data.result.status === "OK") {
           console.log("Loading done", data);
           store.dispatch(clearAnimationSteps());
+          store.dispatch(setMaxSteps(data.result.steps));
           return fetch(ENDPOINT + '/publish', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
           })
         } else {
-          alert(data.result.status);
+          alert(data.result.message);
         }
       });
   }

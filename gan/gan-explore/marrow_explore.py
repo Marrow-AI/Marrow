@@ -149,8 +149,6 @@ class Gan(Thread):
 
             elif request == "shuffle":
                 print("Shuffling to {} steps {} snapshot {} type {}".format(future, args['steps'],args['snapshot'], args['type']))
-                self.steps = int(args['steps'])
-                self.linespaces = np.linspace(0, 1, self.steps)
                 if args['snapshot'] != self.current_snapshot:
                     self.current_snapshot = args['snapshot']
                     tf.get_default_session().close()
@@ -175,6 +173,9 @@ class Gan(Thread):
                             self.load_latent_dest_dlatents()
                         else:
                             raise Exception('Invalid generation type')
+
+                        self.steps = int(args['steps'])
+                        self.linespaces = np.linspace(0, 1, self.steps)
 
                         self.linespace_i = -1
                         self.loop.call_soon_threadsafe(
@@ -219,31 +220,36 @@ class Gan(Thread):
                         future.set_result, str(e)
                     )
             elif request == "load":
-                print("Loading animation {}".format(args['animation']))
-                with open('animations/{}/info.json'.format(args['animation'])) as json_file:
-                    data = json.load(json_file)
-                    print(data);
+                try:
+                    print("Loading animation {}".format(args['animation']))
+                    with open('animations/{}/info.json'.format(args['animation'])) as json_file:
+                        data = json.load(json_file)
+                        print(data);
 
-                    if data['snapshot'] != self.current_snapshot:
-                        self.current_snapshot = data['snapshot']
-                        tf.get_default_session().close()
-                        tf.reset_default_graph()
-                        print('New snapshot, quiting GAN thread')
-                        self.loop.call_soon_threadsafe(
-                            future.set_result, {'status' : 'new_snapshot', 'snapshot': data['snapshot']}
-                        )
-                        break
-                    else:
-                        self.latent_source = np.load('animations/{}/source.npy'.format(args['animation']))
-                        print('Loaded source {}'.format(self.latent_source.shape))
-                        self.latent_dest = np.load('animations/{}/dest.npy'.format(args['animation']))
-                        print('Loaded dest {}'.format(self.latent_dest.shape))
-                        self.steps = int(data['steps'])
-                        self.linespaces = np.linspace(0, 1, self.steps)
-                        self.linespace_i = 0
-                        self.loop.call_soon_threadsafe(
-                                future.set_result, {'status' : 'OK', 'steps': data['steps']}
-                        )
+                        if data['snapshot'] != self.current_snapshot:
+                            self.current_snapshot = data['snapshot']
+                            tf.get_default_session().close()
+                            tf.reset_default_graph()
+                            print('New snapshot, quiting GAN thread')
+                            self.loop.call_soon_threadsafe(
+                                future.set_result, {'status' : 'new_snapshot', 'snapshot': data['snapshot']}
+                            )
+                            break
+                        else:
+                            self.latent_source = np.load('animations/{}/source.npy'.format(args['animation']))
+                            print('Loaded source {}'.format(self.latent_source.shape))
+                            self.latent_dest = np.load('animations/{}/dest.npy'.format(args['animation']))
+                            print('Loaded dest {}'.format(self.latent_dest.shape))
+                            self.steps = int(data['steps'])
+                            self.linespaces = np.linspace(0, 1, self.steps)
+                            self.linespace_i = 0
+                            self.loop.call_soon_threadsafe(
+                                    future.set_result, {'status' : 'OK', 'steps': data['steps']}
+                            )
+                except Exception as e:
+                    self.loop.call_soon_threadsafe(
+                        future.set_result, {'status' : 'Error', 'message': str(e)}
+                    )
 
 
             elif request == "video":
