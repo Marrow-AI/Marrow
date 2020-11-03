@@ -9,9 +9,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import store, {clearAnimationSteps, moveSteps} from '../state';
+import store, {clearAnimationSteps, moveSteps, setStep, setMaxSteps} from '../state';
 import SaveForm from "./SaveForm";
 import EncoderSection from "./EncoderSection";
+import Slider from '@material-ui/core/Slider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +39,7 @@ export default function Generate() {
   const [dataset, setDataset] = useState('');
   const [snapshot, setSnapshot] = useState('ffhq');
   const [generating, setGenerating] = useState('both');
-  const [steps, setSteps] = useState(144);
+  const maxSteps = useSelector(state => state.maxSteps);
   const animationSteps = useSelector(state => state.animationSteps);
   const currentStep = useSelector(state => state.currentStep);
 
@@ -118,6 +119,16 @@ export default function Generate() {
       e.currentTarget.dataset.steps
     ))
   }
+  const handleStepsChange = (e) => {
+    store.dispatch(
+      setMaxSteps(e.currentTarget.value)
+    )
+  }
+  const handleStepSliderChange = (e, val) => {
+    store.dispatch(setStep(
+      val
+    ))
+  }
 
   return (
     <>
@@ -175,7 +186,7 @@ export default function Generate() {
 
             <div className="stepsDiv">
               <label className="label steps"> Number of steps:</label>
-              <input className="input steps" autoComplete="off" name="steps" defaultValue={steps} type="number"/>
+              <input className="input steps" autoComplete="off" name="steps" value={maxSteps} type="number" onChange={handleStepsChange}/>
             </div>
 
             <div className="divBtnGnr">
@@ -188,6 +199,16 @@ export default function Generate() {
             <img className="imgAnimation" src={animationSteps.length > 0 ? animationSteps[currentStep] : ''} width="512" height="512" alt="" />
             </div>
             <div className="controls-container">
+              <Slider
+                id="step-slider"
+                name="step-slider"
+                value={currentStep}
+                onChange={handleStepSliderChange}
+                defaultValue={0}
+                step={1}
+                min={0}
+                max={maxSteps -1}
+              />
               <button onClick={handleDirection} className="direction" data-direction="back" data-steps="1">&lt;</button>1
               <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="1">&gt;</button>
               <button onClick={handleDirection} className="direction" data-direction="back" data-steps="10">&lt;&lt;</button>10

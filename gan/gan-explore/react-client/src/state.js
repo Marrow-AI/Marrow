@@ -11,7 +11,8 @@ const reducer = (state = {
   Get_Image: '',
   file_name: '',
   animationSteps: [],
-  currentStep: 0
+  currentStep: 0,
+  maxSteps: 144 
 }, action) => {
   switch (action.type) {  
     case 'SET_SOCKET': {
@@ -38,7 +39,8 @@ const reducer = (state = {
   case 'CLEAR_ANIMATION_STEPS': {
     return {
       ...state,
-      animationSteps: []
+      animationSteps: [],
+      currentStep: 0
     }
   }
   case 'MOVE_STEPS': {
@@ -46,6 +48,18 @@ const reducer = (state = {
     return {
       ...state,
       currentStep: Math.min(Math.max(state.currentStep + steps, 0),state.animationSteps.length - 1)
+    }
+  }
+  case 'SET_STEP': {
+    return {
+      ...state,
+      currentStep: action.step
+    }
+  }
+  case 'SET_MAX_STEPS': {
+    return {
+      ...state,
+      maxSteps: action.maxSteps
     }
   }
   case 'GET_IMAGE': {
@@ -84,6 +98,16 @@ export const moveSteps  = (direction, steps) => ({
   type: 'MOVE_STEPS',
   direction,
   steps
+})
+
+export const setStep  = (step) => ({
+  type: 'SET_STEP',
+  step
+})
+
+export const setMaxSteps  = (maxSteps) => ({
+  type: 'SET_MAX_STEPS',
+  maxSteps
 })
 
 const store = createStore(
