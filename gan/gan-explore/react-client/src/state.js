@@ -5,22 +5,38 @@ const animationStepHandler = (data) => {
   store.dispatch(addAnimationStep(data.image, data.step));
 }
 
+const publishStartHandler = (data) => {
+  store.dispatch(clearAnimationSteps());
+  store.dispatch(setMaxSteps(data.steps));
+}
+
+const nowEncodingHandler = (data) => {
+  console.log("NowEncoding state", data)
+  store.dispatch(setNowEncoding(data));
+}
+
 const reducer = (state = {
   socket: null,
   snapshot: '',
   Get_Image: '',
   file_name: '',
   animationSteps: [],
+  nowEncoding: {},
   currentStep: 0,
-  maxSteps: 144 
+  maxSteps: 40
 }, action) => {
   switch (action.type) {  
     case 'SET_SOCKET': {
       console.log("Setting socket", action.socket);
       if (state.socket) {
         state.socket.off('animationStep', animationStepHandler)
+        state.socket.off('publishStart', publishStartHandler)
+        state.socket.off('nowEncoding', nowEncodingHandler)
       }
       action.socket.on('animationStep', animationStepHandler)
+      action.socket.on('publishStart', publishStartHandler)
+      action.socket.on('nowEncoding', nowEncodingHandler)
+
       return {...state, socket: action.socket}
   }
   case 'SAVE_SNAPSHOT': {
@@ -62,16 +78,22 @@ const reducer = (state = {
       maxSteps: action.maxSteps
     }
   }
+  case 'SET_NOW_ENCODING': {
+    return {
+      ...state,
+      nowEncoding: action.data
+    }
+  }
   case 'GET_IMAGE': {
     return {
       ...state,
       Get_Image: action.getImage
     }
   }
-    case 'SAVE_FILE_NAME': {
-      return {
-        ...state,
-        file_name: action.images
+  case 'SAVE_FILE_NAME': {
+    return {
+      ...state,
+      file_name: action.images
     }
   }
   default:
@@ -108,6 +130,11 @@ export const setStep  = (step) => ({
 export const setMaxSteps  = (maxSteps) => ({
   type: 'SET_MAX_STEPS',
   maxSteps
+})
+
+export const setNowEncoding  = (data) => ({
+  type: 'SET_NOW_ENCODING',
+  data
 })
 
 const store = createStore(
