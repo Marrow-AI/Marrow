@@ -42,6 +42,7 @@ export default function Generate() {
   const maxSteps = useSelector(state => state.maxSteps);
   const animationSteps = useSelector(state => state.animationSteps);
   const currentStep = useSelector(state => state.currentStep);
+  const nowEncoding = useSelector(state => state.nowEncoding);
 
   const handleChange = (event) => {
     setDataset(event.target.value);
@@ -133,6 +134,11 @@ export default function Generate() {
   return (
     <>
       <h1 className="secondTitle">EXPLORER TOOL</h1>
+      {nowEncoding.file && (
+        <div className="now-encoding" >
+          <span>Now encoding {nowEncoding.file}. Please hold...</span>
+        </div>
+      )}
       <div className="main">
         <div className="mainSection" >
           <form className="formLeft" key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)} >

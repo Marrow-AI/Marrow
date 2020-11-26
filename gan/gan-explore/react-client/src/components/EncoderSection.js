@@ -22,7 +22,7 @@ export default function EncoderSection(props) {
     fetch('/encode', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({data:images[0].data_url})
+      body: JSON.stringify({data:images[0].data_url, fileName: images[0].file.name})
     })
     .then(res => res.json())
     .then((data) => {

@@ -134,6 +134,7 @@ class Gan(Thread):
                     future.set_result, "OK"
                 )
                 with self.app.app_context():
+                    emit('publishStart',{'steps':self.steps},namespace='/',broadcast=True)
                     for i in range(self.steps):
                         self.linespace_i = i
                         print(self.linespace_i)
@@ -142,6 +143,7 @@ class Gan(Thread):
                         b64 = base64.b64encode(buf)
                         b64text = b64.decode('utf-8')
                         emit('animationStep',{'step':i, 'image': b64text},namespace='/',broadcast=True)
+                    emit('publishStop',{'steps':self.steps},namespace='/',broadcast=True)
 
                     self.linespace_i = 0
 
@@ -277,6 +279,8 @@ class Gan(Thread):
             elif request == "encode":
                 print("Encode uploaded image!")
                 try:
+                    with self.app.app_context():
+                        emit('nowEncoding',{'file':args["fileName"]},namespace='/',broadcast=True)
                     image = Image.open(
                             io.BytesIO(base64.b64decode(
                                 args["data"][args["data"].find(",") + 1:]
@@ -301,7 +305,7 @@ class Gan(Thread):
                     image_align(f_src, f_aligned, face_landmarks)
                     print("Wrote face to {}".format(f_aligned))
 
-                    iterations = 1500 
+                    iterations = 500 
                     self.perceptual_model.set_reference_images([f_aligned])
                     op = self.perceptual_model.optimize(self.encoder_generator.dlatent_variable, iterations=iterations, learning_rate=1)
                     pbar = tqdm(op, leave=False, total=iterations)
@@ -322,13 +326,24 @@ class Gan(Thread):
                     self.linespace_i = -1;
 
 
+                    with self.app.app_context():
+                        emit('nowEncoding',{'file': None},namespace='/',broadcast=True)
                     
                     self.loop.call_soon_threadsafe(
                         future.set_result, "OK"
                     )
+                    
+                    # TODO: Temp
+                    future = self.loop.create_future()
+                    self.steps = 40
+                    self.linespaces = np.linspace(0, 1, self.steps)
+                    self.linespace_i = 0
+                    self.queue.put((future, "publish", None))
 
                 except Exception as e:
                     print("EXCEPTION {}".format(e))
+                    with self.app.app_context():
+                        emit('nowEncoding',{'file': None},namespace='/',broadcast=True)
                     self.loop.call_soon_threadsafe(
                         future.set_result, str(e)
                     )
