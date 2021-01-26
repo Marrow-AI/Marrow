@@ -53,7 +53,7 @@ class Gan(Thread):
         self.app = app
         self.loop = loop
         self.args = args
-        self.steps = 100
+        self.steps = int(args.steps) if 'steps' in args else 100
         self.current_snapshot = args.snapshot
         Thread.__init__(self)
 
@@ -94,12 +94,24 @@ class Gan(Thread):
 
         print("Loading snapshot {}".format(snapshot))
         url = os.path.abspath("marrow/00021-sgan-dense512-8gpu/network-snapshot-{}.pkl".format(snapshot))
+
+        if snapshot == 'ffhq':
+            dimension =  18
+            img_size = 256
+        else:
+            dimension = 16
+            img_size = 512
+
         with open(url, 'rb') as f:
             self._G, self._D, self.Gs = pickle.load(f)
-            self.encoder_generator = Generator(self.Gs, 1, randomize_noise=False)
-            self.perceptual_model = PerceptualModel(256, layer=9, batch_size=1)
-            print("Building encoder perceptual model")
-            self.perceptual_model.build_perceptual_model(self.encoder_generator.generated_image)
+            self.encoder_generator = Generator(self.Gs, 1, dimension, randomize_noise=False)
+
+            if snapshot == 'ffhq':
+                print("Building encoder perceptual model")
+                self.perceptual_model = PerceptualModel(img_size, layer=9, batch_size=1)
+                self.perceptual_model.build_perceptual_model(self.encoder_generator.generated_image)
+            else:
+                self.perceptual_model = None
         print(self.Gs)
 
     def push_frames(self):
@@ -143,6 +155,7 @@ class Gan(Thread):
                         b64 = base64.b64encode(buf)
                         b64text = b64.decode('utf-8')
                         emit('animationStep',{'step':i, 'image': b64text},namespace='/',broadcast=True)
+                        time.sleep(0.5)
                     emit('publishStop',{'steps':self.steps},namespace='/',broadcast=True)
 
                     self.linespace_i = 0
@@ -279,6 +292,8 @@ class Gan(Thread):
             elif request == "encode":
                 print("Encode uploaded image!")
                 try:
+                    if not self.perceptual_model:
+                        raise Exception('No perceptual model for this snapshot.')
                     with self.app.app_context():
                         emit('nowEncoding',{'file':args["fileName"]},namespace='/',broadcast=True)
                     image = Image.open(
@@ -464,6 +479,7 @@ def shuffle():
         global gan
         gan.join()
         args.snapshot = params['snapshot']
+        args.steps = params['steps']
         gan = Gan(q, app, loop, args)
         gan.daemon = True
         gan.start()
@@ -534,7 +550,7 @@ try:
             #print("Generating samples")
             #for t in np.arange(0, 300, 0.000001):
             #	s.gen(t)
-      app.run (host = "0.0.0.0", port = 8540, use_reloader=False)
+      app.run (host = "0.0.0.0", port = 8541, use_reloader=False)
 
 except KeyboardInterrupt:
     print("Shutting down")
