@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-//const ENDPOINT = 'http://52.206.213.41:8080';
-const ENDPOINT = '';
+const ENDPOINT = 'http://52.206.213.41:8541';
+//const ENDPOINT = '';
 
 export default function Generate() {
   const [view, setView] = useState();

@@ -9,7 +9,8 @@ import Select from '@material-ui/core/Select';
 import { useSelector } from 'react-redux';
 import store, {clearAnimationSteps, setMaxSteps} from '../state';
 
-const ENDPOINT = '';
+//const ENDPOINT = '';
+const ENDPOINT = 'http://52.206.213.41:8541';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,6 +44,7 @@ export default function SaveForm() {
     }
     fetch(ENDPOINT + '/save', {
       method: 'POST',
+      mode: 'cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     })
