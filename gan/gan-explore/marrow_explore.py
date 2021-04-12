@@ -438,7 +438,7 @@ if not args.dummy:
 else:
     gan = DummyGan(q,loop,args)
 
-#CORS(app)
+CORS(app)
 gan.start()
 
 app.config['SECRET_KEY'] = 'mysecret'
