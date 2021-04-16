@@ -17,6 +17,13 @@ socket.on('connect', () => {
 
 
 function App() {
+  const ENDPOINT= 'http://52.206.213.41:8541'
+  
+  store.dispatch({
+    type: 'END_POINT',
+    ENDPOINT: ENDPOINT
+})
+
   return (
     <>
     <div className='app-container'>

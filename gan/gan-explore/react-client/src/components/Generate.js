@@ -20,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
     border: "white",
     backgroundColor: "black"
   },
+  rail: {
+    height: 10
+  },
+  track: {
+    height: 10
+  },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 120,
@@ -29,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const ENDPOINT = 'http://52.206.213.41:8541';
 //const ENDPOINT = '';
 
 export default function Generate() {
@@ -43,9 +48,15 @@ export default function Generate() {
   const animationSteps = useSelector(state => state.animationSteps);
   const currentStep = useSelector(state => state.currentStep);
   const nowEncoding = useSelector(state => state.nowEncoding);
+  const ENDPOINT = useSelector(state => state.ENDPOINT);
+  const [isGenerated, setIsGenerated] = useState(false);
 
   const handleChange = (event) => {
     setDataset(event.target.value);
+    store.dispatch({
+      type: 'SAVE_TYPE_DATASET',
+      dataset: dataset
+    })
   };
 
   const handleSnapshot = (event) => {
@@ -63,6 +74,7 @@ export default function Generate() {
   const onSubmit = (values, ev) => {
     const form = ev.target;
     const data = {
+      dataset: form.dataset.value,
       steps: form.steps.value,
       snapshot: form.snapshot.value,
       type: form.shuffle.value,
@@ -82,7 +94,6 @@ export default function Generate() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
           })
-          //return getImage("forward", "1");
         } else {
           alert(data.result);
         }
@@ -96,6 +107,7 @@ export default function Generate() {
           alert(data.result);
         }
       })
+      setIsGenerated(true);
   };
 
   const getImage = async (direction, steps) => {
@@ -110,11 +122,6 @@ export default function Generate() {
 
   const handleDirection = (e) => {
     e.preventDefault()
-      /*
-    getImage(
-      e.currentTarget.dataset.direction,
-      e.currentTarget.dataset.steps
-    )*/
     store.dispatch(moveSteps(
       e.currentTarget.dataset.direction,
       e.currentTarget.dataset.steps
@@ -139,12 +146,19 @@ export default function Generate() {
           <span>Now encoding {nowEncoding.file}. Please hold...</span>
         </div>
       )}
+     
       <div className="main">
         <div className="mainSection" >
+
+        { isGenerated ? 
+        <div>
+        <EncoderSection />
+        </div>
+         : 
           <form className="formLeft" key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)} >
             <FormControl className={classes.formControl} >
               <InputLabel className="inputNew" id="demo-simple-select-helper-label">Choose a dataset</InputLabel>
-              <Select className="select dataset" name="type" autoComplete="off"
+              <Select className="select dataset" name="dataset" autoComplete="off"
                 labelId="demo-simple-select-helper-label"
                 id="demo-simple-select-helper"
                 value={dataset}
@@ -199,12 +213,14 @@ export default function Generate() {
               <button className="btn generate" name="generate" type="onSubmit" ref={register}>Generate animation</button>
             </div>
           </form>
-          
+        }
+
           <div className="imgControler">
             <div className="output-container">
             <img className="imgAnimation" src={animationSteps.length > 0 ? animationSteps[currentStep] : ''} width="512" height="512" alt="" />
             </div>
             <div className="controls-container">
+            <div className={classes.root}>
               <Slider
                 id="step-slider"
                 name="step-slider"
@@ -215,16 +231,15 @@ export default function Generate() {
                 min={0}
                 max={maxSteps -1}
               />
-              <button onClick={handleDirection} className="direction" data-direction="back" data-steps="1">&lt;</button>1
-              <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="1">&gt;</button>
-              <button onClick={handleDirection} className="direction" data-direction="back" data-steps="10">&lt;&lt;</button>10
-              <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="10">&gt;&gt;</button>
-              <button onClick={handleDirection} className="direction" data-direction="back" data-steps="100">&lt;&lt;&lt;</button>100
-              <button onClick={handleDirection} className="direction" data-direction="forward" data-steps="100">&gt;&gt;&gt;</button>
+              </div>
             </div>
-            <SaveForm />
-           </div>
-         <EncoderSection />
+           
+         
+           { isGenerated ? 
+     
+   
+           <SaveForm /> : ''}
+        </div>
         </div>
        </div>
      <Footer />

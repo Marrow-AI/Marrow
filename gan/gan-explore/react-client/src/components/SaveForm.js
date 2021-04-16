@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import store, {clearAnimationSteps, setMaxSteps} from '../state';
 
 //const ENDPOINT = '';
-const ENDPOINT = 'http://52.206.213.41:8541';
+// const ENDPOINT = 'http://52.206.213.41:8541';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +35,7 @@ export default function SaveForm() {
   const [animationClip, setanimationlip] = useState('');
   const snapshots = useSelector(state => state.snapshot);
   const getImage = useSelector(state => state.getImage);
+  const ENDPOINT = useSelector(state => state.ENDPOINT);
 
   const handleSave = (values, e) => {
     e.preventDefault();

@@ -20,6 +20,10 @@ body {
   background-color: black;
 }
 
+.app-container {
+  width:100%;
+}
+
 a {
   text-decoration: none;
   font-family: 'Yanone Kaffeesatz';
@@ -31,6 +35,23 @@ h1 {
   margin-top: 5%;
   letter-spacing: 4px;
   color: white;
+}
+
+.MuiSlider-root.MuiSlider-colorPrimary {
+  height: 12px;
+}
+
+.span.MuiSlider-rail {
+  height: 12px;
+}
+
+.span.MuiSlider-track {
+  height: 12px;
+}
+
+.MuiSlider-thumb.MuiSlider-thumbColorPrimary {
+  width: 30px;
+  height: 30px;
 }
 
 .secondTitle {
@@ -116,8 +137,8 @@ button {
   font-size: 14px;
   font-weight: 600;
   color: white;
-  border: 1px solid white;
-  border-radius: 10px;
+  border: 2px solid #EEBBF9;
+  border-radius: 40px;
   box-shadow: 2px 3px 5px rgba(0, 0, 0, .75);
   text-transform: uppercase;
   padding: 18px 40px;
@@ -130,7 +151,6 @@ button:hover {
 }
 
 .main {
-  max-width: 850px;
   margin-left: auto;
   margin-right: auto;
   -webkit-animation: page-transition 1.8s;
@@ -173,15 +193,14 @@ button:hover {
 
 .mainSection {
   display: flex;
-  margin-top: 25%;
-  margin-left: -20%;
+  margin-top: 15%;
 }
 
 .shuffleForm {
  margin-left: auto;
  margin-right: auto;
  width: 400px;
- margin-top: -12%;
+ margin-top: -10%;
  text-align: left;
 }
 
@@ -262,6 +281,7 @@ input.steps {
   color: black;
   box-shadow: none;
   border: 2px solid #EEBBF9;
+  padding: 18px 40px;
 }
 
 .imgControler {
@@ -280,8 +300,8 @@ input.steps {
 }
 
 .imgAnimation {
-  border-radius: 20px;
-  border: 2px solid #ED965F;
+  border-radius: 5px;
+  border: 2px solid #EEBBF9;
   box-shadow: none;
   display: inline-block;
 }
@@ -408,6 +428,12 @@ input.save {
   position: sticky;
 }
 
+.btn.load.encode {
+  margin-left: 30px;
+  margin-top: 25px;
+  text-align: center;
+}
+
 .btn.load:hover {
   color: #444444;
   box-shadow: none;
@@ -523,10 +549,16 @@ a.footer:hover {
   color: white !important;
   font-family: "Lato";
   letter-spacing: 0.15rem;
-  margin-left: 8%;
-  margin-top: -10%;
+  width: 700px;
+  margin-top: 215px;
+  margin-left: 40px;
 }
 
+.encoderSection {
+  width: 70%;
+  margin-top: 90px;
+  margin-left: 20px;
+}
 
 .fileContainer {
   background-color: black !important;
@@ -541,6 +573,7 @@ a.footer:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: #C4FE00;
   font-size: 48px;
+  font-family: 'Yanone Kaffeesatz';
 }

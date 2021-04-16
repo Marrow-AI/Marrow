@@ -39,6 +39,18 @@ const reducer = (state = {
 
       return {...state, socket: action.socket}
   }
+  case 'END_POINT': {
+    return {
+      ...state,
+      ENDPOINT: action.ENDPOINT
+    }
+  }
+  case 'SAVE_TYPE_DATASET': {
+    return {
+      ...state,
+      dataset: action.dataset
+    }
+  }
   case 'SAVE_SNAPSHOT': {
     return {
       ...state,
