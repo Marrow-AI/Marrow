@@ -37,16 +37,13 @@ h1 {
   color: white;
 }
 
-.MuiSlider-root.MuiSlider-colorPrimary {
-  height: 12px;
+
+.MuiSlider-rail {
+  height: 15px !important;
 }
 
-.span.MuiSlider-rail {
-  height: 12px;
-}
-
-.span.MuiSlider-track {
-  height: 12px;
+.MuiSlider-track {
+  height: 15px !important;
 }
 
 .MuiSlider-thumb.MuiSlider-thumbColorPrimary {
@@ -158,6 +155,7 @@ button:hover {
   -o-animation: page-transition 1.8s;
   animation: page-transition 1.8s;
   text-align: center;
+  width: 900px;
 }
 
 @-webkit-keyframes page-transition {
@@ -192,8 +190,14 @@ button:hover {
 }
 
 .mainSection {
-  display: flex;
+
   margin-top: 15%;
+
+}
+
+.cointainer {
+  display: flex;
+  width: 800px;
 }
 
 .shuffleForm {
@@ -290,6 +294,7 @@ input.steps {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
 }
 
 .output-container {
@@ -307,49 +312,40 @@ input.steps {
 }
 
 .controls-container {
-  margin-left: auto;
-  margin-right: auto;
-  justify-content: space-evenly;
-  font-family: "Lato";
-  font-size: 12px;
-  color: #ED965F;
-  text-align: center;
-  margin-left: 25%;
+  margin-left: 19%;
 }
 
-.direction {
- font-family: "Lato";
- font-size: 12px;
- background-color: black;
- color:  #ED965F;
- font-weight: 700;
- border: none;
- text-decoration: none;
- padding: 16px;
- outline:none;
- padding-left: 4%;
- padding-right: 4%;
- letter-spacing: 0.1rem;
- display: inline-block;
-}
+// .direction {
+//  font-family: "Lato";
+//  font-size: 12px;
+//  background-color: black;
+//  color:  #ED965F;
+//  font-weight: 700;
+//  border: none;
+//  text-decoration: none;
+//  padding: 16px;
+//  outline:none;
+//  padding-left: 4%;
+//  padding-right: 4%;
+//  letter-spacing: 0.1rem;
+//  display: inline-block;
+// }
 
-.direction:hover {
-  cursor: pointer;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
+// .direction:hover {
+//   cursor: pointer;
+//   font-weight: 700;
+//   letter-spacing: 2px;
+// }
 
 .saveLoad {
-  margin-left: auto;
-  margin-right: auto;
-  width: 780px;
+  margin-left: 50%;
+  width: 700px;
   margin-top: 70px;
   text-align: center;
 }
 
 .saveForm {
- margin-left: -20%;
- margin-bottom: 5%;
+ margin-left: -18%;
 }
 
 label.save {
@@ -407,10 +403,9 @@ input.save {
 
 .loadForm {
   padding-top: 0;
-  margin-top: 5%;
-  padding-bottom: 12%;
+  margin-top: 2%;
+  margin-bottom: 10%;
   text-align: left;
-  margin-left: 22px;
   justify-content: space-between;
   position: relative;
 }
@@ -429,7 +424,7 @@ input.save {
 }
 
 .btn.load.encode {
-  margin-left: 30px;
+  margin-left: 10%;
   margin-top: 25px;
   text-align: center;
 }
@@ -471,16 +466,11 @@ input.save {
   width: 100%;
 }
 
-.mainFooter {
-  width: 100%;
-  bottom: 0;
-  height: 3rem;
-  background-color:black;
-}
-
-.footer {
+.footerDiv {
   display: flex;
   justify-content: space-around;
+  margin: 0 15px;
+  height: 3rem;
 }
 
 a.footer {
@@ -494,6 +484,18 @@ a.footer {
 a.footer:hover {
   color: rgba(255, 255, 255, 0.8);
 } 
+
+.logos {
+  height: 25px;
+  object-fit: contain;
+  margin: 5px 0;
+  padding-bottom: 2px;
+}
+
+.logosdiv {
+  display: flex;
+  justify-content: space-around;  
+}
 
 .aboutSection {
   margin-top: 2%;
@@ -549,15 +551,20 @@ a.footer:hover {
   color: white !important;
   font-family: "Lato";
   letter-spacing: 0.15rem;
-  width: 700px;
-  margin-top: 215px;
-  margin-left: 40px;
+  width: 400px;
 }
 
 .encoderSection {
-  width: 70%;
-  margin-top: 90px;
-  margin-left: 20px;
+  margin-left: -150%;
+}
+
+.line {
+  border-bottom: 5px solid #3F51B5;
+  margin-top: -6.5%;
+  margin-left: 3.2%;
+  width: 450px;
+  position: absolute;
+  z-index: -1;
 }
 
 .fileContainer {

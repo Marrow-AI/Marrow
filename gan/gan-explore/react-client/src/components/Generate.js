@@ -12,30 +12,24 @@ import Select from '@material-ui/core/Select';
 import store, {clearAnimationSteps, moveSteps, setStep, setMaxSteps} from '../state';
 import SaveForm from "./SaveForm";
 import EncoderSection from "./EncoderSection";
+import ShowEncodedImages from './ShowEncodedImages';
 import Slider from '@material-ui/core/Slider';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     background: "black",
     border: "white",
-    backgroundColor: "black"
-  },
-  rail: {
-    height: 10
-  },
-  track: {
-    height: 10
+    backgroundColor: "black",
+    width: '500px'
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 140,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
   }
 }))
-
-//const ENDPOINT = '';
 
 export default function Generate() {
   const [view, setView] = useState();
@@ -50,6 +44,7 @@ export default function Generate() {
   const nowEncoding = useSelector(state => state.nowEncoding);
   const ENDPOINT = useSelector(state => state.ENDPOINT);
   const [isGenerated, setIsGenerated] = useState(false);
+  const [pageTitle, SetPageTitle] = useState('EXPLORER TOOL')
 
   const handleChange = (event) => {
     setDataset(event.target.value);
@@ -86,6 +81,7 @@ export default function Generate() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     })
+  
       .then(res => res.json())
       .then((data) => {
         if (data.result === "OK") {
@@ -107,8 +103,19 @@ export default function Generate() {
           alert(data.result);
         }
       })
-      setIsGenerated(true);
+      setTimeout(() => {
+        setIsGenerated(true);
+        changingPageTitle()
+    }, 1100)
   };
+
+  function changingPageTitle() {
+    if(dataset === 'person') {
+      return SetPageTitle('This Person Does Not Exist')
+    } else if (dataset === 'happy') {
+      return SetPageTitle('Happy Families Dinner')
+    }
+  }
 
   const getImage = async (direction, steps) => {
     await fetch(ENDPOINT + '/generate?direction=' + direction + '&steps=' + steps + '&shadows=0')
@@ -140,7 +147,7 @@ export default function Generate() {
 
   return (
     <>
-      <h1 className="secondTitle">EXPLORER TOOL</h1>
+      <h1 className="secondTitle">{pageTitle}</h1>
       {nowEncoding.file && (
         <div className="now-encoding" >
           <span>Now encoding {nowEncoding.file}. Please hold...</span>
@@ -149,10 +156,12 @@ export default function Generate() {
      
       <div className="main">
         <div className="mainSection" >
+          <div className="cointainer" >
 
         { isGenerated ? 
         <div>
         <EncoderSection />
+        <ShowEncodedImages />
         </div>
          : 
           <form className="formLeft" key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)} >
@@ -233,13 +242,12 @@ export default function Generate() {
               />
               </div>
             </div>
+            </div>
            
-         
-           { isGenerated ? 
-     
-   
-           <SaveForm /> : ''}
+          
         </div>
+        { isGenerated ? 
+           <SaveForm /> : '' }
         </div>
        </div>
      <Footer />

@@ -7,7 +7,7 @@ export default function EncoderSection(props) {
   const dataset = useSelector(state => state.dataset);
   const [images, setImages] = useState([]);
   const maxNumber = 1;
-  const [imageUploaded, setImageUploaded] = useState(false);
+  // const [imageUploaded, setImageUploaded] = useState(false);
 
 
   const onChange = (imageList, addUpdateIndex) => {
@@ -38,6 +38,7 @@ export default function EncoderSection(props) {
 
   return (
     <div className="fileUploader">
+      
       <div>
         <h1>{dataset}</h1>
       </div>
@@ -61,7 +62,7 @@ export default function EncoderSection(props) {
           <div className="upload__image-wrapper">
             <button className="btn generate"
               style={isDragging ? { color: 'red' } : undefined}
-              onClick={onImageUpload && setImageUploaded(true)}
+              onClick={onImageUpload}
               {...dragProps}
             > Upload your image
               
@@ -75,13 +76,8 @@ export default function EncoderSection(props) {
             ))}
           </div>
         )}
-        
-      </ImageUploading>
-      { imageUploaded ?
-        
-      <div className="divBtnGnr">
-        <button className="btn load encode" name="encode" onClick={onSubmit} >Encode Image to Space</button>
-      </div> : ''}
+       </ImageUploading> 
+       <button className="btn load encode" name="encode" onClick={onSubmit} >Encode Image to Space</button>
       </div> 
  
     </div>
