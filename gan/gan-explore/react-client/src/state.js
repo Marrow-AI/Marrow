@@ -23,7 +23,8 @@ const reducer = (state = {
   animationSteps: [],
   nowEncoding: {},
   currentStep: 0,
-  maxSteps: 40
+  maxSteps: 40,
+  currentShuffle: 'use_step'
 }, action) => {
   switch (action.type) {  
     case 'SET_SOCKET': {
@@ -55,6 +56,12 @@ const reducer = (state = {
     return {
       ...state,
       snapshot: action.snapshot
+    }
+  }
+  case 'SET_SHUFFLE': {
+    return {
+      ...state,
+      currentShuffle: action.currentShuffle
     }
   }
   case 'ADD_ANIMATION_STEP': {

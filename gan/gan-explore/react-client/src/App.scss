@@ -190,22 +190,19 @@ button:hover {
 }
 
 .mainSection {
-
-  margin-top: 15%;
-
+  margin-top: 25%;
+  width: 90%;
 }
 
-.cointainer {
+.container {
   display: flex;
-  width: 800px;
 }
 
 .shuffleForm {
- margin-left: auto;
- margin-right: auto;
- width: 400px;
- margin-top: -10%;
- text-align: left;
+  margin-left: -20%;
+  margin-right: 25%;
+  margin-top: -10%;
+  text-align: left;
 }
 
 .dataSnap {
@@ -275,7 +272,6 @@ input.steps {
 }
 
 .btn.generate {
-  margin-left: 8%;
   margin-top: 10%;
   transition: all .20s ease-in;
 }
@@ -291,9 +287,6 @@ input.steps {
 .imgControler {
   width: 600px;
   margin-top: -5%;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
   position: relative;
 }
 
@@ -464,6 +457,13 @@ input.save {
   position: fixed;
   bottom: 0;
   width: 100%;
+  background-color: #1e1e1e;
+}
+
+.mainFooter {
+  width: 100%;
+  bottom: 0;
+  height: 2.3rem;
 }
 
 .footerDiv {
@@ -471,6 +471,9 @@ input.save {
   justify-content: space-around;
   margin: 0 15px;
   height: 3rem;
+}
+.footer {
+  margin: 0 15px;
 }
 
 a.footer {
@@ -486,10 +489,10 @@ a.footer:hover {
 } 
 
 .logos {
-  height: 25px;
+  height: 30px;
   object-fit: contain;
-  margin: 5px 0;
-  padding-bottom: 2px;
+  margin: 10px 20px;
+  padding-bottom: 10px;
 }
 
 .logosdiv {
@@ -554,16 +557,20 @@ a.footer:hover {
   width: 400px;
 }
 
+.encodeRandom {
+margin-left: -150%;
+}
+
 .encoderSection {
-  margin-left: -150%;
+  // margin-left: -150%;
 }
 
 .line {
   border-bottom: 5px solid #3F51B5;
-  margin-top: -6.5%;
-  margin-left: 3.2%;
-  width: 450px;
-  position: absolute;
+  // margin-top: -6.5%;
+  // margin-left: 3.2%;
+  width: 100%;
+  position: relative;
   z-index: -1;
 }
 
