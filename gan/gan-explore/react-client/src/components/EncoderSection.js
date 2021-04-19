@@ -16,6 +16,7 @@ export default function EncoderSection(props) {
   const [isGenerating, setIsGenerating] = useState(true)
 
   const onSubmit = () => {
+  setIsGenerating(true)
   const data = {
     dataset: dataset,
     steps: maxSteps,
@@ -52,6 +53,7 @@ export default function EncoderSection(props) {
   }
 
   const onChange = (imageList, addUpdateIndex) => {
+    setIsGenerating(true)
     console.log(imageList, addUpdateIndex);
     store.dispatch({
       type: 'SAVE_FILE_NAME',
@@ -78,12 +80,10 @@ export default function EncoderSection(props) {
   useEffect(()=> {
     if(currentStep === (maxSteps-1)) {
       setIsGenerating(false)
-    } else if (currentStep !== (maxSteps-1)) {
-      setIsGenerating(true)
     }
     console.log(isGenerating)
     console.log(currentStep)
-  },[])
+  }, [currentStep])
 
   return (
     <div className="fileUploader">

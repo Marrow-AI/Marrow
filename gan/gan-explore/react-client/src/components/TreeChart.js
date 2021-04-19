@@ -56,7 +56,6 @@ function TreeChart({ data }) {
       .delay(node => node.depth * 300)
       .attr("opacity", 1)
       .attr("stroke", "white")
-      .style("backgroundColor", 'https://freight.cargo.site/w/1500/q/75/i/86ea540d3a129ee6f716806b5c2eec2de144339a1abbd00297dfdaddead631e9/posterHorizontal.jpg');
 
     // links
     const enteringAndUpdatingLinks = svg
@@ -65,6 +64,7 @@ function TreeChart({ data }) {
       .join("path")
       .attr("class", "link")
       .attr("d", linkGenerator)
+      //growing gradually
       .attr("stroke-dasharray", function() {
         const length = this.getTotalLength();
         return `${length} ${length}`;
