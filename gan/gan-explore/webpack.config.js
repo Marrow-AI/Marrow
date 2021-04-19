@@ -7,10 +7,9 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 module.exports = {
   mode: isDevelopment ? 'development' : 'production',
   devServer: {
-    contentBase: './react-client/public',
+    contentBase: './static',
     host: '0.0.0.0',
     hot: true,
-    contentBase: './react-client/public',
     disableHostCheck: true,
     historyApiFallback: true,
     headers: {

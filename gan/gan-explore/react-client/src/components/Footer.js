@@ -4,14 +4,23 @@ import { NavLink } from 'react-router-dom';
 const Footer = () => {
   return (
     <div className="footerCointainer">
-    <div className="mainFooter">
-      <div className="footer">
-        <NavLink className='footer' to="/about" exact activeClassName="active">About the tool</NavLink>
-        <a className='footer' href="https://www.nfb.ca/interactive/marrow/" alt="" target="_blank" rel="noopener noreferrer">About Marrow</a>
-        <a className='footer' href="https://towardsdatascience.com/small-family-small-dataset-7f7db708f06d" alt="" target="_blank" rel="noopener noreferrer">Tool's Background</a>
-        <a className='footer' href="/" alt="" target="_blank" rel="noopener noreferrer">Section for Logos</a>
-      </div>
-    </div>
+     <div className="mainFooter">
+      <div className="footerDiv">
+          <div>
+            <NavLink className='footer' to="/" exact activeClassName="active">Start Again</NavLink>
+            <a className='footer' href="https://shirin.works/Marrow-teach-me-how-to-see-you-mother-Machine-learning-immersive" alt="" target="_blank" rel="noopener noreferrer">About Marrow</a>
+            <a className='footer' href="https://towardsdatascience.com/a-tool-for-collaborating-over-gans-latent-space-b7ea92ad63d8" alt="" target="_blank" rel="noopener noreferrer">About the tool</a>
+          </div>
+      
+          <div >
+            <div className='logosdiv'>
+            <a href='https://atlasv.io/' target="_blank"><img className='logos' src="/atlasV.png" alt='' /></a>
+            <a href='https://www.nfb.ca/interactive/marrow' target="_blank"><img className='logos' src="/NFB.png" alt='' /></a>
+            <a href='https://ars.electronica.art/news/de/' target="_blank"><img className='logos' src="/Ars-Electronica.png" alt='' /></a>
+          </div>
+          </div>
+          </div>
+        </div>
     </div>
   );
 };
