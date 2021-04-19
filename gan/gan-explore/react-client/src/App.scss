@@ -591,3 +591,13 @@ margin-left: -150%;
   font-size: 48px;
   font-family: 'Yanone Kaffeesatz';
 }
+
+button:disabled,
+button[disabled], 
+button:disabled:hover{
+  border: none;
+  background-color: rgb(25, 25, 25);
+  color: #666666;
+  cursor: not-allowed;
+  pointer-events: none;
+}

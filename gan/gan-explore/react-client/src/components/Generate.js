@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
 import { useForm } from "react-hook-form";
 import Footer from './Footer.js';
@@ -11,7 +11,6 @@ import Select from '@material-ui/core/Select';
 import store, { clearAnimationSteps, moveSteps, setStep, setMaxSteps } from '../state';
 import SaveForm from "./SaveForm";
 import EncoderSection from "./EncoderSection";
-import ShowEncodedImages from './ShowEncodedImages';
 import Slider from '@material-ui/core/Slider';
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +43,9 @@ export default function Generate() {
   const nowEncoding = useSelector(state => state.nowEncoding);
   const ENDPOINT = useSelector(state => state.ENDPOINT);
   const [isGenerated, setIsGenerated] = useState(false);
-  const [pageTitle, setPageTitle] = useState('EXPLORER TOOL')
+  const [pageTitle, setPageTitle] = useState('EXPLORER TOOL');
+  const [finishGenerating, setFinishGenerating] = useState(false)
+
 
   const handleChange = (event) => {
     setDataset(event.target.value);
@@ -78,7 +79,6 @@ export default function Generate() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     })
-
       .then(res => res.json())
       .then((data) => {
         if (data.result === "OK") {

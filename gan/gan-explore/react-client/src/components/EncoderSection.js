@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ImageUploading from 'react-images-uploading';
 import store from '../state';
 import { useSelector } from 'react-redux';
+// import ShowEncodedImages from './ShowEncodedImages';
 
 export default function EncoderSection(props) { 
   const dataset = useSelector(state => state.dataset);
@@ -12,9 +13,9 @@ export default function EncoderSection(props) {
   const currentShuffle = useSelector(state => state.currentShuffle);
   const snapshot = useSelector(state => state.snapshot);
   const maxSteps = useSelector(state => state.maxSteps);
+  const [finishGenerating, setFinishGenerating] = useState(true)
 
   // const [imageUploaded, setImageUploaded] = useState(false);
-
 
   const onSubmit = () => {
   const data = {
@@ -76,6 +77,14 @@ export default function EncoderSection(props) {
     })
   };
 
+  useEffect(()=> {
+    if(currentStep === (maxSteps-1)) {
+      setFinishGenerating(!finishGenerating)
+    }
+    console.log(finishGenerating)
+    console.log(currentStep)
+  })
+
   return (
     <div className="fileUploader">
       <div>
@@ -83,7 +92,7 @@ export default function EncoderSection(props) {
       </div>
 
       <div className='encodeRandom'>
-      <button className="btn generate" name="generate" type="onSubmit" onClick={onSubmit}>Generate Randomly</button>
+      <button disabled={finishGenerating} className="btn generate" name="generate" type="onSubmit" onClick={onSubmit}>Generate Randomly</button>
 
       <div className="encoderSection">
       <ImageUploading
@@ -101,7 +110,7 @@ export default function EncoderSection(props) {
         }) => (
           
           <div className="upload__image-wrapper">
-            <button className="btn generate"
+            <button disabled={finishGenerating} className="btn generate"
               style={isDragging ? { color: 'red' } : undefined}
               onClick={onImageUpload}
               {...dragProps}> Upload your image </button>
