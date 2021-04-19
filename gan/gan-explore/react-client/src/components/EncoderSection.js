@@ -13,9 +13,7 @@ export default function EncoderSection(props) {
   const currentShuffle = useSelector(state => state.currentShuffle);
   const snapshot = useSelector(state => state.snapshot);
   const maxSteps = useSelector(state => state.maxSteps);
-  const [finishGenerating, setFinishGenerating] = useState(true)
-
-  // const [imageUploaded, setImageUploaded] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(true)
 
   const onSubmit = () => {
   const data = {
@@ -79,11 +77,13 @@ export default function EncoderSection(props) {
 
   useEffect(()=> {
     if(currentStep === (maxSteps-1)) {
-      setFinishGenerating(!finishGenerating)
+      setIsGenerating(false)
+    } else if (currentStep !== (maxSteps-1)) {
+      setIsGenerating(true)
     }
-    console.log(finishGenerating)
+    console.log(isGenerating)
     console.log(currentStep)
-  })
+  },[])
 
   return (
     <div className="fileUploader">
@@ -92,7 +92,7 @@ export default function EncoderSection(props) {
       </div>
 
       <div className='encodeRandom'>
-      <button disabled={finishGenerating} className="btn generate" name="generate" type="onSubmit" onClick={onSubmit}>Generate Randomly</button>
+      <button disabled={isGenerating} className="btn generate" name="generate" type="onSubmit" onClick={onSubmit}>Generate Randomly</button>
 
       <div className="encoderSection">
       <ImageUploading
@@ -110,7 +110,7 @@ export default function EncoderSection(props) {
         }) => (
           
           <div className="upload__image-wrapper">
-            <button disabled={finishGenerating} className="btn generate"
+            <button disabled={isGenerating} className="btn generate"
               style={isDragging ? { color: 'red' } : undefined}
               onClick={onImageUpload}
               {...dragProps}> Upload your image </button>

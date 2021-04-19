@@ -593,8 +593,7 @@ margin-left: -150%;
 }
 
 button:disabled,
-button[disabled], 
-button:disabled:hover{
+button[disabled]{
   border: none;
   background-color: rgb(25, 25, 25);
   color: #666666;
