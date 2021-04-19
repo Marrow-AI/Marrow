@@ -470,20 +470,23 @@ def shuffle():
     params = request.get_json()
     print(params)
     q.put((future, "shuffle", params))
-    print("placing on q")
-    if params['snapshot'] == args.snapshot:
-        data = loop.run_until_complete(future)
-        return jsonify(result=data)
-    else:
-        print('Reloading GAN for new snapshot')
-        global gan
-        gan.join()
-        args.snapshot = params['snapshot']
-        args.steps = params['steps']
-        gan = Gan(q, app, loop, args)
-        gan.daemon = True
-        gan.start()
-        return jsonify(result="OK")
+    try:
+        if params['snapshot'] == args.snapshot:
+            data = loop.run_until_complete(future)
+            return jsonify(result=data)
+        else:
+            print('Reloading GAN for new snapshot')
+            global gan
+            gan.join()
+            args.snapshot = params['snapshot']
+            args.steps = params['steps']
+            gan = Gan(q, app, loop, args)
+            gan.daemon = True
+            gan.start()
+            return jsonify(result="OK")
+    except Exception as e:
+        return jsonify(result="BUSY")
+
 
 @app.route('/save',  methods = ['POST'])
 def save():
@@ -530,14 +533,17 @@ def load():
 
 @app.route('/encode',  methods = ['POST'])
 def encode():
-    future = loop.create_future()
-    params = request.get_json()
-    q.put((future, "encode", params))
-    data = loop.run_until_complete(future)
-    if data == 'OK':
-        return jsonify(result=data)
-    else:
-        return jsonify(result=data)
+    try:
+        future = loop.create_future()
+        params = request.get_json()
+        q.put((future, "encode", params))
+        data = loop.run_until_complete(future)
+        if data == 'OK':
+            return jsonify(result=data)
+        else:
+            return jsonify(result=data)
+    except Exception as e:
+        return jsonify(result="BUSY")
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
