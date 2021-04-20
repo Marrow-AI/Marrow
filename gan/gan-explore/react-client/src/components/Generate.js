@@ -89,6 +89,7 @@ export default function Generate() {
           })
         } else {
           alert(data.result);
+          throw new Error(data.result);
         }
       })
       .then(res => res.json())
@@ -100,10 +101,15 @@ export default function Generate() {
           alert(data.result);
         }
       })
-    setTimeout(() => {
-      setIsGenerated(true);
-      changingPageTitle()
-    }, 1100)
+      .then(() => {
+        setTimeout(() => {
+          setIsGenerated(true);
+          changingPageTitle()
+        }, 1100)
+      })
+      .catch((e) => {
+        console.log("Error generating", e);
+      })
   };
 
   function changingPageTitle() {
