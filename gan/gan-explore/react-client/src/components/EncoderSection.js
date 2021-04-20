@@ -13,7 +13,13 @@ export default function EncoderSection(props) {
   const currentShuffle = useSelector(state => state.currentShuffle);
   const snapshot = useSelector(state => state.snapshot);
   const maxSteps = useSelector(state => state.maxSteps);
-  const [isGenerating, setIsGenerating] = useState(true)
+  const [isGenerating, setIsGenerating] = useState(true);
+
+  //for the tree data:
+  //create data-hirarcy out of the images object. 
+  //if currentStep < maxSteps => child
+  //if currentStep == maxSteps => perant. 
+  //bring animationSteps from state.js
 
   const onSubmit = () => {
   setIsGenerating(true)
