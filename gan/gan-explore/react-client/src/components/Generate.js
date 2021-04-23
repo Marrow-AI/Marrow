@@ -12,6 +12,7 @@ import store, { clearAnimationSteps, moveSteps, setStep, setMaxSteps } from '../
 import SaveForm from "./SaveForm";
 import EncoderSection from "./EncoderSection";
 import Slider from '@material-ui/core/Slider';
+import useSpinner from './useSpinner';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,6 +46,7 @@ export default function Generate() {
   const [isGenerated, setIsGenerated] = useState(false);
   const [pageTitle, setPageTitle] = useState('EXPLORER TOOL');
   const [finishGenerating, setFinishGenerating] = useState(false)
+  const [loading, showLoading, hideLoading] = useSpinner();
 
 
   const handleChange = (event) => {
@@ -102,10 +104,12 @@ export default function Generate() {
         }
       })
       .then(() => {
+        showLoading();
         setTimeout(() => {
           setIsGenerated(true);
           changingPageTitle()
-        }, 1100)
+          hideLoading()
+        }, 2000)
       })
       .catch((e) => {
         console.log("Error generating", e);
@@ -146,7 +150,9 @@ export default function Generate() {
       <h1 className="secondTitle">{pageTitle}</h1>
       {nowEncoding.file && (
         <div className="now-encoding" >
-          <span>Now encoding {nowEncoding.file}.<br/> Please hold...</span>
+          <span className='encoding-loder-text'>Now encoding {nowEncoding.file}<br /><br />
+          Please hold...</span>
+          {loading}
         </div>
       )}
 
@@ -187,6 +193,8 @@ export default function Generate() {
               </form>
             }
 
+            {loading}
+
             <div className="imgControler">
               <div className="output-container">
                 <img className="imgAnimation" src={animationSteps.length > 0 ? animationSteps[currentStep] : ''} width="512" height="512" alt="" />
@@ -206,7 +214,6 @@ export default function Generate() {
                 </div>
               </div>
             </div>
-
 
           </div>
           {isGenerated ?

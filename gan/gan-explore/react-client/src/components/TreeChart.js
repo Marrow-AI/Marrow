@@ -21,7 +21,7 @@ function TreeChart({ data }) {
   // will be called initially and on every data change
   useEffect(() => {
     const svg = select(svgRef.current);
-
+    
     // use dimensions from useResizeObserver,
     // but use getBoundingClientRect on initial render
     // (dimensions are null for the first render)
@@ -30,6 +30,7 @@ function TreeChart({ data }) {
 
     // transform hierarchical data
     const root = hierarchy(data);
+    console.log(root)
     const treeLayout = tree().size([height, width]);
 
     const linkGenerator = linkHorizontal()
@@ -41,6 +42,7 @@ function TreeChart({ data }) {
 
     console.warn("descendants", root.descendants());
     console.warn("links", root.links());
+    
 
     // nodes
     svg
