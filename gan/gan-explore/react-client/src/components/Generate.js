@@ -34,7 +34,7 @@ export default function Generate() {
   const [view, setView] = useState();
   const { register, handleSubmit } = useForm({ mode: "onBlur" });
   const classes = useStyles();
-  const [dataset, setDataset] = useState('');
+  const [dataset, setDataset] = useState('person');
   const [snapshot, setSnapshot] = useState('ffhq');
   const [generating, setGenerating] = useState('use_step');
   const maxSteps = useSelector(state => state.maxSteps);
@@ -60,13 +60,13 @@ export default function Generate() {
     } else if (dataset === 'happy') {
       setSnapshot('007743')
     }
+  };
+
+  const onSubmit = (values, ev) => {
     store.dispatch({
       type: 'SAVE_SNAPSHOT',
       snapshot: snapshot
     })
-  };
-
-  const onSubmit = (values, ev) => {
     const form = ev.target;
     const data = {
       dataset: form.dataset.value,

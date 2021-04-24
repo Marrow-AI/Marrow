@@ -4,6 +4,9 @@ import store from '../state';
 import { useSelector } from 'react-redux';
 import TreeChart from './TreeChart';
 import useSpinner from './useSpinner';
+import Tree from 'react-d3-tree';
+import { hierarchy } from "d3";
+import { cloneDeep, uniqueId } from 'lodash';
 
 export default function EncoderSection(props) {
   const dataset = useSelector(state => state.dataset);
@@ -17,9 +20,60 @@ export default function EncoderSection(props) {
   const snapshot = useSelector(state => state.snapshot);
   const maxSteps = useSelector(state => state.maxSteps);
   const [isGenerating, setIsGenerating] = useState(true);
+  const animationSteps = useSelector(state => state.animationSteps);
+  const [tree, setTree] = useState(
+{
+  name: 'START',
+  children: [
+  ]
+}
+  );
+
+
+	const renderRectSvgNode = ({ nodeDatum, toggleNode }) => (
+		<g>
+ {nodeDatum.attributes?.image ? (
+		<>
+			<defs>
+			<pattern id={`image-${nodeDatum.attributes.uuid}`} x="100" y="0" viewBox="0 0 1024 1024" height="100%" width="1">
+				<image x="0" y="0" width="1024" height="1024" href={nodeDatum.attributes.image}></image>
+			</pattern>
+		 </defs>
+			<circle r="50" onClick={toggleNode} fill={`url(#image-${nodeDatum.attributes.uuid}`} />
+		</>
+  ) : (
+	<circle r="50" onClick={toggleNode} fill="#fefefe" />
+	)}
+			<text fill="white" strokeWidth="1" x="20">
+				{nodeDatum.name}
+			</text>
+		</g>
+	);
+
+  const addChild = (data) => {
+    const treeClone = cloneDeep(tree);
+    const root = hierarchy(treeClone);
+    const descendants = root.descendants();
+    const lastChild = descendants[descendants.length - 1].data;
+    lastChild.children = [
+      ...lastChild.children,
+      {
+				name: data.name,
+			  attributes: {
+					image: data.imageUrl,
+					uuid: uniqueId()
+				},children: []}
+    ];
+		console.log("Tree", treeClone);
+    setTree(treeClone);
+  }
 
   const onSubmit = () => {
     setIsGenerating(true)
+    addChild({
+      name: currentStep,
+      imageUrl: animationSteps[currentStep]
+    })
     const data = {
       dataset: dataset,
       steps: maxSteps,
@@ -157,7 +211,12 @@ export default function EncoderSection(props) {
           </div>
         </div>
       </div>
-      <TreeChart data={parentsData} />
+      <div id="treeWrapper" style={{ width: '50em', height: '20em' }}>
+        <Tree 
+				data={tree}
+        renderCustomNodeElement={renderRectSvgNode}
+				 />
+      </div>
     </div>
   );
 }
