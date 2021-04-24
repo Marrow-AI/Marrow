@@ -594,12 +594,27 @@ Loading {
 .spinner{  
   height: 50%;
   width: 100%;
-  /* display: flex; */
   align-items: center;
   justify-content: center;
   position: absolute;
-  /* position: relative; */
   left: 0;
   margin-top: 0;
   z-index: 100;
+}
+
+svg {
+  overflow: visible;
+  display: block;
+  width: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  // justify-content: center;
+  height: 100vh;
+  padding: 0 0;
+  // text-align: center;
+  box-sizing: border-box;
 }

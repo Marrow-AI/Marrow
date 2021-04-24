@@ -97,7 +97,7 @@ function TreeChart({ data }) {
       .attr("fill", "white")
       .attr("stroke", "white")
       .attr("font-size", 16)
-      .text(node => node.data.name)
+      .text(node => node.data)
       .transition()
       .duration(500)
       .delay(node => node.depth * 300)
