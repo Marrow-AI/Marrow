@@ -54,22 +54,21 @@ const Footer = () => {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-          The GAN Explorer is an interactive web-based tool that lets you explore the latent space of 
-          <a className='link footer' href="https://github.com/NVlabs/stylegan" alt="" target="_blank" rel="noopener noreferrer"> StyleGAN V1</a>’s results, 
-          encode your own images to the latent space, and create chains of key-frame animations between different points on the latent space.
-          <br/>
-          <br/>
-          This tool was developed and designed for Ars Electronica Future Thinking School by
-          <a className='link footer' href="https://avner.js.org/" alt="" target="_blank" rel="noopener noreferrer"> Avner Peled </a> 
-          and <a className='link footer'className='link footer' href="https://shirin.works/" alt="" target="_blank" rel="noopener noreferrer">shirin anlen</a>, 
-          and is part of the development of the 
-          <a className='link footer' href="https://shirin.works/Marrow-teach-me-how-to-see-you-mother-Machine-learning-immersive" alt="" target="_blank" rel="noopener noreferrer"> Marrow project</a>, 
-          with the support of the National Film Board of Canada.
-          <br/>
-          <br/>
-          Read more about the motivation and code in this <a className='link footer' href="https://towardsdatascience.com/a-tool-for-collaborating-over-gans-latent-space-b7ea92ad63d8" alt="" target="_blank" rel="noopener noreferrer">
-           Medium post</a>.
-            
+            The GAN Explorer is an interactive web-based tool that lets you explore the latent space of 
+            <a className='link footer' href="https://github.com/NVlabs/stylegan" alt="" target="_blank" rel="noopener noreferrer"> StyleGAN V1</a>’s results, 
+            encode your own images to the latent space, and create chains of key-frame animations between different points on the latent space.
+            <br/>
+            <br/>
+            This tool was developed and designed for Ars Electronica Future Thinking School by
+            <a className='link footer' href="https://avner.js.org/" alt="" target="_blank" rel="noopener noreferrer"> Avner Peled </a> 
+            and <a className='link footer'className='link footer' href="https://shirin.works/" alt="" target="_blank" rel="noopener noreferrer">shirin anlen</a>, 
+            and is part of the development of the 
+            <a className='link footer' href="https://shirin.works/Marrow-teach-me-how-to-see-you-mother-Machine-learning-immersive" alt="" target="_blank" rel="noopener noreferrer"> Marrow project</a>, 
+            with the support of the National Film Board of Canada.
+            <br/>
+            <br/>
+            Read more about the motivation and code in this <a className='link footer' href="https://towardsdatascience.com/a-tool-for-collaborating-over-gans-latent-space-b7ea92ad63d8" alt="" target="_blank" rel="noopener noreferrer">
+            Medium post</a>.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
