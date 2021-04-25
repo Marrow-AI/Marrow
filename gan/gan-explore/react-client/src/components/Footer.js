@@ -61,7 +61,7 @@ const Footer = () => {
             <br/>
             This tool was developed and designed for Ars Electronica Future Thinking School by
             <a className='link footer' href="https://avner.js.org/" alt="" target="_blank" rel="noopener noreferrer"> Avner Peled </a> 
-            and <a className='link footer'className='link footer' href="https://shirin.works/" alt="" target="_blank" rel="noopener noreferrer">shirin anlen</a>, 
+            and <a className='link footer' href="https://shirin.works/" alt="" target="_blank" rel="noopener noreferrer">shirin anlen</a>, 
             and is part of the development of the 
             <a className='link footer' href="https://shirin.works/Marrow-teach-me-how-to-see-you-mother-Machine-learning-immersive" alt="" target="_blank" rel="noopener noreferrer"> Marrow project</a>, 
             with the support of the National Film Board of Canada.
@@ -73,7 +73,6 @@ const Footer = () => {
         </DialogContent>
         <DialogActions>
           <button className='btn save footer' onClick={handleClose}> close </button>
-
         </DialogActions>
       </Dialog>
     </>
