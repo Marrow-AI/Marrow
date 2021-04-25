@@ -9,9 +9,6 @@ import Select from '@material-ui/core/Select';
 import { useSelector } from 'react-redux';
 import store, {clearAnimationSteps, setMaxSteps} from '../state';
 
-//const ENDPOINT = '';
-// const ENDPOINT = 'http://52.206.213.41:8541';
-
 const useStyles = makeStyles((theme) => ({
   root: {
     background: "black",

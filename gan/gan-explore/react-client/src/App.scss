@@ -430,6 +430,11 @@ input.save {
   margin-top: 20%;
 }
 
+.link.footer {
+  font-family: 'Lato', sans-serif;
+  color: black;
+}
+
 .footerCointainer {
   display: block;
   position: fixed;
@@ -537,10 +542,11 @@ input.save {
 }
 
 .encoderSection {
- margin-left: -20%;
+ margin-left: -30%;
   margin-right: 25%;
-  margin-top: -10%;
+  margin-top: -5%;
   text-align: left;
+  position: relative;
 }
 
 .fileContainer {
@@ -568,7 +574,7 @@ input.save {
 
 button:disabled,
 button[disabled]{
-  border: none;
+  border: 2px solid rgb(50, 50, 50);
   background-color: rgb(25, 25, 25);
   color: #666666;
   cursor: not-allowed;
@@ -608,13 +614,11 @@ svg {
   width: 100%;
 }
 
-#root {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  // justify-content: center;
-  height: 100vh;
-  padding: 0 0;
-  // text-align: center;
-  box-sizing: border-box;
+.rd3t-link {
+ stroke: #3F51B5 !important; 
+ stroke-width: 0.2rem !important;
+}
+
+.rd3t-tree-container {
+  position: absolute;
 }

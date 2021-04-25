@@ -34,7 +34,7 @@ export default function Generate() {
   const [view, setView] = useState();
   const { register, handleSubmit } = useForm({ mode: "onBlur" });
   const classes = useStyles();
-  const [dataset, setDataset] = useState('person');
+  const [dataset, setDataset] = useState('');
   const [snapshot, setSnapshot] = useState('ffhq');
   const [generating, setGenerating] = useState('use_step');
   const maxSteps = useSelector(state => state.maxSteps);
@@ -166,8 +166,8 @@ export default function Generate() {
               </div>
               :
               <form key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)} >
-                <FormControl className={classes.formControl} >
-                  <InputLabel className="inputNew" id="demo-simple-select-helper-label">Choose a dataset</InputLabel>
+                <FormControl required className={classes.formControl} >
+                  <InputLabel className="inputNew" id="demo-simple-select-helper-label" >Choose a dataset</InputLabel>
                   <Select className="select dataset" name="dataset" autoComplete="off"
                     labelId="demo-simple-select-helper-label"
                     id="demo-simple-select-helper"
@@ -184,7 +184,8 @@ export default function Generate() {
                 <div className="stepsDiv">
                   <label className="label steps"> Number of frames:</label>
                   <input className="input steps" autoComplete="off" name="steps" value={maxSteps} type="number" onChange={handleStepsChange} />
-                  <FormHelperText>Number of frames to generate animation sequence</FormHelperText>
+                  <FormHelperText>Number of frames to generate animation sequence &mdash;<br />
+                  The bigger the number the longer it will take to generate.</FormHelperText>
                 </div>
 
                 <div className="divBtnGnr">

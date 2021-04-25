@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import ImageUploading from 'react-images-uploading';
 import store from '../state';
 import { useSelector } from 'react-redux';
-import TreeChart from './TreeChart';
 import useSpinner from './useSpinner';
 import Tree from 'react-d3-tree';
 import { hierarchy } from "d3";
@@ -13,58 +12,57 @@ export default function EncoderSection(props) {
   const [loading, showLoading, hideLoading] = useSpinner();
   const ENDPOINT = useSelector(state => state.ENDPOINT);
   const [images, setImages] = useState([]);
-  const [parentsData, setParentsData] = useState([]);
-  const [currentParent, setCurrentParent] = useState({})
   const currentStep = useSelector(state => state.currentStep);
   const currentShuffle = useSelector(state => state.currentShuffle);
   const snapshot = useSelector(state => state.snapshot);
   const maxSteps = useSelector(state => state.maxSteps);
   const [isGenerating, setIsGenerating] = useState(true);
   const animationSteps = useSelector(state => state.animationSteps);
-  const [tree, setTree] = useState(
-{
-  name: 'START',
-  children: [
-  ]
-}
+  const [tree, setTree] = useState({
+      name: 'START',
+      children: []
+    });
+
+  const renderRectSvgNode = ({ nodeDatum, toggleNode }) => (
+    <g>
+      {nodeDatum.attributes?.image ? (
+        <>
+          <defs>
+            <pattern id={`image-${nodeDatum.attributes.uuid}`} x="0" y="0" viewBox="0 0 1024 1024" height="100%" width="1">
+              <image x="0" y="0" width="1024" height="1024" href={nodeDatum.attributes.image}></image>
+            </pattern>
+          </defs>
+          <circle r="35" onClick={toggleNode} fill={`url(#image-${nodeDatum.attributes.uuid}`} stroke='#3F51B5'  />
+        </>
+      ) : (
+        <>
+        <circle r="5" fill='#000' stroke='transparent' onClick={toggleNode} />
+      </>
+      )}
+       
+    </g>
   );
-
-
-	const renderRectSvgNode = ({ nodeDatum, toggleNode }) => (
-		<g>
- {nodeDatum.attributes?.image ? (
-		<>
-			<defs>
-			<pattern id={`image-${nodeDatum.attributes.uuid}`} x="100" y="0" viewBox="0 0 1024 1024" height="100%" width="1">
-				<image x="0" y="0" width="1024" height="1024" href={nodeDatum.attributes.image}></image>
-			</pattern>
-		 </defs>
-			<circle r="50" onClick={toggleNode} fill={`url(#image-${nodeDatum.attributes.uuid}`} />
-		</>
-  ) : (
-	<circle r="50" onClick={toggleNode} fill="#fefefe" />
-	)}
-			<text fill="white" strokeWidth="1" x="20">
-				{nodeDatum.name}
-			</text>
-		</g>
-	);
 
   const addChild = (data) => {
     const treeClone = cloneDeep(tree);
     const root = hierarchy(treeClone);
     const descendants = root.descendants();
     const lastChild = descendants[descendants.length - 1].data;
+    // if (currentStep === (maxSteps - 1)) {
     lastChild.children = [
       ...lastChild.children,
       {
-				name: data.name,
-			  attributes: {
-					image: data.imageUrl,
-					uuid: uniqueId()
-				},children: []}
-    ];
-		console.log("Tree", treeClone);
+        name: data.name,
+        attributes: {
+          image: data.imageUrl,
+          uuid: uniqueId()
+        }, children: []
+      }
+    ]
+  // } if (currentStep < (maxSteps - 1)) {
+   
+  // }
+    console.log("Tree", treeClone);
     setTree(treeClone);
   }
 
@@ -117,6 +115,10 @@ export default function EncoderSection(props) {
 
   const onChange = (imageList, addUpdateIndex) => {
     setIsGenerating(true)
+    addChild({
+      name: currentStep,
+      imageUrl: animationSteps[currentStep]
+    })
     console.log(imageList, addUpdateIndex);
     store.dispatch({
       type: 'SAVE_FILE_NAME',
@@ -144,21 +146,6 @@ export default function EncoderSection(props) {
           alert(data.result);
         }
       })
-     if (currentStep < (maxSteps - 1)) {
-        const childImage = {
-          name: images[0].file.name,
-          url: images[0].data_url, 
-          children:[] }
-          setCurrentParent({...currentParent, children:[...currentParent.children, childImage]})
-      }
-     if (currentStep === (maxSteps - 1)) {
-      setParentsData(parentsData => [...parentsData, currentParent])
-      setCurrentParent({...imageList, children:[]})
-  }
-    
-    console.log('current parent', currentParent)
-    console.log('parent data', parentsData)
-
   };
 
   useEffect(() => {
@@ -174,11 +161,11 @@ export default function EncoderSection(props) {
         <h1>{dataset}</h1>
       </div>
       <div className="mainSection" >
+      {loading}
         <div className='encodeRandom'>
           <div className="encoderSection">
-            <button disabled={isGenerating} className="btn generate" name="generate" type="onSubmit" onClick={onSubmit}>Generate Randomly</button>
-
-            {loading}
+            <button disabled={isGenerating} className="btn generate" name="generate" type="onSubmit" 
+              onClick={onSubmit}>Generate Randomly</button>
 
             <ImageUploading
               value={images}
@@ -197,25 +184,19 @@ export default function EncoderSection(props) {
                     style={isDragging ? { color: 'red' } : undefined}
                     onClick={onImageUpload}
                     {...dragProps}> Upload your image </button>
-            &nbsp;
-
-                  {/* {imageList.map((image, index) => (
-              <div key={index} className="image-item">
-                <p>({image.file.name})</p> */}
-                  {/* <img src={image['data_url']} alt="" width="100" /> */}
-                  {/* </div>
-            ))} */}
+             &nbsp;
                 </div>
               )}
             </ImageUploading>
           </div>
         </div>
       </div>
-      <div id="treeWrapper" style={{ width: '50em', height: '20em' }}>
-        <Tree 
-				data={tree}
-        renderCustomNodeElement={renderRectSvgNode}
-				 />
+      <div id="treeWrapper" style={{ width: '50em', height: '10em', marginLeft:'-8%', marginTop: '-15%', position: 'relative' }}>
+        <Tree
+          data={tree}
+          renderCustomNodeElement={renderRectSvgNode}
+  
+        />
       </div>
     </div>
   );
