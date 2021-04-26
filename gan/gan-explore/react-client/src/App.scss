@@ -21,7 +21,7 @@ body {
 }
 
 .app-container {
-  width:100%;
+  max-width: 1000px;
 }
 
 a {
@@ -199,7 +199,7 @@ button:hover {
 }
 
 .shuffleForm {
-  margin-left: -20%;
+  margin-left: 20%;
   margin-right: 25%;
   margin-top: -10%;
   text-align: left;
@@ -272,7 +272,7 @@ input.steps {
 }
 
 .btn.generate {
-  margin-top: 10%;
+  margin-top: 50px;
   transition: all .20s ease-in;
 }
 
@@ -310,9 +310,11 @@ input.steps {
 
 .saveLoad {
   margin-left: 58%;
-  width: 700px;
-  margin-top: 70px;
-  text-align: center;
+  // width: 700px;
+  margin-left: 75%;
+  width: 100%;
+  margin-top: 35px;
+  margin-bottom: 100px;
 }
 
 .saveForm {
@@ -361,15 +363,18 @@ input.save {
   border-radius: 0px;
   font-size: 14px;
   letter-spacing: 0.18rem;
-  padding: 10px;
-  margin-left: 5%;
-  color: #CBCDCE;
+  padding: 5px;
+  float: right;
+  // margin-left: 5%;
+  // color: #CBCDCE;
+  color: #C4FE00;
 }
 
 .btn.download:hover {
   color: #444444;
   box-shadow: none;
   border: none;
+  padding: 5px;
 }
 
 .loadForm {
@@ -538,7 +543,9 @@ input.save {
   color: white !important;
   font-family: "Lato";
   letter-spacing: 0.15rem;
-  width: 440px;
+  width: 660px;
+  margin-left: 100px;
+
 }
 
 .encodeRandom {
@@ -546,7 +553,7 @@ input.save {
 }
 
 .encoderSection {
- margin-left: -30%;
+//  margin-left: -30%;
   margin-right: 25%;
   margin-top: -5%;
   text-align: left;
