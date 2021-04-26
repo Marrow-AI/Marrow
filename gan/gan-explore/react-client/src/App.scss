@@ -553,11 +553,9 @@ input.save {
 }
 
 .encoderSection {
-//  margin-left: -30%;
-  margin-right: 25%;
-  margin-top: -5%;
   text-align: left;
   position: relative;
+  margin-top: 30px;
 }
 
 .fileContainer {
@@ -622,7 +620,6 @@ Loading {
 svg {
   overflow: visible;
   display: block;
-  width: 100%;
 }
 
 .rd3t-link {

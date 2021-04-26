@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ImageUploading from 'react-images-uploading';
 import store from '../state';
 import { useSelector } from 'react-redux';
@@ -6,6 +6,7 @@ import useSpinner from './useSpinner';
 import Tree from 'react-d3-tree';
 import { hierarchy, tree as d3Tree } from "d3";
 import { cloneDeep, uniqueId } from 'lodash';
+import useDimensions from 'react-use-dimensions';
 
 export default function EncoderSection(props) {
   const dataset = useSelector(state => state.dataset);
@@ -19,6 +20,10 @@ export default function EncoderSection(props) {
   const [isGenerating, setIsGenerating] = useState(true);
   const animationSteps = useSelector(state => state.animationSteps);
   const finalDestination = useSelector(state => state.finalDestination);
+  const [margin, setMargin] = useState(-15);
+  const [countNodes, setCountNodes] = useState(1);
+  const targetRef = useRef();
+  const [dimensions, setDimension] = useState({});
   const [tree, setTree] = useState({
     name: 'root',
     children: [],
@@ -38,7 +43,7 @@ export default function EncoderSection(props) {
               <image x="0" y="0" width="1024" height="1024" href={nodeDatum.attributes.image}></image>
             </pattern>
           </defs>
-          <circle r="35" onClick={toggleNode} fill={`url(#image-${nodeDatum.attributes.uuid}`} stroke='#3F51B5' />
+          <circle r="35" onClick={toggleNode} fill={`url(#image-${nodeDatum.attributes.uuid}`} opacity='0.9' stroke='#3F51B5' />
         </>
       ) : (
         <>
@@ -54,7 +59,6 @@ export default function EncoderSection(props) {
     const root = hierarchy(treeClone);
     const descendants = root.descendants();
     const lastChild = descendants[descendants.length - 1].data;
-    // if (currentStep === (maxSteps - 1)) {
     lastChild.children = [
       ...lastChild.children,
       {
@@ -65,9 +69,6 @@ export default function EncoderSection(props) {
         }, children: []
       }
     ]
-    // } if (currentStep < (maxSteps - 1)) {
-
-    // }
     console.log("Tree", treeClone);
     setTree(treeClone);
     return lastChild.uuid;
@@ -76,9 +77,7 @@ export default function EncoderSection(props) {
   const addChild = (data, parentId) => {
     const treeClone = cloneDeep(tree);
     const root = hierarchy(treeClone);
-    console.log("Looking for parent", parentId);
     const parent = root.find((node) => node.data.attributes.uuid === parentId)
-    console.log("Found parent", parent);
     const newId = uniqueId();
     parent.data.children = [
       ...parent.data.children,
@@ -90,14 +89,10 @@ export default function EncoderSection(props) {
         }, children: []
       }
     ]
-    // } if (currentStep < (maxSteps - 1)) {
-
-    // }
     console.log("Tree", treeClone);
     setTree(treeClone);
     return newId;
   }
-
 
   const addBetween = (data) => {
     const treeClone = cloneDeep(tree);
@@ -115,7 +110,6 @@ export default function EncoderSection(props) {
     }
 
     parent.data.children = [between];
-
     console.log("Tree", treeClone);
     setTree(treeClone);
     return between.attributes.uuid;
@@ -161,6 +155,7 @@ export default function EncoderSection(props) {
         console.log("Publish result", data);
         if (data.result === "OK") {
           showLoading();
+          setCountNodes(countNodes +1)
           console.log("Server is publishing!");
         } else {
           alert(data.result);
@@ -193,6 +188,7 @@ export default function EncoderSection(props) {
       .then((data) => {
         if (data.result === "OK") {
           showLoading();
+          setCountNodes(countNodes +1)
           console.log("Result!", data)
         } else {
           alert(data.result);
@@ -200,7 +196,15 @@ export default function EncoderSection(props) {
       })
   };
 
+
+
   useEffect(() => {
+    // setDimension(targetRef.current.getClientBoundingRect())
+    // console.log(targetRef.current.getBoundingClientRect())
+    if (countNodes > 3) {
+      setMargin(margin - 30)
+      setCountNodes(1)
+    }
     if (currentStep === (maxSteps - 1)) {
       setIsGenerating(false)
       const childId = addChild({
@@ -249,7 +253,7 @@ export default function EncoderSection(props) {
           </div>
         </div>
       </div>
-      <div id="treeWrapper" style={{ width: '50em', height: '10em', marginLeft: '30%', marginTop: '-12%', position: 'relative' }}>
+      <div ref={targetRef} id="treeWrapper" style={{ width: '50em', height: '10em', marginLeft: `${margin}%`, marginTop: '-55%', position: 'relative' }}>
         <Tree
           data={tree}
           renderCustomNodeElement={renderRectSvgNode}
