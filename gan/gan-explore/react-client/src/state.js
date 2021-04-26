@@ -5,6 +5,10 @@ const animationStepHandler = (data) => {
   store.dispatch(addAnimationStep(data.image, data.step));
 }
 
+const finalDestinationHandler = (data) => {
+  store.dispatch(setFinalDestination(data.image));
+}
+
 const publishStartHandler = (data) => {
   store.dispatch(clearAnimationSteps());
   store.dispatch(setMaxSteps(data.steps));
@@ -21,6 +25,7 @@ const reducer = (state = {
   Get_Image: '',
   file_name: '',
   animationSteps: [],
+  finalDestination: null,
   nowEncoding: {},
   currentStep: 0,
   maxSteps: 40,
@@ -30,10 +35,12 @@ const reducer = (state = {
     case 'SET_SOCKET': {
       console.log("Setting socket", action.socket);
       if (state.socket) {
+        state.socket.off('finalDestination', finalDestinationHandler)
         state.socket.off('animationStep', animationStepHandler)
         state.socket.off('publishStart', publishStartHandler)
         state.socket.off('nowEncoding', nowEncodingHandler)
       }
+      action.socket.on('finalDestination', finalDestinationHandler)
       action.socket.on('animationStep', animationStepHandler)
       action.socket.on('publishStart', publishStartHandler)
       action.socket.on('nowEncoding', nowEncodingHandler)
@@ -115,6 +122,12 @@ const reducer = (state = {
       file_name: action.images
     }
   }
+  case 'SET_FINAL_DESTINATION': {
+    return {
+      ...state,
+      finalDestination: "data:image/jpeg;base64," + action.image
+    }
+  }
   default:
       return state;
   }
@@ -129,6 +142,11 @@ export const addAnimationStep = (image, step) => ({
   type: 'ADD_ANIMATION_STEP',
   image,
   step
+})
+
+export const setFinalDestination = (image) => ({
+  type: 'SET_FINAL_DESTINATION',
+  image
 })
 
 export const clearAnimationSteps  = () => ({

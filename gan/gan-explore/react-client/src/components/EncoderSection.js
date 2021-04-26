@@ -18,6 +18,7 @@ export default function EncoderSection(props) {
   const maxSteps = useSelector(state => state.maxSteps);
   const [isGenerating, setIsGenerating] = useState(true);
   const animationSteps = useSelector(state => state.animationSteps);
+  const finalDestination = useSelector(state => state.finalDestination);
   const [tree, setTree] = useState({
     name: 'START',
     children: []
@@ -147,6 +148,10 @@ export default function EncoderSection(props) {
   useEffect(() => {
     if (currentStep === (maxSteps - 1)) {
       setIsGenerating(false)
+      addChild({
+        name: '',
+        imageUrl: animationSteps[currentStep]
+      })
       hideLoading()
     }
   }, [currentStep])
