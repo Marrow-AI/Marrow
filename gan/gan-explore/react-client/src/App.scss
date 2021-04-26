@@ -155,7 +155,7 @@ button:hover {
   -o-animation: page-transition 1.8s;
   animation: page-transition 1.8s;
   text-align: center;
-  width: 900px;
+  max-width: 900px;
 }
 
 @-webkit-keyframes page-transition {
@@ -191,7 +191,7 @@ button:hover {
 
 .mainSection {
   margin-top: 20%;
-  width: 800px;
+  max-width: 800px;
 }
 
 .container {
@@ -309,9 +309,9 @@ input.steps {
 }
 
 .saveLoad {
-  margin-left: 58%;
+  // margin-left: 58%;
   // width: 700px;
-  margin-left: 75%;
+  margin-left: 70%;
   width: 100%;
   margin-top: 35px;
   margin-bottom: 100px;
@@ -543,8 +543,8 @@ input.save {
   color: white !important;
   font-family: "Lato";
   letter-spacing: 0.15rem;
-  width: 660px;
-  margin-left: 100px;
+  max-width: 680px;
+  margin-left: 80px;
 
 }
 
