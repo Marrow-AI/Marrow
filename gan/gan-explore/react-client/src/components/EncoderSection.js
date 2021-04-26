@@ -193,7 +193,7 @@ export default function EncoderSection(props) {
           </div>
         </div>
       </div>
-      <div id="treeWrapper" style={{ width: '50em', height: '10em', marginLeft: '-8%', marginTop: '-15%', position: 'relative' }}>
+      <div id="treeWrapper" style={{ width: '50em', height: '10em', marginLeft: '30%', marginTop: '-12%', position: 'relative' }}>
         <Tree
           data={tree}
           renderCustomNodeElement={renderRectSvgNode}

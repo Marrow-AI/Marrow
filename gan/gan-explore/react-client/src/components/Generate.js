@@ -161,9 +161,9 @@ export default function Generate() {
           <div className="container" >
 
             {isGenerated ?
-              <div>
+             
                 <EncoderSection />
-              </div>
+             
               :
               <form key={1} className="shuffleForm" onSubmit={handleSubmit(onSubmit)} >
                 <FormControl required className={classes.formControl} >
