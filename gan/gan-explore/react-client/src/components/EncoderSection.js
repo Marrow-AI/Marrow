@@ -19,9 +19,9 @@ export default function EncoderSection(props) {
   const [isGenerating, setIsGenerating] = useState(true);
   const animationSteps = useSelector(state => state.animationSteps);
   const [tree, setTree] = useState({
-      name: 'START',
-      children: []
-    });
+    name: 'START',
+    children: []
+  });
 
   const renderRectSvgNode = ({ nodeDatum, toggleNode }) => (
     <g>
@@ -32,14 +32,14 @@ export default function EncoderSection(props) {
               <image x="0" y="0" width="1024" height="1024" href={nodeDatum.attributes.image}></image>
             </pattern>
           </defs>
-          <circle r="35" onClick={toggleNode} fill={`url(#image-${nodeDatum.attributes.uuid}`} stroke='#3F51B5'  />
+          <circle r="35" onClick={toggleNode} fill={`url(#image-${nodeDatum.attributes.uuid}`} stroke='#3F51B5' />
         </>
       ) : (
         <>
-        <circle r="5" fill='#000' stroke='transparent' onClick={toggleNode} />
-      </>
+          <circle r="5" fill='#000' stroke='transparent' onClick={toggleNode} />
+        </>
       )}
-       
+
     </g>
   );
 
@@ -59,9 +59,9 @@ export default function EncoderSection(props) {
         }, children: []
       }
     ]
-  // } if (currentStep < (maxSteps - 1)) {
-   
-  // }
+    // } if (currentStep < (maxSteps - 1)) {
+
+    // }
     console.log("Tree", treeClone);
     setTree(treeClone);
   }
@@ -100,16 +100,11 @@ export default function EncoderSection(props) {
       .then((data) => {
         console.log("Publish result", data);
         if (data.result === "OK") {
+          showLoading();
           console.log("Server is publishing!");
         } else {
           alert(data.result);
         }
-      })
-      .then(() => {
-        showLoading();
-        setTimeout(() => {
-          hideLoading()
-        }, 2000)
       })
   }
 
@@ -141,6 +136,7 @@ export default function EncoderSection(props) {
       .then(res => res.json())
       .then((data) => {
         if (data.result === "OK") {
+          showLoading();
           console.log("Result!", data)
         } else {
           alert(data.result);
@@ -151,6 +147,7 @@ export default function EncoderSection(props) {
   useEffect(() => {
     if (currentStep === (maxSteps - 1)) {
       setIsGenerating(false)
+      hideLoading()
     }
   }, [currentStep])
 
@@ -161,10 +158,10 @@ export default function EncoderSection(props) {
         <h1>{dataset}</h1>
       </div>
       <div className="mainSection" >
-      {loading}
+        {loading}
         <div className='encodeRandom'>
           <div className="encoderSection">
-            <button disabled={isGenerating} className="btn generate" name="generate" type="onSubmit" 
+            <button disabled={isGenerating} className="btn generate" name="generate" type="onSubmit"
               onClick={onSubmit}>Generate Randomly</button>
 
             <ImageUploading
@@ -191,11 +188,10 @@ export default function EncoderSection(props) {
           </div>
         </div>
       </div>
-      <div id="treeWrapper" style={{ width: '50em', height: '10em', marginLeft:'-8%', marginTop: '-15%', position: 'relative' }}>
+      <div id="treeWrapper" style={{ width: '50em', height: '10em', marginLeft: '-8%', marginTop: '-15%', position: 'relative' }}>
         <Tree
           data={tree}
           renderCustomNodeElement={renderRectSvgNode}
-  
         />
       </div>
     </div>
