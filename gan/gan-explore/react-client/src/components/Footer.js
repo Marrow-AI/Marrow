@@ -55,8 +55,9 @@ const Footer = () => {
         <DialogContent>
           <DialogContentText>
             The GAN Explorer is an interactive web-based tool that lets you explore the latent space of 
-            <a className='link footer' href="https://github.com/NVlabs/stylegan" alt="" target="_blank" rel="noopener noreferrer"> StyleGAN V1</a>’s results, 
-            encode your own images to the latent space, and create chains of key-frame animations between different points on the latent space.
+            <a className='link footer' href="https://github.com/NVlabs/stylegan" alt="" target="_blank" rel="noopener noreferrer"> StyleGAN V1</a>’s results,
+            using two datasets: human faces from  <a className='link footer' href="https://thispersondoesnotexist.com/" alt="" target="_blank" rel="noopener noreferrer"> 'This Person Does Not Exist'</a> and 'Happy Families Dinners'.  
+            It invites you to encode your own images to the latent space, and create chains of key-frame animations between different points on the latent space.
             <br/>
             <br/>
             This tool was developed and designed for Ars Electronica Future Thinking School by
