@@ -4,7 +4,7 @@ import store from '../state';
 import { useSelector } from 'react-redux';
 import useSpinner from './useSpinner';
 import Tree from 'react-d3-tree';
-import { hierarchy } from "d3";
+import { hierarchy, tree as d3Tree } from "d3";
 import { cloneDeep, uniqueId } from 'lodash';
 
 export default function EncoderSection(props) {
@@ -20,9 +20,14 @@ export default function EncoderSection(props) {
   const animationSteps = useSelector(state => state.animationSteps);
   const finalDestination = useSelector(state => state.finalDestination);
   const [tree, setTree] = useState({
-    name: 'START',
-    children: []
+    name: 'root',
+    children: [],
+    attributes: {
+      uuid: "ROOT"
+    }
   });
+
+  const [currentParent, setCurrentParent] = useState("ROOT");
 
   const renderRectSvgNode = ({ nodeDatum, toggleNode }) => (
     <g>
@@ -44,7 +49,7 @@ export default function EncoderSection(props) {
     </g>
   );
 
-  const addChild = (data) => {
+  const addLastChild = (data) => {
     const treeClone = cloneDeep(tree);
     const root = hierarchy(treeClone);
     const descendants = root.descendants();
@@ -65,14 +70,68 @@ export default function EncoderSection(props) {
     // }
     console.log("Tree", treeClone);
     setTree(treeClone);
+    return lastChild.uuid;
+  }
+
+  const addChild = (data, parentId) => {
+    const treeClone = cloneDeep(tree);
+    const root = hierarchy(treeClone);
+    console.log("Looking for parent", parentId);
+    const parent = root.find((node) => node.data.attributes.uuid === parentId)
+    console.log("Found parent", parent);
+    const newId = uniqueId();
+    parent.data.children = [
+      ...parent.data.children,
+      {
+        name: data.name,
+        attributes: {
+          image: data.imageUrl,
+          uuid: newId,
+        }, children: []
+      }
+    ]
+    // } if (currentStep < (maxSteps - 1)) {
+
+    // }
+    console.log("Tree", treeClone);
+    setTree(treeClone);
+    return newId;
+  }
+
+
+  const addBetween = (data) => {
+    const treeClone = cloneDeep(tree);
+    const root = hierarchy(treeClone);
+    const descendants = root.descendants();
+    const lastChild = descendants[descendants.length - 1];
+    const parent = lastChild.parent;
+
+    const between = {
+      name: data.name,
+      attributes: {
+        image: data.imageUrl,
+        uuid: uniqueId()
+      }, children: [ lastChild.data ]
+    }
+
+    parent.data.children = [between];
+
+    console.log("Tree", treeClone);
+    setTree(treeClone);
+    return between.attributes.uuid;
   }
 
   const onSubmit = () => {
     setIsGenerating(true)
-    addChild({
-      name: currentStep,
-      imageUrl: animationSteps[currentStep]
-    })
+    let nextParent;
+    if (currentStep < maxSteps -1) {
+      nextParent = addBetween({
+        name: currentStep,
+        imageUrl: animationSteps[currentStep]
+      })
+      setCurrentParent(nextParent);
+    }
+
     const data = {
       dataset: dataset,
       steps: maxSteps,
@@ -111,10 +170,6 @@ export default function EncoderSection(props) {
 
   const onChange = (imageList, addUpdateIndex) => {
     setIsGenerating(true)
-    addChild({
-      name: currentStep,
-      imageUrl: animationSteps[currentStep]
-    })
     console.log(imageList, addUpdateIndex);
     store.dispatch({
       type: 'SAVE_FILE_NAME',
@@ -148,10 +203,11 @@ export default function EncoderSection(props) {
   useEffect(() => {
     if (currentStep === (maxSteps - 1)) {
       setIsGenerating(false)
-      addChild({
+      const childId = addChild({
         name: '',
         imageUrl: animationSteps[currentStep]
-      })
+      }, currentParent)
+      setCurrentParent(childId);
       hideLoading()
     }
   }, [currentStep])
