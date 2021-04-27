@@ -632,17 +632,18 @@ svg {
 }
 
 
-@media only screen and (max-width: 1400px) { 
-    .app-container {
-      max-width: 800px;
-    }
 
-    .mainSection {
+@media only screen and (max-width: 1400px) { 
+  .app-container {
+      max-width: 800px;
+  }
+
+  .mainSection {
       
       margin-top: 20%;
-    }
+  }
 
-    .fileUploader {
+  .fileUploader {
       max-width: 600px;
       margin-left: 45px;
   }
