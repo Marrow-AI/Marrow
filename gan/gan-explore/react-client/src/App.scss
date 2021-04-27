@@ -630,3 +630,46 @@ svg {
 .rd3t-tree-container {
   position: absolute;
 }
+
+
+@media only screen and (max-width: 1400px) { 
+    .app-container {
+      max-width: 800px;
+    }
+
+    .mainSection {
+      
+      margin-top: 20%;
+    }
+
+    .fileUploader {
+      max-width: 600px;
+      margin-left: 45px;
+  }
+
+  .encodeRandom {
+    margin-left: 50px;
+    margin-top: 20%;
+  }
+
+  .imgControler {
+    margin-top: 0;
+  }
+
+  .container {
+    margin-top: 10%;
+  }
+
+  .secondTitle {
+    font-size: 42px;
+  }
+
+  .saveLoad {
+    margin-left: 20%;
+    margin-bottom: 100px;
+  }
+
+  .shuffleForm {
+    margin-left: 5%;
+  }
+}

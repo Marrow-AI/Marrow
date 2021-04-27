@@ -20,7 +20,7 @@ export default function EncoderSection(props) {
   const [isGenerating, setIsGenerating] = useState(true);
   const animationSteps = useSelector(state => state.animationSteps);
   const finalDestination = useSelector(state => state.finalDestination);
-  const [margin, setMargin] = useState(-15);
+  const [margin, setMargin] = useState(-18);
   const [countNodes, setCountNodes] = useState(1);
   const targetRef = useRef();
   const [dimensions, setDimension] = useState({});
@@ -177,12 +177,16 @@ export default function EncoderSection(props) {
     fetch(ENDPOINT + '/encode', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: imageList.map((image, i) => (
+      body: 
         JSON.stringify({
-          data: image.data_url,
-          fileName: image.file.name
+          data: imageList[0].data_url,
+          fileName: imageList[0].file.name,
+          steps: maxSteps,
+          snapshot: snapshot,
+          type: currentShuffle,
+          currentStep: currentStep
         })
-      ))
+      
     })
       .then(res => res.json())
       .then((data) => {
@@ -195,7 +199,6 @@ export default function EncoderSection(props) {
         }
       })
   };
-
 
 
   useEffect(() => {
@@ -220,9 +223,9 @@ export default function EncoderSection(props) {
   return (
     <div className="fileUploader">
       <div>
-        <h1>{dataset}</h1>
+        <h1 className='thirdTitle'>{dataset}</h1>
       </div>
-      <div className="mainSection" >
+      <div className="mainSectiontwo" >
         {loading}
         <div className='encodeRandom'>
           <div className="encoderSection">
@@ -253,7 +256,7 @@ export default function EncoderSection(props) {
           </div>
         </div>
       </div>
-      <div ref={targetRef} id="treeWrapper" style={{ width: '50em', height: '10em', marginLeft: `${margin}%`, marginTop: '-55%', position: 'relative' }}>
+      <div ref={targetRef} id="treeWrapper" style={{ width: '50em', height: '10em', marginLeft: `${margin}%`, marginTop: '-45%', position: 'relative' }}>
         <Tree
           data={tree}
           renderCustomNodeElement={renderRectSvgNode}
