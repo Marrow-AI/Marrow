@@ -165,14 +165,11 @@ export default function EncoderSection(props) {
 
   const onChange = (imageList, addUpdateIndex) => {
     setIsGenerating(true)
-    console.log(imageList, addUpdateIndex);
     store.dispatch({
       type: 'SAVE_FILE_NAME',
       file_name: images
     })
     setImages(images => [...images, ...imageList]);
-    console.log(images);
-
     console.log("Submitting image for encoding!", imageList)
     fetch(ENDPOINT + '/encode', {
       method: 'POST',
@@ -256,7 +253,7 @@ export default function EncoderSection(props) {
           </div>
         </div>
       </div>
-      <div ref={targetRef} id="treeWrapper" style={{ width: '50em', height: '10em', marginLeft: `${margin}%`, marginTop: '-45%', position: 'relative' }}>
+      <div ref={targetRef} id="treeWrapper" style={{ width: '50em', height: '10em', marginLeft: `${margin}%`, marginTop: '-55%', position: 'relative' }}>
         <Tree
           data={tree}
           renderCustomNodeElement={renderRectSvgNode}
