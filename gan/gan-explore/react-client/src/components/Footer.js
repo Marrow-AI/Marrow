@@ -68,7 +68,7 @@ const Footer = () => {
             <br/> 
             <br/>
             This project is part of the development of the <a className='link footer' href="https://shirin.works/Marrow-teach-me-how-to-see-you-mother-Machine-learning-immersive" alt="" target="_blank" rel="noopener noreferrer">Marrow project</a>, 
-            with the support of the National Film Board of Canada, Atlas V and the CNC.
+            with the support of the National Film Board of Canada, ATLAS V and the CNC.
             <br/>
             <br/>
             Read more about the motivation and code in this <a className='link footer' href="https://towardsdatascience.com/a-tool-for-collaborating-over-gans-latent-space-b7ea92ad63d8" alt="" target="_blank" rel="noopener noreferrer">
