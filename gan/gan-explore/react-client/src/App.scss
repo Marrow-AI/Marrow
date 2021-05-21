@@ -449,20 +449,22 @@ input.save {
   position: fixed;
   bottom: 0;
   width: 100%;
+  height: 4rem;
+  margin-left: 2%;
   background-color: black;
-  height: 2.6rem;
+  margin-top: 20px;
+ 
 }
 
 .mainFooter {
-  width: 100%;
+  width: 95%;
   bottom: 0;
-
 }
 
 .footerDiv {
-  justify-content: space-around;
-  margin: 0 15px;
-  height: 3rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 10px;
 }
 
 .btn.save.footer {
@@ -470,23 +472,32 @@ input.save {
   box-shadow: none;
   padding-bottom: 10px;
   float: left;
-  color: #818181;
+  color: #ababab;
 }
 
 .btn.save.footer:hover {
   color: rgb(236, 236, 236);
 }
 
-.logosdiv {
-  display: flex;
-  float: right;
-}
 
 .logos {
-  height: 30px;
+  height: 25px;
   object-fit: contain;
-  margin: 10px 20px;
+  margin: 10px 40px;
   padding-bottom: 10px;
+}
+
+
+.addCred {
+  /* width: 500px; */
+  font-size: 10px;
+  float: right;
+  padding-right: 25px;
+  margin-top: -6px;
+  padding-bottom: 2px;
+  color: rgb(166, 166, 166);
+  text-align: right;
+  font-family: 'Lato', sans-serif;
 }
 
 .aboutSection {
