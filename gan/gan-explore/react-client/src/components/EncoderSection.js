@@ -19,7 +19,7 @@ export default function EncoderSection(props) {
   const maxSteps = useSelector(state => state.maxSteps);
   const [isGenerating, setIsGenerating] = useState(true);
   const animationSteps = useSelector(state => state.animationSteps);
-  const finalDestination = useSelector(state => state.finalDestination);
+  const nowPublishing = useSelector(state => state.nowPublishing);
   const [margin, setMargin] = useState(-18);
   const [countNodes, setCountNodes] = useState(1);
   const targetRef = useRef();
@@ -205,7 +205,7 @@ export default function EncoderSection(props) {
       setMargin(margin - 30)
       setCountNodes(1)
     }
-    if (currentStep === (maxSteps - 1)) {
+    if (currentStep === (maxSteps - 1) && nowPublishing) {
       setIsGenerating(false)
       const childId = addChild({
         name: '',

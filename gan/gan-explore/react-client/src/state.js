@@ -10,8 +10,13 @@ const finalDestinationHandler = (data) => {
 }
 
 const publishStartHandler = (data) => {
+  store.dispatch(setNowPublishing(true));
   store.dispatch(clearAnimationSteps());
   store.dispatch(setMaxSteps(data.steps));
+}
+
+const publishStopHandler = (data) => {
+  store.dispatch(setNowPublishing(false));
 }
 
 const nowEncodingHandler = (data) => {
@@ -27,6 +32,7 @@ const reducer = (state = {
   animationSteps: [],
   finalDestination: null,
   nowEncoding: {},
+  nowPublishing: false,
   currentStep: 0,
   maxSteps: 40,
   currentShuffle: 'use_step'
@@ -38,11 +44,13 @@ const reducer = (state = {
         state.socket.off('finalDestination', finalDestinationHandler)
         state.socket.off('animationStep', animationStepHandler)
         state.socket.off('publishStart', publishStartHandler)
+        state.socket.off('publishStop', publishStopHandler)
         state.socket.off('nowEncoding', nowEncodingHandler)
       }
       action.socket.on('finalDestination', finalDestinationHandler)
       action.socket.on('animationStep', animationStepHandler)
       action.socket.on('publishStart', publishStartHandler)
+      action.socket.on('publishStop', publishStopHandler)
       action.socket.on('nowEncoding', nowEncodingHandler)
 
       return {...state, socket: action.socket}
@@ -110,6 +118,12 @@ const reducer = (state = {
       nowEncoding: action.data
     }
   }
+  case 'SET_NOW_PUBLISHING': {
+    return {
+      ...state,
+      nowPublishing: action.data
+    }
+  }
   case 'GET_IMAGE': {
     return {
       ...state,
@@ -171,6 +185,11 @@ export const setMaxSteps  = (maxSteps) => ({
 
 export const setNowEncoding  = (data) => ({
   type: 'SET_NOW_ENCODING',
+  data
+})
+
+export const setNowPublishing  = (data) => ({
+  type: 'SET_NOW_PUBLISHING',
   data
 })
 
