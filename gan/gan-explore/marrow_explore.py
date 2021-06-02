@@ -334,12 +334,14 @@ class Gan(Thread):
                     gen_img.save(f_gen, 'PNG')
 
                     print("Wrote generated image to {}".format(f_gen))
+                    source_step = int(args['currentStep'])
+                    print("Use step {} as source".format(source_step))
+                    self.latent_source = (self.linespaces[source_step] * self.latent_dest + (1-self.linespaces[source_step])*self.latent_source)
 
                     self.latent_dest = generated_dlatents
                     print("Set latent dest to {}".format(self.latent_dest.shape))
                     self.linespaces = np.linspace(0, 1, self.steps)
-                    self.linespace_i = -1;
-
+                    self.linespace_i = 0;
 
                     with self.app.app_context():
                         emit('nowEncoding',{'file': None},namespace='/',broadcast=True)
@@ -348,11 +350,7 @@ class Gan(Thread):
                         future.set_result, "OK"
                     )
                     
-                    # TODO: Temp
                     future = self.loop.create_future()
-                    self.steps = 40
-                    self.linespaces = np.linspace(0, 1, self.steps)
-                    self.linespace_i = 0
                     self.queue.put((future, "publish", None))
 
                 except Exception as e:
