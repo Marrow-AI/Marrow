@@ -44,7 +44,7 @@ if not args.dummy:
     from ffhq_dataset.face_alignment import image_align
     from ffhq_dataset.landmarks_detector import LandmarksDetector
     from encoder.generator_model import Generator
-    from encoder.perceptual_model import PerceptualModel
+    from encoder.perceptual_model import PerceptualModel, PerceptualModelOld
     landmarks_detector = LandmarksDetector('marrow/shape_predictor_68_face_landmarks.dat')
 
 class Gan(Thread):
@@ -97,7 +97,7 @@ class Gan(Thread):
 
         if snapshot == 'ffhq':
             dimension =  18
-            img_size = 256
+            img_size = 1024
         else:
             dimension = 16
             img_size = 512
@@ -108,11 +108,21 @@ class Gan(Thread):
 
             if snapshot == 'ffhq':
                 print("Building encoder perceptual model")
-                self.perceptual_model = PerceptualModel(img_size, layer=9, batch_size=1)
+                #self.perceptual_model = PerceptualModel(256, layer=9, batch_size=1)
+                self.perceptual_model = PerceptualModelOld(256, batch_size=1)
                 self.perceptual_model.build_perceptual_model(self.encoder_generator.generated_image)
             else:
                 self.perceptual_model = None
         print(self.Gs)
+
+    def emit_frame(self, topic, index):
+        self.linespace_i = index 
+        print(self.linespace_i)
+        img = self.get_buf(False)
+        ret, buf = cv2.imencode('.jpg', img)
+        b64 = base64.b64encode(buf)
+        b64text = b64.decode('utf-8')
+        emit(topic,{'step':index, 'image': b64text},namespace='/',broadcast=True)
 
     def push_frames(self):
         while True:
@@ -148,13 +158,7 @@ class Gan(Thread):
                 with self.app.app_context():
                     emit('publishStart',{'steps':self.steps},namespace='/',broadcast=True)
                     for i in range(self.steps):
-                        self.linespace_i = i
-                        print(self.linespace_i)
-                        img = self.get_buf(False)
-                        ret, buf = cv2.imencode('.jpg', img)
-                        b64 = base64.b64encode(buf)
-                        b64text = b64.decode('utf-8')
-                        emit('animationStep',{'step':i, 'image': b64text},namespace='/',broadcast=True)
+                        self.emit_frame('animationStep', i)
                         time.sleep(0.5)
                     emit('publishStop',{'steps':self.steps},namespace='/',broadcast=True)
 
@@ -317,15 +321,11 @@ class Gan(Thread):
                     landmarks_iter = enumerate(landmarks_detector.get_landmarks(f_src),start=1)
                     face_landmarks = next(landmarks_iter)[1]
                     print("Face Landmarks {}".format(face_landmarks))
-                    image_align(f_src, f_aligned, face_landmarks)
+                    image_align(f_src, f_aligned, face_landmarks, output_size=256)
                     print("Wrote face to {}".format(f_aligned))
 
-                    iterations = 500 
-                    self.perceptual_model.set_reference_images([f_aligned])
-                    op = self.perceptual_model.optimize(self.encoder_generator.dlatent_variable, iterations=iterations, learning_rate=1)
-                    pbar = tqdm(op, leave=False, total=iterations)
-                    for loss in pbar:
-                        pbar.set_description('Loss: %.2f' % loss)
+                    iterations = 750
+                    self.encode_old(iterations, f_aligned)
 
                     generated_images = self.encoder_generator.generate_images()
                     generated_dlatents = self.encoder_generator.get_dlatents()
@@ -363,6 +363,29 @@ class Gan(Thread):
                         future.set_result, str(e)
                     )
 
+    def encode(self, iterations, image):
+        self.perceptual_model.set_reference_images([image])
+        op = self.perceptual_model.optimize(self.encoder_generator.dlatent_variable, iterations=iterations, learning_rate=1)
+        pbar = tqdm(op, leave=False, total=iterations)
+        for loss in pbar:
+            pbar.set_description('Loss: %.2f' % loss)
+
+    def encode_old(self, iterations, image):
+        im = Image.open(image)
+        self.perceptual_model.set_reference_images_from_image(np.array([np.array(im)]))
+        op = self.perceptual_model.optimize(self.encoder_generator.dlatent_variable, iterations=iterations, learning_rate=1)
+        best_loss = None
+        best_dlatent = None
+        with tqdm(total=iterations) as pbar:
+            for iteration, loss in enumerate(op):
+                pbar.set_description('Loss: %.2f' % loss)
+                if best_loss is None or loss < best_loss:
+                    best_loss = loss
+                    best_dlatent = self.encoder_generator.get_dlatents()
+                self.encoder_generator.stochastic_clip_dlatents()
+                pbar.update()
+        print(f"final loss {loss}")
+        self.encoder_generator.set_dlatents(best_dlatent)
 
 
     def get_buf(self, shadows):
